@@ -1,0 +1,23 @@
+.calculator {
+    width:200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 50px 150px 50px;
+}
+.output {
+    height: 20px;
+    border: 1px solid black;
+    grid-area: 1 / 1 / 2 / 4;
+}
+.control {
+    align-self: end;
+}
+.numbers {
+    display: grid;
+    grid-template-columns: repeat(3, 50px);
+    grid-template-rows: repeat(4, 40px);
+}
+.operation {
+    width: 50px;
+    height: 40px;
+}

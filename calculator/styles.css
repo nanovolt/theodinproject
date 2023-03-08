@@ -1,13 +1,18 @@
 .calculator {
-    width:200px;
+    width: fit-content;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 50px 150px 50px;
 }
-.output {
-    height: 20px;
+.output-container {
+    /* direction: rtl; */
+    min-height: 38px;
+    font-size: 24px;
     border: 1px solid black;
     grid-area: 1 / 1 / 2 / 4;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
 }
 .control {
     align-self: end;

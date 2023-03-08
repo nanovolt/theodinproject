@@ -27,3 +27,23 @@ function operate(operator) {
             break;
     }
 }
+
+const output = document.querySelector(".output");
+output.textContent = "";
+
+const allclear = document.querySelector(".allclear");
+allclear.onclick = function () {
+    output.textContent = "";
+}
+const numbers = document.querySelectorAll(".number");
+for (let number of numbers) {
+    number.addEventListener("click", ()=> {
+        if (number.textContent == ".") {
+            let lastInput = output.textContent[output.textContent.length - 1];
+            console.log("lastInput:", lastInput);
+            // output.textContent += "0.";  
+        }
+        output.textContent += number.textContent;
+        console.log(output.textContent);
+    })
+}

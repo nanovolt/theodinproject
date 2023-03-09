@@ -66,8 +66,8 @@ function parseString() {
     // let str = "1--2";
 
     // let str = "-1+-2";
-    let str = "-1--2";
-
+    // let str = "-1--2";
+    let str = input.textContent;
     let parsedString = {};
     let matches = [...str.matchAll(signs)];
     // console.log("matches:", matches);
@@ -84,21 +84,40 @@ function parseString() {
     // for (let match of matches) {
     //     console.log(match);
     // }
-
+    
     if (matches.length == 1 && matches[0].index != 0) {
         let splitString = split_at_index(str, matches[0].index);
-        console.log("splitString:", splitString);
-        return splitString;
+   
+        parsedString.left = splitString[0];
+        parsedString.op = splitString[1];
+        parsedString.right = splitString[2];
+
+        console.log("parsedString:", parsedString);
+
+        return parsedString;
     }
     if (matches.length == 3 || matches.length == 2 && matches[0].index == 0) {
         let splitString = split_at_index(str, matches[1].index);
-        console.log("splitString:", splitString);
-        return splitString;
+     
+
+        parsedString.left = splitString[0];
+        parsedString.op = splitString[1];
+        parsedString.right = splitString[2];
+        
+        console.log("parsedString:", parsedString);
+
+        return parsedString;
     }
     if (matches.length == 2 && matches[0].index != 0) {
         let splitString = split_at_index(str, matches[0].index);
-        console.log("splitString:", splitString);
-        return splitString;
+        
+        parsedString.left = splitString[0];
+        parsedString.op = splitString[1];
+        parsedString.right = splitString[2];
+        
+        console.log("parsedString:", parsedString);
+
+        return parsedString;
     }
     return [str];
         // let operandArr = input.textContent.split(/\+|\-|\*|\//);

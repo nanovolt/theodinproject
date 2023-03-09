@@ -4,16 +4,31 @@
     display: grid;
     grid-template-columns: 50px 150px 50px;
 }
-.output-container {
-    /* direction: rtl; */
-    min-height: 38px;
-    font-size: 24px;
-    border: 1px solid black;
+.top-container {
+    box-sizing: border-box;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    height: 25px;
     grid-area: 1 / 1 / 2 / 4;
     display: flex;
-    flex-wrap: wrap;
     justify-content: flex-end;
 }
+.output {
+    
+}
+.input-container {
+    /* direction: rtl; */
+    box-sizing: border-box;
+    height: 40px;
+    font-size: 24px;
+    border: 1px solid black;
+    grid-area: 2 / 1 / 3 / 4;
+    display: flex;
+    justify-content: flex-end;
+    overflow: hidden;
+}
+
 .control {
     align-self: end;
 }

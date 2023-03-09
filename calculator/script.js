@@ -16,6 +16,7 @@ topOutput.textContent = "";
 const input = document.querySelector(".input");
 input.textContent = "";
 
+const plusminus = document.querySelector(".plusminus");
 const allclear = document.querySelector(".allclear");
 const clear = document.querySelector(".clear");
 const numbers = document.querySelectorAll(".number");
@@ -23,10 +24,11 @@ const operations = document.querySelectorAll(".operation");
 const dot = document.querySelector(".dot");
 const equals = document.querySelector(".equals");
 
-let lastEntry;
+let lastEntry = "";
 let topValue = "";
 let pressedOperation = false;
 let enableDecimal = true;
+let isFull = false;
 
 function showOnTop(str) {
     topOutput.textContent = str;
@@ -37,29 +39,38 @@ function updateLastEntry () {
 function calculate(a, operation, b) {
     switch(operation) {
         case "+" :
-            add(a, b);
+            return add(a, b);
             break;
         case "-" :
-            subtract(a, b);
+            return subtract(a, b);
             break;
         case "*" :
-            muliply(a, b);
+            return muliply(a, b);
             break;
         case "/" :
-            operate(a, b);
+            return divide(a, b);
             break;
     }
 }
-function parseString(str) {
+function parseString() {
 
     let signs = /\+|\-|\*|\//;
-
-    match = signs.exec(str);
+    let parsedString = {};
+    match = signs.exec(input.textContent);
     if (match !== null) {
-        console.log("match:", match.index);
-        console.log("string:", str);
         console.log(input.textContent.split(/\+|\-|\*|\//));
+        let operandArr = input.textContent.split(/\+|\-|\*|\//);
+        let operation = input.textContent[match.index];
+        let sum = calculate(+operandArr[0], operation, +operandArr[1]);
+        
+        parsedString = {"left": operandArr[0], "op": operation, "right": operandArr[1]};
+        console.log("parsed string:", parsedString);
+        return parsedString;
     }
+    parsedString = {"left": input.textContent, "op": "", "right": ""};
+    console.log("parsed string:", parsedString);
+    return parsedString;
+
     // console.log(+input.textContent);
 
     // console.log(input.textContent.split(/\+|\-|\*|\//));
@@ -90,50 +101,111 @@ function parseString(str) {
     //     console.log("arr:", arr);
     // }
 }
+
+plusminus.onclick = function() {
+    let parsedString = parseString(input.textContent);
+    console.log(parsedString);
+    if (parsedString.left != "") {
+        console.log('not empty');
+        parsedString.left = String(0 - +parsedString.left);
+    }
+    if (parsedString.right != "") {
+        console.log('not empty');
+        parsedString.right = String(0 - +parsedString.right);
+    }
+    console.log(parsedString);
+    input.textContent = parsedString.left+parsedString.op+parsedString.right;
+
+    // let signs = /\+|\-|\*|\//;
+    // // console.log(input.textContent[input.textContent.length-1]);
+    // match = signs.exec(input.textContent);
+    // console.log("match:", match);
+    // if (match) {
+    //     console.log("match.index:", match.index);
+    //     let num = +input.textContent.slice(match.index+1);
+    //     let sub = input.textContent.substring(0, match.index+1);
+    //     num = 0 - num;
+    //     console.log("num:", num);
+    //     console.log("sub:", sub);
+    //     input.textContent = sub + String(num);
+    // } else {
+    //     input.textContent = 0 - +input.textContent;
+    // }
+
+    // for (let i = input.textContent.length-1; i >= 0; i--) {
+    //     console.log(input.textContent[i]);
+        
+    // }
+    
+    // if (match !== null) {
+    //     match.index;
+    // while(true) {
+
+    // }
+    // }
+    
+}
+    
+
 allclear.onclick = function() {
     input.textContent = "";
     topOutput.textContent = "";
-   
+    lastEntry = "";
+    pressedOperation = false;
+    enableDecimal = true;
 }
 clear.onclick = function() {
     input.textContent = input.textContent.slice(0, -1);
+    parseString();
+    if (input.textContent.length == 0) {
+        allclear.onclick();
+    }
+
 }
 
 dot.onclick = function() {
     if (enableDecimal) {
         console.log("lastEntry:", lastEntry);
-        console.log("typeof lastEntry:", typeof +lastEntry);
-        if(true) {
-
+        let numbers = /\d/;
+        console.log(lastEntry.match(numbers));
+        if(lastEntry.match(numbers)) {
+            input.textContent += ".";
+        } else {
+            input.textContent += "0.";
         }
-        
         enableDecimal = false;
     }
+    updateLastEntry();
 }
 equals.onclick = function() {
-    
+    if (lastEntry == ".") {
+        input.textContent += "0";
+    }
     topOutput.textContent = input.textContent + "=";
     updateLastEntry();
     showOnTop(topOutput.textContent);
-    input.textContent = parseString(topOutput.textContent);
+    let parsedString = parseString();
 }
+
 for (let number of numbers) {
     number.addEventListener("click", ()=> {   
         input.textContent += number.textContent; 
         updateLastEntry();
+        parseString();
     })
 }
 
 for (let operation of operations) {
     operation.addEventListener("click", ()=> {
+        if (lastEntry == ".") {
+            input.textContent += "0";
+        }
         if (!pressedOperation && !operation.classList.contains("noshow")) {
             input.textContent += operation.textContent;
             pressedOperation = true;
             enableDecimal = true;
         }
-        if (pressedOperation) {
-
-        }
+        
         updateLastEntry();
     })
 }

@@ -14,9 +14,6 @@
     display: flex;
     justify-content: flex-end;
 }
-.output {
-    
-}
 .input-container {
     /* direction: rtl; */
     box-sizing: border-box;
@@ -37,7 +34,7 @@
     grid-template-columns: repeat(3, 50px);
     grid-template-rows: repeat(4, 40px);
 }
-.operation {
+.operation, .control-operation {
     width: 50px;
     height: 40px;
 }

@@ -52,24 +52,64 @@ function calculate(a, operation, b) {
             break;
     }
 }
-function parseString() {
+function p() {
 
-    let signs = /\+|\-|\*|\//;
+    let signs = /\+|\-|\*|\//g;
+
+    // let str = "-1";
+    
+    // let str = "1+2";
+    // let str = "1-2";
+
+    // let str = "-1+2";
+    // let str = "1+-2";
+    // let str = "1--2";
+
+    // let str = "-1+-2";
+    let str = "-1--2";
+
     let parsedString = {};
-    match = signs.exec(input.textContent);
-    if (match !== null) {
-        console.log(input.textContent.split(/\+|\-|\*|\//));
-        let operandArr = input.textContent.split(/\+|\-|\*|\//);
-        let operation = input.textContent[match.index];
-        let sum = calculate(+operandArr[0], operation, +operandArr[1]);
-        
-        parsedString = {"left": operandArr[0], "op": operation, "right": operandArr[1]};
-        console.log("parsed string:", parsedString);
-        return parsedString;
+    let matches = [...str.matchAll(signs)];
+    // console.log("matches:", matches);
+
+    function split_at_index(str, index)
+    {
+        let left = str.substring(0, index);
+        let op = str.substring(index, index+1);
+        let right = str.substring(index+1);
+        return [left, op, right];
+        // return value.substring(0, index) + "," + value.substring(index);
     }
-    parsedString = {"left": input.textContent, "op": "", "right": ""};
-    console.log("parsed string:", parsedString);
-    return parsedString;
+
+    // for (let match of matches) {
+    //     console.log(match);
+    // }
+
+    if (matches.length == 1 && matches[0].index != 0) {
+        let splitString = split_at_index(str, matches[0].index);
+        console.log("splitString:", splitString);
+        return splitString;
+    }
+    if (matches.length == 3 || matches.length == 2 && matches[0].index == 0) {
+        let splitString = split_at_index(str, matches[1].index);
+        console.log("splitString:", splitString);
+        return splitString;
+    }
+    if (matches.length == 2 && matches[0].index != 0) {
+        let splitString = split_at_index(str, matches[0].index);
+        console.log("splitString:", splitString);
+        return splitString;
+    }
+    return [str];
+        // let operandArr = input.textContent.split(/\+|\-|\*|\//);
+        // console.log("operandArr:", operandArr);
+        // let operation = input.textContent[match.index];
+
+        // return parsedString;
+    // }
+    // parsedString = {"left": input.textContent, "op": "", "right": ""};
+    // console.log("parsed string:", parsedString);
+    // return parsedString;
 
     // console.log(+input.textContent);
 
@@ -103,18 +143,29 @@ function parseString() {
 }
 
 plusminus.onclick = function() {
-    let parsedString = parseString(input.textContent);
-    console.log(parsedString);
-    if (parsedString.left != "") {
-        console.log('not empty');
-        parsedString.left = String(0 - +parsedString.left);
-    }
+    let parsedString = parseString();
+
+    // console.log(parsedString);
     if (parsedString.right != "") {
-        console.log('not empty');
+        console.log('right not empty');
         parsedString.right = String(0 - +parsedString.right);
+        console.log("PARSED:", parsedString);
+        input.textContent = parsedString.left+parsedString.op+parsedString.right;
+        parseString();
+        return
     }
-    console.log(parsedString);
-    input.textContent = parsedString.left+parsedString.op+parsedString.right;
+
+    if (parsedString.left != "") {
+        console.log('left not empty');
+        parsedString.left = String(0 - +parsedString.left);
+        console.log("PARSED:", parsedString);
+        input.textContent = parsedString.left+parsedString.op+parsedString.right;
+        parseString();
+        return
+    }
+    
+    // console.log(parsedString);
+    // input.textContent = parsedString.left+parsedString.op+parsedString.right;
 
     // let signs = /\+|\-|\*|\//;
     // // console.log(input.textContent[input.textContent.length-1]);
@@ -205,7 +256,7 @@ for (let operation of operations) {
             pressedOperation = true;
             enableDecimal = true;
         }
-        
+        parseString();
         updateLastEntry();
     })
 }

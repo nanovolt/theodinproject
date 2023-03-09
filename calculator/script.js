@@ -52,7 +52,7 @@ function calculate(a, operation, b) {
             break;
     }
 }
-function p() {
+function parseString() {
 
     let signs = /\+|\-|\*|\//g;
 

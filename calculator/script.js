@@ -21,6 +21,7 @@ class stateObserver {
         this.inputString = input.textContent;
         this.parsedString = this.parseString();
         this.isDecimalEnabled = true;
+        this.setCurrentOperand();
     }
     getInputString() {
         return this.inputString;
@@ -128,19 +129,18 @@ plusminus.onclick = function() {
 
     switch(observer.getCurrentOperand()) {
         case "left" :
-            if (str.left) {
+            if (str.left && +str.left != 0) {
                 str.left = String(0 - +str.left);
                 input.textContent = str.left + str.op + str.right;
-                break;
             }
-            
+            break;
+
         case "right":
-            if (str.right) {
+            if (str.right && +str.right != 0) {
                 str.right = String(0 - +str.right);
                 input.textContent = str.left + str.op + str.right;
-                break;
             }
-            
+            break;
     }
     observer.observe();
     str = observer.getParsedString();
@@ -164,10 +164,32 @@ clear.onclick = function() {
 }
 
 dot.onclick = function() {
-    observer.observe();
-    let str = observer.getParsedString();
 
-    input.textContent += ".";
+    let str = observer.getParsedString();
+    switch(observer.getCurrentOperand()) {
+        case "left":
+            console.log("left");
+            if (!str.left.includes(".")) {
+                if (str.left == "") {
+                    str.left += "0.";
+                } else {
+                    str.left += ".";
+                }
+                input.textContent = str.left + str.op + str.right;
+            }
+            break;
+        case "right":
+            console.log("right");
+            if (!str.right.includes(".")) {
+                if (str.right == "") {
+                    str.right += "0.";
+                } else {
+                    str.right += ".";
+                }
+                input.textContent = str.left + str.op + str.right;          
+            }
+            break;
+    }    
 }
 equals.onclick = function() {
     // topOutput.textContent = input.textContent + "=";

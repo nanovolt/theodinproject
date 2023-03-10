@@ -173,9 +173,10 @@ clear.onclick = function () {
 
 function activateDot() {
     let str = observer.getParsedString();
+    // console.log("DOT:", observer.getCurrentOperand());
     switch (observer.getCurrentOperand()) {
         case "left":
-
+            
             if (!str.left.includes(".")) {
                 if (str.left == "") {
                     str.left += "0.";
@@ -186,7 +187,7 @@ function activateDot() {
             }
             break;
         case "right":
-
+            
             if (!str.right.includes(".")) {
                 if (str.right == "") {
                     str.right += "0.";
@@ -203,19 +204,26 @@ dot.onclick = function () {
 }
 function activateEquals() {
     let str = observer.getParsedString();
-
+    
     let signs = /\+|\-|\*|\//g;
 
     input.textContent[input.textContent.length - 1];
-
+    
     if (input.textContent[input.textContent.length - 1] == ".") {
         input.textContent += "0";
     }
     if (input.textContent) {
         topOutput.textContent = input.textContent + "=";
+        
     }
-
-    input.textContent = calculate(+str.left, str.op, +str.right);
+    if (str.op) {
+        input.textContent = calculate(+str.left, str.op, +str.right);
+    }
+    observer.observe();
+    str = observer.getParsedString();
+    // console.log("EQALS:", str);
+    // console.log("EQALS:", str);
+    // observer.setCurrentOperand();
 }
 equals.onclick = function () {
     activateEquals();
@@ -230,7 +238,7 @@ function activateNumber(number) {
     
     observer.observe();
     let str = observer.getParsedString();
-    console.log(str);
+    // console.log(str);
 }
 for (let number of numbers) {
     number.addEventListener("click", () => {
@@ -316,7 +324,7 @@ function muliply(a, b) {
 }
 function divide(a, b) {
     if (b == 0) {
-        return "are you dumb?";
+        return `x/0 is undefined`;
     }
     let result = (a / b).toFixed(2);
     if (result % 1 == 0) {
@@ -326,7 +334,7 @@ function divide(a, b) {
 }
 
 window.addEventListener("keydown", (e) => {
-    console.log(e);
+    // console.log(e);
     switch(e.code) {
         case "Numpad0":
             activateNumber("0");
@@ -387,7 +395,6 @@ window.addEventListener("keydown", (e) => {
             activateEquals();
             break;
         case "NumpadDecimal":
-            console.log("dot");
             activateDot();
             break
     }

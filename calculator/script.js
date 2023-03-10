@@ -1,5 +1,3 @@
-
-
 const topOutput = document.querySelector(".top");
 topOutput.textContent = "";
 const input = document.querySelector(".input");
@@ -33,8 +31,20 @@ class stateObserver {
     observe() {
         this.inputString = input.textContent;
         this.parsedString = this.parseString();
+        
+        // console.log(`parsedString: ${this.parsedString}`);
+
+        this.setCurrentOperand();
+
     }
-    
+    setCurrentOperand() {
+        this.parsedString.op == ""
+        ? this.currentOperand = "left"
+        : this.currentOperand = "right";
+    }
+    getCurrentOperand() {
+        return this.currentOperand;
+    }
     parseString() {
 
         let signs = /\+|\-|\*|\//g;
@@ -114,29 +124,27 @@ let observer = new stateObserver();
 
 plusminus.onclick = function() {
     observer.observe();
-    let parsedString = observer.getParsedString();
+    let str = observer.getParsedString();
 
-    console.log(parsedString);
-
-    if (parsedString.right != "") {
-        console.log('right not empty');
-        parsedString.right = String(0 - +parsedString.right);
-        console.log("PARSED:", parsedString);
-        input.textContent = parsedString.left+parsedString.op+parsedString.right;
-        parseString();
-
-        return
+    switch(observer.getCurrentOperand()) {
+        case "left" :
+            if (str.left) {
+                str.left = String(0 - +str.left);
+                input.textContent = str.left + str.op + str.right;
+                break;
+            }
+            
+        case "right":
+            if (str.right) {
+                str.right = String(0 - +str.right);
+                input.textContent = str.left + str.op + str.right;
+                break;
+            }
+            
     }
-
-    if (parsedString.left != "") {
-        console.log('left not empty');
-        parsedString.left = String(0 - +parsedString.left);
-        console.log("PARSED:", parsedString);
-        input.textContent = parsedString.left+parsedString.op+parsedString.right;
-        parseString();
-
-        return
-    }
+    observer.observe();
+    str = observer.getParsedString();
+    console.log(str);
 }
     
 allclear.onclick = function() {
@@ -144,29 +152,44 @@ allclear.onclick = function() {
     topOutput.textContent = "";
 }
 clear.onclick = function() {
+    
     input.textContent = input.textContent.slice(0, -1);
-    parseString();
     if (input.textContent.length == 0) {
         allclear.onclick();
     }
+
+    observer.observe();
+    let str = observer.getParsedString();
+    console.log(str);
 }
 
 dot.onclick = function() {
+    observer.observe();
+    let str = observer.getParsedString();
+
     input.textContent += ".";
 }
 equals.onclick = function() {
-    topOutput.textContent = input.textContent + "=";
+    // topOutput.textContent = input.textContent + "=";
 }
 
 for (let number of numbers) {
     number.addEventListener("click", ()=> {   
-        input.textContent += number.textContent; 
+        input.textContent += number.textContent;
+
+        observer.observe();
+        let str = observer.getParsedString();
+        console.log(str);
     })
 }
 
 for (let operation of operations) {
     operation.addEventListener("click", ()=> {
         input.textContent += operation.textContent;
+
+        observer.observe();
+        let str = observer.getParsedString();
+        console.log(str);
     })
 }
 

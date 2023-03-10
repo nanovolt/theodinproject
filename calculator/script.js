@@ -192,7 +192,9 @@ dot.onclick = function() {
     }    
 }
 equals.onclick = function() {
-    // topOutput.textContent = input.textContent + "=";
+    let str = observer.getParsedString();
+    topOutput.textContent = input.textContent + "=";
+    input.textContent = calculate(+str.left, str.op, +str.right);
 }
 
 for (let number of numbers) {
@@ -206,16 +208,21 @@ for (let number of numbers) {
 }
 
 for (let operation of operations) {
+    
     operation.addEventListener("click", ()=> {
+        let str = observer.getParsedString();
+        if (str.op) {
+            equals.onclick();
+        }
+        
         input.textContent += operation.textContent;
 
         observer.observe();
-        let str = observer.getParsedString();
-        console.log(str);
     })
 }
 
 function calculate(a, operation, b) {
+    
     switch(operation) {
         case "+" :
             return add(a, b);

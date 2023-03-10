@@ -129,14 +129,14 @@ plusminus.onclick = function() {
 
     switch(observer.getCurrentOperand()) {
         case "left" :
-            if (str.left && +str.left != 0) {
+            if (str.left && +str.left != 0 && !isNaN(str.left)) {
                 str.left = String(0 - +str.left);
                 input.textContent = str.left + str.op + str.right;
             }
             break;
 
         case "right":
-            if (str.right && +str.right != 0) {
+            if (str.right && +str.right != 0 && !isNaN(str.right)) {
                 str.right = String(0 - +str.right);
                 input.textContent = str.left + str.op + str.right;
             }
@@ -152,12 +152,14 @@ allclear.onclick = function() {
     topOutput.textContent = "";
 }
 clear.onclick = function() {
-    
+
     input.textContent = input.textContent.slice(0, -1);
     if (input.textContent.length == 0) {
         allclear.onclick();
     }
-
+    if (input.textContent.length == 1 && input.textContent[0] == "-") {
+        allclear.onclick();
+    }
     observer.observe();
     let str = observer.getParsedString();
     console.log(str);
@@ -168,7 +170,7 @@ dot.onclick = function() {
     let str = observer.getParsedString();
     switch(observer.getCurrentOperand()) {
         case "left":
-            console.log("left");
+            
             if (!str.left.includes(".")) {
                 if (str.left == "") {
                     str.left += "0.";
@@ -179,7 +181,7 @@ dot.onclick = function() {
             }
             break;
         case "right":
-            console.log("right");
+            
             if (!str.right.includes(".")) {
                 if (str.right == "") {
                     str.right += "0.";
@@ -193,7 +195,18 @@ dot.onclick = function() {
 }
 equals.onclick = function() {
     let str = observer.getParsedString();
-    topOutput.textContent = input.textContent + "=";
+
+    let signs = /\+|\-|\*|\//g;
+
+    input.textContent[input.textContent.length-1];
+
+    if (input.textContent[input.textContent.length-1] == ".") {
+        input.textContent += "0";
+    }
+    if (input.textContent) {
+        topOutput.textContent = input.textContent + "=";
+    }
+    
     input.textContent = calculate(+str.left, str.op, +str.right);
 }
 
@@ -210,14 +223,29 @@ for (let number of numbers) {
 for (let operation of operations) {
     
     operation.addEventListener("click", ()=> {
+    
         let str = observer.getParsedString();
-        if (str.op) {
-            equals.onclick();
+
+        if (input.textContent[input.textContent.length-1] == ".") {
+            input.textContent += "0";
         }
-        
-        input.textContent += operation.textContent;
+
+        if (str.left != ""){
+            if (str.op == "") {
+                input.textContent += operation.textContent;
+            }
+        }
+        if (str.right != ""){
+            equals.onclick();
+            input.textContent += operation.textContent;
+        }
+        if (str.right == "" && str.op != ""){
+            input.textContent = str.left + operation.textContent + str.right;
+        }
 
         observer.observe();
+        str = observer.getParsedString();
+        console.log(str);
     })
 }
 
@@ -235,14 +263,33 @@ function calculate(a, operation, b) {
     }
 }
 function add(a, b) {
-    return a + b;
+    let result = (a + b).toFixed(2);
+    if (result % 1 == 0) {
+        return Math.round(result);
+    }
+    return result;
 }
 function subtract(a, b) {
-    return a - b;
+    let result = (a - b).toFixed(2);
+    if (result % 1 == 0) {
+        return Math.round(result);
+    }
+    return result;
 }
 function muliply(a, b) {
-    return a * b;
+    let result = (a * b).toFixed(2);
+    if (result % 1 == 0) {
+        return Math.round(result);
+    }
+    return result;
 }
 function divide(a, b) {
-    return a / b;
+    if (b == 0) {
+        return "are you dumb?";
+    }
+    let result = (a / b).toFixed(2);
+    if (result % 1 == 0) {
+        return Math.round(result);
+    }
+    return result;
 }

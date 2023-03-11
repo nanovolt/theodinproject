@@ -1,8 +1,4 @@
-html,
-body {
-    margin: 0;
-    height: 100%;
-}
+
 body {
     background-color: #222;
     font-family: monospace;
@@ -25,7 +21,7 @@ body {
     overflow: hidden;
     font-size: 1.5rem;
     font-weight: 600;
-    width: 258px;
+    /* width: 258px; */
     overflow: hidden;
 }
 
@@ -39,14 +35,14 @@ body {
     overflow: hidden;
     font-size: 32px;
     font-weight: 800;
-    width: 258px;
+    /* width: 258px; */
     overflow: hidden;
 }
 .grid {
     display: grid;
     gap: 2px;
-    grid-template-columns: repeat(5, 50px);
-    grid-auto-rows: 50px;
+    grid-template-columns: repeat(5, 80px);
+    grid-auto-rows: 80px;
 }
 
 .control-operation,
@@ -82,7 +78,11 @@ body {
 }
 
 @media screen and (width <= 720px) {
-
+    html,
+    body {
+        margin: 0;
+        height: 100%;
+    }
     .calculator {
         margin: 0;
         width: auto;

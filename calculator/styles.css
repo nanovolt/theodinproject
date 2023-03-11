@@ -21,7 +21,7 @@ body {
     overflow: hidden;
     font-size: 1.5rem;
     font-weight: 600;
-    /* width: 258px; */
+    width: 308px;
     overflow: hidden;
 }
 
@@ -35,14 +35,14 @@ body {
     overflow: hidden;
     font-size: 32px;
     font-weight: 800;
-    /* width: 258px; */
+    width: 308px;
     overflow: hidden;
 }
 .grid {
     display: grid;
     gap: 2px;
-    grid-template-columns: repeat(5, 80px);
-    grid-auto-rows: 80px;
+    grid-template-columns: repeat(5, 60px);
+    grid-auto-rows: 60px;
 }
 
 .control-operation,
@@ -62,19 +62,19 @@ body {
 .dot:hover,
 .operation:hover {
     color: greenyellow;
-    background-color:#8fb66bd3;
+    background-color:#384d25d3;
     cursor: pointer;
     outline: 1px solid greenyellow;
 }
-.control-operation:active,
+/* .control-operation:active,
 .number:active,
 .dot:active,
 .operation:active {
     background-color:#69da00ee;
-}
+} */
+
 .active {
     background-color:#69da00ee;
-    outline: 1px solid greenyellow;
 }
 
 @media screen and (width <= 720px) {

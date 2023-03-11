@@ -124,7 +124,7 @@ class stateObserver {
 let observer = new stateObserver();
 
 function activatePlusMinus() {
-    
+    activateClickEffect("plusminus");
     observer.observe();
     let str = observer.getParsedString();
 
@@ -151,7 +151,7 @@ plusminus.onclick = function () {
     activatePlusMinus();
 }
 function activatePercent() {
-    
+    activateClickEffect("percent");
     observer.observe();
     let str = observer.getParsedString();
 
@@ -183,6 +183,7 @@ percent.onclick = function() {
 }
 
 function activateAllClear() {
+    activateClickEffect("allclear");
     input.textContent = "";
     topOutput.textContent = "";
     observer.observe();
@@ -203,15 +204,19 @@ allclear.onclick = function () {
     
 // }
 function activateClear() {
+    activateClickEffect("clear");
     if (input.textContent == "undefined") {
-        activateAllClear();
+        input.textContent = "";
+        topOutput.textContent = "";
     }
     input.textContent = input.textContent.slice(0, -1);
     if (input.textContent.length == 0) {
-        activateAllClear();
+        input.textContent = "";
+        topOutput.textContent = "";
     }
     if (input.textContent.length == 1 && input.textContent[0] == "-") {
-        activateAllClear();
+        input.textContent = "";
+        topOutput.textContent = "";
     }
     observer.observe();
     let str = observer.getParsedString();
@@ -222,6 +227,7 @@ clear.onclick = function () {
 }
 
 function activateDot() {
+    activateClickEffect("dot");
     let str = observer.getParsedString();
     // console.log("DOT:", observer.getCurrentOperand());
     switch (observer.getCurrentOperand()) {
@@ -252,7 +258,9 @@ function activateDot() {
 dot.onclick = function () {
     activateDot();
 }
-function activateEquals() {
+function activateEquals(bool) {
+    if (!bool) activateClickEffect("equals");
+    
     let str = observer.getParsedString();
     let signs = /\+|\-|\*|\//g;
 
@@ -279,6 +287,7 @@ equals.onclick = function () {
     activateEquals();
 }
 function activateNumber(number) {
+    
     if(typeof number == "string") {
         input.textContent += number;
     } 
@@ -289,10 +298,12 @@ function activateNumber(number) {
 }
 for (let number of numbers) {
     number.addEventListener("click", () => {
+        activateClickEffect("number", number);
         activateNumber(number);
     })
 }
 function activateOperation(operation) {
+    
     let str = observer.getParsedString();
 
     if (input.textContent[input.textContent.length - 1] == ".") {
@@ -309,7 +320,7 @@ function activateOperation(operation) {
         }
     }
     if (str.right != "") {
-        equals.onclick();
+        activateEquals(true);
         if (typeof operation == "string") {
             input.textContent += operation;
         } else{
@@ -327,6 +338,7 @@ function activateOperation(operation) {
 }
 for (let operation of operations) {
     operation.addEventListener("click", () => {
+        activateClickEffect("operation", operation);
         activateOperation(operation);
     })
 }
@@ -379,10 +391,18 @@ function divide(a, b) {
     }
     return result;
 }
-function activateClickEffect(el) {
-    let elem = document.getElementsByClassName(`${el}`)[0];
-    elem.classList.add("active");
-    setTimeout(()=> elem.classList.remove("active"), 150);
+function activateClickEffect(el, arg=null) {
+    if (arg) {
+        arg.style.cssText = "background-color:#69da00ee; outline: 1px solid greenyellow;"
+        setTimeout(()=> arg.style.cssText = "background-color:#444;", 150);
+    } else {
+        console.log("el");
+        let elem = document.getElementsByClassName(`${el}`)[0];
+        elem.style.cssText = "background-color:#69da00ee; outline: 1px solid greenyellow;"
+        // elem.classList.add("active");
+        setTimeout(()=> elem.style.cssText = "background-color:#444;", 150);
+    }
+    
 }
 window.addEventListener("keydown", (e) => {
     console.log(e);

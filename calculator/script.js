@@ -124,6 +124,7 @@ class stateObserver {
 let observer = new stateObserver();
 
 function activatePlusMinus() {
+    
     observer.observe();
     let str = observer.getParsedString();
 
@@ -150,6 +151,7 @@ plusminus.onclick = function () {
     activatePlusMinus();
 }
 function activatePercent() {
+    
     observer.observe();
     let str = observer.getParsedString();
 
@@ -184,9 +186,9 @@ function activateAllClear() {
     input.textContent = "";
     topOutput.textContent = "";
     observer.observe();
-    console.log("AC:", observer.getParsedString());
-    console.log("AC:", observer.getInputString());
-    console.log("AC:", observer.getCurrentOperand());
+    // console.log("AC:", observer.getParsedString());
+    // console.log("AC:", observer.getInputString());
+    // console.log("AC:", observer.getCurrentOperand());
 }
 
 allclear.onclick = function () {
@@ -254,15 +256,19 @@ function activateEquals() {
     let str = observer.getParsedString();
     let signs = /\+|\-|\*|\//g;
 
-    input.textContent[input.textContent.length - 1];
+    let lastInput = input.textContent[input.textContent.length - 1];
     
-    if (input.textContent[input.textContent.length - 1] == ".") {
+    if (lastInput == ".") {
         input.textContent += "0";
     }
-    if (input.textContent) {
+    if (str.left != "" && str.right == "") {
+        topOutput.textContent = str.left + "=";
+    } else {
         topOutput.textContent = input.textContent + "=";
-        
     }
+    // if (input.textContent) {
+    //     topOutput.textContent = input.textContent + "="; 
+    // }
     if (str.op) {
         input.textContent = calculate(str.left, str.op, str.right);
     }
@@ -373,84 +379,113 @@ function divide(a, b) {
     }
     return result;
 }
+function activateClickEffect(e) {
 
+    // e.target.style.cssText = "color: greenyellow;\
+    // background-color:#60b610ee;\
+    // cursor: pointer;\
+    // outline: 1px solid greenyellow;"
+}
 window.addEventListener("keydown", (e) => {
     console.log(e);
     
     // e.preventDefault();
     // prevets NumpadEnter from triggering click event
     // Or you'll be entering the last mouseclicked item
-    e.preventDefault();
+    activateClickEffect(e);
+    
     switch(e.code) {
+        
         case "Numpad0":
             activateNumber("0");
+            e.preventDefault();
             break;
         case "Numpad1":
             activateNumber("1");
+            e.preventDefault();
             break;
         case "Numpad2":
             activateNumber("2");
+            e.preventDefault();
             break;
         case "Numpad3":
             activateNumber("3");
+            e.preventDefault();
             break;
         case "Numpad4":
             activateNumber("4");
+            e.preventDefault();
             break;
         case "Numpad5":
             activateNumber("5");
+            e.preventDefault();
             break;
         case "Numpad6":
             activateNumber("6");
+            e.preventDefault();
             break;
         case "Numpad7":
             activateNumber("7");
+            e.preventDefault();
             break;
         case "Numpad8":
             activateNumber("8");
+            e.preventDefault();
             break;
         case "Numpad9":
             activateNumber("9");
+            e.preventDefault();
             break;
         case "NumpadAdd":
             activateOperation("+");
+            e.preventDefault();
             break;
         case "NumpadSubtract":
             activateOperation("-");
+            e.preventDefault();
             break;
         case "NumpadMultiply":
             activateOperation("*");
+            e.preventDefault();
             break;
         case "NumpadDivide":
             activateOperation("/");
+            e.preventDefault();
             break;
         case "Backslash":
             activatePlusMinus();
+            e.preventDefault();
             break;
         case "Digit5":
             if (e.shiftKey) {
                 activatePercent();
+                e.preventDefault();
             }
             break;
         case "ShiftRight":
             activatePercent();
+            e.preventDefault();
             break;
         case "Backspace":
             if (e.shiftKey) {
-                console.log("CALL at 458");
                 activateAllClear();
+                e.preventDefault();
             } else {
                 activateClear();
+                e.preventDefault();
             }   
             break;
         case "Enter":
             activateEquals();
+            e.preventDefault();
             break;
         case "NumpadEnter":
             activateEquals();
+            e.preventDefault();
             break;
         case "NumpadDecimal":
             activateDot();
+            e.preventDefault();
             break
     }
 })

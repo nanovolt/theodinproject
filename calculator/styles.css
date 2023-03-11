@@ -20,10 +20,10 @@ body {
     overflow: hidden;
     font-size: 1.5rem;
     font-weight: 600;
+    width: 258px;
+    overflow: hidden;
 }
-.top {
-    line-height: 1;
-}
+
 .input-container {
     /* direction: rtl; */
     box-sizing: border-box;
@@ -34,7 +34,8 @@ body {
     overflow: hidden;
     font-size: 32px;
     font-weight: 800;
-   
+    width: 258px;
+    overflow: hidden;
 }
 .grid {
     display: grid;
@@ -53,6 +54,8 @@ body {
     color: greenyellow;
     font-size: 24px;
     font-weight: bold;
+    transition: 150ms;
+    
 }
 .control-operation:hover,
 .number:hover,
@@ -61,4 +64,15 @@ body {
     color: greenyellow;
     background-color:#8fb66bd3;
     cursor: pointer;
+    outline: 1px solid greenyellow;
+}
+.control-operation:active,
+.number:active,
+.dot:active,
+.operation:active {
+    background-color:#69da00ee;
+}
+.active {
+    background-color:#b61010ee;
+    outline: 1px solid greenyellow;
 }

@@ -379,12 +379,10 @@ function divide(a, b) {
     }
     return result;
 }
-function activateClickEffect(e) {
-
-    // e.target.style.cssText = "color: greenyellow;\
-    // background-color:#60b610ee;\
-    // cursor: pointer;\
-    // outline: 1px solid greenyellow;"
+function activateClickEffect(el) {
+    let elem = document.getElementsByClassName(`${el}`)[0];
+    elem.classList.add("active");
+    setTimeout(()=> elem.classList.remove("active"), 150);
 }
 window.addEventListener("keydown", (e) => {
     console.log(e);
@@ -392,100 +390,122 @@ window.addEventListener("keydown", (e) => {
     // e.preventDefault();
     // prevets NumpadEnter from triggering click event
     // Or you'll be entering the last mouseclicked item
-    activateClickEffect(e);
+    
     
     switch(e.code) {
         
         case "Numpad0":
             activateNumber("0");
             e.preventDefault();
+            activateClickEffect("zero");
             break;
         case "Numpad1":
             activateNumber("1");
             e.preventDefault();
+            activateClickEffect("one");
             break;
         case "Numpad2":
             activateNumber("2");
             e.preventDefault();
+            activateClickEffect("two");
             break;
         case "Numpad3":
             activateNumber("3");
             e.preventDefault();
+            activateClickEffect("three");
             break;
         case "Numpad4":
             activateNumber("4");
             e.preventDefault();
+            activateClickEffect("four");
             break;
         case "Numpad5":
             activateNumber("5");
             e.preventDefault();
+            activateClickEffect("five");
             break;
         case "Numpad6":
             activateNumber("6");
             e.preventDefault();
+            activateClickEffect("six");
             break;
         case "Numpad7":
             activateNumber("7");
             e.preventDefault();
+            activateClickEffect("seven");
             break;
         case "Numpad8":
             activateNumber("8");
             e.preventDefault();
+            activateClickEffect("eight");
             break;
         case "Numpad9":
             activateNumber("9");
             e.preventDefault();
+            activateClickEffect("nine");
             break;
         case "NumpadAdd":
             activateOperation("+");
             e.preventDefault();
+            activateClickEffect("add");
             break;
         case "NumpadSubtract":
             activateOperation("-");
             e.preventDefault();
+            activateClickEffect("subtract");
             break;
         case "NumpadMultiply":
             activateOperation("*");
             e.preventDefault();
+            activateClickEffect("multiply");
             break;
         case "NumpadDivide":
             activateOperation("/");
             e.preventDefault();
+            activateClickEffect("divide");
             break;
         case "Backslash":
             activatePlusMinus();
             e.preventDefault();
+            activateClickEffect("plusminus");
             break;
         case "Digit5":
             if (e.shiftKey) {
                 activatePercent();
                 e.preventDefault();
+                activateClickEffect("percent");
             }
             break;
         case "ShiftRight":
             activatePercent();
             e.preventDefault();
+            activateClickEffect("percent");
             break;
         case "Backspace":
-            if (e.shiftKey) {
+            if (e.ctrlKey) {
                 activateAllClear();
                 e.preventDefault();
+                activateClickEffect("allclear");
             } else {
                 activateClear();
                 e.preventDefault();
+                activateClickEffect("clear");
             }   
             break;
         case "Enter":
             activateEquals();
             e.preventDefault();
+            activateClickEffect("equals");
             break;
         case "NumpadEnter":
             activateEquals();
             e.preventDefault();
+            activateClickEffect("equals");
             break;
         case "NumpadDecimal":
             activateDot();
             e.preventDefault();
+            activateClickEffect("dot");
             break
     }
 })

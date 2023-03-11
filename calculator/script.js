@@ -217,7 +217,7 @@ function activateEquals() {
         
     }
     if (str.op) {
-        input.textContent = calculate(+str.left, str.op, +str.right);
+        input.textContent = calculate(str.left, str.op, str.right);
     }
     observer.observe();
     str = observer.getParsedString();
@@ -280,7 +280,7 @@ function activateOperation(operation) {
 
     observer.observe();
     str = observer.getParsedString();
-    console.log(str);
+    // console.log(str);
 }
 for (let operation of operations) {
     operation.addEventListener("click", () => {
@@ -289,19 +289,22 @@ for (let operation of operations) {
 }
 
 function calculate(a, operation, b) {
-
+    if (b == "") {
+        return +a;
+    }
     switch (operation) {
         case "+":
-            return add(a, b);
+            return add(+a, +b);
         case "-":
-            return subtract(a, b);
+            return subtract(+a, +b);
         case "*":
-            return muliply(a, b);
+            return muliply(+a, +b);
         case "/":
-            return divide(a, b);
+            return divide(+a, +b);
     }
 }
 function add(a, b) {
+    
     let result = (a + b).toFixed(2);
     if (result % 1 == 0) {
         return Math.round(result);

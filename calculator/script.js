@@ -176,17 +176,30 @@ function activatePercent() {
     str = observer.getParsedString();
     console.log(str);
 }
-percent.onclick = function () {
+percent.onclick = function() {
     activatePercent();
 }
 
 function activateAllClear() {
     input.textContent = "";
     topOutput.textContent = "";
+    observer.observe();
+    console.log("AC:", observer.getParsedString());
+    console.log("AC:", observer.getInputString());
+    console.log("AC:", observer.getCurrentOperand());
 }
+
 allclear.onclick = function () {
     activateAllClear();
 }
+
+// allclear.addEventListener("click", callAllClear);
+
+// function callAllClear(e) {
+//     console.log("CALL at 194:", allclear);
+//     console.log("CALL at 194 e:", e);
+    
+// }
 function activateClear() {
     if (input.textContent == "undefined") {
         activateAllClear();
@@ -239,7 +252,6 @@ dot.onclick = function () {
 }
 function activateEquals() {
     let str = observer.getParsedString();
-    
     let signs = /\+|\-|\*|\//g;
 
     input.textContent[input.textContent.length - 1];
@@ -254,11 +266,8 @@ function activateEquals() {
     if (str.op) {
         input.textContent = calculate(str.left, str.op, str.right);
     }
+    
     observer.observe();
-    str = observer.getParsedString();
-    // console.log("EQALS:", str);
-    // console.log("EQALS:", str);
-    // observer.setCurrentOperand();
 }
 equals.onclick = function () {
     activateEquals();
@@ -270,10 +279,7 @@ function activateNumber(number) {
     else {
         input.textContent += number.textContent;
     }
-    
     observer.observe();
-    let str = observer.getParsedString();
-    // console.log(str);
 }
 for (let number of numbers) {
     number.addEventListener("click", () => {
@@ -309,13 +315,9 @@ function activateOperation(operation) {
             input.textContent = str.left + operation + str.right;
         } else{
             input.textContent = str.left + operation.textContent + str.right;
-        }
-        
+        }   
     }
-
     observer.observe();
-    str = observer.getParsedString();
-    // console.log(str);
 }
 for (let operation of operations) {
     operation.addEventListener("click", () => {
@@ -327,6 +329,7 @@ function calculate(a, operation, b) {
     if (b == "") {
         return +a;
     }
+    console.log(`a: ${a}, b: ${b}`);
     switch (operation) {
         case "+":
             return add(+a, +b);
@@ -372,7 +375,12 @@ function divide(a, b) {
 }
 
 window.addEventListener("keydown", (e) => {
-    // console.log(e);
+    console.log(e);
+    
+    // e.preventDefault();
+    // prevets NumpadEnter from triggering click event
+    // Or you'll be entering the last mouseclicked item
+    e.preventDefault();
     switch(e.code) {
         case "Numpad0":
             activateNumber("0");
@@ -429,6 +437,7 @@ window.addEventListener("keydown", (e) => {
             break;
         case "Backspace":
             if (e.shiftKey) {
+                console.log("CALL at 458");
                 activateAllClear();
             } else {
                 activateClear();

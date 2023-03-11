@@ -2,28 +2,27 @@ body {
     background-color: #222;
     font-family: monospace;
     color: greenyellow;
-    /* line-height: 1; */
 }
 .calculator {
     width: fit-content;
     margin: 0 auto;
     margin-top: 2rem;
-    display: grid;
-    grid-template-columns: 50px 150px 50px;
     padding: 1rem;
     background-color: #333;
 }
 .top-container {
     box-sizing: border-box;
-
-    min-height: 34px;
+    height: 1.5rem;
     grid-area: 1 / 1 / 2 / 4;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
     overflow: hidden;
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: 600;
-   
+}
+.top {
+    line-height: 1;
 }
 .input-container {
     /* direction: rtl; */
@@ -35,23 +34,15 @@ body {
     overflow: hidden;
     font-size: 32px;
     font-weight: 800;
+   
 }
 .grid {
     display: grid;
+    gap: 2px;
     grid-template-columns: repeat(5, 50px);
+    grid-auto-rows: 50px;
 }
-.control {
-    align-self: end;
-}
-.numbers {
-    display: grid;
-    grid-template-columns: repeat(3, 50px);
-    grid-template-rows: repeat(4, 40px);
-}
-.operation, .control-operation {
-    width: 50px;
-    height: 40px;
-}
+
 .control-operation,
 .number,
 .dot,
@@ -59,7 +50,7 @@ body {
     padding: 0;
     border: none;
     background-color: #444;
-    color: white;
+    color: greenyellow;
     font-size: 24px;
     font-weight: bold;
 }
@@ -68,6 +59,6 @@ body {
 .dot:hover,
 .operation:hover {
     color: greenyellow;
-    background-color:#7bff0036;
+    background-color:#8fb66bd3;
     cursor: pointer;
 }

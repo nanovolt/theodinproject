@@ -150,7 +150,6 @@ plusminus.onclick = function () {
     activatePlusMinus();
 }
 function activatePercent() {
-    console.log("percent");
     observer.observe();
     let str = observer.getParsedString();
 
@@ -160,7 +159,7 @@ function activatePercent() {
 
                 str.left = +str.left / 100;
 
-                input.textContent = str.left.toFixed(2) + str.op + str.right;
+                input.textContent = str.left + str.op + str.right;
             }
             break;
 
@@ -169,7 +168,7 @@ function activatePercent() {
                 
                 str.right = +str.right / 100;
 
-                input.textContent = str.left + str.op + str.right.toFixed(2);
+                input.textContent = str.left + str.op + str.right;
             }
             break;
     }
@@ -189,6 +188,9 @@ allclear.onclick = function () {
     activateAllClear();
 }
 function activateClear() {
+    if (input.textContent == "undefined") {
+        activateAllClear();
+    }
     input.textContent = input.textContent.slice(0, -1);
     if (input.textContent.length == 0) {
         activateAllClear();
@@ -198,7 +200,7 @@ function activateClear() {
     }
     observer.observe();
     let str = observer.getParsedString();
-    console.log(str);
+    // console.log(str);
 }
 clear.onclick = function () {
     activateClear();
@@ -360,7 +362,7 @@ function muliply(a, b) {
 }
 function divide(a, b) {
     if (b == 0) {
-        return `x/0 is undefined`;
+        return `undefined`;
     }
     let result = (a / b).toFixed(2);
     if (result % 1 == 0) {
@@ -370,7 +372,7 @@ function divide(a, b) {
 }
 
 window.addEventListener("keydown", (e) => {
-    console.log(e);
+    // console.log(e);
     switch(e.code) {
         case "Numpad0":
             activateNumber("0");
@@ -421,6 +423,9 @@ window.addEventListener("keydown", (e) => {
             if (e.shiftKey) {
                 activatePercent();
             }
+            break;
+        case "ShiftRight":
+            activatePercent();
             break;
         case "Backspace":
             if (e.shiftKey) {

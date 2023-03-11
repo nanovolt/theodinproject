@@ -4,6 +4,7 @@ const input = document.querySelector(".input");
 input.textContent = "";
 
 const plusminus = document.querySelector(".plusminus");
+const percent = document.querySelector(".percent");
 const allclear = document.querySelector(".allclear");
 const clear = document.querySelector(".clear");
 const numbers = document.querySelectorAll(".number");
@@ -148,6 +149,38 @@ function activatePlusMinus() {
 plusminus.onclick = function () {
     activatePlusMinus();
 }
+function activatePercent() {
+    console.log("percent");
+    observer.observe();
+    let str = observer.getParsedString();
+
+    switch (observer.getCurrentOperand()) {
+        case "left":
+            if (str.left && +str.left != 0 && !isNaN(str.left)) {
+
+                str.left = +str.left / 100;
+
+                input.textContent = str.left.toFixed(2) + str.op + str.right;
+            }
+            break;
+
+        case "right":
+            if (str.right && +str.right != 0 && !isNaN(str.right)) {
+                
+                str.right = +str.right / 100;
+
+                input.textContent = str.left + str.op + str.right.toFixed(2);
+            }
+            break;
+    }
+    observer.observe();
+    str = observer.getParsedString();
+    console.log(str);
+}
+percent.onclick = function () {
+    activatePercent();
+}
+
 function activateAllClear() {
     input.textContent = "";
     topOutput.textContent = "";
@@ -337,7 +370,7 @@ function divide(a, b) {
 }
 
 window.addEventListener("keydown", (e) => {
-    // console.log(e);
+    console.log(e);
     switch(e.code) {
         case "Numpad0":
             activateNumber("0");
@@ -383,6 +416,11 @@ window.addEventListener("keydown", (e) => {
             break;
         case "Backslash":
             activatePlusMinus();
+            break;
+        case "Digit5":
+            if (e.shiftKey) {
+                activatePercent();
+            }
             break;
         case "Backspace":
             if (e.shiftKey) {

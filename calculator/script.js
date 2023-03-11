@@ -145,7 +145,7 @@ function activatePlusMinus() {
     }
     observer.observe();
     str = observer.getParsedString();
-    console.log(str);
+    // console.log(str);
 }
 plusminus.onclick = function () {
     activatePlusMinus();
@@ -176,7 +176,7 @@ function activatePercent() {
     }
     observer.observe();
     str = observer.getParsedString();
-    console.log(str);
+    // console.log(str);
 }
 percent.onclick = function() {
     activatePercent();
@@ -347,7 +347,7 @@ function calculate(a, operation, b) {
     if (b == "") {
         return +a;
     }
-    console.log(`a: ${a}, b: ${b}`);
+    // console.log(`a: ${a}, b: ${b}`);
     switch (operation) {
         case "+":
             return add(+a, +b);
@@ -396,7 +396,7 @@ function activateClickEffect(el, arg=null) {
         arg.style.cssText = "background-color:#69da00ee; outline: 1px solid greenyellow;"
         setTimeout(()=> arg.style.cssText = "background-color:#444;", 150);
     } else {
-        console.log("el");
+        // console.log("el");
         let elem = document.getElementsByClassName(`${el}`)[0];
         elem.style.cssText = "background-color:#69da00ee; outline: 1px solid greenyellow;"
         // elem.classList.add("active");
@@ -405,7 +405,7 @@ function activateClickEffect(el, arg=null) {
     
 }
 window.addEventListener("keydown", (e) => {
-    console.log(e);
+    // console.log(e);
     
     // e.preventDefault();
     // prevets NumpadEnter from triggering click event

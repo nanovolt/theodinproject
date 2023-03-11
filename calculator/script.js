@@ -411,7 +411,6 @@ window.addEventListener("keydown", (e) => {
     // prevets NumpadEnter from triggering click event
     // Or you'll be entering the last mouseclicked item
     
-    
     switch(e.code) {
         
         case "Numpad0":

@@ -1,4 +1,7 @@
 # The Odin Project
+
+[The Odin Project website](https://www.theodinproject.com)
+
 [https://nanovolt.github.io/theodinproject](https://nanovolt.github.io/theodinproject)
 
 [Recipes](https://nanovolt.github.io/theodinproject/recipes/index.html)

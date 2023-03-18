@@ -12,13 +12,16 @@
 
 <body>
     <div class="wrapper">
+
         <div class="dashboard">
             <div class="sidebar">
                 <a href="#">
-                    <div class="logo">
-                        <!-- <a href=""></a> -->
-                        <img src="abstract.svg" alt="" srcset="">
-                        <span>Dashboard</span>
+                    <div class="logo_wrapper">
+                        <div class="logo">
+                            <!-- <a href=""></a> -->
+                            <img src="abstract.svg" alt="" srcset="">
+                            <span>Dashboard</span>
+                        </div>
                     </div>
                 </a>
 
@@ -43,16 +46,33 @@
             </div>
             <div class="header">
                 <div class="header_top">
-                    <input type="search" name="" id="">
-                    <div class="notifications">notify</div>
-                    <div class="account">account</div>
+                    <button class="icon menu_button" onclick="toggle_menu()"></button>
+                    <div class="top_left">
+                        <div class="icon search"></div>
+                        <input class="search_input" type="search" name="" id="">
+                    </div>
+                    
+                    <div class="top_right">
+                        <div class="notifications"></div>
+                        <div class="account">
+                            <div class="account_image"></div>
+                            <div class="account_title">Morgan Oakley</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="header_bottom">
-                    <div class="greetings">Hi there</div>
+                    <div class="header_bottom_left">
+                        <div class="account_image"></div>
+                        <div class="greetings">
+                            <div>Hi there,</div>
+                            <div><b>Morgan Oakley (@morgan)</b></div>
+                        </div>
+                    </div>
+                    
                     <div class="controls">
-                        <div class="new">New</div>
-                        <div class="upload">Upload</div>
-                        <div class="share">Share</div>
+                        <button class="new">New</button>
+                        <button class="upload">Upload</button>
+                        <button class="share">Share</button>
                     </div>
                 </div>
             </div>
@@ -63,6 +83,30 @@
 
     </div>
     <!-- <p style="width:min-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error esse magnam sequi. Aspernatur dolorem id consequatur veniam quasi voluptatum repudiandae odio illo architecto sunt, ratione nostrum ipsa atque aliquam suscipit laborum quo assumenda. Eveniet tempora, cum atque fuga, minima beatae quod consequatur optio obcaecati a dolorum ipsum pariatur error at quia labore qui autem saepe odit ea recusandae aliquid corrupti? Excepturi molestias tempora accusantium voluptatum iste velit voluptate sequi! Alias, adipisci harum ratione quisquam eligendi reiciendis. Maiores, quisquam dolor. Aperiam exercitationem tenetur similique nemo ex beatae quos excepturi autem! Dolores, quas! Est, velit rem provident odit vitae quis magni accusantium.</p> -->
+    <script>
+        let close_menu = document.createElement("button");
+        let sidebar = document.querySelector(".sidebar");
+        let logo_wrapper = document.querySelector(".logo_wrapper");
+        close_menu.classList.add("icon");
+        close_menu.classList.add("close_menu");
+        // close_menu.textContent = "X";
+        let menu_state = false;
+        close_menu.onclick = toggle_menu;
+
+        function toggle_menu() {
+            
+            // logo_wrapper.insertAdjacentElement("afterend", close_menu);
+            if (!menu_state) {
+                sidebar.style.display = "block";
+                logo_wrapper.appendChild(close_menu);
+                menu_state = true;
+            } else {
+                sidebar.style.display = "none";
+                menu_state = false;
+            }
+            
+        }
+    </script>
 </body>
 
 </html>

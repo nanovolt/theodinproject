@@ -32,7 +32,7 @@ a {
     height: 100%;
 }
 .wrapper {
-    width: clamp(320px, 100%, 1366px);
+    width: clamp(320px, 100%, 2048px);
     margin: 0 auto;
 }
 .dashboard {
@@ -135,22 +135,26 @@ nav > ul {
     background-color: white;
     padding: 16px;
 }
-.header_top {
-    margin-bottom: 16px;
-    gap: 8px;
-    
-}
+
 .header_top, .header_bottom {
     display: grid;
     grid-template-columns: auto auto;
     justify-content: space-between;
     align-items: center;
 }
+.header_top {
+    grid-template-columns: 1fr auto;
+    margin-bottom: 16px;
+    gap: 8px; 
+}
 .top_left, .top_right {
     display: grid;
     grid-template-columns: auto auto;
     align-items: center;
     gap: 24px;
+}
+.top_left {
+    grid-template-columns: auto minmax(10ch, 1fr);
 }
 .search, notifications {
     display: grid;
@@ -207,6 +211,54 @@ nav > ul {
     height: 48px;
     width: 48px;
 }
+.main {
+    padding: 16px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, auto));
+}
+
+.projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+
+.project {
+    /* font-size: 12px; */
+    background-color: white;
+    border-radius: 8px;
+    padding: 16px;
+    /* padding-right: 16px; */
+    border-left: 8px solid orange;
+    display: grid;
+    /* align-content:space-between; */
+}
+.projects_title, .announcements_title, .trending_title {
+    margin-bottom: 8px;
+}
+.project_title {
+    font-weight: bold;
+    
+}
+.project_controls {
+    display: flex;
+    gap: 16px;
+    justify-content: end;
+}
+.star, .eye, .fork {
+    font-family: "Font Awesome 6 Free";
+}
+.star::before {
+    font-weight: 400;
+    content: "\f005";
+}
+.eye::before {
+    content: "\f06e";
+}
+.fork::before {
+    content: "\f126";
+}
 @media (max-width: 1024px) {
     .sidebar {
         display: none;
@@ -224,6 +276,6 @@ nav > ul {
         left: 0; */
     }
     .header_top {
-        grid-template-columns: auto auto auto;
+        grid-template-columns: auto 1fr auto;
     }
 }

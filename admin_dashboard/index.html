@@ -77,7 +77,86 @@
                 </div>
             </div>
             <div class="main">
-                main
+
+                <div class="project_wrapper">
+                    <div class="projects_title">Your Projects</div>
+                    <div class="projects">
+                    
+                        <div class="project">
+                            <div class="project_title">Project 1</div>
+                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor quam iure cumque officia voluptatum atque odit modi quibusdam cum voluptas.</p>
+                            <div class="project_controls">
+                                <div class="icon star"></div>
+                                <div class="icon eye"></div>
+                                <div class="icon fork"></div>
+                            </div>
+                        </div>
+                        <div class="project">
+                            <div class="project_title">Project 2</div>
+                            <p>Ullam dolores magni veniam facilis ratione laborum! Optio, debitis ipsam! At labore vero incidunt quod ipsam, aspernatur asperiores id facilis.</p>
+                            <div class="project_controls">
+                                <div class="icon star"></div>
+                                <div class="icon eye"></div>
+                                <div class="icon fork"></div>
+                            </div>
+                        </div>
+                        <div class="project">
+                            <div class="project_title">Project 3</div>
+                            <p>Veniam modi alias temporibus cupiditate, facere vel qui ratione suscipit, nemo odit iusto eveniet eius accusamus perferendis, praesentium officia facilis.</p>
+                            <div class="project_controls">
+                                <div class="icon star"></div>
+                                <div class="icon eye"></div>
+                                <div class="icon fork"></div>
+                            </div>
+                        </div>
+                        <div class="project">
+                            <div class="project_title">Project 4</div>
+                            <p>Unde ipsum quod omnis, quam totam, odio soluta qui facere voluptas sapiente sequi error aliquam fuga, quis natus repellat. Quis?</p>
+                            <div class="project_controls">
+                                <div class="icon star"></div>
+                                <div class="icon eye"></div>
+                                <div class="icon fork"></div>
+                            </div>
+                        </div>
+                        <div class="project">
+                            <div class="project_title">Project 5</div>
+                            <p>Eligendi nemo culpa provident aperiam impedit excepturi voluptas! Fuga magnam ex tempora? Illum, nisi architecto molestias qui odit et sit.</p>
+                            <div class="project_controls">
+                                <div class="icon star"></div>
+                                <div class="icon eye"></div>
+                                <div class="icon fork"></div>
+                            </div>
+                        </div>
+                        <div class="project">
+                            <div class="project_title">Project 6</div>
+                            <p>Repellat facere recusandae quasi autem eos. Odit corporis ipsam asperiores? Accusantium saepe dolores nesciunt aliquid harum doloribus, libero vel omnis?</p>
+                            <div class="project_controls">
+                                <div class="icon star"></div>
+                                <div class="icon eye"></div>
+                                <div class="icon fork"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="right_sidebar">
+                    <div class="announcements_wrapper">
+                        <div class="announcements_title">Announcements</div>
+                        <div class="announcements">
+                            <div class="ann">Ann 1</div>
+                            <div class="ann">Ann 2</div>
+                            <div class="ann">Ann 3</div>
+                        </div>
+                    </div>
+                    <div class="trending_wrapper">
+                        <div class="trending_title">Trending</div>
+                        <div class="trending">
+                            <div class="trend">Trend 1</div>
+                            <div class="trend">Trend 2</div>
+                            <div class="trend">Trend 3</div>
+                            <div class="trend">Trend 4</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -98,10 +177,12 @@
             // logo_wrapper.insertAdjacentElement("afterend", close_menu);
             if (!menu_state) {
                 sidebar.style.display = "block";
+                document.body.style = `overflow-y: hidden;`;
                 logo_wrapper.appendChild(close_menu);
                 menu_state = true;
             } else {
                 sidebar.style.display = "none";
+                document.body.style = `overflow-y: visible;`;
                 menu_state = false;
             }
             

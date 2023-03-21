@@ -1,0 +1,19 @@
+{
+  "name": "theodinproject",
+  "version": "1.0.0",
+  "description": "[The Odin Project website](https://www.theodinproject.com)",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nanovolt/theodinproject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nanovolt/theodinproject/issues"
+  },
+  "homepage": "https://github.com/nanovolt/theodinproject#readme"
+}

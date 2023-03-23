@@ -17,3 +17,5 @@
 [Sign-up form](https://nanovolt.github.io/theodinproject/sign-up_form/index.html)
 
 [Admin dashboard](https://nanovolt.github.io/theodinproject/admin_dashboard/index.html)
+
+[Library](https://nanovolt.github.io/theodinproject/library/index.html)

@@ -93,9 +93,12 @@ const form = document.querySelector(".form");
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   const formdata = new FormData(form);
-  const title = formdata.get("title");
+  let title = formdata.get("title");
   const pages = formdata.get("pages");
   const isRead = formdata.get("isRead");
+  if (title === "") {
+    title = "No title";
+  }
   const bookData = new Book(myLibrary.length, title, +pages, Boolean(+isRead));
   addBookToLibrary(bookData);
 });

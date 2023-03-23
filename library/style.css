@@ -1,5 +1,51 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background-color: #e0e0e0;
+  font-family: sans-serif;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+  color: white;
+  width: fit-content;
+}
+
+.icon {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 900;
+  padding: 0;
+  border: none;
+  line-height: 1;
+  background-color: hsla(0, 0%, 0%, 0);
+  height: 100%;
+}
+.wrapper {
+  width: clamp(320px, 100%, 1024px);
+  margin: 0 auto;
+  padding: 16px;
+  display: grid;
+}
+
 .library {
-  display: flex;
-  flex-wrap: wrap;
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 24px;
+}
+.book {
+  border-radius: 8px;
+  padding: 16px;
+  background-color: white;
 }

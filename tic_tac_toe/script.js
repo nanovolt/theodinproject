@@ -115,18 +115,14 @@ const game = (() => {
     for (const cell of cells) {
       cell.addEventListener("click", processGame.bind(this));
     }
-    document
-      .querySelector(".x")
-      .addEventListener(
-        "click",
-        currentPlayer.chooseMarker.bind(currentPlayer, "X")
-      );
-    document
-      .querySelector(".o")
-      .addEventListener(
-        "click",
-        currentPlayer.chooseMarker.bind(currentPlayer, "O")
-      );
+    x.addEventListener(
+      "click",
+      currentPlayer.chooseMarker.bind(currentPlayer, "X")
+    );
+    o.addEventListener(
+      "click",
+      currentPlayer.chooseMarker.bind(currentPlayer, "O")
+    );
 
     document.querySelector(".ok").addEventListener("click", finishGame);
   }

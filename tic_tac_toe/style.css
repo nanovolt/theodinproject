@@ -1,6 +1,7 @@
 * {
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
   background-color: #e0e0e0;
@@ -12,6 +13,7 @@ ul {
   margin: 0;
   padding: 0;
 }
+
 a {
   text-decoration: none;
   color: white;
@@ -31,11 +33,13 @@ a {
   background-color: hsla(0, 0%, 0%, 0);
   height: 100%;
 }
+
 .wrapper {
   width: clamp(320px, 100%, 1024px);
   margin: 0 auto;
   padding: 16px;
   display: grid;
+  position: relative;
 }
 
 .board {
@@ -45,6 +49,81 @@ a {
   grid-template-rows: repeat(3, 100px);
   gap: 2px;
 }
+
 .cell {
   background-color: white;
+  display: grid;
+  place-items: center;
+  font-size: 64px;
+  cursor: pointer;
+}
+.marker {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  align-content: center;
+  gap: 16px;
+  background-color: white;
+  padding: 16px;
+  position: absolute;
+  top: 50%;
+  font-size: 64px;
+  font-weight: bold;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  border: 4px solid dodgerblue;
+  width: 306px;
+  height: 306px;
+}
+.marker-player {
+  font-size: 32px;
+  grid-area: 1 / 1 / 3 / 3;
+}
+.marker-title {
+  font-size: 32px;
+  grid-area: 2 / 1 / 4 / 3;
+}
+.x,
+.o {
+  display: grid;
+  place-items: center;
+  height: 100px;
+  width: 100px;
+}
+.x:hover,
+.o:hover {
+  background-color: dodgerblue;
+  cursor: pointer;
+}
+.winner-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 16px;
+  width: 306px;
+  height: 306px;
+  padding: 16px;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  background-color: #3030308f;
+  display: none;
+}
+.ok {
+  padding: 8px 16px;
+  border-radius: 0;
+  border: none;
+  background-color: dodgerblue;
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+}
+.ok:hover {
+  background-color: rgb(23, 107, 192);
+  cursor: pointer;
 }

@@ -1,17 +1,20 @@
-function Book(id, title, pages, isRead) {
-  this.id = id;
-  this.title = title;
-  this.pages = pages;
-  this.isRead = isRead;
-}
-Book.prototype.toggle = function toggle() {
-  // this.isRead ? (this.isRead = false) : (this.isRead = true);
-  if (this.isRead) {
-    this.isRead = false;
-  } else {
-    this.isRead = true;
+class Book {
+  constructor(id, title, pages, isRead) {
+    this.id = id;
+    this.title = title;
+    this.pages = pages;
+    this.isRead = isRead;
   }
-};
+
+  toggle() {
+    // this.isRead ? (this.isRead = false) : (this.isRead = true);
+    if (this.isRead) {
+      this.isRead = false;
+    } else {
+      this.isRead = true;
+    }
+  }
+}
 
 let myLibrary = [];
 const b1 = new Book(0, "Harry Potter", 320, true);

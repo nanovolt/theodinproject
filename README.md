@@ -19,3 +19,5 @@
 [Admin dashboard](https://nanovolt.github.io/theodinproject/admin_dashboard/)
 
 [Library](https://nanovolt.github.io/theodinproject/library/)
+
+[Tic Tac Toe](https://nanovolt.github.io/theodinproject/tic_tac_toe/)

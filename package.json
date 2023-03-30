@@ -2,7 +2,7 @@
   "name": "theodinproject",
   "version": "1.0.0",
   "description": "[The Odin Project website](https://www.theodinproject.com)",
-  "main": "script.js",
+  "private": "true",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,3 +1,6 @@
-document.body.style.backgroundColor = "dodgerblue";
+import "./index.css";
+import Header from "./header";
 
-console.log("index.js: restaurant page");
+console.log("index.js");
+
+document.body.appendChild(Header());

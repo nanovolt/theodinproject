@@ -1,5 +1,44 @@
-.menu-wrapper {
+.menu {
   width: clamp(320px, 100%, 1024px);
   margin: 0 auto;
-  background-color: tomato;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  /* grid-auto-rows: 200px; */
+}
+
+.menu-item {
+  background-color: white;
+  padding: 16px;
+  border-radius: 12px;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 50% 1fr;
+}
+
+.title {
+  /* font-size: 18px; */
+  font-weight: bold;
+}
+.image {
+  grid-area: 1 / 1 / 4 / 2;
+  border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.order {
+  border-radius: 12px;
+  padding: 8px;
+  cursor: pointer;
+  background-color: #5bff4c;
+  font-weight: bold;
+}
+.price {
+  font-size: 24px;
+  font-weight: bold;
+}
+.order:hover {
+  background-color: #3ab62a;
 }

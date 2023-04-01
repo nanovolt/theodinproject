@@ -1,3 +1,42 @@
-.reservation-wrapper {
-  background-color: dodgerblue;
+.reservation {
+  width: clamp(320px, 100%, 1024px);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  align-content: center;
+}
+
+.place {
+  padding: 16px;
+  border-radius: 12px;
+  background-color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  border-right: 16px solid #50fc39;
+  text-align: center;
+  justify-items: center;
+}
+.place-title,
+.status {
+  padding: 8px;
+  font-size: 18px;
+}
+.status {
+  /* padding: 8px; */
+  text-align: center;
+}
+.reserve {
+  grid-area: 2 / 1 / 3 / 3;
+  padding: 16px;
+  border-radius: 12px;
+  width: fit-content;
+
+  font-weight: bold;
+  background-color: #00aeff;
+}
+.reserve:hover {
+  cursor: pointer;
+  background-color: #0285c2;
 }

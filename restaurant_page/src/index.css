@@ -14,9 +14,14 @@
 }
 
 body {
+  min-height: 100vh;
+  position: relative;
   margin: 0;
-  background-color: #e0e0e0;
+  background-color: #f0f0f0;
   font-size: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 ul {

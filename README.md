@@ -21,3 +21,5 @@
 [Library](https://nanovolt.github.io/theodinproject/library/)
 
 [Tic Tac Toe](https://nanovolt.github.io/theodinproject/tic_tac_toe/)
+
+[Restaurant page](https://nanovolt.github.io/theodinproject/restaurant_page/)

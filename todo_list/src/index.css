@@ -1,0 +1,54 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("fonts/Roboto/Roboto-Regular.ttf") format("truetype");
+}
+
+:root {
+  font-family: "Roboto", "Open Sans", "Helvetica Neue", system-ui, -apple-system,
+    sans-serif;
+  font-size: 0.625rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  position: relative;
+  margin: 0;
+  background-color: #f0f0f0;
+  font-size: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  width: fit-content;
+}
+
+button {
+  border: 0;
+}
+.icon {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 900;
+  padding: 0;
+  border: none;
+  line-height: 1;
+  background-color: hsla(0, 0%, 0%, 0);
+  height: 100%;
+}

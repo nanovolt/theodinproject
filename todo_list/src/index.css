@@ -14,14 +14,15 @@
 }
 
 body {
-  min-height: 100vh;
-  position: relative;
-  margin: 0;
-  background-color: #f0f0f0;
-  font-size: 1.6rem;
   display: flex;
   flex-direction: column;
   gap: 16px;
+
+  min-height: 100vh;
+  /* position: relative; */
+  margin: 0;
+  background-color: #f0f0f0;
+  font-size: 1.6rem;
 }
 
 ul {
@@ -36,9 +37,14 @@ a {
   width: fit-content;
 }
 
-button {
+button,
+textarea,
+input {
   border: 0;
+  font-size: inherit;
+  padding: 0;
 }
+
 .icon {
   display: inline-block;
   text-rendering: auto;

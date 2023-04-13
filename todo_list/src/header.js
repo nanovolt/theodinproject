@@ -1,11 +1,11 @@
-import "./footer.css";
+import "./header.css";
 
-export default function Footer() {
+export default function Header() {
   function initializeEventListeners() {}
 
   function initializeComponent(parentComponent) {
-    const component = document.createElement("footer");
-    component.innerHTML = "To-Do List App 2023";
+    const component = document.createElement("header");
+    component.innerText = "To-do List App";
 
     parentComponent.appendChild(component);
   }

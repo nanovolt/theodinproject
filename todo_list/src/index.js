@@ -19,11 +19,14 @@ const storage = TodosStorage();
 storage.init();
 const observable = new Observable();
 
+const todosWindow = TodosWindow(observable, storage);
+observable.subscribe(todosWindow);
+
 const bodyComponents = [Header(), Main(), Footer()];
 AppendComponents(document.body, bodyComponents);
 
 const mainComponents = [
-  TodosWindow(storage),
+  todosWindow,
   AddTodo(),
   ModalTodoEditor(observable, storage),
   TasksWindow(),

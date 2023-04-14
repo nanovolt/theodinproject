@@ -1,4 +1,18 @@
-export default function TodosWindow(storage) {
+export default function TodosWindow(observable, storage) {
+  function updateListOfTodos() {
+    const allTodoLists = document.querySelectorAll(".todo-list");
+    allTodoLists.forEach((el) => el.remove());
+
+    const arrayOfTodoLists = storage.getArrayOfTodoLists();
+
+    arrayOfTodoLists.forEach((todoList) => {
+      const todoListElem = document.createElement("li");
+      todoListElem.classList.add("todo-list");
+      todoListElem.innerText = todoList.name;
+      document.querySelector(".list-of-todos").appendChild(todoListElem);
+    });
+  }
+
   function initializeComponent(parentComponent) {
     const component = document.createElement("div");
     component.classList.add("todos-window");
@@ -36,17 +50,11 @@ export default function TodosWindow(storage) {
     const listOfTodos = document.createElement("ul");
     listOfTodos.classList.add("list-of-todos");
 
-    const arrayOfTodoLists = storage.getArrayOfTodoLists();
-
-    arrayOfTodoLists.forEach((todoList) => {
-      const todoListElem = document.createElement("li");
-      todoListElem.classList.add("todo-list");
-      todoListElem.innerText = todoList.name;
-      listOfTodos.appendChild(todoListElem);
-    });
     component.appendChild(listOfTodos);
 
     parentComponent.appendChild(component);
+
+    updateListOfTodos();
   }
 
   function addTodoList() {
@@ -59,6 +67,7 @@ export default function TodosWindow(storage) {
       } else {
         console.log(`didn't add to storage: ${inputFormEl.value}`);
       }
+      observable.notify();
     });
   }
 
@@ -66,5 +75,10 @@ export default function TodosWindow(storage) {
     addTodoList();
   }
 
-  return { initializeComponent, initializeEventListeners };
+  function getNotified() {
+    console.log(`get notified`);
+    updateListOfTodos();
+  }
+
+  return { initializeComponent, initializeEventListeners, getNotified };
 }

@@ -1,0 +1,38 @@
+.todos-window {
+  display: grid;
+  gap: 8px;
+}
+
+.list-of-todos {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.todo-list-input-container {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  justify-items: start;
+}
+
+.todo-list {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  cursor: pointer;
+  background-color: white;
+}
+
+.todo-list:hover {
+  background-color: lightskyblue;
+}
+
+.current {
+  background-color: lightskyblue;
+}
+
+.add-todo-list,
+.delete-todo-list,
+.edit-todo-list-name {
+  padding: 4px 8px;
+  cursor: pointer;
+}

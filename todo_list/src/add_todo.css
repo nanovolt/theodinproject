@@ -1,14 +1,14 @@
-.add-task {
-  padding: 8px;
-  border-radius: 16px;
+.add-todo {
+  padding: 4px 8px;
+  /* border-radius: 16px; */
   background-color: white;
   grid-area: 1 / 2 / 2 / 3;
 }
 
-.add-task:hover {
+.add-todo:hover {
   cursor: pointer;
   background-color: #bdbdbd;
 }
 
-.add-task::before {
+.add-todo::before {
 }

@@ -1,7 +1,7 @@
 import "./add_todo.css";
 
 export default function AddTodo() {
-  function openTodoEditor() {
+  function openTodoEditorEventListeners() {
     const addTask = document.querySelector(".add-todo");
     const todoEditor = document.querySelector(".todo-editor");
     addTask.addEventListener("click", () => {
@@ -10,7 +10,7 @@ export default function AddTodo() {
   }
 
   function initializeEventListeners() {
-    openTodoEditor();
+    openTodoEditorEventListeners();
   }
 
   function initializeComponent(parentComponent) {

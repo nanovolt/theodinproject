@@ -1,8 +1,5 @@
 import "./index.css";
-import {
-  AppendComponents,
-  initializeEventListeners,
-} from "./component_manager";
+import InitializeComponents from "./component_manager";
 import TodosStorage from "./todos_storage";
 import Observable from "./task_observable";
 
@@ -23,7 +20,7 @@ const todosWindow = TodosWindow(observable, storage);
 observable.subscribe(todosWindow);
 
 const bodyComponents = [Header(), Main(), Footer()];
-AppendComponents(document.body, bodyComponents);
+InitializeComponents(document.body, bodyComponents);
 
 const mainComponents = [
   todosWindow,
@@ -31,6 +28,4 @@ const mainComponents = [
   ModalTodoEditor(observable, storage),
   TasksWindow(),
 ];
-AppendComponents(document.querySelector("main"), mainComponents);
-
-initializeEventListeners(bodyComponents.concat(mainComponents));
+InitializeComponents(document.querySelector("main"), mainComponents);

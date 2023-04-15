@@ -29,8 +29,17 @@ export default function TodosStorage() {
     return localStorage.getItem("currentTodoList");
   }
 
-  function setCurrentTodoList(list) {
-    localStorage.setItem("currentTodoList", list);
+  function setCurrentTodoList(todoList) {
+    localStorage.setItem("currentTodoList", todoList);
+  }
+
+  function deleteTodoList(name) {
+    // console.log(getArrayOfTodoLists().filter((item) => item.name !== name));
+    localStorage.setItem(
+      "ArrayOfTodoLists",
+      JSON.stringify(getArrayOfTodoLists().filter((item) => item.name !== name))
+    );
+    setCurrentTodoList("");
   }
 
   function init() {
@@ -41,32 +50,27 @@ export default function TodosStorage() {
       addTodoList("Default");
     }
 
-    console.log(getCurrentTodoList());
-    console.log(getArrayOfTodoLists());
+    // console.log(getCurrentTodoList());
+    // console.log(getArrayOfTodoLists());
   }
 
   function isNotPresent(name) {
     const arr = getArrayOfTodoLists();
     if (arr.filter((todo) => todo.name === name).length === 0) {
-      console.log(
-        "not present:",
-        arr.filter((todo) => todo.name === name)
-      );
       return true;
     }
-    console.log(
-      "present:",
-      arr.filter((todo) => todo.name === name)
-    );
+
     return false;
   }
 
   return {
+    init,
     getArrayOfTodoLists,
     addTodoList,
+    deleteTodoList,
     hasTodoLists,
     getCurrentTodoList,
-    init,
+    setCurrentTodoList,
     isNotPresent,
   };
 }

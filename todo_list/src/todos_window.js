@@ -1,33 +1,60 @@
 import "./todos_window.css";
+import * as DOM from "./todos_window_DOM";
 
 export default function TodosWindow(observable, storage) {
-  function appendTodoList(name, currentName) {
-    const todoListElem = document.createElement("li");
-    todoListElem.classList.add("todo-list");
-    if (name === currentName) todoListElem.classList.add("current");
-    todoListElem.innerText = name;
-
-    const editTodoListName = document.createElement("button");
-    editTodoListName.classList.add("edit-todo-list-name");
-    editTodoListName.innerText = "Edit";
-
-    const list = document.querySelector(".list-of-todos");
-    list.appendChild(todoListElem);
-    list.appendChild(editTodoListName);
-  }
-
-  function update() {
-    // const arrayOfTodoLists = storage.getArrayOfTodoLists();
-    // arrayOfTodoLists.forEach((item) => {});
-  }
-
   function todoListEventListeners(todoList) {
+    let valueBeforeEdit;
+
     todoList.addEventListener("click", () => {
-      storage.setCurrentTodoList(todoList.innerText);
-      if (document.querySelector(".current")) {
-        document.querySelector(".current").classList.remove("current");
+      if (!todoList.lastChild.classList.contains("editing-name")) {
+        storage.setCurrentTodoList(todoList.firstChild.innerText);
+        if (document.querySelector(".current")) {
+          document.querySelector(".current").classList.remove("current");
+        }
+        todoList.classList.add("current");
       }
-      todoList.classList.add("current");
+    });
+
+    function change(value) {
+      DOM.createTodoListNameSpan(value);
+      DOM.createEditButton();
+    }
+
+    // if clicked on Edit
+    function editOkEventListeners() {}
+    editOkEventListeners();
+
+    todoList.lastChild.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      valueBeforeEdit = todoList.firstChild.innerText;
+
+      createEditInput(valueBeforeEdit);
+      createOkButton();
+
+      todoList.lastChild.addEventListener("click", () => {
+        console.log("pressed OK, acceptChanges()");
+        change(todoList.firstChild.value);
+      });
+
+      todoList.firstChild.focus();
+
+      todoList.firstChild.addEventListener("keydown", (ev) => {
+        if (ev.key === "Enter") {
+          console.log("pressed Enter, acceptChanges()");
+          change(todoList.firstChild.value);
+        }
+        if (ev.key === "Escape") {
+          console.log("pressed Escape, resetChanges()");
+          change(valueBeforeEdit);
+          console.log("activeElement:", document.activeElement);
+        }
+      });
+
+      todoList.firstChild.addEventListener("blur", () => {
+        console.log("editInput blur", e.target);
+        change(valueBeforeEdit);
+      });
     });
   }
 
@@ -37,31 +64,29 @@ export default function TodosWindow(observable, storage) {
     if (inputFormEl.value && storage.isNotPresent(inputFormEl.value)) {
       storage.addTodoList(inputFormEl.value);
       appendTodoList(inputFormEl.value, "");
-      // console.log(document.querySelectorAll(".todo-list:nth-last-of-type(1)"));
+
       todoListEventListeners(
         document.querySelectorAll(".todo-list:nth-last-of-type(1)")[0]
       );
+
+      // editTodoListNameEventListeners(
+      //   document.querySelectorAll(".todo-list:nth-last-of-type(1)")[0].lastChild
+      // );
     }
   }
 
   function deleteTodoList() {
     const current = document.querySelector(".current");
     if (current) {
-      storage.deleteTodoList(current.innerText);
-      current.nextElementSibling.remove();
+      storage.deleteTodoList(current.firstChild.innerText);
       current.remove();
     }
 
     if (storage.getArrayOfTodoLists().length === 0) {
-      storage.setCurrentTodoList("Default");
       storage.addTodoList("Default");
       appendTodoList("Default");
       todoListEventListeners(document.querySelector(".todo-list"));
     }
-  }
-
-  function getNotified() {
-    update();
   }
 
   function initializeEventListeners() {
@@ -85,42 +110,16 @@ export default function TodosWindow(observable, storage) {
       // });
     }
 
-    function DeleteTodoListEventListeners() {
-      const addTodoListButton = document.querySelector(".delete-todo-list");
-      addTodoListButton.addEventListener("click", () => {
+    document
+      .querySelector(".delete-todo-list")
+      .addEventListener("click", () => {
         deleteTodoList();
       });
-    }
-
-    function EditTodoListNameEventListeners() {
-      const editTodoListName = document.querySelectorAll(
-        ".edit-todo-list-name"
-      );
-
-      editTodoListName.forEach((butt) => {
-        butt.addEventListener("click", () => {
-          console.log(butt.previousElementSibling);
-          const inputEdit = document.createElement("input");
-          inputEdit.value = butt.previousElementSibling.innerText;
-          butt.parentNode.replaceChild(inputEdit, butt.previousElementSibling);
-          inputEdit.focus();
-          inputEdit.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") {
-              addTodoList();
-            }
-          });
-        });
-      });
-    }
-
-    const allTodoLists = document.querySelectorAll(".todo-list");
-    allTodoLists.forEach((item) => {
-      todoListEventListeners(item);
+    document.querySelectorAll(".todo-list").forEach((element) => {
+      todoListEventListeners(element);
+      // console.log(element);
     });
-
     AddTodoListEventListeners();
-    DeleteTodoListEventListeners();
-    EditTodoListNameEventListeners();
   }
 
   function initializeComponent(parentComponent) {
@@ -153,12 +152,12 @@ export default function TodosWindow(observable, storage) {
 
     parentComponent.appendChild(component);
 
-    storage.getArrayOfTodoLists().forEach((item) => {
-      appendTodoList(item.name, storage.getCurrentTodoList());
+    storage.getArrayOfTodoLists().forEach((todoList) => {
+      appendTodoList(todoList.name, storage.getCurrentTodoList());
     });
 
     initializeEventListeners();
   }
 
-  return { initializeComponent, getNotified };
+  return { initializeComponent };
 }

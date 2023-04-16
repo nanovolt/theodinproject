@@ -3,11 +3,6 @@
   gap: 8px;
 }
 
-.list-of-todos {
-  display: grid;
-  grid-template-columns: 1fr auto;
-}
-
 .todo-list-input-container {
   display: grid;
   grid-template-columns: 1fr auto auto;
@@ -15,9 +10,9 @@
 }
 
 .todo-list {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto;
   align-items: center;
-  padding: 4px 8px;
   cursor: pointer;
   background-color: white;
 }
@@ -32,7 +27,21 @@
 
 .add-todo-list,
 .delete-todo-list,
-.edit-todo-list-name {
+.edit-todo-list-name,
+.todo-list-name,
+.ok-edit-todo-list-name {
   padding: 4px 8px;
   cursor: pointer;
+}
+
+.todo-list-edit-input {
+  padding: 4px 8px;
+}
+
+.edit-todo-list-name,
+.ok-edit-todo-list-name {
+  width: 48px;
+}
+.todo-list-edit-input {
+  background-color: #dfdfdf;
 }

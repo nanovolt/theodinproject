@@ -14,17 +14,6 @@ export default function TodosStorage() {
     return false;
   }
 
-  function addTodoList(name) {
-    const array = getArrayOfTodoLists();
-
-    const todoList = {
-      name: `${name}`,
-      todos: [],
-    };
-    array.push(todoList);
-    localStorage.setItem("ArrayOfTodoLists", JSON.stringify(array));
-  }
-
   function getCurrentTodoList() {
     return localStorage.getItem("currentTodoList");
   }
@@ -33,12 +22,30 @@ export default function TodosStorage() {
     localStorage.setItem("currentTodoList", todoList);
   }
 
+  function addTodoList(name) {
+    const array = getArrayOfTodoLists();
+
+    const todoList = {
+      name: `${name}`,
+      todos: [],
+    };
+
+    array.push(todoList);
+    // console.log(JSON.stringify(array));
+    localStorage.setItem("ArrayOfTodoLists", JSON.stringify(array));
+    setCurrentTodoList(name);
+  }
+
   function deleteTodoList(name) {
     // console.log(getArrayOfTodoLists().filter((item) => item.name !== name));
+    console.log(
+      JSON.stringify(getArrayOfTodoLists().filter((item) => item.name === name))
+    );
     localStorage.setItem(
       "ArrayOfTodoLists",
       JSON.stringify(getArrayOfTodoLists().filter((item) => item.name !== name))
     );
+
     setCurrentTodoList("");
   }
 

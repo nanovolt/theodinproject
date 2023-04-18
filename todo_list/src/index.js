@@ -28,4 +28,5 @@ const mainComponents = [
   ModalTodoEditor(observable, storage),
   TasksWindow(),
 ];
+
 InitializeComponents(document.querySelector("main"), mainComponents);

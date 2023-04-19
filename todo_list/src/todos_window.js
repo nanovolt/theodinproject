@@ -2,153 +2,146 @@ import "./todos_window.css";
 import * as DOM from "./todos_window_DOM";
 
 export default function TodosWindow(observable, storage) {
-  function displayPopup(message, inputValue) {
-    const popup = document.querySelector(".add-todo-list-popup");
-    if (message === "Already have:") {
-      popup.style.cssText = `border-right: 8px solid red;`;
-    } else {
-      popup.style.cssText = `border-right: 8px solid green;`;
-    }
-
-    const { height } = document
-      .querySelector(".todo-list-name-input")
-      .getBoundingClientRect();
-
-    document.querySelector(".add-todo-list-popup").style.top = `${height}px`;
-    popup.style.visibility = "visible";
-    popup.innerText = `${message} ${inputValue}`;
-    popup.style.opacity = "1";
-
-    setTimeout(() => {
-      popup.style.opacity = "0";
-      popup.style.visibility = "hidden";
-    }, 1000);
-  }
-
   function isTodoListCurrent(todoListName) {
     return todoListName === storage.getCurrentTodoList();
   }
 
-  function isInputValid(value) {
-    if (!value.replace(/\s/g, "").length) {
-      console.log(
-        "string only contains whitespace (ie. spaces, tabs or line breaks)"
-      );
-      return false;
-    }
-    return true;
-  }
-
   function todoListEventListeners(todoList) {
+    let todoListName = todoList.querySelector(".todo-list-name");
+    let editButton = todoList.querySelector(".edit-todo-list-name");
+    let todoListEditInput = todoList.querySelector(".todo-list-edit-input");
+    let okButton = todoList.querySelector(".ok-edit-todo-list-name");
+
     let valueBeforeEdit;
 
-    todoList.addEventListener("click", () => {
-      console.log("todoList click", todoList);
-      if (!todoList.lastChild.classList.contains("editing-name")) {
-        storage.setCurrentTodoList(todoList.firstChild.innerText);
-        if (document.querySelector(".current")) {
-          document.querySelector(".current").classList.remove("current");
-        }
-        todoList.classList.add("current");
-      }
-    });
+    function createTodoListEventListeners() {
+      todoList.addEventListener("click", () => {
+        if (!editButton.classList.contains("editing-name")) {
+          storage.setCurrentTodoList(todoListName.innerText);
 
-    function change(value) {
-      DOM.createTodoListNameSpan(value);
-      DOM.createEditButton();
-    }
-
-    // if clicked on Edit
-    function editOkEventListeners() {}
-    editOkEventListeners();
-
-    todoList.lastChild.addEventListener("click", (e) => {
-      // e.stopPropagation();
-
-      valueBeforeEdit = todoList.firstChild.innerText;
-
-      DOM.createEditInput(todoList, valueBeforeEdit);
-      DOM.createOkButton(todoList);
-
-      todoList.lastChild.addEventListener("click", () => {
-        console.log("pressed OK, acceptChanges()");
-        change(todoList.firstChild.value);
-      });
-
-      todoList.firstChild.focus();
-
-      todoList.firstChild.addEventListener("keydown", (ev) => {
-        if (ev.key === "Enter") {
-          console.log("pressed Enter, acceptChanges()");
-          change(todoList.firstChild.value);
-        }
-        if (ev.key === "Escape") {
-          console.log("pressed Escape, resetChanges()");
-          change(valueBeforeEdit);
-          console.log("activeElement:", document.activeElement);
+          if (document.querySelector(".current")) {
+            document.querySelector(".current").classList.remove("current");
+          }
+          todoList.classList.add("current");
         }
       });
+    }
+    createTodoListEventListeners();
 
-      todoList.firstChild.addEventListener("blur", () => {
-        console.log("editInput blur", e.target);
-        change(valueBeforeEdit);
+    function createEditButtonEventListeners(button) {
+      button.addEventListener("click", (e) => {
+        console.log("edit");
+        e.stopPropagation();
+
+        valueBeforeEdit = todoListName.innerText;
+
+        todoListName.remove();
+        button.remove();
+        DOM.createEditInput(todoList, valueBeforeEdit);
+        DOM.createOkButton(todoList);
+        todoListEditInput = todoList.querySelector(".todo-list-edit-input");
+        okButton = todoList.querySelector(".ok-edit-todo-list-name");
+
+        okButton.addEventListener("click", () => {
+          console.log("pressed OK, acceptChanges()");
+
+          todoListEditInput.remove();
+          okButton.remove();
+          DOM.createTodoListNameSpan(todoList, valueBeforeEdit);
+          DOM.createEditButton(todoList);
+          todoListName = todoList.querySelector(".todo-list-name");
+          editButton = todoList.querySelector(".edit-todo-list-name");
+
+          createEditButtonEventListeners(editButton);
+        });
+
+        todoListEditInput.focus();
+
+        todoListEditInput.addEventListener("keydown", (ev) => {
+          if (ev.key === "Enter") {
+            console.log("pressed Enter, acceptChanges()");
+
+            todoListEditInput.remove();
+            okButton.remove();
+            DOM.createTodoListNameSpan(todoList, valueBeforeEdit);
+            DOM.createEditButton(todoList);
+            todoListName = todoList.querySelector(".todo-list-name");
+            editButton = todoList.querySelector(".edit-todo-list-name");
+
+            createEditButtonEventListeners(editButton);
+          }
+
+          if (ev.key === "Escape") {
+            console.log("pressed Escape, resetChanges()");
+
+            todoListEditInput.remove();
+            okButton.remove();
+            DOM.createTodoListNameSpan(todoList, valueBeforeEdit);
+            DOM.createEditButton(todoList);
+            todoListName = todoList.querySelector(".todo-list-name");
+            editButton = todoList.querySelector(".edit-todo-list-name");
+
+            createEditButtonEventListeners(editButton);
+          }
+        });
+
+        todoListEditInput.addEventListener("blur", () => {
+          console.log("editInput blur", e.target);
+
+          todoListEditInput.remove();
+          okButton.remove();
+          DOM.createTodoListNameSpan(todoList, valueBeforeEdit);
+          DOM.createEditButton(todoList);
+          todoListName = todoList.querySelector(".todo-list-name");
+          editButton = todoList.querySelector(".edit-todo-list-name");
+
+          createEditButtonEventListeners(editButton);
+        });
       });
-    });
-  }
-
-  function deleteTodoList() {
-    const current = document.querySelector(".current");
-    if (current) {
-      console.log(current.firstChild.innerText);
-      storage.deleteTodoList(current.firstChild.innerText);
-      current.remove();
-      displayPopup("Deleted:", current.firstChild.innerText);
     }
 
-    if (storage.getArrayOfTodoLists().length === 0) {
-      storage.addTodoList("Default");
-      DOM.createTodoList("Default", isTodoListCurrent("Default"));
-
-      todoListEventListeners(document.querySelector(".todo-list"));
-    }
+    createEditButtonEventListeners(editButton);
   }
 
   function initializeEventListeners() {
-    // let clickTarget;
-    function addTodoListEventListeners() {
-      // window.addEventListener("click", (e) => {
-      //   clickTarget = e.target;
-      // });
-      const nameInput = document.querySelector(".todo-list-name-input");
-      let inputValue = "";
+    const todoListNameInput = document.querySelector(".todo-list-name-input");
+    const addTodoList = document.querySelector(".add-todo-list");
+    const deleteTodoList = document.querySelector(".delete-todo-list");
 
-      document.querySelector(".add-todo-list").addEventListener("click", () => {
-        // inputValue = nameInput.value;
-        // e.preventDefault();
-        console.log("add click", inputValue);
+    let inputValue = "";
+
+    function addTodoListEventListeners() {
+      addTodoList.addEventListener("click", () => {
+        inputValue = inputValue.trim().split(/[\s]+/).join(" ");
+
         if (inputValue) {
           if (storage.isNotPresent(inputValue)) {
             storage.addTodoList(inputValue.trim());
+
             DOM.createTodoList(inputValue, isTodoListCurrent(inputValue));
             todoListEventListeners(
               document.querySelectorAll(".todo-list:nth-last-of-type(1)")[0]
             );
 
-            displayPopup("Added:", inputValue);
+            DOM.displayPopup("Added:", inputValue);
             inputValue = "";
           } else {
-            nameInput.value = inputValue;
-            displayPopup("Already have:", inputValue);
-            nameInput.focus();
+            todoListNameInput.value = inputValue;
+            todoListNameInput.focus();
+            DOM.displayPopup("Already have:", inputValue);
           }
         }
       });
+    }
 
-      nameInput.addEventListener("keydown", (e) => {
-        inputValue = nameInput.value;
+    function todoListNameInputEventListeners() {
+      todoListNameInput.addEventListener("keydown", (e) => {
+        inputValue = todoListNameInput.value;
+        inputValue = inputValue.trim().split(/[\s]+/).join(" ");
+
         if (inputValue && e.key === "Enter") {
           if (storage.isNotPresent(inputValue)) {
-            nameInput.value = "";
+            todoListNameInput.value = "";
 
             storage.addTodoList(inputValue.trim());
             DOM.createTodoList(inputValue, isTodoListCurrent(inputValue));
@@ -156,41 +149,45 @@ export default function TodosWindow(observable, storage) {
               document.querySelectorAll(".todo-list:nth-last-of-type(1)")[0]
             );
 
-            displayPopup("Added:", inputValue);
+            DOM.displayPopup("Added:", inputValue);
           } else {
-            displayPopup("Already have:", inputValue);
+            DOM.displayPopup("Already have:", inputValue);
           }
         }
+
         if (e.key === "Escape") {
-          nameInput.value = "";
+          todoListNameInput.value = "";
         }
       });
 
-      nameInput.addEventListener("blur", () => {
-        inputValue = nameInput.value;
-        nameInput.value = "";
-
-        // console.log("blur clickTarget:", clickTarget);
-
-        // if (clickTarget === nameInput.nextElementSibling) {
-        // }
-        // if (storage.isNotPresent(inputValue)) {
-        //   nameInput.value = inputValue;
-        // }
+      todoListNameInput.addEventListener("blur", () => {
+        inputValue = todoListNameInput.value;
+        todoListNameInput.value = "";
       });
     }
 
-    document
-      .querySelector(".delete-todo-list")
-      .addEventListener("click", () => {
-        deleteTodoList();
+    function deleteTodoListEventListeners() {
+      deleteTodoList.addEventListener("click", () => {
+        const current = document.querySelector(".current");
+
+        if (current) {
+          storage.deleteTodoList(current.firstChild.innerText);
+          current.remove();
+          DOM.displayPopup("Deleted:", current.firstChild.innerText);
+        }
+
+        if (storage.getArrayOfTodoLists().length === 0) {
+          storage.addTodoList("Default");
+          DOM.createTodoList("Default", isTodoListCurrent("Default"));
+
+          todoListEventListeners(document.querySelector(".todo-list"));
+        }
       });
+    }
 
-    document.querySelectorAll(".todo-list").forEach((element) => {
-      todoListEventListeners(element);
-    });
-
+    todoListNameInputEventListeners();
     addTodoListEventListeners();
+    deleteTodoListEventListeners();
   }
 
   function initializeComponent(parentComponent) {
@@ -201,6 +198,10 @@ export default function TodosWindow(observable, storage) {
     });
 
     initializeEventListeners();
+
+    document.querySelectorAll(".todo-list").forEach((element) => {
+      todoListEventListeners(element);
+    });
   }
 
   return { initializeComponent };

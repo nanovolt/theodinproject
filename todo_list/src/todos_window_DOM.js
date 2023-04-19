@@ -96,3 +96,26 @@ export function createTodoList(todoListName, isCurrent) {
 
   document.querySelector(".list-of-todos").appendChild(element);
 }
+
+export function displayPopup(message, inputValue) {
+  const popup = document.querySelector(".add-todo-list-popup");
+  if (message === "Already have:") {
+    popup.style.cssText = `border-right: 8px solid red;`;
+  } else {
+    popup.style.cssText = `border-right: 8px solid green;`;
+  }
+
+  const { height } = document
+    .querySelector(".todo-list-name-input")
+    .getBoundingClientRect();
+
+  document.querySelector(".add-todo-list-popup").style.top = `${height}px`;
+  popup.style.visibility = "visible";
+  popup.innerText = `${message} ${inputValue}`;
+  popup.style.opacity = "1";
+
+  setTimeout(() => {
+    popup.style.opacity = "0";
+    popup.style.visibility = "hidden";
+  }, 1000);
+}

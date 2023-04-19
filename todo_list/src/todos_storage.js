@@ -38,9 +38,9 @@ export default function TodosStorage() {
 
   function deleteTodoList(name) {
     // console.log(getArrayOfTodoLists().filter((item) => item.name !== name));
-    console.log(
-      JSON.stringify(getArrayOfTodoLists().filter((item) => item.name === name))
-    );
+    // console.log(
+    //   JSON.stringify(getArrayOfTodoLists().filter((item) => item.name === name))
+    // );
     localStorage.setItem(
       "ArrayOfTodoLists",
       JSON.stringify(getArrayOfTodoLists().filter((item) => item.name !== name))

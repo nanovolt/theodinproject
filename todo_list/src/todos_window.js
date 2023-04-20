@@ -24,6 +24,8 @@ export default function TodosWindow(observable, storage) {
           }
           todoList.classList.add("current");
         }
+
+        observable.notify();
       });
     }
 

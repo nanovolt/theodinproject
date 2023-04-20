@@ -7,6 +7,14 @@ export default function TodosStorage() {
     return array;
   }
 
+  function renameTodoList(oldName, newName) {
+    const arr = getArrayOfTodoLists();
+
+    arr[arr.findIndex((todoList) => todoList.name === oldName)].name = newName;
+
+    localStorage.setItem("ArrayOfTodoLists", JSON.stringify(arr));
+  }
+
   function hasTodoLists() {
     if (localStorage.getItem("ArrayOfTodoLists")) {
       return true;
@@ -22,25 +30,30 @@ export default function TodosStorage() {
     localStorage.setItem("currentTodoList", todoList);
   }
 
+  function isNotPresent(name) {
+    const arr = getArrayOfTodoLists();
+    if (arr.filter((todo) => todo.name === name).length === 0) {
+      return true;
+    }
+    return false;
+  }
+
   function addTodoList(name) {
-    const array = getArrayOfTodoLists();
+    const arr = getArrayOfTodoLists();
 
-    const todoList = {
-      name: `${name}`,
-      todos: [],
-    };
+    if (isNotPresent(name)) {
+      const todoList = {
+        name: `${name}`,
+        todos: [],
+      };
 
-    array.push(todoList);
-    // console.log(JSON.stringify(array));
-    localStorage.setItem("ArrayOfTodoLists", JSON.stringify(array));
-    setCurrentTodoList(name);
+      arr.push(todoList);
+      localStorage.setItem("ArrayOfTodoLists", JSON.stringify(arr));
+      setCurrentTodoList(name);
+    }
   }
 
   function deleteTodoList(name) {
-    // console.log(getArrayOfTodoLists().filter((item) => item.name !== name));
-    // console.log(
-    //   JSON.stringify(getArrayOfTodoLists().filter((item) => item.name === name))
-    // );
     localStorage.setItem(
       "ArrayOfTodoLists",
       JSON.stringify(getArrayOfTodoLists().filter((item) => item.name !== name))
@@ -56,18 +69,6 @@ export default function TodosStorage() {
       setCurrentTodoList("Default");
       addTodoList("Default");
     }
-
-    // console.log(getCurrentTodoList());
-    // console.log(getArrayOfTodoLists());
-  }
-
-  function isNotPresent(name) {
-    const arr = getArrayOfTodoLists();
-    if (arr.filter((todo) => todo.name === name).length === 0) {
-      return true;
-    }
-
-    return false;
   }
 
   return {
@@ -79,5 +80,6 @@ export default function TodosStorage() {
     getCurrentTodoList,
     setCurrentTodoList,
     isNotPresent,
+    renameTodoList,
   };
 }

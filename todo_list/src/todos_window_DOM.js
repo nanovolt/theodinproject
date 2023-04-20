@@ -16,16 +16,6 @@ export function createStaticElements(parentComponent) {
   const todoListInput = document.createElement("input");
   todoListInput.classList.add("todo-list-name-input");
   todoListInput.pattern = "^[^ ].+[^ ]$";
-  // const pattern = /^[.+]*$/g;
-  // todoListInput.addEventListener("input", () => {
-  // console.log([...todoListInput.value.matchAll(pattern)]);
-  // // console.log(todoListInput.value.match("^[^ ].+[^ ]$"));
-  // if (todoListInput.value.match(/^[^ ].+[^ ]$/)) {
-  //   console.log(todoListInput.value);
-  // } else {
-  //   todoListInput.value = todoListInput.value.slice(0, -1);
-  // }
-  // });
 
   const addTodoListButton = document.createElement("button");
   addTodoListButton.classList.add("add-todo-list");

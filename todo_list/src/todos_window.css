@@ -1,56 +1,87 @@
 .todos-window {
   display: grid;
   gap: 8px;
+  padding: 8px;
+  border-radius: 8px;
+
+  background-color: var(--color-component);
 }
 
 .todo-list-input-container {
+  /* position: relative; */
+
   display: grid;
-  position: relative;
-  grid-template-columns: 1fr auto auto;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+
   justify-items: start;
+}
+
+.list-of-todo-lists {
+  display: grid;
+  gap: 8px;
 }
 
 .todo-list {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) 32px 32px;
   align-items: center;
-  cursor: pointer;
-  background-color: white;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 8px;
 }
 
-.todo-list:hover {
-  background-color: lightskyblue;
-}
-
-.current {
-  background-color: lightskyblue;
-}
-
-.add-todo-list,
-.delete-todo-list,
-.edit-todo-list-name,
-.todo-list-name,
-.ok-edit-todo-list-name {
+.todo-list-name {
+  /* min-width: 0; */
+  overflow-wrap: break-word;
   padding: 4px 8px;
-  cursor: pointer;
-}
-
-.todo-list-edit-input,
-.todo-list-name-input,
-.add-todo-list-popup {
-  padding: 4px 8px;
-}
-.todo-list-name-input::after {
-  content: "add";
-}
-
-.edit-todo-list-name,
-.ok-edit-todo-list-name {
-  width: 48px;
 }
 
 .todo-list-edit-input {
-  background-color: #dfdfdf;
+}
+
+.todo-list .edit-todo-list-name,
+.todo-list .delete-todo-list {
+  visibility: hidden;
+}
+
+.todo-list:hover {
+  background-color: var(--color-hover);
+}
+
+.todo-list:hover .edit-todo-list-name,
+.todo-list:hover .delete-todo-list {
+  visibility: visible;
+}
+
+.current {
+  background-color: var(--color-select);
+}
+
+.delete-todo-list,
+.edit-todo-list-name,
+.ok-edit-todo-list-name {
+  height: 32px;
+  /* : 48px; */
+  padding: 0;
+}
+
+.edit-todo-list-name,
+.ok-edit-todo-list-name {
+  /* width: 64px; */
+}
+
+.edit-todo-list-name::before {
+  font-family: "Font Awesome 6 Free";
+  content: "\f044";
+}
+
+.ok-edit-todo-list-name::before {
+  content: "\f00c";
+}
+
+.delete-todo-list::before {
+  content: "\f2ed";
 }
 
 .add-todo-list-popup {
@@ -59,7 +90,8 @@
   position: absolute;
   top: 0;
   left: 0;
-
-  background-color: white;
-  transition: 250ms;
+  transition: opacity 250ms;
+  background-color: var(--color-select);
+  padding: 8px;
+  border-radius: 8px;
 }

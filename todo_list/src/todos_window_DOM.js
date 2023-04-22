@@ -7,68 +7,79 @@ function setFixedPosition() {
 }
 
 export function createStaticElements(parentComponent) {
-  const element = document.createElement("div");
-  element.classList.add("todos-window");
+  const component = document.createElement("div");
+  component.classList.add("todos-window");
 
   const todoListInputContainer = document.createElement("div");
   todoListInputContainer.classList.add("todo-list-input-container");
 
   const todoListInput = document.createElement("input");
   todoListInput.classList.add("todo-list-name-input");
+  todoListInput.maxLength = 48;
   todoListInput.pattern = "^[^ ].+[^ ]$";
 
   const addTodoListButton = document.createElement("button");
   addTodoListButton.classList.add("add-todo-list");
   addTodoListButton.innerText = "Add";
 
-  const deleteTodoListButton = document.createElement("button");
-  deleteTodoListButton.classList.add("delete-todo-list");
-  deleteTodoListButton.innerText = "Delete";
-
   const addTodoListPopup = document.createElement("div");
   addTodoListPopup.classList.add("add-todo-list-popup");
 
   const listOfTodos = document.createElement("ul");
-  listOfTodos.classList.add("list-of-todos");
+  listOfTodos.classList.add("list-of-todo-lists");
 
   todoListInputContainer.appendChild(todoListInput);
   todoListInputContainer.appendChild(addTodoListButton);
-  todoListInputContainer.appendChild(deleteTodoListButton);
   todoListInputContainer.appendChild(addTodoListPopup);
 
-  element.appendChild(todoListInputContainer);
-  element.appendChild(listOfTodos);
+  component.appendChild(todoListInputContainer);
+  component.appendChild(listOfTodos);
 
-  parentComponent.appendChild(element);
+  parentComponent.appendChild(component);
 
   setFixedPosition();
 }
 
 export function createEditButton(parentElement) {
   const element = document.createElement("button");
+  element.classList.add("icon");
+  // element.classList.add("icon-free");
   element.classList.add("edit-todo-list-name");
-  element.innerText = "Edit";
-  parentElement.appendChild(element);
+
+  parentElement.prepend(element);
 }
 
 export function createOkButton(parentElement) {
   const element = document.createElement("button");
+  element.classList.add("icon");
+  element.classList.add("icon-free");
   element.classList.add("ok-edit-todo-list-name");
-  element.innerText = "Ok";
-  parentElement.appendChild(element);
+
+  parentElement.prepend(element);
 }
 
 export function createEditInput(parentElement, todoListName) {
   const element = document.createElement("input");
   element.classList.add("todo-list-edit-input");
   element.value = todoListName;
-  parentElement.appendChild(element);
+  element.maxLength = 48;
+  parentElement.prepend(element);
 }
 
 export function createTodoListNameSpan(parentElement, todoListName) {
   const element = document.createElement("span");
   element.classList.add("todo-list-name");
   element.innerText = todoListName;
+
+  parentElement.prepend(element);
+}
+
+export function createDeleteButton(parentElement) {
+  const element = document.createElement("button");
+  element.classList.add("icon");
+  element.classList.add("icon-free");
+  element.classList.add("delete-todo-list");
+
   parentElement.appendChild(element);
 }
 
@@ -81,13 +92,15 @@ export function createTodoList(todoListName, isCurrent) {
     if (current) current.classList.remove("current");
     element.classList.add("current");
   }
-  createTodoListNameSpan(element, todoListName);
-  createEditButton(element);
 
-  document.querySelector(".list-of-todos").appendChild(element);
+  createEditButton(element);
+  createTodoListNameSpan(element, todoListName);
+  createDeleteButton(element);
+
+  document.querySelector(".list-of-todo-lists").appendChild(element);
 }
 
-export function displayPopup(message, inputValue) {
+export function displayPopup(message, inputValue, top = 0, left = 0) {
   const popup = document.querySelector(".add-todo-list-popup");
   if (message === "Already have:") {
     popup.style.cssText = `border-right: 8px solid red;`;
@@ -95,11 +108,11 @@ export function displayPopup(message, inputValue) {
     popup.style.cssText = `border-right: 8px solid green;`;
   }
 
-  const { height } = document
-    .querySelector(".todo-list-name-input")
-    .getBoundingClientRect();
+  // console.log("top:", top, "left:", left);
 
-  document.querySelector(".add-todo-list-popup").style.top = `${height}px`;
+  document.querySelector(".add-todo-list-popup").style.top = `${top}px`;
+  document.querySelector(".add-todo-list-popup").style.left = `${left}px`;
+
   popup.style.visibility = "visible";
   popup.innerText = `${message} ${inputValue}`;
   popup.style.opacity = "1";

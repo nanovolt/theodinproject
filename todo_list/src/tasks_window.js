@@ -1,69 +1,78 @@
 import "./tasks_window.css";
 import format from "date-fns/format";
 import { parseISO } from "date-fns/esm";
+import * as DOM from "./tasks_window_DOM";
 
-export default function TasksWindow() {
+export default function TasksWindow(observable, storage) {
   const tasks = [];
-  let task;
+
+  function hideTodoEditor() {
+    const todoEditor = document.querySelector(".todo-editor");
+    todoEditor.style.display = "none";
+  }
+
+  function initializeEventListeners() {
+    function openTodoEditorEventListeners() {
+      const addTask = document.querySelector(".add-todo");
+      const todoEditor = document.querySelector(".todo-editor");
+
+      addTask.addEventListener("click", () => {
+        if (storage.getCurrentTodoList()) {
+          todoEditor.style.display = "block";
+        } else {
+          alert("Choose To-do list first");
+        }
+      });
+
+      todoEditor.addEventListener("blur", () => {
+        hideTodoEditor();
+      });
+    }
+
+    function getTodo() {
+      const todoEditor = document.querySelector(".todo-editor");
+      const todoEditorForm = document.querySelector(".todo-editor-form");
+
+      todoEditorForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const formdata = new FormData(todoEditorForm);
+        const task = {};
+        task.title = formdata.get("title");
+        task.description = formdata.get("description");
+        task.dueDate = formdata.get("dueDate");
+        task.priority = formdata.get("priority");
+
+        todoEditor.style.display = "none";
+
+        task.dueDate = format(parseISO(task.dueDate), "dd/MM/yyyy");
+        DOM.createToDo(task);
+      });
+    }
+
+    function cancel() {
+      const cancelButt = document.querySelector(".cancel");
+      cancelButt.addEventListener("click", () => {
+        hideTodoEditor();
+      });
+    }
+
+    openTodoEditorEventListeners();
+    getTodo();
+    cancel();
+  }
 
   function initializeComponent(parentComponent) {
-    const component = document.createElement("div");
-    component.classList.add("tasks-window");
-    parentComponent.appendChild(component);
+    DOM.createStaticElements(parentComponent);
+    initializeEventListeners();
   }
 
-  function renderTask() {
-    const window = document.querySelector(".tasks-window");
-    const taskElem = document.createElement("div");
-    taskElem.classList.add("task");
-    const taskTitle = document.createElement("div");
-    taskTitle.classList.add("task-title");
-    const taskDescription = document.createElement("div");
-    taskDescription.classList.add("task-description");
-    const taskDueDate = document.createElement("div");
-    taskDueDate.classList.add("task-due-date");
-    const taskPriority = document.createElement("div");
-    taskPriority.classList.add("task-priority");
-
-    switch (task.priority) {
-      case "Critical":
-        taskPriority.classList.add("critical");
-        break;
-      case "Urgent":
-        taskPriority.classList.add("urgent");
-        break;
-      case "Normal":
-        taskPriority.classList.add("normal");
-        break;
-      case "Low":
-        taskPriority.classList.add("low");
-        break;
-      default:
-        break;
-    }
-    // console.log(parseISO(task.dueDate, "eeee do MMM, yyyy"));
-
-    taskTitle.innerText = task.title;
-    taskDescription.innerText = task.description;
-    taskDueDate.innerText = format(parseISO(task.dueDate), "dd/MM/yyyy");
-    // taskDueDate.innerText = task.dueDate;
-    taskPriority.innerText = task.priority;
-
-    taskElem.appendChild(taskTitle);
-    taskElem.appendChild(taskDescription);
-    taskElem.appendChild(taskDueDate);
-    taskElem.appendChild(taskPriority);
-
-    window.appendChild(taskElem);
+  function getNotified() {
+    console.log("tasks windows notified");
   }
 
-  function notify(param) {
-    task = param;
-    tasks.push(task);
-    renderTask();
-  }
-
-  function initializeEventListeners() {}
-
-  return { initializeComponent, initializeEventListeners, notify, renderTask };
+  return {
+    initializeComponent,
+    getNotified,
+  };
 }

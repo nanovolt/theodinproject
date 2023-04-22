@@ -12,6 +12,8 @@ export default function TodosWindow(observable, storage) {
     let todoListEditInput = todoList.querySelector(".todo-list-edit-input");
     let okButton = todoList.querySelector(".ok-edit-todo-list-name");
 
+    const deleteButton = todoList.querySelector(".delete-todo-list");
+
     let valueBeforeEdit;
 
     function createTodoListEventListeners() {
@@ -35,8 +37,10 @@ export default function TodosWindow(observable, storage) {
       function createSpanAndEdit(editValue) {
         todoListEditInput.remove();
         okButton.remove();
-        DOM.createTodoListNameSpan(todoList, editValue);
+
         DOM.createEditButton(todoList);
+        DOM.createTodoListNameSpan(todoList, editValue);
+
         todoListName = todoList.querySelector(".todo-list-name");
         editButton = todoList.querySelector(".edit-todo-list-name");
         createEditButtonEventListeners(editButton);
@@ -45,8 +49,10 @@ export default function TodosWindow(observable, storage) {
       function createInputAndOk() {
         todoListName.remove();
         button.remove();
-        DOM.createEditInput(todoList, valueBeforeEdit);
+
         DOM.createOkButton(todoList);
+        DOM.createEditInput(todoList, valueBeforeEdit);
+
         todoListEditInput = todoList.querySelector(".todo-list-edit-input");
         okButton = todoList.querySelector(".ok-edit-todo-list-name");
       }
@@ -59,17 +65,34 @@ export default function TodosWindow(observable, storage) {
         okButton.addEventListener("click", (ev) => {
           ev.stopPropagation();
 
+          const { top, left, height } =
+            todoListEditInput.getBoundingClientRect();
+
           const editValue = todoListEditInput.value
             .trim()
             .split(/[\s]+/)
             .join(" ");
 
           if (editValue) {
-            storage.renameTodoList(valueBeforeEdit, editValue);
-            if (storage.getCurrentTodoList() === valueBeforeEdit) {
-              storage.setCurrentTodoList(editValue);
+            if (storage.isNotPresent(editValue)) {
+              storage.renameTodoList(valueBeforeEdit, editValue);
+              if (storage.getCurrentTodoList() === valueBeforeEdit) {
+                storage.setCurrentTodoList(editValue);
+              }
+              createSpanAndEdit(editValue);
+            } else if (editValue === valueBeforeEdit) {
+              createSpanAndEdit(valueBeforeEdit);
+            } else {
+              todoListEditInput.focus();
+              DOM.displayPopup(
+                "Already have:",
+                editValue,
+                window.scrollY + top + height + 8,
+                left
+              );
             }
-            createSpanAndEdit(editValue);
+          } else {
+            createSpanAndEdit(valueBeforeEdit);
           }
         });
 
@@ -80,17 +103,37 @@ export default function TodosWindow(observable, storage) {
         });
 
         todoListEditInput.addEventListener("keydown", (ev) => {
+          const { top, left, height } =
+            todoListEditInput.getBoundingClientRect();
+
           const editValue = todoListEditInput.value
             .trim()
             .split(/[\s]+/)
             .join(" ");
 
-          if (editValue && ev.key === "Enter") {
-            storage.renameTodoList(valueBeforeEdit, editValue);
-            if (storage.getCurrentTodoList() === valueBeforeEdit) {
-              storage.setCurrentTodoList(editValue);
+          if (ev.key === "Enter") {
+            if (editValue) {
+              if (storage.isNotPresent(editValue)) {
+                storage.renameTodoList(valueBeforeEdit, editValue);
+                if (storage.getCurrentTodoList() === valueBeforeEdit) {
+                  storage.setCurrentTodoList(editValue);
+                }
+                createSpanAndEdit(editValue);
+              } else if (editValue === valueBeforeEdit) {
+                createSpanAndEdit(valueBeforeEdit);
+              } else {
+                todoListEditInput.focus();
+
+                DOM.displayPopup(
+                  "Already have:",
+                  editValue,
+                  window.scrollY + top + height + 8,
+                  left
+                );
+              }
+            } else {
+              createSpanAndEdit(valueBeforeEdit);
             }
-            createSpanAndEdit(editValue);
           }
 
           if (ev.key === "Escape") {
@@ -107,15 +150,47 @@ export default function TodosWindow(observable, storage) {
     }
 
     createEditButtonEventListeners(editButton);
+
+    function deleteTodoListEventListeners() {
+      deleteButton.addEventListener("click", (e) => {
+        const { top, left, height } = deleteButton.getBoundingClientRect();
+
+        e.stopPropagation();
+
+        storage.deleteTodoList(todoListName.innerText);
+        if (todoList.classList.contains("current")) {
+          console.log("current");
+          storage.setCurrentTodoList("");
+        }
+        todoList.remove();
+
+        DOM.displayPopup(
+          "Deleted:",
+          todoListName.innerText,
+          window.scrollY + top + height + 8,
+          left
+        );
+
+        if (storage.getArrayOfTodoLists().length === 0) {
+          storage.addTodoList("Default");
+          DOM.createTodoList("Default", isTodoListCurrent("Default"));
+
+          todoListEventListeners(document.querySelector(".todo-list"));
+        }
+      });
+    }
+
+    deleteTodoListEventListeners();
   }
 
   function initializeEventListeners() {
     const todoListNameInput = document.querySelector(".todo-list-name-input");
     const addTodoList = document.querySelector(".add-todo-list");
-    const deleteTodoList = document.querySelector(".delete-todo-list");
 
     function addTodoListEventListeners() {
       addTodoList.addEventListener("click", () => {
+        const { top, left, height } = todoListNameInput.getBoundingClientRect();
+
         const inputValue = todoListNameInput.value
           .trim()
           .split(/[\s]+/)
@@ -130,14 +205,24 @@ export default function TodosWindow(observable, storage) {
               document.querySelectorAll(".todo-list:nth-last-of-type(1)")[0]
             );
 
-            DOM.displayPopup("Added:", inputValue);
+            DOM.displayPopup(
+              "Added:",
+              inputValue,
+              window.scrollY + top + height + 8,
+              left
+            );
 
             todoListNameInput.value = "";
           } else {
             todoListNameInput.value = inputValue;
             todoListNameInput.focus();
 
-            DOM.displayPopup("Already have:", inputValue);
+            DOM.displayPopup(
+              "Already have:",
+              inputValue,
+              window.scrollY + top + height + 8,
+              left
+            );
           }
         }
       });
@@ -145,6 +230,8 @@ export default function TodosWindow(observable, storage) {
 
     function todoListNameInputEventListeners() {
       todoListNameInput.addEventListener("keydown", (e) => {
+        const { top, left, height } = todoListNameInput.getBoundingClientRect();
+
         const inputValue = todoListNameInput.value
           .trim()
           .split(/[\s]+/)
@@ -159,11 +246,16 @@ export default function TodosWindow(observable, storage) {
               document.querySelectorAll(".todo-list:nth-last-of-type(1)")[0]
             );
 
-            DOM.displayPopup("Added:", inputValue);
+            DOM.displayPopup("Added:", inputValue, top + height + 8, left);
 
             todoListNameInput.value = "";
           } else {
-            DOM.displayPopup("Already have:", inputValue);
+            DOM.displayPopup(
+              "Already have:",
+              inputValue,
+              window.scrollY + top + height + 8,
+              left
+            );
           }
         }
 
@@ -179,28 +271,8 @@ export default function TodosWindow(observable, storage) {
       });
     }
 
-    function deleteTodoListEventListeners() {
-      deleteTodoList.addEventListener("click", () => {
-        const current = document.querySelector(".current");
-
-        if (current) {
-          storage.deleteTodoList(current.firstChild.innerText);
-          current.remove();
-          DOM.displayPopup("Deleted:", current.firstChild.innerText);
-        }
-
-        if (storage.getArrayOfTodoLists().length === 0) {
-          storage.addTodoList("Default");
-          DOM.createTodoList("Default", isTodoListCurrent("Default"));
-
-          todoListEventListeners(document.querySelector(".todo-list"));
-        }
-      });
-    }
-
     todoListNameInputEventListeners();
     addTodoListEventListeners();
-    deleteTodoListEventListeners();
   }
 
   function initializeComponent(parentComponent) {

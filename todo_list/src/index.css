@@ -7,21 +7,42 @@
   font-family: "Roboto", "Open Sans", "Helvetica Neue", system-ui, -apple-system,
     sans-serif;
   font-size: 0.625rem;
+  --color-base: #121927;
+  --color-component: #1b2436;
+  --color-input: #2a395e;
+  --color-select: #253049;
+  --color-hover: #21325a;
+  --color-button: #00519c;
+  --color-button-hover: #0166c5;
+  --color-button-active: #0084ff;
+  color: white;
 }
 
 * {
   box-sizing: border-box;
 }
 
+html {
+  scrollbar-color: var(--color-button-active) transparent;
+  /* scrollbar-width: 24px; */
+  /* overflow-y: scroll; */
+  /* scrollbar-width: none; */
+  /* overflow-y: hidden; */
+  /* scrollbar-gutter: stable; */
+  /* scrollbar-color: red transparent; */
+  /* scrollbar-gutter: stable both-edges; */
+  /* overflow-y: overlay; */
+  /* margin-left: calc(100vw - 100%); */
+}
+
 body {
   display: flex;
   flex-direction: column;
   gap: 8px;
-
+  margin-left: -16px;
   min-height: 100vh;
-  /* position: relative; */
   margin: 0;
-  background-color: #f0f0f0;
+  background-color: var(--color-base);
   font-size: 1.6rem;
 }
 
@@ -37,12 +58,45 @@ a {
   width: fit-content;
 }
 
-button,
+button {
+  font-size: 1.6rem;
+  cursor: pointer;
+  background-color: var(--color-button);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  color: white;
+}
+
+button:hover {
+  background-color: var(--color-button-hover);
+}
+
+button:active {
+  background-color: var(--color-button-active);
+}
+
+input,
+textarea {
+  font-family: "Roboto", "Open Sans", "Helvetica Neue", system-ui, -apple-system,
+    sans-serif;
+  color: white;
+  background-color: var(--color-input);
+}
+
+textarea button,
 textarea,
 input {
   border: 0;
   font-size: inherit;
-  padding: 0;
+  padding: 4px 8px;
+  border-radius: 8px;
+  outline: none;
+}
+
+input {
+  width: 100%;
+  line-height: 1;
 }
 
 .icon {
@@ -52,9 +106,16 @@ input {
   font-style: normal;
   font-variant: normal;
   font-weight: 900;
-  padding: 0;
+  /* padding: 0; */
   border: none;
   line-height: 1;
   background-color: hsla(0, 0%, 0%, 0);
   height: 100%;
+}
+
+.icon-free {
+  font-family: "Font Awesome 6 Free";
+}
+.icon-brands {
+  font-family: "Font Awesome 6 Brands";
 }

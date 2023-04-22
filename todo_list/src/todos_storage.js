@@ -58,8 +58,6 @@ export default function TodosStorage() {
       "ArrayOfTodoLists",
       JSON.stringify(getArrayOfTodoLists().filter((item) => item.name !== name))
     );
-
-    setCurrentTodoList("");
   }
 
   function init() {

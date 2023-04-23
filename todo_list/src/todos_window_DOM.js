@@ -43,7 +43,6 @@ export function createStaticElements(parentComponent) {
 export function createEditButton(parentElement) {
   const element = document.createElement("button");
   element.classList.add("icon");
-  // element.classList.add("icon-free");
   element.classList.add("edit-todo-list-name");
 
   parentElement.prepend(element);
@@ -52,7 +51,6 @@ export function createEditButton(parentElement) {
 export function createOkButton(parentElement) {
   const element = document.createElement("button");
   element.classList.add("icon");
-  element.classList.add("icon-free");
   element.classList.add("ok-edit-todo-list-name");
 
   parentElement.prepend(element);
@@ -77,7 +75,6 @@ export function createTodoListNameSpan(parentElement, todoListName) {
 export function createDeleteButton(parentElement) {
   const element = document.createElement("button");
   element.classList.add("icon");
-  element.classList.add("icon-free");
   element.classList.add("delete-todo-list");
 
   parentElement.appendChild(element);

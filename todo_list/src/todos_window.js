@@ -159,10 +159,11 @@ export default function TodosWindow(observable, storage) {
 
         storage.deleteTodoList(todoListName.innerText);
         if (todoList.classList.contains("current")) {
-          console.log("current");
           storage.setCurrentTodoList("");
         }
         todoList.remove();
+
+        observable.notify();
 
         DOM.displayPopup(
           "Deleted:",
@@ -200,7 +201,9 @@ export default function TodosWindow(observable, storage) {
           if (storage.isNotPresent(inputValue)) {
             storage.addTodoList(inputValue);
 
-            DOM.createTodoList(inputValue, isTodoListCurrent(inputValue));
+            // DOM.createTodoList(inputValue, isTodoListCurrent(inputValue));
+            DOM.createTodoList(inputValue, false);
+
             todoListEventListeners(
               document.querySelectorAll(".todo-list:nth-last-of-type(1)")[0]
             );
@@ -241,7 +244,9 @@ export default function TodosWindow(observable, storage) {
           if (storage.isNotPresent(inputValue)) {
             storage.addTodoList(inputValue);
 
-            DOM.createTodoList(inputValue, isTodoListCurrent(inputValue));
+            // DOM.createTodoList(inputValue, isTodoListCurrent(inputValue));
+            DOM.createTodoList(inputValue, false);
+
             todoListEventListeners(
               document.querySelectorAll(".todo-list:nth-last-of-type(1)")[0]
             );
@@ -277,12 +282,11 @@ export default function TodosWindow(observable, storage) {
 
   function initializeComponent(parentComponent) {
     DOM.createStaticElements(parentComponent);
+    initializeEventListeners();
 
     storage.getArrayOfTodoLists().forEach((todoList) => {
       DOM.createTodoList(todoList.name, isTodoListCurrent(todoList.name));
     });
-
-    initializeEventListeners();
 
     document.querySelectorAll(".todo-list").forEach((element) => {
       todoListEventListeners(element);

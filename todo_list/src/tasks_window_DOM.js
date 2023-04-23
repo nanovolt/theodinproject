@@ -9,18 +9,26 @@ export function createTodoEditor(parentComponent) {
   title.name = "title";
   title.classList.add("input-title");
   title.placeholder = "task title...";
-  title.required = true;
+  title.maxLength = 64;
+  title.setAttribute("required", true);
 
   const description = document.createElement("textarea");
   description.name = "description";
   description.classList.add("input-description");
   description.placeholder = "description (optional)";
+  description.maxLength = 256;
+
+  const dueDateLabel = document.createElement("div");
+  dueDateLabel.classList.add("due-date-label");
+  dueDateLabel.innerText = "Due date";
 
   const dueDate = document.createElement("input");
   dueDate.name = "dueDate";
   dueDate.classList.add("input-due-date");
   dueDate.type = "date";
-  dueDate.required = true;
+
+  // if set, requires anyway
+  // dueDate.setAttribute("required", false);
 
   const priorityLabel = document.createElement("div");
   priorityLabel.classList.add("priority-label");
@@ -58,7 +66,9 @@ export function createTodoEditor(parentComponent) {
   priorityThird.value = "Normal";
   priorityThird.title = "Normal";
 
-  priorityThird.checked = true;
+  priorityThird.setAttribute("checked", true);
+
+  // priorityThird.checked = true;
 
   // const labelForThird = document.createElement("label");
   // labelForThird.for = "third";
@@ -87,6 +97,10 @@ export function createTodoEditor(parentComponent) {
   cancelEl.type = "button";
   cancelEl.innerText = "Cancel";
 
+  const editorBackground = document.createElement("div");
+  editorBackground.classList.add("editor-background");
+  document.body.appendChild(editorBackground);
+
   prioritySelector.appendChild(priorityFirst);
   // prioritySelector.appendChild(labelForFirst);
   prioritySelector.appendChild(prioritySecond);
@@ -98,6 +112,7 @@ export function createTodoEditor(parentComponent) {
 
   form.appendChild(title);
   form.appendChild(description);
+  form.appendChild(dueDateLabel);
   form.appendChild(dueDate);
   form.appendChild(priorityLabel);
   form.appendChild(prioritySelector);
@@ -122,15 +137,45 @@ export function createStaticElements(parentComponent) {
   listOfTodos.classList.add("list-of-todos");
 
   component.appendChild(addTodo);
-  createTodoEditor(component);
   component.appendChild(listOfTodos);
+
+  createTodoEditor(component);
 
   parentComponent.appendChild(component);
 }
 
-export function createToDo(task) {
-  const taskElem = document.createElement("div");
-  taskElem.classList.add("task");
+export function createEditButton(parentElement) {
+  const element = document.createElement("button");
+  element.classList.add("icon");
+  element.classList.add("edit-todo");
+
+  parentElement.appendChild(element);
+}
+
+export function createOkButton(parentElement) {
+  const element = document.createElement("button");
+  element.classList.add("icon");
+  element.classList.add("ok-edit-todo");
+
+  parentElement.appendChild(element);
+}
+
+export function createDeleteButton(parentElement) {
+  const element = document.createElement("button");
+  element.classList.add("icon");
+  element.classList.add("delete-todo");
+
+  parentElement.appendChild(element);
+}
+
+export function createToDo(task, date) {
+  const todoElem = document.createElement("li");
+  todoElem.classList.add("task");
+  todoElem.dataset.id = task.id;
+
+  const todoContent = document.createElement("li");
+  todoContent.classList.add("todo-content");
+
   const taskTitle = document.createElement("div");
   taskTitle.classList.add("task-title");
   const taskDescription = document.createElement("div");
@@ -160,13 +205,19 @@ export function createToDo(task) {
 
   taskTitle.innerText = task.title;
   taskDescription.innerText = task.description;
-  taskDueDate.innerText = task.dueDate;
+  // taskDueDate.innerText = task.dueDate;
+  taskDueDate.innerText = date;
+
   taskPriority.innerText = task.priority;
 
-  taskElem.appendChild(taskTitle);
-  taskElem.appendChild(taskDescription);
-  taskElem.appendChild(taskDueDate);
-  taskElem.appendChild(taskPriority);
+  todoContent.appendChild(taskTitle);
+  todoContent.appendChild(taskDescription);
+  todoContent.appendChild(taskDueDate);
+  todoContent.appendChild(taskPriority);
 
-  document.querySelector(".list-of-todos").appendChild(taskElem);
+  todoElem.appendChild(todoContent);
+  createEditButton(todoElem);
+  createDeleteButton(todoElem);
+
+  document.querySelector(".list-of-todos").appendChild(todoElem);
 }

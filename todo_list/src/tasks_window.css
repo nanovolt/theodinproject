@@ -6,37 +6,74 @@
   background-color: var(--color-component);
 }
 
+.list-of-todos {
+  display: grid;
+  gap: 8px;
+}
+
 .task {
   display: grid;
-  column-gap: 8px;
-  grid-template-columns: auto auto;
+  grid-template-columns: minmax(0, 1fr) 32px 32px;
+  gap: 8px;
   padding: 8px;
   border-radius: 8px;
-  background-color: white;
-  justify-content: start;
+  background-color: var(--color-select);
+}
+
+.todo-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 2fr;
+  gap: 8px;
   align-items: center;
 }
 
 .task-title {
   grid-area: 1 / 1 / 2 / 3;
   font-size: 20px;
+  overflow-wrap: break-word;
 }
+
 .task-description {
-  color: #333333;
   grid-area: 2 / 1 / 3 / 3;
+  overflow-wrap: break-word;
 }
 
 .task-due-date {
   grid-area: 3 / 1 / 4 / 2;
   font-size: 14px;
-  color: #333333;
 }
 
 .task-priority {
   grid-area: 3 / 2 / 4 / 3;
   padding: 4px 8px;
   border-radius: 16px;
-  color: white;
+  width: min-content;
+}
+
+.edit-todo,
+.ok-edit-todo,
+.delete-todo {
+  height: 32px;
+  /* : 48px; */
+  padding: 0;
+}
+
+.edit-todo::before,
+.ok-edit-todo::before,
+.delete-todo::before {
+  font-family: "Font Awesome 6 Free";
+}
+
+.edit-todo::before {
+  content: "\f044";
+}
+
+.ok-edit-todo::before {
+  content: "\f00c";
+}
+
+.delete-todo::before {
+  content: "\f2ed";
 }
 
 .critical {
@@ -58,13 +95,32 @@
 /* editor */
 
 .todo-editor {
+  width: clamp(304px, calc(100% - 16px), 480px);
   display: none;
-  /* position: fixed; */
-  /* left: 50%; */
-  /* transform: translate(-50%, 0); */
+  position: fixed;
+  top: 64px;
+  /* left: 0; */
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, 0);
   background-color: var(--color-select);
   padding: 8px;
   border-radius: 8px;
+  transition: transform 250ms;
+}
+
+.editor-background {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* min-height: 100vh; */
+  z-index: 1;
+  backdrop-filter: blur(1px);
+  filter: blur(1px);
+  -webkit-filter: blur(1px);
+  background-color: #00000036;
 }
 
 .todo-editor-form {
@@ -138,7 +194,10 @@ input[type="radio"]:checked::before {
 }
 
 .input-description {
-  /* resize: none; */
+  resize: vertical;
+  height: fit-content;
+  /* overflow-y: visible; */
+  max-height: 128px;
   /* border-bottom: 2px solid #999; */
 }
 
@@ -155,6 +214,12 @@ input[type="radio"]:checked::before {
   padding: 8px 16px;
 }
 
+#first,
+#second,
+#third,
+#fourth {
+  margin: 0;
+}
 #first {
   background-color: red;
 }

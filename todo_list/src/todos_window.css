@@ -71,8 +71,13 @@
   /* width: 64px; */
 }
 
-.edit-todo-list-name::before {
+.edit-todo-list-name::before,
+.ok-edit-todo-list-name::before,
+.delete-todo-list::before {
   font-family: "Font Awesome 6 Free";
+}
+
+.edit-todo-list-name::before {
   content: "\f044";
 }
 

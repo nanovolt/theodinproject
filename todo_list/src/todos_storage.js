@@ -49,7 +49,6 @@ export default function TodosStorage() {
 
       arr.push(todoList);
       localStorage.setItem("ArrayOfTodoLists", JSON.stringify(arr));
-      setCurrentTodoList(name);
     }
   }
 
@@ -60,10 +59,80 @@ export default function TodosStorage() {
     );
   }
 
+  function getArrayofTodos() {
+    const arr = getArrayOfTodoLists();
+
+    if (getCurrentTodoList()) {
+      const { todos } =
+        arr[
+          arr.findIndex((todoList) => todoList.name === getCurrentTodoList())
+        ];
+
+      return todos;
+    }
+    return [];
+  }
+
+  function getIds() {
+    const arr = getArrayOfTodoLists();
+    const { todos } =
+      arr[arr.findIndex((todoList) => todoList.name === getCurrentTodoList())];
+
+    const s = new Set(todos.map((item) => item.id));
+
+    // console.log(todos.map((item) => item.id));
+
+    return s;
+  }
+
+  function getLength() {
+    const arr = getArrayOfTodoLists();
+
+    return arr[
+      arr.findIndex((todoList) => todoList.name === getCurrentTodoList())
+    ].todos.length;
+  }
+
+  function addTodo(todo) {
+    const arr = getArrayOfTodoLists();
+
+    arr[
+      arr.findIndex((todoList) => todoList.name === getCurrentTodoList())
+    ].todos.push(todo);
+
+    localStorage.setItem("ArrayOfTodoLists", JSON.stringify(arr));
+  }
+
+  function getTodo(id) {
+    const arr = getArrayOfTodoLists();
+
+    const currentTodoList =
+      arr[arr.findIndex((todoList) => todoList.name === getCurrentTodoList())];
+
+    const targetTodoList = currentTodoList.todos.filter(
+      (todo) => todo.id === id
+    );
+
+    return targetTodoList[0];
+  }
+
+  function deleteTodo(id) {
+    const arr = getArrayOfTodoLists();
+
+    const currentTodoList =
+      arr[arr.findIndex((todoList) => todoList.name === getCurrentTodoList())];
+
+    const updatedTodoList = currentTodoList.todos.filter(
+      (todo) => todo.id !== id
+    );
+
+    currentTodoList.todos = updatedTodoList;
+
+    localStorage.setItem("ArrayOfTodoLists", JSON.stringify(arr));
+  }
+
   function init() {
-    if (hasTodoLists()) {
-      //
-    } else {
+    if (!localStorage.getItem("ArrayOfTodoLists")) {
       setCurrentTodoList("Default");
       addTodoList("Default");
     }
@@ -79,5 +148,11 @@ export default function TodosStorage() {
     setCurrentTodoList,
     isNotPresent,
     renameTodoList,
+    addTodo,
+    getLength,
+    getArrayofTodos,
+    deleteTodo,
+    getIds,
+    getTodo,
   };
 }

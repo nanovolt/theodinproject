@@ -8,3 +8,9 @@ main {
   align-items: start;
   margin: 0 auto;
 }
+
+@media screen and (max-width: 576px) {
+  main {
+    grid-template-columns: auto;
+  }
+}

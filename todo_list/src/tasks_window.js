@@ -4,8 +4,6 @@ import { parseISO } from "date-fns/esm";
 import * as DOM from "./tasks_window_DOM";
 
 export default function TasksWindow(observable, storage) {
-  let func;
-
   function hideTodoEditor() {
     const editorBackground = document.querySelector(".editor-background");
     const todoEditor = document.querySelector(".todo-editor");
@@ -21,6 +19,26 @@ export default function TasksWindow(observable, storage) {
     inputDescription.style.height = "auto";
   }
 
+  function readFormData() {
+    const todoEditorForm = document.querySelector(".todo-editor-form");
+
+    const formdata = new FormData(todoEditorForm);
+    const task = {};
+    task.title = formdata.get("title");
+    task.description = formdata.get("description");
+    task.dueDate = formdata.get("dueDate");
+    task.priority = formdata.get("priority");
+
+    task.title = task.title.trim().split(/[\s]+/).join(" ");
+    task.description = task.description.trim().split(/[\s]+/).join(" ");
+
+    if (!task.dueDate) {
+      task.dueDate = format(parseISO(new Date().toISOString()), "yyyy-MM-dd");
+    }
+
+    return task;
+  }
+
   function todoEventListeners(id) {
     const todo = document.querySelector(`[data-id="${id}"]`);
     const editTodo = todo.querySelector(".edit-todo");
@@ -30,20 +48,21 @@ export default function TasksWindow(observable, storage) {
     const inputDescription = todoEditorForm.querySelector(".input-description");
     const inputDueDate = todoEditorForm.querySelector(".input-due-date");
     const inputPriority = todoEditorForm.querySelector(".input-title");
+    const action = todoEditorForm.querySelector(".action");
+
     const editorBackground = document.querySelector(".editor-background");
     const todoEditor = document.querySelector(".todo-editor");
 
-    function editTodoFunc() {
-      console.log("edit todo");
-    }
-
     editTodo.addEventListener("click", () => {
-      func = editTodoFunc;
-
       const storageTodo = storage.getTodo(id);
 
       editorBackground.style.height = `${document.body.scrollHeight}px`;
       editorBackground.style.display = "block";
+
+      action.innerText = "Edit";
+
+      // todoEditorForm.addEventListener("submit", formEventHandler);
+
       todoEditor.style.display = "block";
 
       inputTitle.value = storageTodo.title;
@@ -53,12 +72,9 @@ export default function TasksWindow(observable, storage) {
       // inputDueDate.value = "0001-01-01";
       inputDueDate.value = storageTodo.dueDate;
 
-      console.log(storageTodo.priority);
-
       const radio = todoEditorForm.querySelector(
         `input[value="${storageTodo.priority}"]`
       );
-      console.log(radio);
 
       radio.checked = true;
       inputTitle.focus();
@@ -70,56 +86,27 @@ export default function TasksWindow(observable, storage) {
     });
   }
 
-  function addTodo(e) {
-    e.preventDefault();
-
-    const todoEditorForm = document.querySelector(".todo-editor-form");
-
-    const formdata = new FormData(todoEditorForm);
-    const task = {};
-    task.title = formdata.get("title");
-    task.description = formdata.get("description");
-    task.dueDate = formdata.get("dueDate");
-    task.priority = formdata.get("priority");
-
-    hideTodoEditor();
-
-    if (!task.dueDate) {
-      task.dueDate = format(parseISO(new Date().toISOString()), "yyyy-MM-dd");
-      // task.dueDate = format(parseISO(new Date().toISOString()), "PPPP");
-    } else {
-      // isoDate = format(parseISO(task.dueDate), "yyyy-MM-dd");
-      // task.dueDate = format(parseISO(task.dueDate), "PPPP");
+  function getNotified() {
+    while (document.querySelector(".list-of-todos").firstChild) {
+      document.querySelector(".list-of-todos").firstChild.remove();
     }
 
-    task.title = task.title.trim().split(/[\s]+/).join(" ");
-    task.description = task.description.trim().split(/[\s]+/).join(" ");
-
-    if (!storage.getArrayofTodos().length) {
-      task.id = 0;
-    } else {
-      for (let i = 0; i <= storage.getIds().size; i += 1) {
-        if (!storage.getIds().has(i)) {
-          task.id = i;
-          break;
-        }
-      }
-    }
-
-    storage.addTodo(task);
-
-    const date = format(parseISO(task.dueDate), "PPPP");
-    DOM.createToDo(task, date);
-    todoEventListeners(task.id);
+    storage.getArrayofTodos().forEach((todo) => {
+      const date = format(parseISO(todo.dueDate), "PPPP");
+      DOM.createToDo(todo, date);
+      todoEventListeners(todo.id);
+    });
   }
 
   function initializeEventListeners() {
-    const addTask = document.querySelector(".add-todo");
+    const addTodo = document.querySelector(".add-todo");
     const todoEditor = document.querySelector(".todo-editor");
     const todoEditorForm = document.querySelector(".todo-editor-form");
     const inputTitle = todoEditorForm.querySelector(".input-title");
     const inputDescription = todoEditorForm.querySelector(".input-description");
     const editorBackground = document.querySelector(".editor-background");
+    const action = todoEditorForm.querySelector(".action");
+    const cancelButt = todoEditorForm.querySelector(".cancel");
 
     function editorBackgroundEventListeners() {
       editorBackground.addEventListener("click", () => {
@@ -127,15 +114,14 @@ export default function TasksWindow(observable, storage) {
       });
     }
 
-    editorBackgroundEventListeners();
-
     function addTodoListEventListeners() {
-      func = addTodo;
-      addTask.addEventListener("click", () => {
-        func = addTodo;
+      addTodo.addEventListener("click", () => {
         if (storage.getCurrentTodoList()) {
           editorBackground.style.height = `${document.body.scrollHeight}px`;
           editorBackground.style.display = "block";
+
+          action.innerText = "Add";
+
           todoEditor.style.display = "block";
 
           inputTitle.focus();
@@ -146,9 +132,37 @@ export default function TasksWindow(observable, storage) {
     }
 
     function todoEditorEventListeners() {
-      todoEditorForm.addEventListener("submit", func);
+      function formEventHandler(e) {
+        e.preventDefault();
 
-      const cancelButt = document.querySelector(".cancel");
+        if (action.innerText === "Add") {
+          const task = readFormData();
+          hideTodoEditor();
+
+          // to-do smart id generator
+          if (!storage.getArrayofTodos().length) {
+            task.id = 0;
+          } else {
+            for (let i = 0; i <= storage.getIds().size; i += 1) {
+              if (!storage.getIds().has(i)) {
+                task.id = i;
+                break;
+              }
+            }
+          }
+
+          storage.addTodo(task);
+
+          const date = format(parseISO(task.dueDate), "PPPP");
+          DOM.createToDo(task, date);
+          todoEventListeners(task.id);
+        } else {
+          console.log("editing");
+        }
+      }
+
+      todoEditorForm.addEventListener("submit", formEventHandler);
+
       cancelButt.addEventListener("click", () => {
         hideTodoEditor();
       });
@@ -171,23 +185,12 @@ export default function TasksWindow(observable, storage) {
 
     addTodoListEventListeners();
     todoEditorEventListeners();
+    editorBackgroundEventListeners();
   }
 
   function initializeComponent(parentComponent) {
     DOM.createStaticElements(parentComponent);
     initializeEventListeners();
-
-    storage.getArrayofTodos().forEach((todo) => {
-      const date = format(parseISO(todo.dueDate), "PPPP");
-      DOM.createToDo(todo, date);
-      todoEventListeners(todo.id);
-    });
-  }
-
-  function getNotified() {
-    while (document.querySelector(".list-of-todos").firstChild) {
-      document.querySelector(".list-of-todos").firstChild.remove();
-    }
 
     storage.getArrayofTodos().forEach((todo) => {
       const date = format(parseISO(todo.dueDate), "PPPP");

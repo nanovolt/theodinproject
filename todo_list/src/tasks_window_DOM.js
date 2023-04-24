@@ -43,10 +43,6 @@ export function createTodoEditor(parentComponent) {
   priorityFirst.type = "radio";
   priorityFirst.value = "Critical";
   priorityFirst.title = "Critical";
-  // const labelForFirst = document.createElement("label");
-  // labelForFirst.for = "first";
-  // labelForFirst.setAttribute("for", "first");
-  // labelForFirst.innerText = "Critical";
 
   const prioritySecond = document.createElement("input");
   prioritySecond.name = "priority";
@@ -54,10 +50,6 @@ export function createTodoEditor(parentComponent) {
   prioritySecond.type = "radio";
   prioritySecond.value = "Urgent";
   prioritySecond.title = "Urgent";
-  // const labelForSecond = document.createElement("label");
-  // labelForSecond.for = "second";
-  // labelForSecond.setAttribute("for", "second");
-  // labelForSecond.innerText = "Urgent";
 
   const priorityThird = document.createElement("input");
   priorityThird.name = "priority";
@@ -65,15 +57,7 @@ export function createTodoEditor(parentComponent) {
   priorityThird.type = "radio";
   priorityThird.value = "Normal";
   priorityThird.title = "Normal";
-
   priorityThird.setAttribute("checked", true);
-
-  // priorityThird.checked = true;
-
-  // const labelForThird = document.createElement("label");
-  // labelForThird.for = "third";
-  // labelForThird.setAttribute("for", "third");
-  // labelForThird.innerText = "Normal";
 
   const priorityFourth = document.createElement("input");
   priorityFourth.name = "priority";
@@ -82,15 +66,9 @@ export function createTodoEditor(parentComponent) {
   priorityFourth.value = "Low";
   priorityFourth.title = "Low";
 
-  // const labelForFourth = document.createElement("label");
-  // labelForFourth.for = "fourth";
-  // labelForFourth.setAttribute("for", "fourth");
-  // labelForFourth.innerText = "Low";
-
-  const add = document.createElement("button");
-  add.classList.add("add");
-  add.type = "submit";
-  add.innerText = "Add";
+  const action = document.createElement("button");
+  action.classList.add("action");
+  action.type = "submit";
 
   const cancelEl = document.createElement("button");
   cancelEl.classList.add("cancel");
@@ -102,13 +80,9 @@ export function createTodoEditor(parentComponent) {
   document.body.appendChild(editorBackground);
 
   prioritySelector.appendChild(priorityFirst);
-  // prioritySelector.appendChild(labelForFirst);
   prioritySelector.appendChild(prioritySecond);
-  // prioritySelector.appendChild(labelForSecond);
   prioritySelector.appendChild(priorityThird);
-  // prioritySelector.appendChild(labelForThird);
   prioritySelector.appendChild(priorityFourth);
-  // prioritySelector.appendChild(labelForFourth);
 
   form.appendChild(title);
   form.appendChild(description);
@@ -117,7 +91,7 @@ export function createTodoEditor(parentComponent) {
   form.appendChild(priorityLabel);
   form.appendChild(prioritySelector);
 
-  form.appendChild(add);
+  form.appendChild(action);
   form.appendChild(cancelEl);
 
   component.appendChild(form);

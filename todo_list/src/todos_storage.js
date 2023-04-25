@@ -1,3 +1,6 @@
+import format from "date-fns/format";
+import { parseISO } from "date-fns/esm";
+
 export default function TodosStorage() {
   function getArrayOfTodoLists() {
     const array = JSON.parse(localStorage.getItem("ArrayOfTodoLists"));
@@ -149,8 +152,106 @@ export default function TodosStorage() {
 
   function init() {
     if (!localStorage.getItem("ArrayOfTodoLists")) {
-      setCurrentTodoList("Default");
-      addTodoList("Default");
+      setCurrentTodoList("Groceries");
+      addTodoList("Groceries");
+
+      addTodo({
+        title: "Milk",
+        description: "2 cartons",
+        dueDate: format(parseISO(new Date().toISOString()), "yyyy-MM-dd"),
+        priority: "Low",
+        id: 0,
+        complete: true,
+      });
+
+      addTodo({
+        title: "Steak or ribs",
+        description: "5kg",
+        dueDate: format(parseISO(new Date().toISOString()), "yyyy-MM-dd"),
+        priority: "Normal",
+        id: 1,
+        complete: false,
+      });
+
+      addTodo({
+        title: "Hot sauce",
+        description: "Don't forget the milk",
+        dueDate: format(parseISO(new Date().toISOString()), "yyyy-MM-dd"),
+        priority: "Critical",
+        id: 2,
+        complete: false,
+      });
+
+      setCurrentTodoList("Projects");
+      addTodoList("Projects");
+
+      addTodo({
+        title: "Hot fix ticket #42069",
+        description: "",
+        dueDate: format(parseISO(new Date().toISOString()), "yyyy-MM-dd"),
+        priority: "Urgent",
+        id: 0,
+        complete: false,
+      });
+
+      addTodo({
+        title: "Send excel",
+        description: "",
+        dueDate: format(parseISO(new Date().toISOString()), "yyyy-MM-dd"),
+        priority: "Normal",
+        id: 1,
+        complete: true,
+      });
+
+      addTodo({
+        title: "Finish report",
+        description: "",
+        dueDate: format(parseISO(new Date().toISOString()), "yyyy-MM-dd"),
+        priority: "Low",
+        id: 2,
+        complete: false,
+      });
+
+      setCurrentTodoList("Workout");
+      addTodoList("Workout");
+
+      addTodo({
+        title: "Hanging leg raise 3x30",
+        description: "",
+        dueDate: format(parseISO(new Date().toISOString()), "yyyy-MM-dd"),
+        priority: "Normal",
+        id: 0,
+        complete: true,
+      });
+
+      addTodo({
+        title: "Pull-up 3x15",
+        description: "",
+        dueDate: format(parseISO(new Date().toISOString()), "yyyy-MM-dd"),
+        priority: "Normal",
+        id: 1,
+        complete: true,
+      });
+
+      addTodo({
+        title: "Pike push-up 3x15",
+        description: "",
+        dueDate: format(parseISO(new Date().toISOString()), "yyyy-MM-dd"),
+        priority: "Normal",
+        id: 2,
+        complete: true,
+      });
+
+      addTodo({
+        title: "5k run",
+        description: "",
+        dueDate: format(parseISO(new Date().toISOString()), "yyyy-MM-dd"),
+        priority: "Urgent",
+        id: 3,
+        complete: false,
+      });
+
+      setCurrentTodoList("Groceries");
     }
   }
 

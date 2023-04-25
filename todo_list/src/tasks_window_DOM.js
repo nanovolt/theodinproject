@@ -195,3 +195,26 @@ export function createToDo(task, date) {
 
   document.querySelector(".list-of-todos").appendChild(todoElem);
 }
+
+export function displayPopup(message, inputValue, top = 0, left = 0) {
+  const popup = document.querySelector(".add-todo-list-popup");
+  if (message === "Already have:") {
+    popup.style.cssText = `border-right: 8px solid red;`;
+  } else {
+    popup.style.cssText = `border-right: 8px solid green;`;
+  }
+
+  // console.log("top:", top, "left:", left);
+
+  document.querySelector(".add-todo-list-popup").style.top = `${top}px`;
+  document.querySelector(".add-todo-list-popup").style.left = `${left}px`;
+
+  popup.style.visibility = "visible";
+  popup.innerText = `${message} ${inputValue}`;
+  popup.style.opacity = "1";
+
+  setTimeout(() => {
+    popup.style.opacity = "0";
+    popup.style.visibility = "hidden";
+  }, 1000);
+}

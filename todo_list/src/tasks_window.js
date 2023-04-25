@@ -126,7 +126,14 @@ export default function TasksWindow(observable, storage) {
 
           inputTitle.focus();
         } else {
-          alert("Choose To-do list first");
+          const { top, left, height } = addTodo.getBoundingClientRect();
+
+          DOM.displayPopup(
+            "Choose To-do list first",
+            "",
+            window.scrollY + top + height + 8,
+            left
+          );
         }
       });
     }

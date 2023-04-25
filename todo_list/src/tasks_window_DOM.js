@@ -66,6 +66,12 @@ export function createTodoEditor(parentComponent) {
   priorityFourth.value = "Low";
   priorityFourth.title = "Low";
 
+  const hiddenID = document.createElement("input");
+
+  hiddenID.classList.add("id");
+  hiddenID.type = "hidden";
+  hiddenID.name = "id";
+
   const action = document.createElement("button");
   action.classList.add("action");
   action.type = "submit";
@@ -90,6 +96,7 @@ export function createTodoEditor(parentComponent) {
   form.appendChild(dueDate);
   form.appendChild(priorityLabel);
   form.appendChild(prioritySelector);
+  form.appendChild(hiddenID);
 
   form.appendChild(action);
   form.appendChild(cancelEl);
@@ -146,6 +153,9 @@ export function createToDo(task, date) {
   const todoElem = document.createElement("li");
   todoElem.classList.add("task");
   todoElem.dataset.id = task.id;
+  if (task.complete) {
+    todoElem.classList.add("complete");
+  }
 
   const todoContent = document.createElement("li");
   todoContent.classList.add("todo-content");
@@ -175,6 +185,7 @@ export function createToDo(task, date) {
     default:
       break;
   }
+
   // console.log(parseISO(task.dueDate, "eeee do MMM, yyyy"));
 
   taskTitle.innerText = task.title;

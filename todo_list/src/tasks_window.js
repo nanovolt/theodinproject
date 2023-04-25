@@ -28,6 +28,7 @@ export default function TasksWindow(observable, storage) {
     task.description = formdata.get("description");
     task.dueDate = formdata.get("dueDate");
     task.priority = formdata.get("priority");
+    task.id = formdata.get("id");
 
     task.title = task.title.trim().split(/[\s]+/).join(" ");
     task.description = task.description.trim().split(/[\s]+/).join(" ");
@@ -47,13 +48,21 @@ export default function TasksWindow(observable, storage) {
     const inputTitle = todoEditorForm.querySelector(".input-title");
     const inputDescription = todoEditorForm.querySelector(".input-description");
     const inputDueDate = todoEditorForm.querySelector(".input-due-date");
-    const inputPriority = todoEditorForm.querySelector(".input-title");
+    const hiddenID = todoEditorForm.querySelector(".id");
+
     const action = todoEditorForm.querySelector(".action");
 
     const editorBackground = document.querySelector(".editor-background");
     const todoEditor = document.querySelector(".todo-editor");
 
-    editTodo.addEventListener("click", () => {
+    todo.addEventListener("click", () => {
+      todo.classList.toggle("complete");
+      storage.toggleComplete(id, todo.classList.contains("complete"));
+    });
+
+    editTodo.addEventListener("click", (e) => {
+      e.stopPropagation();
+
       const storageTodo = storage.getTodo(id);
 
       editorBackground.style.height = `${document.body.scrollHeight}px`;
@@ -77,10 +86,14 @@ export default function TasksWindow(observable, storage) {
       );
 
       radio.checked = true;
+
+      hiddenID.value = id;
+
       inputTitle.focus();
     });
 
-    deleteTodo.addEventListener("click", () => {
+    deleteTodo.addEventListener("click", (e) => {
+      e.stopPropagation();
       storage.deleteTodo(id);
       todo.remove();
     });
@@ -142,10 +155,10 @@ export default function TasksWindow(observable, storage) {
       function formEventHandler(e) {
         e.preventDefault();
 
-        if (action.innerText === "Add") {
-          const task = readFormData();
-          hideTodoEditor();
+        const task = readFormData();
+        hideTodoEditor();
 
+        if (action.innerText === "Add") {
           // to-do smart id generator
           if (!storage.getArrayofTodos().length) {
             task.id = 0;
@@ -158,13 +171,52 @@ export default function TasksWindow(observable, storage) {
             }
           }
 
+          task.complete = false;
+
+          console.log(task);
           storage.addTodo(task);
 
           const date = format(parseISO(task.dueDate), "PPPP");
           DOM.createToDo(task, date);
           todoEventListeners(task.id);
         } else {
-          console.log("editing");
+          console.log(task);
+          storage.updateTodo(task);
+
+          const todo = document.querySelector(`[data-id="${task.id}"]`);
+          const title = todo.querySelector(".task-title");
+          const description = todo.querySelector(".task-description");
+          const dueDate = todo.querySelector(".task-due-date");
+          const priority = todo.querySelector(".task-priority");
+
+          title.innerText = task.title;
+          description.innerText = task.description;
+
+          const date = format(parseISO(task.dueDate), "PPPP");
+          dueDate.innerText = date;
+
+          priority.className = "";
+          priority.classList.add("task-priority");
+          priority.innerText = task.priority;
+
+          switch (task.priority) {
+            case "Critical":
+              priority.classList.add("critical");
+              break;
+            case "Urgent":
+              priority.classList.add("urgent");
+              break;
+            case "Normal":
+              priority.classList.add("normal");
+              break;
+            case "Low":
+              priority.classList.add("low");
+              break;
+            default:
+              break;
+          }
+
+          console.log(todo);
         }
       }
 

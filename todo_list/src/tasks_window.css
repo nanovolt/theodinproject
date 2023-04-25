@@ -89,9 +89,6 @@
   background: #41c3ff;
 }
 
-.add-todo {
-}
-
 /* editor */
 
 .todo-editor {
@@ -127,14 +124,6 @@
   display: grid;
   padding: 8px;
   gap: 8px;
-}
-
-input,
-textarea {
-  /* border: 0;
-  margin: 0;
-  padding: 0;
-  outline: 0; */
 }
 
 .input-title,
@@ -231,4 +220,23 @@ input[type="radio"]:checked::before {
 }
 #fourth {
   background-color: dodgerblue;
+}
+
+.complete {
+  background-color: #333;
+}
+.complete * {
+  color: #afafaf;
+}
+
+.complete .task-title {
+  text-decoration: line-through;
+}
+
+.complete .task-description {
+  text-decoration: line-through;
+}
+
+.complete .task-priority {
+  background-color: #444;
 }

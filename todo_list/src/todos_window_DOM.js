@@ -105,8 +105,6 @@ export function displayPopup(message, inputValue, top = 0, left = 0) {
     popup.style.cssText = `border-right: 8px solid green;`;
   }
 
-  // console.log("top:", top, "left:", left);
-
   document.querySelector(".add-todo-list-popup").style.top = `${top}px`;
   document.querySelector(".add-todo-list-popup").style.left = `${left}px`;
 

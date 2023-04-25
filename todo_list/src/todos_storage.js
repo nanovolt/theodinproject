@@ -116,6 +116,22 @@ export default function TodosStorage() {
     return targetTodoList[0];
   }
 
+  function updateTodo(task) {
+    const id = Number(task.id);
+
+    const arr = getArrayOfTodoLists();
+
+    const currentTodoList =
+      arr[arr.findIndex((todoList) => todoList.name === getCurrentTodoList())];
+
+    currentTodoList.todos[id].title = task.title;
+    currentTodoList.todos[id].description = task.description;
+    currentTodoList.todos[id].dueDate = task.dueDate;
+    currentTodoList.todos[id].priority = task.priority;
+
+    localStorage.setItem("ArrayOfTodoLists", JSON.stringify(arr));
+  }
+
   function deleteTodo(id) {
     const arr = getArrayOfTodoLists();
 
@@ -138,6 +154,21 @@ export default function TodosStorage() {
     }
   }
 
+  function toggleComplete(id, toggle) {
+    const arr = getArrayOfTodoLists();
+
+    const currentTodoList =
+      arr[arr.findIndex((todoList) => todoList.name === getCurrentTodoList())];
+
+    if (toggle) {
+      currentTodoList.todos[id].complete = true;
+    } else {
+      currentTodoList.todos[id].complete = false;
+    }
+
+    localStorage.setItem("ArrayOfTodoLists", JSON.stringify(arr));
+  }
+
   return {
     init,
     getArrayOfTodoLists,
@@ -154,5 +185,7 @@ export default function TodosStorage() {
     deleteTodo,
     getIds,
     getTodo,
+    updateTodo,
+    toggleComplete,
   };
 }

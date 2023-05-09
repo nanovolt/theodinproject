@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>form_validation</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="form_validation.css" />
+    <script defer src="form_validation.js"></script>
+  </head>
+  <body>
+    <div class="h-full w-full fixed top-0 background"></div>
+    <div class="w-full px-4 mt-4 flex shadow-2xl">
+      <div class="w-1/2 p-4 side-column">
+        <h1 class="text-white text-6xl font-bold">Form validation</h1>
+        <p class="text-white my-8">
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Odit,
+          repellendus.
+        </p>
+        <p class="text-white my-8 font-bold">Register with social media</p>
+        <div class="flex gap-8 flex-wrap">
+          <div
+            class="flex items-center gap-4 text-small bg-blue-900 text-white px-4 py-2 rounded-full">
+            <i class="fa-brands fa-facebook-f"></i>
+            <span>Facebook</span>
+          </div>
+          <div
+            class="flex items-center gap-4 text-small bg-sky-400 text-white px-4 py-2 rounded-full">
+            <i class="fa-brands fa-twitter"></i>
+            <span>Twitter</span>
+          </div>
+        </div>
+      </div>
+      <div class="w-1/2 p-4 bg-white">
+        <h2 class="text4xl font-bold">Register</h2>
+        <p class="my-4">
+          Already have an account?
+          <a class="text-blue-700" href="">Login here</a>
+          instead.
+        </p>
+        <form action="" id="registrationForm">
+          <div class="formGroup flex flex-col my-4">
+            <label for="firstName">First Name</label>
+            <div class="flex items-center">
+              <input
+                required
+                minlength="5"
+                maxlength="16"
+                data-maxlength="16"
+                type="text"
+                id="firstName"
+                class="w-full border-b-2 border-black outline-none py-1" />
+              <span class="error-icon h-4 hidden -ml-6 text-red-700">
+                <i class="fa-solid fa-circle-exclamation"></i>
+              </span>
+              <span class="success-icon hidden -ml-6 text-green-700">
+                <i class="fa-solid fa-circle-check"></i>
+              </span>
+            </div>
+
+            <div class="error text-red-700 pt-2 h-8"></div>
+          </div>
+          <div class="formGroup flex flex-col my-4">
+            <label for="email">Email Adress</label>
+            <div class="flex items-center">
+              <input
+                required
+                minlength="3"
+                maxlength="16"
+                type="email"
+                id="email"
+                class="w-full border-b-2 border-black outline-none py-1" />
+              <span class="error-icon hidden -ml-6 text-red-700">
+                <i class="fa-solid fa-circle-exclamation"></i>
+              </span>
+              <span class="success-icon hidden -ml-6 text-green-700">
+                <i class="fa-solid fa-circle-check"></i>
+              </span>
+            </div>
+            <div class="error text-red-700 py-2 h-8"></div>
+          </div>
+
+          <div class="formGroup flex flex-col my-4">
+            <label for="password">Password</label>
+            <div class="flex items-center">
+              <input
+                required
+                minlength="8"
+                maxlength="32"
+                type="password"
+                id="password"
+                class="w-full border-b-2 border-black outline-none py-1" />
+              <span class="error-icon hidden -ml-6 text-red-700">
+                <i class="fa-solid fa-circle-exclamation"></i>
+              </span>
+              <span class="success-icon hidden -ml-6 text-green-700">
+                <i class="fa-solid fa-circle-check"></i>
+              </span>
+            </div>
+            <div class="error text-red-700 py-2 h-8"></div>
+          </div>
+
+          <div class="formGroup flex flex-col my-4">
+            <label for="confirmPassword">Confirm Password</label>
+            <div class="flex items-center">
+              <input
+                required
+                minlength="8"
+                maxlength="32"
+                data-confirm="password"
+                type="password"
+                id="confirmPassword"
+                class="w-full border-b-2 border-black outline-none py-1" />
+              <span class="error-icon hidden -ml-6 text-red-700">
+                <i class="fa-solid fa-circle-exclamation"></i>
+              </span>
+              <span class="success-icon hidden -ml-6 text-green-700">
+                <i class="fa-solid fa-circle-check"></i>
+              </span>
+            </div>
+            <div class="error text-red-700 py-2 h-8"></div>
+          </div>
+          <button
+            type="submit"
+            class="px-8 py-4 bg-green-400 w-full rounded-full text-white">
+            Register
+          </button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

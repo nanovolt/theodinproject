@@ -25,3 +25,5 @@
 [Restaurant page](https://nanovolt.github.io/theodinproject/restaurant_page/)
 
 [To-do List App](https://nanovolt.github.io/theodinproject/todo_list/)
+
+[Form validation with Javascript](https://nanovolt.github.io/theodinproject/form_validation_with_javascript/)

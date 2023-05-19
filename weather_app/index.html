@@ -6,9 +6,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Weather App</title>
     <link rel="shortcut icon" href="#" type="image/x-icon" />
+    <link rel="stylesheet" href="src/fonts/fa.css" />
     <script defer src="bundle.js"></script>
   </head>
   <body>
-    Weather App
+    <header>
+      <div class="header-wrapper">
+        <div class="app-title">Weather App</div>
+        <div class="dropdown temp-mode">
+          <div class="dropdown-button">C&deg</div>
+          <div class="dropdown-content">
+            <div class="celcius">&degC</div>
+            <div class="fahrenheit">&degF</div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main>
+      <form action="" id="city-form" autocomplete="off">
+        <i class="fa-lg fa-sharp fa-solid fa-magnifying-glass"></i>
+        <input
+          type="text"
+          id="city-input"
+          name="city"
+          minlength="1"
+          maxlength="32" />
+      </form>
+      <div class="weather-container">
+        <div class="main-info">
+          <div class="place">
+            <span class="city"></span>
+            <span>/</span>
+            <span class="country"></span>
+          </div>
+          <div class="temp-box">
+            <span class="sign"></span>
+            <span class="temp"></span>
+            <span class="c-f"></span>
+          </div>
+
+          <div class="feelslike-box">
+            <span>Feels like</span>
+            <span class="sign"></span>
+            <span class="temp-feelslike"></span>
+            <span class="c-f"></span>
+          </div>
+
+          <div class="condition"></div>
+          <img class="condition-image" />
+        </div>
+        <div class="more-info">
+          <div class="humidity"></div>
+        </div>
+      </div>
+    </main>
+    <footer>nanovolt 2023</footer>
   </body>
 </html>

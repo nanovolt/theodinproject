@@ -1,0 +1,19 @@
+#city-form {
+  background-color: white;
+  padding: 8px;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fontsize-xl);
+  position: relative;
+  cursor: text;
+}
+
+#city-input {
+  border: none;
+  background-color: #ffffff00;
+  outline: none;
+  min-width: 0;
+}

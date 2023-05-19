@@ -1,3 +1,106 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("fonts/Roboto/Roboto-Regular.ttf") format("truetype");
+}
+
+:root {
+  font-family: "Roboto", "Open Sans", "Helvetica Neue", system-ui, -apple-system,
+    sans-serif;
+  font-size: 0.625rem;
+  --fontsize-m: 1rem;
+  --fontsize-l: 1.2rem;
+  --fontsize-xl: 1.6rem;
+  --fontsize-2xl: 2.4rem;
+  --fontsize-ultra: 4.8rem;
+
+  --light-sky: linear-gradient(90deg, #00c9ff 0%, #92fe9d 100%);
+  --dark-sky: linear-gradient(90deg, #1cb5e0 0%, #000851 100%);
+  --sunset: linear-gradient(90deg, #d53369 0%, #daae51 100%);
+  --sunset2: linear-gradient(90deg, #fdbb2d 0%, #3a1c71 100%);
+  --heavy-cloud: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-  color: red;
+  min-height: 100vh;
+  position: relative;
+  margin: 0;
+  background-color: #f0f0f0;
+  font-size: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  /* background: var(--sunset2); */
+}
+
+input {
+  font-size: inherit;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  width: fit-content;
+}
+
+button {
+  border: 0;
+}
+
+.icon {
+  display: inline-block;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 900;
+  padding: 0;
+  border: none;
+  line-height: 1;
+  background-color: hsla(0, 0%, 0%, 0);
+  height: 100%;
+}
+
+header {
+  background-color: white;
+}
+
+main {
+  width: clamp(320px, 100%, 768px);
+  margin: 0 auto;
+  padding: 8px;
+  display: grid;
+  gap: 8px;
+}
+
+footer {
+  background-color: white;
+  width: 100%;
+  height: 48px;
+  margin-top: auto;
+  display: grid;
+  place-content: center;
+}
+
+.header-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: clamp(320px, 100%, 768px);
+  margin: 0 auto;
+  padding: 8px;
+}
+
+.app-title {
+  font-size: 24px;
+  font-weight: bold;
 }

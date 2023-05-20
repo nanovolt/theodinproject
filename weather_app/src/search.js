@@ -1,7 +1,9 @@
 import "./search.css";
 
 export default class Search {
-  constructor() {
+  constructor(observable, currentWeather) {
+    this.observable = observable;
+    this.currentWeather = currentWeather;
     this.cityForm = document.querySelector("#city-form");
     this.cityInput = document.querySelector("#city-input");
   }
@@ -11,7 +13,8 @@ export default class Search {
       e.preventDefault();
       const formdata = new FormData(this.cityForm);
       const cityName = formdata.get("city");
-      // currentWeather.updateCurrentWeather(cityName);
+      // this.observable.notify();
+      this.currentWeather.updateCurrentWeather(cityName);
       this.cityInput.value = "";
     });
 

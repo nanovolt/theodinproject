@@ -12,22 +12,45 @@ export default class CurrentWeather {
     this.cf = document.querySelectorAll(".c-f");
     this.condition = document.querySelector(".condition");
     this.conditionImage = document.querySelector(".condition-image");
+    this.cloud = document.querySelector(".cloud");
+    this.humidity = document.querySelector(".humidity");
+    this.uv = document.querySelector(".uv");
+    this.visibility = document.querySelector(".visibility");
+    this.windDirection = document.querySelector(".wind-direction");
+    this.windSpeed = document.querySelector(".wind-speed");
+    this.speed = document.querySelectorAll(".speed");
+    this.distance = document.querySelectorAll(".distance");
   }
 
   showCelciusOrFahrenheit(mode) {
     if (mode === "celcius") {
       this.temp.textContent = this.json.current.temp_c;
       this.tempFeelslike.textContent = this.json.current.feelslike_c;
+      this.visibility.textContent = this.json.current.vis_km;
+      this.windSpeed.textContent = this.json.current.wind_kph;
 
       for (const el of this.cf) {
         el.innerHTML = "&degC";
       }
+      for (const s of this.speed) {
+        s.textContent = "km/h";
+      }
+      for (const d of this.distance) {
+        d.textContent = "km";
+      }
     } else {
       this.temp.textContent = this.json.current.temp_f;
       this.tempFeelslike.textContent = this.json.current.feelslike_f;
-
+      this.visibility.textContent = this.json.current.vis_miles;
+      this.windSpeed.textContent = this.json.current.wind_mph;
       for (const el of this.cf) {
         el.innerHTML = "&degF";
+      }
+      for (const s of this.speed) {
+        s.textContent = "mph";
+      }
+      for (const d of this.distance) {
+        d.textContent = "mi";
       }
     }
   }
@@ -39,6 +62,8 @@ export default class CurrentWeather {
       );
       const json = await response.json();
       this.json = json;
+
+      console.log(this.json);
 
       this.city.textContent = json.location.name;
       this.country.textContent = json.location.country;
@@ -60,9 +85,13 @@ export default class CurrentWeather {
       }
 
       this.mode = this.storage.getTempMode();
-      this.showCelciusOrFahrenheit(this.mode);
 
-      document.querySelector(".humidity").textContent = json.current.humidity;
+      this.cloud.textContent = json.current.cloud;
+      this.humidity.textContent = json.current.humidity;
+      this.uv.textContent = json.current.uv;
+      this.windDirection.textContent = json.current.wind_dir;
+
+      this.showCelciusOrFahrenheit(this.mode);
     } catch (error) {
       console.log(error);
     }

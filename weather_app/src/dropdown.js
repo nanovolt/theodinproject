@@ -10,8 +10,8 @@ export default class Dropdown {
     this.options = Array.from(this.dropdownContent.children);
 
     this.modes = {
-      celcius: "&degC",
-      fahrenheit: "&degF",
+      celcius: "&degC, Metric (km/h)",
+      fahrenheit: "&degF, Imperial (mph)",
     };
   }
 

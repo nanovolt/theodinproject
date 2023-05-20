@@ -1,4 +1,8 @@
 .weather-container {
+  display: grid;
+  gap: 8px;
+  width: fit-content;
+  /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
   background-color: white;
   padding: 8px;
   border-radius: 8px;
@@ -6,7 +10,7 @@
 
 .main-info {
   display: grid;
-  justify-content: start;
+  justify-content: space-between;
   gap: 8px;
 }
 

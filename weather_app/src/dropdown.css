@@ -43,6 +43,7 @@
   padding: 8px;
   border-radius: 8px;
   cursor: pointer;
+  width: max-content;
 }
 
 .dropdown-content div:hover {

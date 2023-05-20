@@ -13,8 +13,8 @@ const storage = new Storage();
 const observable = new Observable();
 
 const tempModeDropdown = new Dropdown("temp-mode", storage, observable);
-const search = new Search();
 const currentWeather = new CurrentWeather(storage);
+const search = new Search(observable, currentWeather);
 
 observable.subscribe(currentWeather);
 

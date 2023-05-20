@@ -12,17 +12,16 @@ const defaultCity = "Almaty";
 const storage = new Storage();
 const observable = new Observable();
 
-const tempModeDropdown = new Dropdown("temp-mode", observable);
+const tempModeDropdown = new Dropdown("temp-mode", storage, observable);
 const search = new Search();
-const currentWeather = new CurrentWeather(observable, storage);
+const currentWeather = new CurrentWeather(storage);
+
+observable.subscribe(currentWeather);
 
 storage.init();
 search.init();
 tempModeDropdown.init();
 
-observable.subscribe(storage);
-observable.subscribe(currentWeather);
-
-tempModeDropdown.setMode(storage.getTempMode());
+// tempModeDropdown.setMode(storage.getTempMode());
 
 currentWeather.updateCurrentWeather(defaultCity);

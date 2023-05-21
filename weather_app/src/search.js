@@ -68,7 +68,24 @@ export default class Search {
     }
   }
 
+  debounce(func, ms) {
+    let timeout;
+    return (...arg) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, arg), ms);
+    };
+  }
+
   init() {
+    const deboundFunction = this.debounce(() => {
+      // console.log("debounce");
+      if (this.cityInput.value) {
+        this.search(this.cityInput.value).then(() => {
+          if (this.json.length !== 0) this.showSuggestions();
+        });
+      }
+    }, 100);
+
     this.cityForm.addEventListener("submit", (e) => {
       e.preventDefault();
 
@@ -94,6 +111,11 @@ export default class Search {
     });
 
     this.cityInput.addEventListener("keydown", (e) => {
+      if (!this.cityInput.value) {
+        this.suggestionList.replaceChildren();
+        this.searchSuggestions.style.display = "none";
+      }
+
       if (e.key === "ArrowDown") {
         // console.log(this.suggestionList);
         if (
@@ -143,14 +165,7 @@ export default class Search {
     });
 
     this.cityInput.addEventListener("input", () => {
-      if (!this.cityInput.value) {
-        this.suggestionList.replaceChildren();
-        this.searchSuggestions.style.display = "none";
-      }
-
-      this.search(this.cityInput.value).then(() => {
-        if (this.json.length !== 0) this.showSuggestions();
-      });
+      deboundFunction();
     });
 
     // this.cityInput.addEventListener("blur", (e) => {

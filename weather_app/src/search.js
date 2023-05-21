@@ -11,6 +11,7 @@ export default class Search {
     this.searchSuggestions = document.querySelector(".search-suggestions");
     this.suggestionList = document.querySelector(".suggestion-list");
     this.focusedSuggestion = -1;
+    this.popup = document.querySelector(".error-popup");
   }
 
   showSuggestions() {

@@ -1,7 +1,7 @@
 import "./current_weather.css";
 
 export default class CurrentWeather {
-  constructor(storage) {
+  constructor(storage, displayPopup) {
     this.key = "7af186cb5b0740ea9b182108231405";
     this.storage = storage;
     this.signs = document.querySelectorAll(".sign");
@@ -20,6 +20,7 @@ export default class CurrentWeather {
     this.windSpeed = document.querySelector(".wind-speed");
     this.speed = document.querySelectorAll(".speed");
     this.distance = document.querySelectorAll(".distance");
+    this.displayPopup = displayPopup;
   }
 
   showCelciusOrFahrenheit(mode) {
@@ -92,6 +93,7 @@ export default class CurrentWeather {
       this.showCelciusOrFahrenheit(this.mode);
     } catch (error) {
       console.log(error);
+      this.displayPopup(q, "not found");
     }
   }
 

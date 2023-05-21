@@ -8,11 +8,13 @@ import Search from "./search";
 import CurrentWeather from "./current_weather";
 import IPLookup from "./ip";
 
+import displayPopup from "./error_popup";
+
 const storage = new Storage();
 const observable = new Observable();
 
 const tempModeDropdown = new Dropdown("temp-mode", storage, observable);
-const currentWeather = new CurrentWeather(storage);
+const currentWeather = new CurrentWeather(storage, displayPopup);
 const search = new Search(observable, currentWeather);
 const ip = new IPLookup();
 

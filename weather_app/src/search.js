@@ -10,7 +10,7 @@ export default class Search {
     this.submitButton = document.querySelector(".arrow");
     this.searchSuggestions = document.querySelector(".search-suggestions");
     this.suggestionList = document.querySelector(".suggestion-list");
-    this.focusedSuggestion = 0;
+    this.focusedSuggestion = -1;
   }
 
   showSuggestions() {
@@ -70,12 +70,20 @@ export default class Search {
   init() {
     this.cityForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      const formdata = new FormData(this.cityForm);
-      const cityName = formdata.get("city");
-      // this.observable.notify();
-      if (cityName) this.currentWeather.updateCurrentWeather(cityName);
-      this.cityInput.value = "";
 
+      const selected = document.querySelector(".selected");
+
+      if (selected) {
+        // console.log(selected.dataset.latlon);
+        this.currentWeather.updateCurrentWeather(selected.dataset.latlon);
+      } else {
+        const formdata = new FormData(this.cityForm);
+        const cityName = formdata.get("city");
+        // this.observable.notify();
+        if (cityName) this.currentWeather.updateCurrentWeather(cityName);
+      }
+
+      this.cityInput.value = "";
       this.suggestionList.replaceChildren();
       this.searchSuggestions.style.display = "none";
     });
@@ -86,15 +94,51 @@ export default class Search {
 
     this.cityInput.addEventListener("keydown", (e) => {
       if (e.key === "ArrowDown") {
-        console.log(this.suggestionList.children[this.focusedSuggestion]);
-        this.suggestionList.children[this.focusedSuggestion].focus();
+        // console.log(this.suggestionList);
+        if (
+          this.focusedSuggestion ===
+          this.suggestionList.children.length - 1
+        ) {
+          this.focusedSuggestion = -1;
+        }
+
         this.focusedSuggestion += 1;
+        // console.log(this.suggestionList.children[this.focusedSuggestion]);
+
+        if (document.querySelector(".selected"))
+          document.querySelector(".selected").classList.remove("selected");
+
+        this.suggestionList.children[this.focusedSuggestion].classList.add(
+          "selected"
+        );
+        return;
       }
+
       if (e.key === "ArrowUp") {
-        console.log(e);
+        e.preventDefault();
+
+        if (this.focusedSuggestion === -1 || this.focusedSuggestion === 0) {
+          this.focusedSuggestion = this.suggestionList.children.length;
+        }
+
         this.focusedSuggestion -= 1;
-        this.suggestionList.children[this.focusedSuggestion].focus();
+        // console.log(this.focusedSuggestion);
+        // console.log(this.suggestionList.children[this.focusedSuggestion]);
+        if (document.querySelector(".selected"))
+          document.querySelector(".selected").classList.remove("selected");
+
+        this.suggestionList.children[this.focusedSuggestion].classList.add(
+          "selected"
+        );
+        return;
       }
+
+      if (e.key === "Escape") {
+        // this.suggestionList.replaceChildren();
+        this.searchSuggestions.style.display = "none";
+      }
+
+      this.focusedSuggestion = -1;
     });
 
     this.cityInput.addEventListener("input", () => {
@@ -108,12 +152,14 @@ export default class Search {
       });
     });
 
-    this.cityInput.addEventListener("blur", () => {
-      this.cityInput.value = "";
-    });
+    // this.cityInput.addEventListener("blur", (e) => {
+    //   if (!e.target.closest("#city-form")) {
+    //     this.cityInput.value = "";
+    //   }
+    // });
 
     this.cityInput.addEventListener("focus", () => {
-      this.focusedSuggestion = 0;
+      this.focusedSuggestion = -1;
 
       if (this.cityInput.value) {
         this.showSuggestions();
@@ -142,8 +188,9 @@ export default class Search {
       ) {
         return;
       }
+      this.cityInput.value = "";
 
-      this.focusedSuggestion = 0;
+      this.focusedSuggestion = -1;
       this.searchSuggestions.style.display = "none";
     });
 

@@ -55,7 +55,7 @@
 
 .location:hover,
 .location:active,
-.location:focus {
+.selected {
   background-color: rgb(137, 195, 253);
 }
 

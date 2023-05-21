@@ -63,8 +63,6 @@ export default class CurrentWeather {
       const json = await response.json();
       this.json = json;
 
-      console.log(this.json);
-
       this.city.textContent = json.location.name;
       this.country.textContent = json.location.country;
       this.condition.textContent = json.current.condition.text;

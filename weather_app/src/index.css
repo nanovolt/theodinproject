@@ -109,23 +109,17 @@ footer a {
 }
 
 .app-title {
-  font-size: 24px;
+  font-size: var(--fontsize-2xl);
   font-weight: bold;
 }
 
 .dots {
   margin-bottom: 4px;
   border: none;
-  border-bottom: 2px dotted black;
+  border-bottom: 1px dotted rgb(0, 0, 0);
 }
 
 .more {
   display: grid;
   grid-template-columns: auto 1fr auto auto;
-}
-
-hr {
-  border: none;
-  height: 10px;
-  border-top: 2px dotted black;
 }

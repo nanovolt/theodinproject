@@ -39,7 +39,6 @@ export default class Dropdown {
 
         if (this.observable) {
           this.observable.notify(option.className);
-          console.log("notified:", option.className);
         }
 
         this.button.textContent = option.textContent;

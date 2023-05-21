@@ -1,9 +1,13 @@
+.form-container {
+  position: relative;
+}
+
 #city-form {
   background-color: white;
   padding: 8px;
   border-radius: 8px;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 8px;
   font-size: var(--fontsize-xl);
@@ -16,4 +20,45 @@
   background-color: #ffffff00;
   outline: none;
   min-width: 0;
+}
+
+.arrow {
+  cursor: pointer;
+  background-color: rgb(166, 166, 255);
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+.search-suggestions {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px);
+  width: 100%;
+  background-color: white;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.5);
+  display: none;
+  gap: 8px;
+}
+
+.suggestion-list {
+  display: grid;
+  gap: 8px;
+}
+
+.location {
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.location:hover,
+.location:active,
+.location:focus {
+  background-color: rgb(137, 195, 253);
+}
+
+.location-details {
+  font-size: var(--fontsize-l);
 }

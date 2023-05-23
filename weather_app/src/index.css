@@ -13,6 +13,8 @@
   --fontsize-2xl: 2.4rem;
   --fontsize-ultra: 3.6rem;
 
+  --primary-color: rgb(200, 100, 250);
+
   --light-sky: linear-gradient(90deg, #00c9ff 0%, #92fe9d 100%);
   --dark-sky: linear-gradient(90deg, #1cb5e0 0%, #000851 100%);
   --sunset: linear-gradient(90deg, #d53369 0%, #daae51 100%);

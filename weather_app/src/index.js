@@ -1,3 +1,6 @@
+// dependency
+// end dependency
+
 import "./index.css";
 
 import Storage from "./storage";
@@ -14,9 +17,9 @@ import Forecast from "./forecast";
 const storage = new Storage();
 const observable = new Observable();
 
-const tempModeDropdown = new Dropdown("temp-mode", storage, observable);
+const dropdown = new Dropdown("temp-mode");
 const currentWeather = new CurrentWeather(storage, displayPopup);
-const search = new Search(storage, observable, currentWeather);
+const search = new Search();
 const ip = new IPLookup();
 const forecast = new Forecast(storage);
 
@@ -25,8 +28,8 @@ observable.subscribe(forecast);
 
 storage.init();
 search.init();
-tempModeDropdown.init();
-tempModeDropdown.setMode(storage.getTempMode());
+dropdown.init();
+// tempModeDropdown.setMode(storage.getTempMode());
 
 // ip.requestIP()
 //   .then(() => {
@@ -34,7 +37,7 @@ tempModeDropdown.setMode(storage.getTempMode());
 //   })
 //   .catch((err) => {});
 
-async function requestAPI() {
+async function app() {
   try {
     await ip.requestIP();
     await currentWeather.updateCurrentWeather(ip.getCity());
@@ -44,4 +47,4 @@ async function requestAPI() {
   }
 }
 
-requestAPI();
+app();

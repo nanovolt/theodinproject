@@ -1,15 +1,12 @@
 .dropdown {
   position: relative;
   border-radius: 8px;
-  background-color: beige;
 }
 
-.active-dropdown {
-  background-color: rgb(247, 247, 166);
-}
-
-.dropdown:hover {
-  background-color: rgb(247, 247, 166);
+.active-dropdown,
+.dropdown,
+.dropdown-content div:hover {
+  background-color: var(--primary-color);
 }
 
 .dropdown-button {
@@ -44,10 +41,6 @@
   border-radius: 8px;
   cursor: pointer;
   width: max-content;
-}
-
-.dropdown-content div:hover {
-  background-color: rgb(247, 247, 166);
 }
 
 .active-dropdown-content {

@@ -1,12 +1,10 @@
-export default class IPLookup {
-  constructor() {
-    this.key = "7af186cb5b0740ea9b182108231405";
-  }
+import key from "./key";
 
+export default class IPLookup {
   async requestIP() {
     try {
       const response = await fetch(
-        `https://api.weatherapi.com/v1/ip.json?key=${this.key}&q=auto:ip`
+        `https://api.weatherapi.com/v1/ip.json?key=${key}&q=auto:ip`
       );
       const json = await response.json();
       this.city = json.city;
@@ -16,7 +14,6 @@ export default class IPLookup {
   }
 
   getCity() {
-    // console.log("city:", this.city);
     return this.city;
   }
 }

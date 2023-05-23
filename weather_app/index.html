@@ -14,25 +14,25 @@
       <div class="header-wrapper">
         <div class="app-title">Weather App</div>
         <div class="dropdown temp-mode">
-          <div class="dropdown-button">C&deg</div>
+          <div class="dropdown-button">&degC, Metric (km/h)</div>
           <div class="dropdown-content">
-            <div class="celcius">&degC, Metric (km/h)</div>
-            <div class="fahrenheit">&degF, Imperial (mph)</div>
+            <div class="dropdown-option celcius">&degC, Metric (km/h)</div>
+            <div class="dropdown-option fahrenheit">&degF, Imperial (mph)</div>
           </div>
         </div>
       </div>
     </header>
     <main>
       <div class="form-container">
-        <form action="" id="city-form" autocomplete="off">
+        <form action="" id="search-form" autocomplete="off">
           <i class="fa-lg fa-sharp fa-solid fa-magnifying-glass"></i>
           <input
             type="text"
-            id="city-input"
+            id="search-input"
             name="city"
             minlength="1"
             maxlength="32" />
-          <button type="submit" class="arrow">
+          <button type="submit" class="search-submit-button">
             <i class="fa-solid fa-arrow-right"></i>
           </button>
         </form>

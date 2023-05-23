@@ -1,13 +1,15 @@
 import "./current_weather.css";
+import key from "./key";
 
 export default class CurrentWeather {
   constructor(storage, displayPopup) {
-    this.key = "7af186cb5b0740ea9b182108231405";
     this.storage = storage;
-    this.signs = document.querySelectorAll(".sign");
     this.city = document.querySelector(".city");
     this.country = document.querySelector(".country");
+    this.tempSign = document.querySelector(".temp-sign");
     this.temp = document.querySelector(".temp");
+    this.tempFeelslikeSign = document.querySelector(".temp-feelslike-sign");
+
     this.tempFeelslike = document.querySelector(".temp-feelslike");
     this.cf = document.querySelectorAll(".c-f");
     this.condition = document.querySelector(".condition");
@@ -20,15 +22,44 @@ export default class CurrentWeather {
     this.windSpeed = document.querySelector(".wind-speed");
     this.speed = document.querySelectorAll(".speed");
     this.distance = document.querySelectorAll(".distance");
+
+    this.co = document.querySelector(".co");
+    this.no2 = document.querySelector(".no2");
+    this.o3 = document.querySelector(".o3");
+    this.pm10 = document.querySelector(".pm10");
+    this.pm2_5 = document.querySelector(".pm2-5");
+    this.so2 = document.querySelector(".so2");
+
     this.displayPopup = displayPopup;
+
+    this.trimAll = document.querySelectorAll(".trim");
+
+    // for (const el of this.trimAll) {
+    // el.textContent.trim().replace(/^(&nbsp;|\s)*/, "");
+    // el.textContent.replace(/&nbsp;/, "");
+    // el.textContent.replace(/[\n\r]+|[\s]{2,}/g, "").trim();
+    // el.textContent.replace(/[\n]/g, "");
+    // el.textContent.replace(/>\s+</g, "><");
+    // el.textContent.replace(/\s+/g, " ").trim();
+    // el.textContent.trim();
+    // console.log(el);
+    // }
+    // this.trimAll.forEach((el) => {
+    //   console.log(el.textContent);
+    // });
   }
 
   showCelciusOrFahrenheit(mode) {
+    let temp = null;
+    let feelslike = null;
+    let visibility = null;
+    let wind = null;
+
     if (mode === "celcius") {
-      this.temp.textContent = this.json.current.temp_c;
-      this.tempFeelslike.textContent = this.json.current.feelslike_c;
-      this.visibility.textContent = this.json.current.vis_km;
-      this.windSpeed.textContent = this.json.current.wind_kph;
+      temp = this.json.current.temp_c;
+      feelslike = this.json.current.feelslike_c;
+      visibility = this.json.current.vis_km;
+      wind = this.json.current.wind_kph;
 
       for (const el of this.cf) {
         el.innerHTML = "&degC";
@@ -40,10 +71,11 @@ export default class CurrentWeather {
         d.textContent = "km";
       }
     } else {
-      this.temp.textContent = this.json.current.temp_f;
-      this.tempFeelslike.textContent = this.json.current.feelslike_f;
-      this.visibility.textContent = this.json.current.vis_miles;
-      this.windSpeed.textContent = this.json.current.wind_mph;
+      temp = this.json.current.temp_f;
+      feelslike = this.json.current.feelslike_f;
+      visibility = this.json.current.vis_miles;
+      wind = this.json.current.wind_mph;
+
       for (const el of this.cf) {
         el.innerHTML = "&degF";
       }
@@ -54,12 +86,33 @@ export default class CurrentWeather {
         d.textContent = "mi";
       }
     }
+
+    if (temp > 0) {
+      this.tempSign.textContent = "+";
+    } else if (temp < 0) {
+      this.tempSign.textContent = "-";
+    } else {
+      this.tempSign.textContent = "";
+    }
+
+    if (feelslike > 0) {
+      this.tempFeelslikeSign.textContent = "+";
+    } else if (feelslike < 0) {
+      this.tempFeelslikeSign.textContent = "-";
+    } else {
+      this.tempFeelslikeSign.textContent = "";
+    }
+
+    this.temp.textContent = temp;
+    this.tempFeelslike.textContent = feelslike;
+    this.visibility.textContent = visibility;
+    this.windSpeed.textContent = wind;
   }
 
   async updateCurrentWeather(q) {
     try {
       const response = await fetch(
-        `https://api.weatherapi.com/v1/current.json?key=${this.key}&q=${q}`
+        `https://api.weatherapi.com/v1/current.json?key=${key}&q=${q}&aqi=yes`
       );
       const json = await response.json();
       this.json = json;
@@ -69,32 +122,26 @@ export default class CurrentWeather {
       this.condition.textContent = json.current.condition.text;
       this.conditionImage.src = json.current.condition.icon;
 
-      if (json.current.temp_c > 0 || json.current.temp_f > 0) {
-        for (const sign of this.signs) {
-          sign.textContent = "+";
-        }
-      } else if (json.current.temp_c < 0 || json.current.temp_f < 0) {
-        for (const sign of this.signs) {
-          sign.textContent = "+";
-        }
-      } else {
-        for (const sign of this.signs) {
-          sign.textContent = "+";
-        }
-      }
-
       this.mode = this.storage.getTempMode();
+      this.showCelciusOrFahrenheit(this.mode);
 
       this.cloud.textContent = json.current.cloud;
       this.humidity.textContent = json.current.humidity;
       this.uv.textContent = json.current.uv;
       this.windDirection.textContent = json.current.wind_dir;
 
-      this.showCelciusOrFahrenheit(this.mode);
+      this.co.textContent = json.current.air_quality.co.toFixed(2);
+      this.no2.textContent = json.current.air_quality.no2.toFixed(2);
+      this.o3.textContent = json.current.air_quality.o3.toFixed(2);
+      this.pm10.textContent = json.current.air_quality.pm10.toFixed(2);
+      this.pm2_5.textContent = json.current.air_quality.pm2_5.toFixed(2);
+      this.so2.textContent = json.current.air_quality.so2.toFixed(2);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       this.displayPopup(q, "not found");
     }
+
+    return this.json.location;
   }
 
   getNotified(arg) {

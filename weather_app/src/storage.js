@@ -21,6 +21,24 @@ export default class Storage {
     this.tempMode = mode;
   }
 
+  // eslint-disable-next-line class-methods-use-this
+  hasLastUsedCities() {
+    if (localStorage.getItem("lastUsedCities")) {
+      return true;
+    }
+    return false;
+  }
+
+  setLastUsedCities(cities) {
+    this.lastUsedCities = cities;
+    localStorage.setItem("lastUsedCities", JSON.stringify(this.lastUsedCities));
+  }
+
+  getLastUsedCities() {
+    this.lastUsedCities = JSON.parse(localStorage.getItem("lastUsedCities"));
+    return this.lastUsedCities;
+  }
+
   getTempMode() {
     return this.tempMode;
   }

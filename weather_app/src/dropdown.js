@@ -26,6 +26,8 @@ export default class Dropdown {
   }
 
   init() {
+    this.setMode(this.storage.getTempMode());
+
     this.button.addEventListener("click", () => {
       this.dropdown.classList.toggle("active-dropdown");
       this.dropdownContent.classList.toggle("active-dropdown-content");
@@ -54,7 +56,5 @@ export default class Dropdown {
       this.dropdown.classList.remove("active-dropdown");
       this.dropdownContent.classList.remove("active-dropdown-content");
     });
-
-    this.setMode(this.storage.getTempMode());
   }
 }

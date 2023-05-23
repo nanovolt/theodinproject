@@ -37,68 +37,153 @@
           </button>
         </form>
         <div class="error-popup"></div>
+        <div class="last-used">
+          <div>Last used:</div>
+          <div class="last-used-list"></div>
+        </div>
         <div class="search-suggestions">
-          <div class="last-used"></div>
           <div class="suggestion-list"></div>
         </div>
       </div>
-      <div class="weather-container">
-        <div class="main-info">
-          <div class="place">
-            <span class="city"></span>
-            <span>/</span>
-            <span class="country"></span>
+      <div class="content-grid">
+        <div class="weather-container">
+          <h2 class="container-title">Now</h2>
+          <div class="main-info">
+            <div class="place">
+              <span class="city"></span>
+              <span>/</span>
+              <span class="country"></span>
+            </div>
+            <div class="temp-box">
+              <span class="temp-sign"></span>
+              <span class="temp"></span>
+              <span class="c-f"></span>
+            </div>
+            <div class="feelslike-box">
+              <span>Feels like</span>
+              <span class="temp-feelslike-sign"></span>
+              <span class="temp-feelslike"></span>
+              <span class="c-f"></span>
+            </div>
+            <div class="condition"></div>
+            <img class="condition-image" />
           </div>
-          <div class="temp-box">
-            <span class="sign"></span>
-            <span class="temp"></span>
-            <span class="c-f"></span>
+          <div class="more-info">
+            <div class="more">
+              <div>Cloud</div>
+              <div class="dots"></div>
+              <div class="cloud"></div>
+              <div>%</div>
+            </div>
+            <div class="more">
+              <div>Humidity</div>
+              <div class="dots"></div>
+              <div class="humidity"></div>
+              <div>%</div>
+            </div>
+            <div class="more">
+              <div>UV index</div>
+              <div class="dots"></div>
+              <div class="uv"></div>
+            </div>
+            <div class="more">
+              <div>Visibility</div>
+              <div class="dots"></div>
+              <div class="visibility"></div>
+              <div class="distance"></div>
+            </div>
+            <div class="more">
+              <div>Wind direction</div>
+              <div class="dots"></div>
+              <div class="wind-direction"></div>
+            </div>
+            <div class="more">
+              <div>Wind speed</div>
+              <div class="dots"></div>
+              <div class="wind-speed"></div>
+              <div class="speed"></div>
+            </div>
           </div>
+          <div class="air-quality">
+            <div>Air Quality</div>
+            <div class="more">
+              <div>CO</div>
+              <div class="dots"></div>
+              <div class="co"></div>
+            </div>
 
-          <div class="feelslike-box">
-            <span>Feels like</span>
-            <span class="sign"></span>
-            <span class="temp-feelslike"></span>
-            <span class="c-f"></span>
+            <div class="more">
+              <div class="trim">
+                <span>NO</span>
+                <sub>2</sub>
+              </div>
+              <div class="dots"></div>
+              <div class="no2"></div>
+            </div>
+            <div class="more">
+              <span class="trim">
+                O
+                <sub>3</sub>
+              </span>
+              <div class="dots"></div>
+              <div class="o3"></div>
+            </div>
+            <div class="more">
+              <div>PM10</div>
+              <div class="dots"></div>
+              <div class="pm10"></div>
+            </div>
+            <div class="more">
+              <div>PM2.5</div>
+              <div class="dots"></div>
+              <div class="pm2-5"></div>
+            </div>
+            <div class="more">
+              <div class="trim">
+                SO
+                <sub>2</sub>
+              </div>
+              <div class="dots"></div>
+              <div class="so2"></div>
+            </div>
           </div>
-          <div class="condition"></div>
-          <img class="condition-image" />
         </div>
-
-        <div class="more-info">
-          <div class="more">
-            <div>Cloud</div>
-            <div class="dots"></div>
-            <div class="cloud"></div>
-            <div>%</div>
-          </div>
-          <div class="more">
-            <div>Humidity</div>
-            <div class="dots"></div>
-            <div class="humidity"></div>
-            <div>%</div>
-          </div>
-          <div class="more">
-            <div>UV index</div>
-            <div class="dots"></div>
-            <div class="uv"></div>
-          </div>
-          <div class="more">
-            <div>Visibility</div>
-            <div class="dots"></div>
-            <div class="visibility"></div>
-            <div class="distance"></div>
-          </div>
-          <div class="more">
-            <div>Wind direction</div>
-            <div class="dots"></div>
-            <div class="wind-direction"></div>
-          </div>
-          <div class="more">
-            <div>Wind speed</div>
-            <div class="dots"></div>
-            <div class="wind-speed"></div>
-            <div class="speed"></div>
+        <div class="forecast-container">
+          <h2 class="container-title">Forecast</h2>
+          <div class="forecast-info">
+            <div class="day">
+              <div class="f-date"></div>
+              <div>
+                <span class="avg-temp"></span>
+                <span class="c-f"></span>
+              </div>
+              <div class="f-condition"></div>
+              <div class="f-condition-image"></div>
+              <div class="rain-chance"></div>
+              <div class="snow-chance"></div>
+            </div>
+            <div class="day">
+              <div class="f-date"></div>
+              <div>
+                <span class="avg-temp"></span>
+                <span class="c-f"></span>
+              </div>
+              <div class="f-condition"></div>
+              <div class="f-condition-image"></div>
+              <div class="rain-chance"></div>
+              <div class="snow-chance"></div>
+            </div>
+            <div class="day">
+              <div class="f-date"></div>
+              <div>
+                <span class="avg-temp"></span>
+                <span class="c-f"></span>
+              </div>
+              <div class="f-condition"></div>
+              <div class="f-condition-image"></div>
+              <div class="rain-chance"></div>
+              <div class="snow-chance"></div>
+            </div>
           </div>
         </div>
       </div>

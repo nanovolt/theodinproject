@@ -9,7 +9,7 @@
   font-size: 0.625rem;
   --fontsize-m: 1rem;
   --fontsize-l: 1.2rem;
-  --fontsize-xl: 1.6rem;
+  --fontsize-xl: 1.8rem;
   --fontsize-2xl: 2.4rem;
   --fontsize-ultra: 3.6rem;
 
@@ -28,8 +28,8 @@ body {
   min-height: 100vh;
   position: relative;
   margin: 0;
-  background-color: #f0f0f0;
-  font-size: 1.6rem;
+  background-color: #ddd;
+  font-size: var(--fontsize-xl);
   display: flex;
   flex-direction: column;
   /* background: var(--sunset2); */
@@ -75,10 +75,13 @@ header {
 }
 
 main {
-  width: clamp(300px, 100%, 768px);
+  width: clamp(300px, 100%, 900px);
   margin: 0 auto;
   padding: 8px;
   display: grid;
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  /* grid-template-columns: auto auto; */
   gap: 8px;
 }
 
@@ -89,6 +92,7 @@ footer {
   margin-top: auto;
   display: grid;
   gap: 8px;
+  padding: 8px;
   grid-template-columns: auto;
   place-items: center;
   /* align-items: center; */
@@ -103,9 +107,14 @@ footer a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: clamp(300px, 100%, 768px);
+  width: clamp(300px, 100%, 900px);
   margin: 0 auto;
   padding: 8px;
+}
+
+h1,
+h2 {
+  margin: 0;
 }
 
 .app-title {
@@ -113,25 +122,27 @@ footer a {
   font-weight: bold;
 }
 
-.dots {
-  margin-bottom: 4px;
-  border: none;
-  border-bottom: 1px dotted rgb(0, 0, 0);
-}
-
-.more {
+.content-grid {
   display: grid;
-  grid-template-columns: auto 1fr auto auto;
+  gap: 8px;
+  /* grid-template-columns: auto 1fr; */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  /* grid-template-columns: repeat(auto-fit, minmax(240px, max-content)); */
+
+  align-items: flex-start;
 }
 
-.error-popup {
-  opacity: 0;
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  transition: opacity 250ms;
-  background-color: white;
-  padding: 8px;
-  border-radius: 8px;
-  border-right: 8px solid red;
+.container-title {
+  font-size: var(--fontsize-2xl);
 }
+
+.chem {
+  /* position: relative;
+  display: inline-block; */
+  white-space: nowrap;
+}
+
+/* sub {
+  position: absolute;
+  left: 0;
+} */

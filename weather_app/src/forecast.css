@@ -1,0 +1,14 @@
+.forecast-container {
+  display: grid;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: white;
+  /* align-items: start; */
+}
+
+.forecast-info {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+}

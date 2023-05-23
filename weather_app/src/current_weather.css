@@ -1,7 +1,8 @@
 .weather-container {
+  /* grid-area: 2 / 1 / 3 / 2; */
   display: grid;
   gap: 8px;
-  width: fit-content;
+  /* width: max-content; */
   /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
   background-color: white;
   padding: 8px;
@@ -10,8 +11,9 @@
 
 .main-info {
   display: grid;
-  justify-content: space-between;
-  gap: 8px;
+  justify-content: flex-start;
+  /* gap: 24px; */
+  column-gap: 24px;
 }
 
 .place {
@@ -34,4 +36,23 @@
 
 .condition-image {
   grid-area: 2 / 2 / 4 / 3;
+}
+
+.dots {
+  margin-bottom: 6px;
+  border: none;
+  border-bottom: 2px dotted rgb(0, 0, 0);
+}
+
+.more {
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+}
+
+.trim {
+  display: flex;
+}
+.trim sub {
+  line-height: 1;
+  align-self: flex-end;
 }

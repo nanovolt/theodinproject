@@ -49,10 +49,10 @@
   grid-template-columns: auto 1fr auto auto;
 }
 
-.trim {
+.chem {
   display: flex;
 }
-.trim sub {
+.chem sub {
   line-height: 1;
   align-self: flex-end;
 }

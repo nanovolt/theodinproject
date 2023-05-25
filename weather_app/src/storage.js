@@ -1,19 +1,18 @@
 export default class Storage {
   constructor() {
     this.tempMode = localStorage.getItem("tempMode");
+    this.lastSearched = localStorage.getItem("lastSearched");
   }
 
   init() {
-    if (!this.hasTempMode()) {
-      this.setTempMode("celcius");
+    if (!this.tempMode) {
+      this.tempMode = "celcius";
+      localStorage.setItem("tempMode", this.tempMode);
     }
-  }
-
-  hasTempMode() {
-    if (this.tempMode) {
-      return true;
+    if (!this.lastSearched) {
+      this.lastSearched = [];
+      localStorage.setItem("lastSearched", JSON.stringify(this.lastSearched));
     }
-    return false;
   }
 
   setTempMode(mode) {
@@ -21,30 +20,26 @@ export default class Storage {
     this.tempMode = mode;
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  hasLastUsedCities() {
-    if (localStorage.getItem("lastUsedCities")) {
-      return true;
-    }
-    return false;
-  }
-
-  setLastUsedCities(cities) {
-    this.lastUsedCities = cities;
-    localStorage.setItem("lastUsedCities", JSON.stringify(this.lastUsedCities));
-  }
-
-  getLastUsedCities() {
-    this.lastUsedCities = JSON.parse(localStorage.getItem("lastUsedCities"));
-    return this.lastUsedCities;
-  }
-
   getTempMode() {
+    this.tempMode = localStorage.getItem("tempMode");
     return this.tempMode;
   }
 
-  getNotified(arg) {
-    console.log("storage notified:", arg);
-    this.setTempMode(arg);
+  addLastSearched(city) {
+    this.getLastSearched();
+    this.lastSearched = this.lastSearched.slice(-2);
+
+    if (typeof city !== "object") {
+      this.lastSearched.push({ name: city });
+    } else {
+      this.lastSearched.push(city);
+    }
+
+    localStorage.setItem("lastSearched", JSON.stringify(this.lastSearched));
+  }
+
+  getLastSearched() {
+    this.lastSearched = JSON.parse(localStorage.getItem("lastSearched"));
+    return this.lastSearched;
   }
 }

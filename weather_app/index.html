@@ -9,21 +9,25 @@
     <link rel="stylesheet" href="src/fonts/fa.css" />
     <script defer src="bundle.js"></script>
   </head>
-  <body>
+  <body class="no-transition">
     <header>
       <div class="header-wrapper">
         <div class="app-title">Weather App</div>
         <div class="dropdown temp-mode">
           <div class="dropdown-button">&degC, Metric (km/h)</div>
           <div class="dropdown-content">
-            <div class="dropdown-option celcius">&degC, Metric (km/h)</div>
-            <div class="dropdown-option fahrenheit">&degF, Imperial (mph)</div>
+            <div data-mode="celcius" class="dropdown-option">
+              &degC, Metric (km/h)
+            </div>
+            <div data-mode="fahrenheit" class="dropdown-option">
+              &degF, Imperial (mph)
+            </div>
           </div>
         </div>
       </div>
     </header>
     <main>
-      <div class="form-container">
+      <div class="search-container">
         <form action="" id="search-form" autocomplete="off">
           <i class="fa-lg fa-sharp fa-solid fa-magnifying-glass"></i>
           <input
@@ -37,12 +41,14 @@
           </button>
         </form>
         <div class="error-popup"></div>
-        <div class="last-used">
-          <div>Last used:</div>
-          <div class="last-used-list"></div>
-        </div>
-        <div class="search-suggestions">
-          <div class="suggestion-list"></div>
+        <div class="search-dropdown">
+          <div class="search-status"></div>
+          <div class="last-searched hidden">
+            <div class="last-searched-list"></div>
+          </div>
+          <div class="search-suggestions hidden">
+            <div class="suggestion-list"></div>
+          </div>
         </div>
       </div>
       <div class="content-grid">
@@ -113,7 +119,7 @@
             </div>
 
             <div class="more">
-              <div class="trim">
+              <div class="chem">
                 <span>NO</span>
                 <sub>2</sub>
               </div>
@@ -121,7 +127,7 @@
               <div class="no2"></div>
             </div>
             <div class="more">
-              <span class="trim">
+              <span class="chem">
                 O
                 <sub>3</sub>
               </span>
@@ -139,7 +145,7 @@
               <div class="pm2-5"></div>
             </div>
             <div class="more">
-              <div class="trim">
+              <div class="chem">
                 SO
                 <sub>2</sub>
               </div>

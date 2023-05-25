@@ -1,8 +1,7 @@
 import "./current_weather.css";
-import key from "./key";
 
 export default class CurrentWeather {
-  constructor(storage, displayPopup) {
+  constructor(storage) {
     this.storage = storage;
     this.city = document.querySelector(".city");
     this.country = document.querySelector(".country");
@@ -30,37 +29,18 @@ export default class CurrentWeather {
     this.pm2_5 = document.querySelector(".pm2-5");
     this.so2 = document.querySelector(".so2");
 
-    this.displayPopup = displayPopup;
-
-    this.trimAll = document.querySelectorAll(".trim");
-
-    // for (const el of this.trimAll) {
-    // el.textContent.trim().replace(/^(&nbsp;|\s)*/, "");
-    // el.textContent.replace(/&nbsp;/, "");
-    // el.textContent.replace(/[\n\r]+|[\s]{2,}/g, "").trim();
-    // el.textContent.replace(/[\n]/g, "");
-    // el.textContent.replace(/>\s+</g, "><");
-    // el.textContent.replace(/\s+/g, " ").trim();
-    // el.textContent.trim();
-    // console.log(el);
-    // }
-    // this.trimAll.forEach((el) => {
-    //   console.log(el.textContent);
-    // });
+    this.preloadIcon = `<i class="fa-solid fa-spinner fa-spin"></i>`;
   }
 
-  showCelciusOrFahrenheit(mode) {
-    let temp = null;
-    let feelslike = null;
-    let visibility = null;
-    let wind = null;
+  init() {
+    this.mode = this.storage.getTempMode();
+    this.changeMode();
+  }
 
-    if (mode === "celcius") {
-      temp = this.json.current.temp_c;
-      feelslike = this.json.current.feelslike_c;
-      visibility = this.json.current.vis_km;
-      wind = this.json.current.wind_kph;
+  changeMode() {
+    this.mode = this.storage.getTempMode();
 
+    if (this.mode === "celcius") {
       for (const el of this.cf) {
         el.innerHTML = "&degC";
       }
@@ -71,11 +51,6 @@ export default class CurrentWeather {
         d.textContent = "km";
       }
     } else {
-      temp = this.json.current.temp_f;
-      feelslike = this.json.current.feelslike_f;
-      visibility = this.json.current.vis_miles;
-      wind = this.json.current.wind_mph;
-
       for (const el of this.cf) {
         el.innerHTML = "&degF";
       }
@@ -85,6 +60,27 @@ export default class CurrentWeather {
       for (const d of this.distance) {
         d.textContent = "mi";
       }
+    }
+  }
+
+  changeValues() {
+    let temp = null;
+    let feelslike = null;
+    let visibility = null;
+    let wind = null;
+
+    this.changeMode();
+
+    if (this.mode === "celcius") {
+      temp = this.current.current.temp_c;
+      feelslike = this.current.current.feelslike_c;
+      visibility = this.current.current.vis_km;
+      wind = this.current.current.wind_kph;
+    } else {
+      temp = this.current.current.temp_f;
+      feelslike = this.current.current.feelslike_f;
+      visibility = this.current.current.vis_miles;
+      wind = this.current.current.wind_mph;
     }
 
     if (temp > 0) {
@@ -109,43 +105,53 @@ export default class CurrentWeather {
     this.windSpeed.textContent = wind;
   }
 
-  async updateCurrentWeather(q) {
-    try {
-      const response = await fetch(
-        `https://api.weatherapi.com/v1/current.json?key=${key}&q=${q}&aqi=yes`
-      );
-      const json = await response.json();
-      this.json = json;
+  preload() {
+    this.city.innerHTML = this.preloadIcon;
+    this.country.innerHTML = this.preloadIcon;
+    this.condition.innerHTML = this.preloadIcon;
+    this.conditionImage.innerHTML = this.preloadIcon;
 
-      this.city.textContent = json.location.name;
-      this.country.textContent = json.location.country;
-      this.condition.textContent = json.current.condition.text;
-      this.conditionImage.src = json.current.condition.icon;
+    this.temp.innerHTML = this.preloadIcon;
+    this.tempFeelslike.innerHTML = this.preloadIcon;
+    this.visibility.innerHTML = this.preloadIcon;
+    this.windSpeed.innerHTML = this.preloadIcon;
 
-      this.mode = this.storage.getTempMode();
-      this.showCelciusOrFahrenheit(this.mode);
+    this.cloud.innerHTML = this.preloadIcon;
+    this.humidity.innerHTML = this.preloadIcon;
+    this.uv.innerHTML = this.preloadIcon;
+    this.windDirection.innerHTML = this.preloadIcon;
 
-      this.cloud.textContent = json.current.cloud;
-      this.humidity.textContent = json.current.humidity;
-      this.uv.textContent = json.current.uv;
-      this.windDirection.textContent = json.current.wind_dir;
-
-      this.co.textContent = json.current.air_quality.co.toFixed(2);
-      this.no2.textContent = json.current.air_quality.no2.toFixed(2);
-      this.o3.textContent = json.current.air_quality.o3.toFixed(2);
-      this.pm10.textContent = json.current.air_quality.pm10.toFixed(2);
-      this.pm2_5.textContent = json.current.air_quality.pm2_5.toFixed(2);
-      this.so2.textContent = json.current.air_quality.so2.toFixed(2);
-    } catch (error) {
-      // console.log(error);
-      this.displayPopup(q, "not found");
-    }
-
-    return this.json.location;
+    this.co.innerHTML = this.preloadIcon;
+    this.no2.innerHTML = this.preloadIcon;
+    this.o3.innerHTML = this.preloadIcon;
+    this.pm10.innerHTML = this.preloadIcon;
+    this.pm2_5.innerHTML = this.preloadIcon;
+    this.so2.innerHTML = this.preloadIcon;
   }
 
-  getNotified(arg) {
-    // this.updateCurrentWeather(arg);
-    this.showCelciusOrFahrenheit(arg);
+  update(obj) {
+    if ("current" in obj) {
+      this.current = obj.current;
+
+      this.city.textContent = this.current.location.name;
+      this.country.textContent = this.current.location.country;
+      this.condition.textContent = this.current.current.condition.text;
+      this.conditionImage.src = this.current.current.condition.icon;
+
+      this.changeValues();
+
+      this.cloud.textContent = this.current.current.cloud;
+      this.humidity.textContent = this.current.current.humidity;
+      this.uv.textContent = this.current.current.uv;
+      this.windDirection.textContent = this.current.current.wind_dir;
+
+      this.co.textContent = this.current.current.air_quality.co.toFixed(2);
+      this.no2.textContent = this.current.current.air_quality.no2.toFixed(2);
+      this.o3.textContent = this.current.current.air_quality.o3.toFixed(2);
+      this.pm10.textContent = this.current.current.air_quality.pm10.toFixed(2);
+      this.pm2_5.textContent =
+        this.current.current.air_quality.pm2_5.toFixed(2);
+      this.so2.textContent = this.current.current.air_quality.so2.toFixed(2);
+    }
   }
 }

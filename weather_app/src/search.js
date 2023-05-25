@@ -1,37 +1,26 @@
 import "./search.css";
-import key from "./key";
 
 export default class Search {
-  constructor(
-    currentWeather,
-    lastSearched,
-    searchSuggestions,
-    storage,
-    observable
-  ) {
-    this.currentWeather = currentWeather;
-    this.lastSearched = lastSearched;
-    this.searchSuggestions = searchSuggestions;
+  constructor(selector, ajax, searchObservable, weatherObservable) {
+    this.selector = selector;
 
-    this.storage = storage;
-    this.observable = observable;
+    this.ajax = ajax;
+    this.searchObservable = searchObservable;
+    this.weatherObservable = weatherObservable;
 
-    this.searchForm = document.querySelector("#search-form");
-    this.searchInput = document.querySelector("#search-input");
-    this.submitButton = document.querySelector(".search-submit-button");
-    this.popup = document.querySelector(".error-popup");
+    this.searchContainer = document.querySelector(this.selector);
+    this.searchForm = this.searchContainer.querySelector("#search-form");
+    this.searchInput = this.searchContainer.querySelector("#search-input");
+    this.submitButton = this.searchContainer.querySelector(
+      ".search-submit-button"
+    );
+    this.searchDropdown =
+      this.searchContainer.querySelector(".search-dropdown");
   }
 
   getFormData() {
     const data = new FormData(this.searchForm);
-    this.formdata = {};
-    this.formdata.city = data.get("city");
-    return this.formdata;
-  }
-
-  search(query) {
-    this.query = query;
-    console.log(`searching: ${query} ...`);
+    return data.get("city").trim().split(/[\s]+/).join(" ");
   }
 
   searchFormEventListeners() {
@@ -44,137 +33,101 @@ export default class Search {
     this.searchForm.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      this.searchInput.value = "";
-      this.search(this.getFormData());
-
-      const selectedSuggestion = document.querySelector(".selected-suggestion");
-
-      if (selectedSuggestion) {
-        this.currentWeather
-          .updateCurrentWeather(selectedSuggestion.dataset.latlon)
-          .then((arg) => {
-            if (arg) {
-              this.updateLastUsedList(arg);
-              this.lastUsed.firstElementChild.textContent = "Last used:";
-            }
-          });
-      } else if (cityName) {
-        this.currentWeather.updateCurrentWeather(cityName).then((arg) => {
-          if (arg) {
-            this.updateLastUsedList(arg);
-            this.lastUsed.firstElementChild.textContent = "Last used:";
-          }
-        });
+      if (this.searchObservable.isSelected()) {
+        this.weatherObservable.update(this.searchObservable.getSelected());
+        this.searchInput.value = "";
       }
 
-      // this.suggestionList.replaceChildren();
-      // this.searchSuggestions.style.display = "none";
+      if (this.getFormData() !== "") {
+        this.ajax.requestCurrentWeather(this.getFormData()).then(() => {
+          this.weatherObservable.update({
+            current: this.ajax.getCurrentWeather(),
+          });
+        });
+
+        this.ajax.requestWeatherForecast(this.getFormData()).then(() => {
+          this.weatherObservable.update({
+            forecast: this.ajax.getCurrentWeather(),
+          });
+        });
+
+        // this.weatherObservable.update([1, 2]);
+
+        // console.log("search promise:", promise);
+        // this.weatherObservable.update(this.getFormData());
+        // this.searchObservable.update(this.getFormData());
+        this.searchInput.value = "";
+        this.searchDropdown.classList.remove("active-search-dropdown");
+      }
+
+      // this.searchObservable.hide();
     });
   }
 
   searchInputEventListeners() {
     this.searchInput.addEventListener("keyup", () => {
-      if (!this.searchInput.value) {
-        // this.lastUsed.style.display = "block";
-      }
+      // this.weatherObservable.update(this.searchInput.value);
     });
 
     this.searchInput.addEventListener("keydown", (e) => {
-      if (!this.searchInput.value) {
-        this.lastUsed.style.display = "block";
-        this.suggestionList.replaceChildren();
-        this.searchSuggestions.style.display = "none";
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        this.searchObservable.selectUp();
       }
-      const isLastUsedDisplayed = this.lastUsed.style.display !== "none";
-      const issearchSuggestionsDisplayed =
-        this.searchSuggestions.style.display !== "none";
 
       if (e.key === "ArrowDown") {
         e.preventDefault();
-
-        if (isLastUsedDisplayed) {
-          if (this.focusedLast >= this.lastUsedList.children.length - 1) {
-            this.focusedLast = -1;
-          }
-          this.focusedLast += 1;
-          this.changeFocusedLastUsed();
-        }
-
-        if (issearchSuggestionsDisplayed) {
-          if (
-            this.focusedSuggestion >=
-            this.suggestionList.children.length - 1
-          ) {
-            this.focusedSuggestion = -1;
-          }
-          this.focusedSuggestion += 1;
-          this.changeFocusedSuggestion();
-        }
-        return;
-      }
-
-      if (e.key === "ArrowUp") {
-        e.preventDefault();
-
-        if (isLastUsedDisplayed) {
-        }
-
-        if (issearchSuggestionsDisplayed) {
-          if (this.focusedSuggestion <= -1 || this.focusedSuggestion === 0) {
-            this.focusedSuggestion = this.suggestionList.children.length;
-          }
-          this.focusedSuggestion -= 1;
-          this.changeFocusedSuggestion();
-        }
-        return;
+        this.searchObservable.selectDown();
       }
 
       if (e.key === "Escape") {
-        this.searchSuggestions.style.display = "none";
+        this.searchObservable.hide();
       }
     });
 
     this.searchInput.addEventListener("input", () => {
-      // dependency
-      // TODO update suggestions
-      // end dependency
+      this.searchObservable.show(this.searchInput.value);
     });
 
     this.searchInput.addEventListener("focus", () => {
-      // dependency
-      if (this.searchInput.value && this.searchSuggestions) {
-        // TODO show suggestions
-      } else if (this.lastSearched) {
-        // TODO show last searched
+      this.searchDropdown.classList.add("active-search-dropdown");
+      this.searchObservable.show(this.searchInput.value);
+    });
+  }
+
+  clickAway() {
+    document.addEventListener("click", (e) => {
+      if (e.target.closest(".search-container")) {
+        return;
       }
-      // end dependency
+      // if (
+      //   e.target.closest(".last-searched") ||
+      //   e.target.closest("#search-form") ||
+      //   e.target.closest(".search-suggestions")
+      // ) {
+      //   return;
+      // }
+
+      if (
+        e.target.closest(".last-searched-location") ||
+        e.target.closest(".suggested-location")
+      ) {
+        // this.searchInput.value = "";
+        const { latlon } = e.target.closest(".location").dataset;
+        this.weatherObservable.update(latlon);
+      }
+
+      this.searchInput.value = "";
+      this.searchDropdown.classList.remove("active-search-dropdown");
+
+      // this.searchObservable.hide();
     });
   }
 
   initializeEventListeners() {
     this.searchFormEventListeners();
     this.searchInputEventListeners();
-    // document.addEventListener("click", (e) => {
-    //   if (e.target.closest(".location")) {
-    //     const { latlon } = e.target.closest(".location").dataset;
-    //     this.currentWeather.updateCurrentWeather(latlon);
-    //     this.cityInput.value = "";
-    //     this.suggestionList.replaceChildren();
-    //     this.searchSuggestions.style.display = "none";
-    //     return;
-    //   }
-    //   if (
-    //     e.target.closest(".last-used") ||
-    //     e.target.closest("#city-form") ||
-    //     e.target.closest(".search-suggestions")
-    //   ) {
-    //     return;
-    //   }
-    //   this.lastUsed.style.display = "none";
-    //   this.cityInput.value = "";
-    //   this.focusedSuggestion = -1;
-    //   this.searchSuggestions.style.display = "none";
-    // });
+    this.clickAway();
   }
 
   init() {

@@ -1,0 +1,36 @@
+.search-suggestions {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 8px);
+  width: 100%;
+  background-color: white;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px 4px rgba(100, 100, 100, 0.5);
+
+  /* box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.5); */
+  /* box-shadow: 0px 2px 4px 4px rgba(100, 100, 100, 0.5); */
+}
+
+.suggestion-list {
+  display: grid;
+  gap: 8px;
+}
+
+.suggested-location {
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.suggested-location:hover,
+.suggested-location:active,
+.selected-suggestion,
+.selected-last-city {
+  background-color: var(--primary-color);
+}
+
+.location-details {
+  font-size: var(--fontsize-l);
+}

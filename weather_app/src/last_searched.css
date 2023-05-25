@@ -1,0 +1,11 @@
+.last-searched {
+}
+
+.last-searched-list {
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.last-searched-city {
+  border-radius: 8px;
+}

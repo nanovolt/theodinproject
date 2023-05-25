@@ -1,11 +1,11 @@
 import "./dropdown.css";
 
 export default class Dropdown {
-  constructor(selector, storage, observable) {
+  constructor(selector, dropdownObservable, storage) {
     this.selector = selector;
 
     this.storage = storage;
-    this.observable = observable;
+    this.dropdownObservable = dropdownObservable;
 
     this.dropdown = document.querySelector(`.${this.selector}`);
     this.button = this.dropdown.querySelector(".dropdown-button");
@@ -19,29 +19,16 @@ export default class Dropdown {
     };
   }
 
-  setMode(arg) {
-    this.mode = arg;
-    this.button.innerHTML = this.modes[this.mode];
-
-    // if (this.observable) {
-    //   this.observable.notify(this.mode);
-    //   console.log("notified:", this.mode);
-    // }
-  }
-
   optionsEventListeners() {
     this.options.forEach((option) => {
       option.addEventListener("click", () => {
         // e.stopPropagation();
 
-        // dependency
-        if (this.storage) {
-          this.storage.setTempMode(option.className);
+        if (option.dataset.mode !== this.mode) {
+          this.mode = option.dataset.mode;
+          this.storage.setTempMode(this.mode);
+          this.dropdownObservable.changeValues();
         }
-        if (this.observable) {
-          this.observable.notify(option.className);
-        }
-        // end dependency
 
         this.button.textContent = option.textContent;
         this.dropdown.classList.remove("active-dropdown");
@@ -68,12 +55,9 @@ export default class Dropdown {
   }
 
   init() {
-    // dependency
-    if (this.storage) {
-      this.setMode(this.storage.getTempMode());
-    }
-    // end dependency
+    this.mode = this.storage.getTempMode();
 
+    this.button.innerHTML = this.modes[this.mode];
     this.initializeEventListeners();
   }
 }

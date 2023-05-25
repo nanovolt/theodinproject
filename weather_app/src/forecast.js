@@ -1,5 +1,4 @@
 import "./forecast.css";
-import key from "./key";
 
 export default class Forecast {
   constructor(storage) {
@@ -14,6 +13,11 @@ export default class Forecast {
     this.snowChances = document.querySelectorAll(".snow-chance");
   }
 
+  init() {
+    this.mode = this.storage.getTempMode();
+    this.changeMode();
+  }
+
   showCelciusOrFahrenheit(mode, el, temp, unit) {
     if (mode === "celcius") {
     } else {
@@ -24,23 +28,23 @@ export default class Forecast {
     }
   }
 
-  async updateForecast(q) {
-    try {
-      const response = await fetch(
-        `https://api.weatherapi.com/v1/forecast.json?key=${key}&q=${q}&days=3`
-      );
-      const json = await response.json();
-      this.json = json;
+  changeMode() {
+    this.mode = this.storage.getTempMode();
+  }
 
-      // console.log(this.json.forecast);
-      this.json.forecast.forecastday.forEach((f, index) => {
-        this.dates[index].textContent = f.date;
+  changeValues() {
+    this.mode = this.storage.getTempMode();
+  }
 
-        // console.log(f.date);
-        // console.log(this.dates[index]);
-      });
-    } catch (error) {
-      console.log(error);
+  update(obj) {
+    // console.log(Object.keys(obj));
+    console.log("forecast obj:", obj);
+    console.log("forecast in obj:", "forecast" in obj);
+
+    if ("forecast" in obj) {
+      this.forecast = obj.forecast;
+
+      console.log("forecast update:", this.forecast);
     }
   }
 

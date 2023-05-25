@@ -26,6 +26,14 @@
   box-sizing: border-box;
 }
 
+.no-transition * {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
+  transition: none !important;
+}
+
 body {
   min-height: 100vh;
   position: relative;
@@ -103,6 +111,18 @@ footer {
 
 footer a {
   color: rgb(0, 255, 0);
+}
+
+.opacity-0 {
+  opacity: 0;
+}
+
+.opacity-1 {
+  opacity: 1;
+}
+
+.hidden {
+  display: none;
 }
 
 .header-wrapper {

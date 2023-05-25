@@ -1,5 +1,5 @@
-export default function displayPopup(city, message) {
-  const popup = document.querySelector(".error-popup");
+export default function Popup(city, message) {
+  const popup = document.querySelector(".popup");
   popup.style.visibility = "visible";
   popup.style.opacity = "1";
   popup.innerText = `${city} ${message}`;

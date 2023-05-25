@@ -1,27 +1,11 @@
 import "./suggestions.css";
-import key from "./key";
 
-export default class Suggestions {
+export default class SearchSuggestions {
   constructor() {
+    this.searchStatus = document.querySelector(".search-status");
     this.searchSuggestions = document.querySelector(".search-suggestions");
     this.suggestionList = document.querySelector(".suggestion-list");
     this.focusedSuggestion = -1;
-  }
-
-  async search(resource, query) {
-    this.resource = "https://api.weatherapi.com/v1/search.json";
-    this.key = `?key=${key}`;
-    this.query = `&q=${query}`;
-
-    try {
-      if (query === "") return;
-
-      const response = await fetch(`${this.resource}${this.key}${this.query}`);
-
-      this.json = await response.json();
-    } catch (err) {
-      console.log(err);
-    }
   }
 
   debounce(func, ms) {
@@ -32,7 +16,17 @@ export default class Suggestions {
     };
   }
 
-  changeFocusedSuggestion() {
+  isSelected() {}
+
+  update(query) {
+    // this.search(query);
+  }
+
+  noSuggestions() {
+    console.log("no suggestions");
+  }
+
+  updateFocus() {
     if (document.querySelector(".selected-suggestion")) {
       document
         .querySelector(".selected-suggestion")
@@ -46,13 +40,23 @@ export default class Suggestions {
     }
   }
 
+  hide() {
+    this.suggestionList.replaceChildren();
+  }
+
+  show(inputValue) {
+    if (inputValue) {
+      this.deboundFunction(inputValue);
+    } else {
+    }
+  }
+
   showSuggestions() {
     this.suggestionList.replaceChildren();
-    this.searchSuggestions.style.display = "grid";
 
     this.json.forEach((city, index) => {
       const location = document.createElement("div");
-      location.classList.add("location");
+      location.classList.add("suggested-location");
 
       if (index === 0) {
         this.focusedSuggestion = 0;
@@ -91,13 +95,19 @@ export default class Suggestions {
     });
   }
 
+  selectDown() {}
+
+  selectUp() {}
+
   init() {
-    this.deboundFunction = this.debounce(() => {
-      if (this.searchInput.value !== "") {
-        this.search(this.searchInput.value).then(() => {
-          if (this.searchInput.value !== "" && this.json.length !== 0) {
-            // showSuggestions();
+    this.deboundFunction = this.debounce((inputValue) => {
+      if (!this.searchSuggestions.classList.contains("hidden")) {
+        this.search(inputValue).then(() => {
+          if (this.json.length === 0) {
+            this.noSuggestions();
             // this.lastUsed.style.display = "none";
+          } else {
+            this.showSuggestions();
           }
         });
       }

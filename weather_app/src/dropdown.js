@@ -27,6 +27,9 @@ export default class Dropdown {
         if (option.dataset.mode !== this.mode) {
           this.mode = option.dataset.mode;
           this.storage.setTempMode(this.mode);
+
+          // uncaught runtime error
+          // TODO if have not loaded city, changeMode() not changeValues()
           this.dropdownObservable.changeValues();
         }
 

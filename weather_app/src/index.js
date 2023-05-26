@@ -37,15 +37,6 @@ const forecast = new Forecast(storage);
 const lastSearched = new LastSearched(storage);
 const searchSuggestions = new SearchSuggestions();
 
-dropdownObservable.subscribe(currentWeather);
-dropdownObservable.subscribe(forecast);
-
-weatherObservable.subscribe(currentWeather);
-weatherObservable.subscribe(forecast);
-
-searchObservable.subscribe(lastSearched);
-searchObservable.subscribe(searchSuggestions);
-
 const search = new Search(
   ".search-container",
   ajax,
@@ -60,21 +51,32 @@ lastSearched.init();
 searchSuggestions.init();
 dropdown.init();
 currentWeather.init();
-currentWeather.preload();
+
+dropdownObservable.subscribe(currentWeather);
+dropdownObservable.subscribe(forecast);
+
+weatherObservable.subscribe(currentWeather);
+weatherObservable.subscribe(forecast);
+
+searchObservable.subscribe(lastSearched);
+searchObservable.subscribe(searchSuggestions);
 
 async function app() {
   try {
+    currentWeather.preload();
     await ajax.requestCityFromIP();
+    storage.setIpLookup(ajax.getIpLookup());
 
-    ajax.requestCurrentWeather(ajax.getCityFromIP()).then(() => {
-      currentWeather.update({ current: ajax.getCurrentWeather() });
-    });
+    await ajax.requestCurrentWeather(ajax.getCityFromIP());
 
-    ajax.requestWeatherForecast(ajax.getCityFromIP()).then(() => {
-      forecast.update({ forecast: ajax.getWeatherForecast() });
-    });
-  } catch (err) {
-    console.log(err);
+    currentWeather.update({ currentWeatherAjax: ajax.getCurrentWeather() });
+
+    // ajax.requestWeatherForecast(ajax.getCityFromIP()).then(() => {
+    //   forecast.update({ forecast: ajax.getWeatherForecast() });
+    // });
+  } catch (error) {
+    console.log(error);
+    Popup(error);
   }
 }
 

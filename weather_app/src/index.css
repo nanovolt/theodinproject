@@ -159,12 +159,5 @@ h2 {
 }
 
 .chem {
-  /* position: relative;
-  display: inline-block; */
   white-space: nowrap;
 }
-
-/* sub {
-  position: absolute;
-  left: 0;
-} */

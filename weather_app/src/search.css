@@ -48,11 +48,3 @@
   opacity: 1;
   transform: translateY(0);
 }
-
-.success {
-  border: 2px solid rgb(0, 200, 0);
-}
-
-.fail {
-  border: 2px solid rgb(255, 0, 0);
-}

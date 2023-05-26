@@ -9,7 +9,7 @@ export default class AjaxRequester {
   async wait() {
     console.log("waiting...");
     setTimeout(() => {
-      console.log("wait");
+      console.log("finished waiting");
       return "finished waiting";
     }, 10000);
   }
@@ -19,12 +19,24 @@ export default class AjaxRequester {
     const query = `&q=auto:ip`;
 
     try {
-      const response = await fetch(`${this.url}${method}${this.key}${query}`);
-      const json = await response.json();
-      this.cityFromIP = json.city;
+      const response = await fetch(`${this.url}${method}${this.key}${query}`, {
+        method: "GET",
+      });
+
+      if (response.ok) {
+        this.json = await response.json();
+        this.cityFromIP = this.json.city;
+      } else {
+        throw Error();
+      }
     } catch (err) {
-      console.log("could not get ip address");
+      // console.log("could not get ip address");
+      throw Error("could not get ip address");
     }
+  }
+
+  getIpLookup() {
+    return this.json;
   }
 
   async requestCurrentWeather(q) {
@@ -34,12 +46,20 @@ export default class AjaxRequester {
 
     try {
       const response = await fetch(
-        ` ${this.url}${method}${this.key}${query}${airQuality}`
+        ` ${this.url}${method}${this.key}${query}${airQuality}`,
+        {
+          method: "GET",
+        }
       );
-      const json = await response.json();
-      this.currentWeather = json;
+
+      if (response.ok) {
+        const json = await response.json();
+        this.currentWeather = json;
+      } else {
+        throw Error();
+      }
     } catch (error) {
-      console.log(`did not find current for: ${q}`);
+      throw Error(`did not find current weather for "${q}"`);
     }
   }
 
@@ -50,10 +70,18 @@ export default class AjaxRequester {
 
     try {
       const response = await fetch(
-        `${this.url}${method}${this.key}${query}${days}`
+        `${this.url}${method}${this.key}${query}${days}`,
+        {
+          method: "GET",
+        }
       );
-      const json = await response.json();
-      this.weatherForecast = json;
+
+      if (response.ok) {
+        const json = await response.json();
+        this.weatherForecast = json;
+      } else {
+        throw Error();
+      }
 
       // this.weatherForecast.forecast.forecastday.forEach((f, index) => {
       //   this.dates[index].textContent = f.date;
@@ -62,7 +90,7 @@ export default class AjaxRequester {
       //   // console.log(this.dates[index]);
       // });
     } catch (error) {
-      console.log(`did not find forecast for: ${q}`);
+      throw Error(`did not find forecast for: ${q}`);
     }
   }
 
@@ -71,10 +99,18 @@ export default class AjaxRequester {
     const query = `&q=${q}`;
 
     try {
-      const response = await fetch(`${this.url}${method}${this.key}${query}`);
-      this.searchSuggestions = await response.json();
+      const response = await fetch(`${this.url}${method}${this.key}${query}`, {
+        method: "GET",
+      });
+
+      if (response.ok) {
+        const json = await response.json();
+        this.searchSuggestions = json;
+      } else {
+        throw Error();
+      }
     } catch (err) {
-      console.log(`did not find search suggestions for: ${q}`);
+      throw Error(`did not find search suggestions for: ${q}`);
     }
   }
 

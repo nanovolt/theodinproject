@@ -37,16 +37,12 @@ export default class Forecast {
   }
 
   update(obj) {
-    // console.log(Object.keys(obj));
-    console.log("forecast obj:", obj);
-    console.log("forecast in obj:", "forecast" in obj);
-
-    if ("forecast" in obj) {
-      this.forecast = obj.forecast;
-
-      console.log("forecast update:", this.forecast);
+    if ("weatherForecastAjax" in obj) {
+      this.ajax = obj.weatherForecastAjax;
     }
   }
+
+  preload() {}
 
   getNotified(arg) {
     this.showCelciusOrFahrenheit(arg);

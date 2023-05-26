@@ -1,4 +1,5 @@
 import "./search.css";
+import Popup from "./popup";
 
 export default class Search {
   constructor(selector, ajax, searchObservable, weatherObservable) {
@@ -23,6 +24,41 @@ export default class Search {
     return data.get("city").trim().split(/[\s]+/).join(" ");
   }
 
+  async searchCurrentWeather(query) {
+    try {
+      await this.ajax.requestCurrentWeather(query);
+      this.weatherObservable.update({
+        currentWeatherAjax: this.ajax.getCurrentWeather(),
+      });
+      this.clearInput();
+    } catch (error) {
+      this.weatherObservable.update({
+        currentWeatherAjax: this.ajax.getCurrentWeather(),
+      });
+      Popup(error);
+    }
+  }
+
+  async searchWeatherForecast(query) {
+    try {
+      await this.ajax.requestWeatherForecast(query);
+      this.weatherObservable.update({
+        weatherForecastAjax: this.ajax.getWeatherForecast(),
+      });
+      this.clearInput();
+    } catch (error) {
+      this.weatherObservable.update({
+        weatherForecastAjax: this.ajax.getWeatherForecast(),
+      });
+      Popup(error);
+    }
+  }
+
+  clearInput() {
+    this.searchInput.value = "";
+    this.searchInput.blur();
+  }
+
   searchFormEventListeners() {
     this.searchForm.addEventListener("click", (e) => {
       if (e.target !== this.submitButton) {
@@ -34,33 +70,17 @@ export default class Search {
       e.preventDefault();
 
       if (this.searchObservable.isSelected()) {
-        this.weatherObservable.update(this.searchObservable.getSelected());
-        this.searchInput.value = "";
+        console.log(`searchObservalbe.isSelected()`);
+        // this.weatherObservable.update(this.searchObservable.getSelected());
       }
 
       if (this.getFormData() !== "") {
-        this.ajax.requestCurrentWeather(this.getFormData()).then(() => {
-          this.weatherObservable.update({
-            current: this.ajax.getCurrentWeather(),
-          });
-        });
+        this.weatherObservable.preload();
+        this.searchCurrentWeather(this.getFormData());
+        this.searchWeatherForecast(this.getFormData());
 
-        this.ajax.requestWeatherForecast(this.getFormData()).then(() => {
-          this.weatherObservable.update({
-            forecast: this.ajax.getCurrentWeather(),
-          });
-        });
-
-        // this.weatherObservable.update([1, 2]);
-
-        // console.log("search promise:", promise);
-        // this.weatherObservable.update(this.getFormData());
-        // this.searchObservable.update(this.getFormData());
-        this.searchInput.value = "";
         this.searchDropdown.classList.remove("active-search-dropdown");
       }
-
-      // this.searchObservable.hide();
     });
   }
 

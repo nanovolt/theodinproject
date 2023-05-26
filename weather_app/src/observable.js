@@ -25,6 +25,14 @@ export default class Observable {
     });
   }
 
+  preload() {
+    this.observers.forEach((observer) => observer.preload());
+  }
+
+  recover() {
+    this.observers.forEach((observer) => observer.recover());
+  }
+
   show(arg) {
     this.observers.forEach((observer) => observer.show(arg));
   }

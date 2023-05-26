@@ -72,15 +72,15 @@ export default class CurrentWeather {
     this.changeMode();
 
     if (this.mode === "celcius") {
-      temp = this.current.current.temp_c;
-      feelslike = this.current.current.feelslike_c;
-      visibility = this.current.current.vis_km;
-      wind = this.current.current.wind_kph;
+      temp = this.ajax.current.temp_c;
+      feelslike = this.ajax.current.feelslike_c;
+      visibility = this.ajax.current.vis_km;
+      wind = this.ajax.current.wind_kph;
     } else {
-      temp = this.current.current.temp_f;
-      feelslike = this.current.current.feelslike_f;
-      visibility = this.current.current.vis_miles;
-      wind = this.current.current.wind_mph;
+      temp = this.ajax.current.temp_f;
+      feelslike = this.ajax.current.feelslike_f;
+      visibility = this.ajax.current.vis_miles;
+      wind = this.ajax.current.wind_mph;
     }
 
     if (temp > 0) {
@@ -129,29 +129,32 @@ export default class CurrentWeather {
     this.so2.innerHTML = this.preloadIcon;
   }
 
-  update(obj) {
-    if ("current" in obj) {
-      this.current = obj.current;
+  getCurrent() {
+    return this.current;
+  }
 
-      this.city.textContent = this.current.location.name;
-      this.country.textContent = this.current.location.country;
-      this.condition.textContent = this.current.current.condition.text;
-      this.conditionImage.src = this.current.current.condition.icon;
+  update(obj) {
+    if ("currentWeatherAjax" in obj) {
+      this.ajax = obj.currentWeatherAjax;
+
+      this.city.textContent = this.ajax.location.name;
+      this.country.textContent = this.ajax.location.country;
+      this.condition.textContent = this.ajax.current.condition.text;
+      this.conditionImage.src = this.ajax.current.condition.icon;
 
       this.changeValues();
 
-      this.cloud.textContent = this.current.current.cloud;
-      this.humidity.textContent = this.current.current.humidity;
-      this.uv.textContent = this.current.current.uv;
-      this.windDirection.textContent = this.current.current.wind_dir;
+      this.cloud.textContent = this.ajax.current.cloud;
+      this.humidity.textContent = this.ajax.current.humidity;
+      this.uv.textContent = this.ajax.current.uv;
+      this.windDirection.textContent = this.ajax.current.wind_dir;
 
-      this.co.textContent = this.current.current.air_quality.co.toFixed(2);
-      this.no2.textContent = this.current.current.air_quality.no2.toFixed(2);
-      this.o3.textContent = this.current.current.air_quality.o3.toFixed(2);
-      this.pm10.textContent = this.current.current.air_quality.pm10.toFixed(2);
-      this.pm2_5.textContent =
-        this.current.current.air_quality.pm2_5.toFixed(2);
-      this.so2.textContent = this.current.current.air_quality.so2.toFixed(2);
+      this.co.textContent = this.ajax.current.air_quality.co.toFixed(2);
+      this.no2.textContent = this.ajax.current.air_quality.no2.toFixed(2);
+      this.o3.textContent = this.ajax.current.air_quality.o3.toFixed(2);
+      this.pm10.textContent = this.ajax.current.air_quality.pm10.toFixed(2);
+      this.pm2_5.textContent = this.ajax.current.air_quality.pm2_5.toFixed(2);
+      this.so2.textContent = this.ajax.current.air_quality.so2.toFixed(2);
     }
   }
 }

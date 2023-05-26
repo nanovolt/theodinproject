@@ -1,0 +1,18 @@
+.popup {
+  position: absolute;
+  pointer-events: none;
+  left: 0;
+  top: calc(100% + 8px);
+  opacity: 0;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: white;
+  border: 2px solid rgb(255, 0, 0);
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  transition: opacity 500ms ease-in-out, transform 500ms ease-in-out;
+}
+
+.popup-show {
+  opacity: 1;
+  pointer-events: auto;
+}

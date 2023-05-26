@@ -1,11 +1,13 @@
-export default function Popup(city, message) {
+import "./popup.css";
+
+export default function Popup(message) {
   const popup = document.querySelector(".popup");
-  popup.style.visibility = "visible";
-  popup.style.opacity = "1";
-  popup.innerText = `${city} ${message}`;
+  // popup.style.visibility = "visible";
+  popup.classList.add("popup-show");
+  popup.innerText = message;
 
   setTimeout(() => {
-    popup.style.opacity = "0";
-    popup.style.visibility = "hidden";
-  }, 1000);
+    // popup.style.visibility = "hidden";
+    popup.classList.remove("popup-show");
+  }, 5000);
 }

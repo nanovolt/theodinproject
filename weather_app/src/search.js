@@ -75,6 +75,34 @@ export default class Search {
     }
   }
 
+  async searchSugestions(input) {
+    try {
+      // const result = await this.ajax.wait(1000);
+
+      const deboundInput = await this.ajax.debounce(input);
+      console.log("input:", input);
+      console.log("deboundInput:", deboundInput);
+
+      // await this.ajax.requestSearchSuggestions(input);
+
+      // console.log(this.ajax.getSearchSuggestions());
+      // this.searchObservable.suggest(this.ajax.getSearchSuggestions());
+
+      // this.weatherObservable.update({
+      //   weatherForecastAjax: this.ajax.getWeatherForecast(),
+      // });
+
+      // this.clearInput();
+    } catch (error) {
+      // this.weatherObservable.update({
+      //   weatherForecastAjax: this.ajax.getWeatherForecast(),
+      // });
+
+      console.log(error);
+      Popup(error);
+    }
+  }
+
   clearInput() {
     this.searchInput.value = "";
     this.searchInput.blur();
@@ -90,13 +118,18 @@ export default class Search {
     this.searchForm.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      if (this.searchObservable.isOptionSelected()) {
-        console.log(`searchObservalbe.isOptionSelected()`);
+      const selectedSuggestion = this.searchDropdown.querySelector(
+        ".selected-suggestion"
+      );
+
+      // console.log(selectedSuggestion);
+
+      if (selectedSuggestion) {
+        // console.log(`searchObservalbe.isOptionSelected()`);
         // this.weatherObservable.update(this.searchObservable.getSelected());
         this.hideDropdown();
 
-        const q = this.searchContainer.querySelector(".selected-suggestion")
-          .dataset.latlon;
+        const q = selectedSuggestion.dataset.latlon;
 
         this.searchCurrentWeather(q);
       }
@@ -142,7 +175,12 @@ export default class Search {
     });
 
     this.searchInput.addEventListener("input", () => {
-      // this.searchObservable.show();
+      if (this.searchInput.value) {
+        this.searchSugestions(this.searchInput.value);
+
+        return;
+      }
+      this.searchObservable.show();
     });
 
     this.searchInput.addEventListener("focus", () => {
@@ -175,6 +213,7 @@ export default class Search {
 
       this.searchInput.value = "";
       // this.searchDropdown.classList.remove("active-search-dropdown");
+
       this.hideDropdown();
 
       this.searchObservable.hide();

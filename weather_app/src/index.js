@@ -46,6 +46,7 @@ const search = new Search(
 
 const lastSearched = new LastSearched(search, weatherObservable, storage);
 
+ajax.initDebouce();
 storage.init();
 search.init();
 lastSearched.init();

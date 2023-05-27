@@ -8,14 +8,6 @@ export default class SearchSuggestions {
     this.focusedSuggestion = -1;
   }
 
-  debounce(func, ms) {
-    this.timeout = null;
-    return (...arg) => {
-      clearTimeout(this.timeout);
-      this.timeout = setTimeout(() => func.apply(this, arg), ms);
-    };
-  }
-
   isOptionSelected() {}
 
   update(query) {
@@ -51,70 +43,56 @@ export default class SearchSuggestions {
     }
   }
 
-  showSuggestions() {
+  suggest(json) {
     this.suggestionList.replaceChildren();
 
-    this.json.forEach((city, index) => {
-      const location = document.createElement("div");
-      location.classList.add("suggested-location");
+    this.json = json;
 
-      if (index === 0) {
-        this.focusedSuggestion = 0;
-        location.classList.add("selected-suggestion");
-      }
+    console.log(this.json);
+    // this.json.forEach((city, index) => {
+    //   const location = document.createElement("div");
+    //   location.classList.add("suggested-location");
 
-      location.setAttribute("tabindex", 0);
-      location.dataset.id = `${city.id}`;
-      location.dataset.latlon = `${city.lat},${city.lon}`;
+    //   if (index === 0) {
+    //     this.focusedSuggestion = 0;
+    //     location.classList.add("selected-suggestion");
+    //   }
 
-      const cityName = document.createElement("div");
-      cityName.classList.add("city-name");
+    //   location.setAttribute("tabindex", 0);
+    //   location.dataset.id = `${city.id}`;
+    //   location.dataset.latlon = `${city.lat},${city.lon}`;
 
-      const locationDetails = document.createElement("div");
-      locationDetails.classList.add("location-details");
+    //   const cityName = document.createElement("div");
+    //   cityName.classList.add("city-name");
 
-      const regionName = document.createElement("span");
-      regionName.classList.add("region-name");
-      const slash = document.createElement("span");
-      slash.textContent = " / ";
-      const countryName = document.createElement("span");
-      countryName.classList.add("country-name");
+    //   const locationDetails = document.createElement("div");
+    //   locationDetails.classList.add("location-details");
 
-      locationDetails.appendChild(regionName);
-      locationDetails.appendChild(slash);
-      locationDetails.appendChild(countryName);
+    //   const regionName = document.createElement("span");
+    //   regionName.classList.add("region-name");
+    //   const slash = document.createElement("span");
+    //   slash.textContent = " / ";
+    //   const countryName = document.createElement("span");
+    //   countryName.classList.add("country-name");
 
-      cityName.textContent = city.name;
-      regionName.textContent = city.region;
-      countryName.textContent = city.country;
+    //   locationDetails.appendChild(regionName);
+    //   locationDetails.appendChild(slash);
+    //   locationDetails.appendChild(countryName);
 
-      location.appendChild(cityName);
-      location.appendChild(locationDetails);
+    //   cityName.textContent = city.name;
+    //   regionName.textContent = city.region;
+    //   countryName.textContent = city.country;
 
-      this.suggestionList.appendChild(location);
-    });
+    //   location.appendChild(cityName);
+    //   location.appendChild(locationDetails);
+
+    //   this.suggestionList.appendChild(location);
+    // });
   }
 
   selectDown() {}
 
   selectUp() {}
 
-  init() {
-    this.deboundFunction = this.debounce((inputValue) => {
-      if (!this.searchSuggestions.classList.contains("hidden")) {
-        this.search(inputValue).then(() => {
-          if (this.json.length === 0) {
-            this.noSuggestions();
-            // this.lastUsed.style.display = "none";
-          } else {
-            this.showSuggestions();
-          }
-        });
-      }
-      // else {
-      //   this.suggestionList.replaceChildren();
-      //   this.searchSuggestions.style.display = "none";
-      // }
-    }, 200);
-  }
+  init() {}
 }

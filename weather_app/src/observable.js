@@ -64,4 +64,8 @@ export default class Observable {
   isOptionSelected() {
     this.observers.forEach((observer) => observer.isOptionSelected());
   }
+
+  suggest(json) {
+    this.observers.forEach((observer) => observer.suggest(json));
+  }
 }

@@ -116,6 +116,15 @@ export default class LastSearched {
   isOptionSelected() {
     // if (this.lastSearchedList.children.length !== 0) return true;
     // return false;
+    if (this.lastSearchedList.querySelector(".selected-suggestion")) {
+      // this.lastSearchedList
+      //   .querySelector(".selected-suggestion")
+      //   .classList.remove("selected-suggestion");
+      console.log("true");
+      return true;
+    }
+    console.log("false");
+    return false;
   }
 
   show() {
@@ -123,14 +132,6 @@ export default class LastSearched {
     if (this.storage.getLastSearched().length === 0) {
       this.searchStatus.textContent = "Last searched: None";
     } else {
-      // this.lastSearchedList
-      //   .querySelector(".selected-suggestion")
-      //   .classList.remove("selected-suggestion");
-
-      // this.lastSearchedList.firstElementChild.classList.add(
-      //   "selected-suggestion"
-      // );
-
       this.searchStatus.textContent = "Last searched:";
       this.lastSearched.classList.remove("hidden");
     }
@@ -140,6 +141,8 @@ export default class LastSearched {
     this.selected = -1;
     this.removeSelected();
   }
+
+  suggest() {}
 
   clear() {}
 

@@ -1,11 +1,17 @@
 .last-searched {
 }
 
-.last-searched-list {
+.searched-list {
   gap: 8px;
   margin-top: 8px;
 }
 
-.last-searched-city {
+.searched-city {
+  cursor: pointer;
+  padding: 8px;
   border-radius: 8px;
+}
+
+.searched-city:hover {
+  background-color: var(--primary-color-hover);
 }

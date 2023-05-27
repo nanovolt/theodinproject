@@ -6,6 +6,7 @@ export default class AjaxRequester {
     this.key = `?key=${key}`;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async wait() {
     console.log("waiting...");
     setTimeout(() => {

@@ -29,22 +29,41 @@ export default class Storage {
     return this.tempMode;
   }
 
-  addLastSearched(city) {
-    this.getLastSearched();
-    this.lastSearched = this.lastSearched.slice(-2);
+  alreadySearched(arg) {
+    return this.getLastSearched().find((city) => {
+      if (
+        city.country === arg.country &&
+        city.lat === arg.lat &&
+        city.lon === arg.lon &&
+        city.name === arg.name &&
+        city.region === arg.region &&
+        city.tz_id === arg.tz_id
+      ) {
+        return true;
+      }
+      return false;
+    });
+  }
 
-    if (typeof city !== "object") {
-      this.lastSearched.push({ name: city });
-    } else {
-      this.lastSearched.push(city);
+  addLastSearched(arg) {
+    if (this.alreadySearched(arg)) {
+      return false;
     }
 
+    this.lastSearched = this.lastSearched.slice(-2);
+    this.lastSearched.push(arg);
     localStorage.setItem("lastSearched", JSON.stringify(this.lastSearched));
+
+    return true;
   }
 
   getLastSearched() {
     this.lastSearched = JSON.parse(localStorage.getItem("lastSearched"));
     return this.lastSearched;
+  }
+
+  hasLastSearched() {
+    this.getLastSearched();
   }
 
   setIpLookup(obj) {

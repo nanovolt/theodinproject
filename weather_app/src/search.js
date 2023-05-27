@@ -2,12 +2,14 @@ import "./search.css";
 import Popup from "./popup";
 
 export default class Search {
-  constructor(selector, ajax, searchObservable, weatherObservable) {
+  constructor(selector, ajax, searchObservable, weatherObservable, storage) {
     this.selector = selector;
 
     this.ajax = ajax;
     this.searchObservable = searchObservable;
     this.weatherObservable = weatherObservable;
+
+    this.storage = storage;
 
     this.searchContainer = document.querySelector(this.selector);
     this.searchForm = this.searchContainer.querySelector("#search-form");
@@ -20,21 +22,36 @@ export default class Search {
   }
 
   getFormData() {
-    const data = new FormData(this.searchForm);
-    return data.get("city").trim().split(/[\s]+/).join(" ");
+    this.formdata = new FormData(this.searchForm);
+    const city = this.formdata.get("city").trim().split(/[\s]+/).join(" ");
+
+    console.log("getFormData:", this.formdata);
+    return city;
+  }
+
+  addSearchedCityToStorage() {
+    return this.storage.addLastSearched(this.ajax.getCurrentWeather().location);
   }
 
   async searchCurrentWeather(query) {
     try {
+      this.weatherObservable.preload();
       await this.ajax.requestCurrentWeather(query);
+
       this.weatherObservable.update({
         currentWeatherAjax: this.ajax.getCurrentWeather(),
       });
+
       this.clearInput();
+      if (this.addSearchedCityToStorage()) {
+        this.searchObservable.update();
+      }
     } catch (error) {
       this.weatherObservable.update({
         currentWeatherAjax: this.ajax.getCurrentWeather(),
       });
+
+      console.log(error);
       Popup(error);
     }
   }
@@ -42,14 +59,18 @@ export default class Search {
   async searchWeatherForecast(query) {
     try {
       await this.ajax.requestWeatherForecast(query);
+
       this.weatherObservable.update({
         weatherForecastAjax: this.ajax.getWeatherForecast(),
       });
+
       this.clearInput();
     } catch (error) {
       this.weatherObservable.update({
         weatherForecastAjax: this.ajax.getWeatherForecast(),
       });
+
+      console.log(error);
       Popup(error);
     }
   }
@@ -69,19 +90,34 @@ export default class Search {
     this.searchForm.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      if (this.searchObservable.isSelected()) {
-        console.log(`searchObservalbe.isSelected()`);
+      if (this.searchObservable.isOptionSelected()) {
+        console.log(`searchObservalbe.isOptionSelected()`);
         // this.weatherObservable.update(this.searchObservable.getSelected());
+        this.hideDropdown();
+
+        const q = this.searchContainer.querySelector(".selected-suggestion")
+          .dataset.latlon;
+
+        this.searchCurrentWeather(q);
       }
 
       if (this.getFormData() !== "") {
-        this.weatherObservable.preload();
-        this.searchCurrentWeather(this.getFormData());
-        this.searchWeatherForecast(this.getFormData());
+        // this.weatherObservable.preload();
+        this.hideDropdown();
 
-        this.searchDropdown.classList.remove("active-search-dropdown");
+        this.searchCurrentWeather(this.getFormData());
+        // this.searchWeatherForecast(this.getFormData());
       }
     });
+  }
+
+  showDropdown() {
+    this.searchDropdown.classList.add("active-search-dropdown");
+  }
+
+  hideDropdown() {
+    this.searchDropdown.classList.remove("active-search-dropdown");
+    this.searchObservable.hide();
   }
 
   searchInputEventListeners() {
@@ -106,12 +142,12 @@ export default class Search {
     });
 
     this.searchInput.addEventListener("input", () => {
-      this.searchObservable.show(this.searchInput.value);
+      // this.searchObservable.show();
     });
 
     this.searchInput.addEventListener("focus", () => {
-      this.searchDropdown.classList.add("active-search-dropdown");
-      this.searchObservable.show(this.searchInput.value);
+      this.showDropdown();
+      this.searchObservable.show();
     });
   }
 
@@ -138,9 +174,10 @@ export default class Search {
       }
 
       this.searchInput.value = "";
-      this.searchDropdown.classList.remove("active-search-dropdown");
+      // this.searchDropdown.classList.remove("active-search-dropdown");
+      this.hideDropdown();
 
-      // this.searchObservable.hide();
+      this.searchObservable.hide();
     });
   }
 

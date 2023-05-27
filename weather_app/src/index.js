@@ -34,7 +34,6 @@ const dropdown = new Dropdown("temp-mode", dropdownObservable, storage);
 const currentWeather = new CurrentWeather(storage);
 const forecast = new Forecast(storage);
 
-const lastSearched = new LastSearched(storage);
 const searchSuggestions = new SearchSuggestions();
 
 const search = new Search(
@@ -44,6 +43,8 @@ const search = new Search(
   weatherObservable,
   storage
 );
+
+const lastSearched = new LastSearched(search, weatherObservable, storage);
 
 storage.init();
 search.init();
@@ -81,8 +82,3 @@ async function app() {
 }
 
 app();
-
-// let arr = [1, 2, 3, 4];
-// arr = arr.slice(-3);
-
-// console.log(arr);

@@ -5,6 +5,8 @@ export default class CurrentWeather {
     this.storage = storage;
     this.city = document.querySelector(".city");
     this.country = document.querySelector(".country");
+    this.lastUpdated = document.querySelector(".last-updated");
+
     this.tempSign = document.querySelector(".temp-sign");
     this.temp = document.querySelector(".temp");
     this.tempFeelslikeSign = document.querySelector(".temp-feelslike-sign");
@@ -108,6 +110,8 @@ export default class CurrentWeather {
   preload() {
     this.city.innerHTML = this.preloadIcon;
     this.country.innerHTML = this.preloadIcon;
+    this.lastUpdated.innerHTML = this.preloadIcon;
+
     this.condition.innerHTML = this.preloadIcon;
     this.conditionImage.innerHTML = this.preloadIcon;
 
@@ -139,6 +143,8 @@ export default class CurrentWeather {
 
       this.city.textContent = this.ajax.location.name;
       this.country.textContent = this.ajax.location.country;
+      this.lastUpdated.textContent = this.ajax.current.last_updated;
+
       this.condition.textContent = this.ajax.current.condition.text;
       this.conditionImage.src = this.ajax.current.condition.icon;
 

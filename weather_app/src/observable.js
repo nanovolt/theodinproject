@@ -60,4 +60,8 @@ export default class Observable {
   getSelected() {
     this.observers.forEach((observer) => observer.getSelected());
   }
+
+  isOptionSelected() {
+    this.observers.forEach((observer) => observer.isOptionSelected());
+  }
 }

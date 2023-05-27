@@ -13,7 +13,7 @@
   display: grid;
   justify-content: flex-start;
   /* gap: 24px; */
-  column-gap: 24px;
+  column-gap: 16px;
 }
 
 .place {
@@ -27,6 +27,9 @@
 }
 
 .feelslike-box {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 4px;
   grid-area: 3 / 1 / 4 / 2;
 }
 

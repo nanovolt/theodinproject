@@ -11,6 +11,8 @@ export default class Forecast {
     this.fConditionImages = document.querySelectorAll(".f-condition-image");
     this.rainChances = document.querySelectorAll(".rain-chance");
     this.snowChances = document.querySelectorAll(".snow-chance");
+
+    this.preloadIcon = `<i class="fa-solid fa-spinner fa-spin"></i>`;
   }
 
   init() {

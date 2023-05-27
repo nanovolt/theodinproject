@@ -33,6 +33,7 @@
   position: absolute;
   pointer-events: none;
   opacity: 0;
+  z-index: 1;
   top: calc(100% + 8px);
   width: 100%;
   background-color: white;
@@ -43,6 +44,9 @@
   transition: opacity 250ms ease-in-out, transform 250ms ease-in-out;
 }
 
+.search-status {
+  margin-left: 8px;
+}
 .active-search-dropdown {
   pointer-events: auto;
   opacity: 1;

@@ -4,12 +4,12 @@
 }
 
 .active-dropdown,
-.dropdown,
-.dropdown-content div:hover {
+.dropdown {
   background-color: var(--primary-color);
 }
 
 .dropdown-button {
+  border-radius: 8px;
   padding: 8px;
   cursor: pointer;
 }
@@ -48,4 +48,9 @@
   opacity: 1;
   /* visibility: visible; */
   transform: translateY(0);
+}
+
+.dropdown-button:hover,
+.dropdown-option:hover {
+  background-color: var(--primary-color-hover);
 }

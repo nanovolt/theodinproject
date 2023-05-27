@@ -16,7 +16,7 @@ export default class SearchSuggestions {
     };
   }
 
-  isSelected() {}
+  isOptionSelected() {}
 
   update(query) {
     // this.search(query);
@@ -41,7 +41,7 @@ export default class SearchSuggestions {
   }
 
   hide() {
-    this.suggestionList.replaceChildren();
+    // this.suggestionList.replaceChildren();
   }
 
   show(inputValue) {

@@ -44,9 +44,24 @@
   transition: opacity 250ms ease-in-out, transform 250ms ease-in-out;
 }
 
+.search-status-box {
+  display: grid;
+  grid-template-columns: auto min-content;
+  justify-content: start;
+}
+
 .search-status {
   /* margin-left: 8px; */
   padding: 8px;
+}
+
+.search-preload {
+  display: none;
+  align-items: center;
+}
+
+.show-preload {
+  display: grid;
 }
 
 .active-search-dropdown {

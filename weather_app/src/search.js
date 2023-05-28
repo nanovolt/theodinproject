@@ -75,11 +75,25 @@ export default class Search {
     }
   }
 
+  showSearchPreload() {
+    this.searchContainer
+      .querySelector(".search-preload")
+      .classList.add("show-preload");
+  }
+
+  hideSearchPreload() {
+    this.searchContainer
+      .querySelector(".search-preload")
+      .classList.remove("show-preload");
+  }
+
   async searchSugestions(input) {
     try {
+      this.showSearchPreload();
       // await this.ajax.wait(3000);
       await this.ajax.debounce();
       await this.ajax.requestSearchSuggestions(input);
+      this.hideSearchPreload();
       const suggestions = this.ajax.getSearchSuggestions();
 
       if (suggestions.length !== 0) {
@@ -120,12 +134,13 @@ export default class Search {
         const q = selectedSuggestion.dataset.latlon;
 
         this.searchCurrentWeather(q);
+        this.searchWeatherForecast(q);
       } else if (this.getFormData() !== "") {
         // this.weatherObservable.preload();
         this.hideDropdown();
 
         this.searchCurrentWeather(this.getFormData());
-        // this.searchWeatherForecast(this.getFormData());
+        this.searchWeatherForecast(this.getFormData());
       }
     });
   }
@@ -168,6 +183,7 @@ export default class Search {
         this.searchObservable.showSuggestions();
         this.searchSugestions(this.searchInput.value);
       } else {
+        this.hideSearchPreload();
         this.searchObservable.showLastSearched();
       }
     });

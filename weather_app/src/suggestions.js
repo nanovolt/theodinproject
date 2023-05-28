@@ -57,9 +57,10 @@ export default class SearchSuggestions {
     thisCity.addEventListener("click", () => {
       // console.log("latlon:", thisCity.dataset.latlon);
       // console.log("name:", thisCity.dataset.name);
-      console.log("city:", thisCity);
+      // console.log("city:", thisCity);
       // this.weatherObservable.update(thisCity.dataset.latlon);
       this.search.searchCurrentWeather(thisCity.dataset.latlon);
+      this.search.searchWeatherForecast(thisCity.dataset.latlon);
       this.search.hideDropdown();
       // const form = document.querySelector("#search-form");
       // const data = new FormData(form);

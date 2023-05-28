@@ -21,6 +21,7 @@ export default class Forecast {
   }
 
   showCelciusOrFahrenheit(mode, el, temp, unit) {
+    console.log("show");
     if (mode === "celcius") {
     } else {
       this.temp.textContent = this.json.current.temp_f;
@@ -32,15 +33,39 @@ export default class Forecast {
 
   changeMode() {
     this.mode = this.storage.getTempMode();
+
+    if (this.mode === "celcius") {
+      for (const el of this.cf) {
+        el.innerHTML = "&degC";
+      }
+      for (const s of this.speed) {
+        s.textContent = "km/h";
+      }
+      for (const d of this.distance) {
+        d.textContent = "km";
+      }
+    } else {
+      for (const el of this.cf) {
+        el.innerHTML = "&degF";
+      }
+      for (const s of this.speed) {
+        s.textContent = "mph";
+      }
+      for (const d of this.distance) {
+        d.textContent = "mi";
+      }
+    }
   }
 
   changeValues() {
-    this.mode = this.storage.getTempMode();
+    console.log("forecast change");
   }
 
   update(obj) {
     if ("weatherForecastAjax" in obj) {
       this.ajax = obj.weatherForecastAjax;
+
+      console.log("forecast ajax:", this.ajax);
     }
   }
 

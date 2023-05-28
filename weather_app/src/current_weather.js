@@ -3,37 +3,43 @@ import "./current_weather.css";
 export default class CurrentWeather {
   constructor(storage) {
     this.storage = storage;
-    this.city = document.querySelector(".city");
-    this.country = document.querySelector(".country");
-    this.lastUpdated = document.querySelector(".last-updated");
 
-    this.tempSign = document.querySelector(".temp-sign");
-    this.temp = document.querySelector(".temp");
-    this.tempFeelslikeSign = document.querySelector(".temp-feelslike-sign");
+    this.weatherContainer = document.querySelector(".weather-container");
 
-    this.tempFeelslike = document.querySelector(".temp-feelslike");
-    this.cf = document.querySelectorAll(".c-f");
-    this.condition = document.querySelector(".condition");
-    this.conditionImage = document.querySelector(".condition-image");
-    this.conditionImageWrapper = document.querySelector(
+    this.city = this.weatherContainer.querySelector(".city");
+    this.country = this.weatherContainer.querySelector(".country");
+    this.lastUpdated = this.weatherContainer.querySelector(".last-updated");
+
+    this.tempSign = this.weatherContainer.querySelector(".temp-sign");
+    this.temp = this.weatherContainer.querySelector(".temp");
+    this.tempFeelslikeSign = this.weatherContainer.querySelector(
+      ".temp-feelslike-sign"
+    );
+
+    this.tempFeelslike = this.weatherContainer.querySelector(".temp-feelslike");
+    this.cf = this.weatherContainer.querySelectorAll(".c-f");
+    this.condition = this.weatherContainer.querySelector(".condition");
+    this.conditionImage =
+      this.weatherContainer.querySelector(".condition-image");
+    this.conditionImageWrapper = this.weatherContainer.querySelector(
       ".condition-image-wrapper"
     );
 
-    this.cloud = document.querySelector(".cloud");
-    this.humidity = document.querySelector(".humidity");
-    this.uv = document.querySelector(".uv");
-    this.visibility = document.querySelector(".visibility");
-    this.windDirection = document.querySelector(".wind-direction");
-    this.windSpeed = document.querySelector(".wind-speed");
-    this.speed = document.querySelectorAll(".speed");
-    this.distance = document.querySelectorAll(".distance");
+    this.cloud = this.weatherContainer.querySelector(".cloud");
+    this.humidity = this.weatherContainer.querySelector(".humidity");
+    this.uv = this.weatherContainer.querySelector(".uv");
+    this.visibility = this.weatherContainer.querySelector(".visibility");
+    this.windDirection = this.weatherContainer.querySelector(".wind-direction");
+    this.windSpeed = this.weatherContainer.querySelector(".wind-speed");
+    this.speed = this.weatherContainer.querySelectorAll(".speed");
+    this.distance = this.weatherContainer.querySelectorAll(".distance");
 
-    this.co = document.querySelector(".co");
-    this.no2 = document.querySelector(".no2");
-    this.o3 = document.querySelector(".o3");
-    this.pm10 = document.querySelector(".pm10");
-    this.pm2_5 = document.querySelector(".pm2-5");
-    this.so2 = document.querySelector(".so2");
+    this.co = this.weatherContainer.querySelector(".co");
+    this.no2 = this.weatherContainer.querySelector(".no2");
+    this.o3 = this.weatherContainer.querySelector(".o3");
+    this.pm10 = this.weatherContainer.querySelector(".pm10");
+    this.pm2_5 = this.weatherContainer.querySelector(".pm2-5");
+    this.so2 = this.weatherContainer.querySelector(".so2");
 
     this.preloadIcon = `<i class="fa-solid fa-spinner fa-spin"></i>`;
   }
@@ -77,16 +83,18 @@ export default class CurrentWeather {
 
     this.changeMode();
 
-    if (this.mode === "celcius") {
-      temp = this.ajax.current.temp_c;
-      feelslike = this.ajax.current.feelslike_c;
-      visibility = this.ajax.current.vis_km;
-      wind = this.ajax.current.wind_kph;
-    } else {
-      temp = this.ajax.current.temp_f;
-      feelslike = this.ajax.current.feelslike_f;
-      visibility = this.ajax.current.vis_miles;
-      wind = this.ajax.current.wind_mph;
+    if (this.ajax) {
+      if (this.mode === "celcius") {
+        temp = this.ajax.current.temp_c;
+        feelslike = this.ajax.current.feelslike_c;
+        visibility = this.ajax.current.vis_km;
+        wind = this.ajax.current.wind_kph;
+      } else {
+        temp = this.ajax.current.temp_f;
+        feelslike = this.ajax.current.feelslike_f;
+        visibility = this.ajax.current.vis_miles;
+        wind = this.ajax.current.wind_mph;
+      }
     }
 
     if (temp > 0) {

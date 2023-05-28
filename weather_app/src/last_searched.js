@@ -57,6 +57,7 @@ export default class LastSearched {
 
       // this.weatherObservable.update(thisCity.dataset.latlon);
       this.search.searchCurrentWeather(thisCity.dataset.latlon);
+      this.search.searchWeatherForecast(thisCity.dataset.latlon);
       this.search.hideDropdown();
       // const form = document.querySelector("#search-form");
       // const data = new FormData(form);
@@ -157,8 +158,6 @@ export default class LastSearched {
     }
 
     if (!this.areSuggestionsHidden()) {
-      console.log("not hidden");
-
       this.removeSelected();
 
       this.selected -= 1;
@@ -180,8 +179,6 @@ export default class LastSearched {
     }
 
     if (!this.areSuggestionsHidden()) {
-      console.log("not hidden");
-
       this.removeSelected();
 
       this.selected += 1;

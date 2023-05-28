@@ -61,19 +61,25 @@ weatherObservable.subscribe(forecast);
 searchObservable.subscribe(lastSearched);
 searchObservable.subscribe(searchSuggestions);
 
+async function requestCurrent() {
+  await ajax.requestCurrentWeather(ajax.getCityFromIP());
+  currentWeather.update({ currentWeatherAjax: ajax.getCurrentWeather() });
+}
+
+async function requestForecast() {
+  await ajax.requestWeatherForecast(ajax.getCityFromIP());
+  forecast.update({ weatherForecastAjax: ajax.getWeatherForecast() });
+}
+
 async function app() {
   try {
     currentWeather.preload();
+
     await ajax.requestCityFromIP();
     storage.setIpLookup(ajax.getIpLookup());
 
-    await ajax.requestCurrentWeather(ajax.getCityFromIP());
-
-    currentWeather.update({ currentWeatherAjax: ajax.getCurrentWeather() });
-
-    // ajax.requestWeatherForecast(ajax.getCityFromIP()).then(() => {
-    //   forecast.update({ forecast: ajax.getWeatherForecast() });
-    // });
+    requestCurrent();
+    requestForecast();
   } catch (error) {
     console.log(error);
     Popup(error);

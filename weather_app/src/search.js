@@ -19,8 +19,6 @@ export default class Search {
     );
     this.searchDropdown =
       this.searchContainer.querySelector(".search-dropdown");
-
-    this.currentSuggestions = "last";
   }
 
   getFormData() {
@@ -96,7 +94,7 @@ export default class Search {
       this.hideSearchPreload();
       const suggestions = this.ajax.getSearchSuggestions();
 
-      if (suggestions.length !== 0) {
+      if (this.allowSuggestions) {
         this.searchObservable.addAsyncSuggestions(suggestions);
       }
     } catch (error) {
@@ -124,21 +122,13 @@ export default class Search {
         ".selected-suggestion"
       );
 
-      // console.log(selectedSuggestion);
-
       if (selectedSuggestion) {
-        // console.log(`searchObservalbe.isOptionSelected()`);
-        // this.weatherObservable.update(this.searchObservable.getSelected());
         this.hideDropdown();
-
         const q = selectedSuggestion.dataset.latlon;
-
         this.searchCurrentWeather(q);
         this.searchWeatherForecast(q);
       } else if (this.getFormData() !== "") {
-        // this.weatherObservable.preload();
         this.hideDropdown();
-
         this.searchCurrentWeather(this.getFormData());
         this.searchWeatherForecast(this.getFormData());
       }
@@ -182,9 +172,11 @@ export default class Search {
       if (this.searchInput.value) {
         this.searchObservable.showSuggestions();
         this.searchSugestions(this.searchInput.value);
+        this.allowSuggestions = true;
       } else {
         this.hideSearchPreload();
         this.searchObservable.showLastSearched();
+        this.allowSuggestions = false;
       }
     });
 
@@ -196,7 +188,6 @@ export default class Search {
       } else {
         this.searchObservable.showLastSearched();
       }
-      // this.searchObservable.showLastSearched();
     });
   }
 

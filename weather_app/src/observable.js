@@ -33,10 +33,6 @@ export default class Observable {
     this.observers.forEach((observer) => observer.recover());
   }
 
-  show(arg) {
-    this.observers.forEach((observer) => observer.show(arg));
-  }
-
   hide() {
     this.observers.forEach((observer) => observer.hide());
   }
@@ -65,7 +61,15 @@ export default class Observable {
     this.observers.forEach((observer) => observer.isOptionSelected());
   }
 
-  suggest(json) {
-    this.observers.forEach((observer) => observer.suggest(json));
+  showLastSearched(arg) {
+    this.observers.forEach((observer) => observer.showLastSearched(arg));
+  }
+
+  showSuggestions(json) {
+    this.observers.forEach((observer) => observer.showSuggestions(json));
+  }
+
+  addAsyncSuggestions(json) {
+    this.observers.forEach((observer) => observer.addAsyncSuggestions(json));
   }
 }

@@ -23,10 +23,6 @@ export default class LastSearched {
       this.lastSearchData.forEach((city) => {
         this.createCity(city);
       });
-
-      // this.lastSearchedList.firstElementChild.classList.add(
-      //   "selected-suggestion"
-      // );
     }
   }
 
@@ -56,8 +52,8 @@ export default class LastSearched {
   cityEventListeners() {
     const thisCity = this.lastSearchedList.firstElementChild;
     thisCity.addEventListener("click", () => {
-      console.log("latlon:", thisCity.dataset.latlon);
-      console.log("name:", thisCity.dataset.name);
+      // console.log("latlon:", thisCity.dataset.latlon);
+      // console.log("name:", thisCity.dataset.name);
 
       // this.weatherObservable.update(thisCity.dataset.latlon);
       this.search.searchCurrentWeather(thisCity.dataset.latlon);
@@ -108,9 +104,9 @@ export default class LastSearched {
       this.removeSelected();
     }
 
-    this.lastSearchedList.firstElementChild.classList.add(
-      "selected-suggestion"
-    );
+    // this.lastSearchedList.firstElementChild.classList.add(
+    //   "selected-suggestion"
+    // );
   }
 
   isOptionSelected() {
@@ -127,7 +123,7 @@ export default class LastSearched {
     return false;
   }
 
-  show() {
+  showLastSearched() {
     this.selected = -1;
     if (this.storage.getLastSearched().length === 0) {
       this.searchStatus.textContent = "Last searched: None";
@@ -140,29 +136,42 @@ export default class LastSearched {
   hide() {
     this.selected = -1;
     this.removeSelected();
+    this.lastSearched.classList.add("hidden");
   }
 
-  suggest() {}
+  showSuggestions() {
+    this.hide();
+  }
+
+  addAsyncSuggestions() {}
 
   clear() {}
+
+  areSuggestionsHidden() {
+    return this.lastSearched.classList.contains("hidden");
+  }
 
   selectUp() {
     if (this.storage.getLastSearched().length === 0) {
       return;
     }
 
-    this.removeSelected();
+    if (!this.areSuggestionsHidden()) {
+      console.log("not hidden");
 
-    this.selected -= 1;
+      this.removeSelected();
 
-    if (this.selected <= -1) {
-      this.selected = this.lastSearchedList.children.length - 1;
+      this.selected -= 1;
+
+      if (this.selected <= -1) {
+        this.selected = this.lastSearchedList.children.length - 1;
+      }
+
+      // console.log("up:", this.selected);
+      this.lastSearchedList.children[this.selected].classList.add(
+        "selected-suggestion"
+      );
     }
-
-    // console.log("up:", this.selected);
-    this.lastSearchedList.children[this.selected].classList.add(
-      "selected-suggestion"
-    );
   }
 
   selectDown() {
@@ -170,17 +179,21 @@ export default class LastSearched {
       return;
     }
 
-    this.removeSelected();
+    if (!this.areSuggestionsHidden()) {
+      console.log("not hidden");
 
-    this.selected += 1;
+      this.removeSelected();
 
-    if (this.selected === this.lastSearchedList.children.length) {
-      this.selected = 0;
+      this.selected += 1;
+
+      if (this.selected === this.lastSearchedList.children.length) {
+        this.selected = 0;
+      }
+
+      // console.log("down:", this.selected);
+      this.lastSearchedList.children[this.selected].classList.add(
+        "selected-suggestion"
+      );
     }
-
-    // console.log("down:", this.selected);
-    this.lastSearchedList.children[this.selected].classList.add(
-      "selected-suggestion"
-    );
   }
 }

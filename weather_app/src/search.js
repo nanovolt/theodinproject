@@ -19,13 +19,13 @@ export default class Search {
     );
     this.searchDropdown =
       this.searchContainer.querySelector(".search-dropdown");
+
+    this.currentSuggestions = "last";
   }
 
   getFormData() {
     this.formdata = new FormData(this.searchForm);
     const city = this.formdata.get("city").trim().split(/[\s]+/).join(" ");
-
-    console.log("getFormData:", this.formdata);
     return city;
   }
 
@@ -77,27 +77,15 @@ export default class Search {
 
   async searchSugestions(input) {
     try {
-      // const result = await this.ajax.wait(1000);
+      // await this.ajax.wait(3000);
+      await this.ajax.debounce();
+      await this.ajax.requestSearchSuggestions(input);
+      const suggestions = this.ajax.getSearchSuggestions();
 
-      const deboundInput = await this.ajax.debounce(input);
-      console.log("input:", input);
-      console.log("deboundInput:", deboundInput);
-
-      // await this.ajax.requestSearchSuggestions(input);
-
-      // console.log(this.ajax.getSearchSuggestions());
-      // this.searchObservable.suggest(this.ajax.getSearchSuggestions());
-
-      // this.weatherObservable.update({
-      //   weatherForecastAjax: this.ajax.getWeatherForecast(),
-      // });
-
-      // this.clearInput();
+      if (suggestions.length !== 0) {
+        this.searchObservable.addAsyncSuggestions(suggestions);
+      }
     } catch (error) {
-      // this.weatherObservable.update({
-      //   weatherForecastAjax: this.ajax.getWeatherForecast(),
-      // });
-
       console.log(error);
       Popup(error);
     }
@@ -132,9 +120,7 @@ export default class Search {
         const q = selectedSuggestion.dataset.latlon;
 
         this.searchCurrentWeather(q);
-      }
-
-      if (this.getFormData() !== "") {
+      } else if (this.getFormData() !== "") {
         // this.weatherObservable.preload();
         this.hideDropdown();
 
@@ -171,21 +157,30 @@ export default class Search {
 
       if (e.key === "Escape") {
         this.searchObservable.hide();
+        this.hideDropdown();
+        this.searchInput.value = "";
+        this.searchInput.blur();
       }
     });
 
     this.searchInput.addEventListener("input", () => {
       if (this.searchInput.value) {
+        this.searchObservable.showSuggestions();
         this.searchSugestions(this.searchInput.value);
-
-        return;
+      } else {
+        this.searchObservable.showLastSearched();
       }
-      this.searchObservable.show();
     });
 
     this.searchInput.addEventListener("focus", () => {
       this.showDropdown();
-      this.searchObservable.show();
+      if (this.searchInput.value) {
+        this.searchObservable.showSuggestions();
+        this.searchSugestions(this.searchInput.value);
+      } else {
+        this.searchObservable.showLastSearched();
+      }
+      // this.searchObservable.showLastSearched();
     });
   }
 
@@ -194,6 +189,8 @@ export default class Search {
       if (e.target.closest(".search-container")) {
         return;
       }
+      this.searchInput.value = "";
+      this.hideDropdown();
       // if (
       //   e.target.closest(".last-searched") ||
       //   e.target.closest("#search-form") ||
@@ -202,21 +199,20 @@ export default class Search {
       //   return;
       // }
 
-      if (
-        e.target.closest(".last-searched-location") ||
-        e.target.closest(".suggested-location")
-      ) {
-        // this.searchInput.value = "";
-        const { latlon } = e.target.closest(".location").dataset;
-        this.weatherObservable.update(latlon);
-      }
+      // if (
+      //   e.target.closest(".last-searched-location") ||
+      //   e.target.closest(".suggested-location")
+      // ) {
+      //   // this.searchInput.value = "";
+      //   console.log("closest");
 
-      this.searchInput.value = "";
+      //   const { latlon } = e.target.closest(".location").dataset;
+      //   this.weatherObservable.update(latlon);
+      // }
+
       // this.searchDropdown.classList.remove("active-search-dropdown");
 
-      this.hideDropdown();
-
-      this.searchObservable.hide();
+      // this.searchObservable.hide();
     });
   }
 

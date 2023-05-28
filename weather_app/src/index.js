@@ -34,8 +34,6 @@ const dropdown = new Dropdown("temp-mode", dropdownObservable, storage);
 const currentWeather = new CurrentWeather(storage);
 const forecast = new Forecast(storage);
 
-const searchSuggestions = new SearchSuggestions();
-
 const search = new Search(
   ".search-container",
   ajax,
@@ -45,8 +43,8 @@ const search = new Search(
 );
 
 const lastSearched = new LastSearched(search, weatherObservable, storage);
+const searchSuggestions = new SearchSuggestions(search);
 
-ajax.initDebouce();
 storage.init();
 search.init();
 lastSearched.init();

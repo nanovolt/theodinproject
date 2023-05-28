@@ -15,6 +15,10 @@ export default class CurrentWeather {
     this.cf = document.querySelectorAll(".c-f");
     this.condition = document.querySelector(".condition");
     this.conditionImage = document.querySelector(".condition-image");
+    this.conditionImageWrapper = document.querySelector(
+      ".condition-image-wrapper"
+    );
+
     this.cloud = document.querySelector(".cloud");
     this.humidity = document.querySelector(".humidity");
     this.uv = document.querySelector(".uv");
@@ -113,7 +117,7 @@ export default class CurrentWeather {
     this.lastUpdated.innerHTML = this.preloadIcon;
 
     this.condition.innerHTML = this.preloadIcon;
-    this.conditionImage.innerHTML = this.preloadIcon;
+    this.conditionImageWrapper.innerHTML = this.preloadIcon;
 
     this.temp.innerHTML = this.preloadIcon;
     this.tempFeelslike.innerHTML = this.preloadIcon;
@@ -145,6 +149,8 @@ export default class CurrentWeather {
       this.country.textContent = this.ajax.location.country;
       this.lastUpdated.textContent = this.ajax.current.last_updated;
 
+      this.conditionImageWrapper.innerHTML = "";
+      this.conditionImageWrapper.appendChild(this.conditionImage);
       this.condition.textContent = this.ajax.current.condition.text;
       this.conditionImage.src = this.ajax.current.condition.icon;
 

@@ -8,14 +8,6 @@ export default class AjaxRequester {
     this.time = null;
   }
 
-  OLDdebounce(func, ms) {
-    this.timeout = null;
-    return (...arg) => {
-      clearTimeout(this.timeout);
-      this.timeout = setTimeout(() => func.apply(this, arg), ms);
-    };
-  }
-
   async requestCityFromIP() {
     const method = "ip.json";
     const query = `&q=auto:ip`;
@@ -84,67 +76,47 @@ export default class AjaxRequester {
       } else {
         throw Error();
       }
-
-      // this.weatherForecast.forecast.forecastday.forEach((f, index) => {
-      //   this.dates[index].textContent = f.date;
-
-      //   // console.log(f.date);
-      //   // console.log(this.dates[index]);
-      // });
     } catch (error) {
       throw Error(`did not find forecast for: ${q}`);
     }
   }
 
-  sayHi() {
-    console.log("hi");
+  OLDdebounce(func, ms) {
+    this.timeout = null;
+    return (...arg) => {
+      clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => func.apply(this, arg), ms);
+    };
   }
 
-  async debounce(arg) {
+  async debounce() {
     clearTimeout(this.time);
     return new Promise((resolve) => {
       this.time = setTimeout(async () => {
         // insert an async function you want to debouce
-        await this.requestSearchSuggestions(arg);
-        console.log("timer");
-        resolve(this.getSearchSuggestions());
-      }, 1000);
+        resolve();
+        // try {
+        //   await this.requestSearchSuggestions(arg);
+        //   // await func(arg);
+        // } catch (error) {
+        //   console.log(error);
+        // } finally {
+        //   resolve(this.getSearchSuggestions());
+        // }
+      }, 200);
     });
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async wait(ms) {
     return new Promise((resolve) => {
       setTimeout(() => {
-        this.sayHi();
         resolve("resolved");
       }, ms);
     });
   }
 
-  initDebouce() {
-    // this.sayHiDebouce = this.debounce(this.sayHi, 1000);
-
-    this.deboundFunction = this.debounce((inputValue) => {
-      console.log("debounce:", inputValue);
-      this.requestSearchSuggestions(inputValue);
-      // this.search(inputValue).then(() => {
-      //   if (this.json.length === 0) {
-      //     this.noSuggestions();
-      //     // this.lastUsed.style.display = "none";
-      //   } else {
-      //     this.showSuggestions();
-      //   }
-      // });
-      // else {
-      //   this.suggestionList.replaceChildren();
-      //   this.searchSuggestions.style.display = "none";
-      // }
-    }, 1000);
-  }
-
   async requestSearchSuggestions(q) {
-    // this.deboundFunction(q);
-
     const method = "search.json";
     const query = `&q=${q}`;
 
@@ -156,8 +128,6 @@ export default class AjaxRequester {
       if (response.ok) {
         const json = await response.json();
         this.searchSuggestions = json;
-
-        console.log(this.searchSuggestions);
       } else {
         throw Error();
       }

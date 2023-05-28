@@ -45,8 +45,10 @@
 }
 
 .search-status {
-  margin-left: 8px;
+  /* margin-left: 8px; */
+  padding: 8px;
 }
+
 .active-search-dropdown {
   pointer-events: auto;
   opacity: 1;

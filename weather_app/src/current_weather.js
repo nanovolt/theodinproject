@@ -1,3 +1,6 @@
+import { parseISO } from "date-fns/esm";
+import format from "date-fns/format";
+
 import "./current_weather.css";
 
 export default class CurrentWeather {
@@ -12,11 +15,12 @@ export default class CurrentWeather {
 
     this.tempSign = this.weatherContainer.querySelector(".temp-sign");
     this.temp = this.weatherContainer.querySelector(".temp");
+
     this.tempFeelslikeSign = this.weatherContainer.querySelector(
       ".temp-feelslike-sign"
     );
-
     this.tempFeelslike = this.weatherContainer.querySelector(".temp-feelslike");
+
     this.cf = this.weatherContainer.querySelectorAll(".c-f");
     this.condition = this.weatherContainer.querySelector(".condition");
     this.conditionImage =
@@ -125,6 +129,7 @@ export default class CurrentWeather {
     this.lastUpdated.innerHTML = this.preloadIcon;
 
     this.condition.innerHTML = this.preloadIcon;
+
     this.conditionImageWrapper.innerHTML = this.preloadIcon;
 
     this.temp.innerHTML = this.preloadIcon;
@@ -155,11 +160,23 @@ export default class CurrentWeather {
 
       this.city.textContent = this.ajax.location.name;
       this.country.textContent = this.ajax.location.country;
-      this.lastUpdated.textContent = this.ajax.current.last_updated;
+
+      // const formattedDate = format(
+      //   parseISO(this.ajax.current.last_updated),
+      //   "PPpp"
+      // );
+      const formattedDate = format(
+        parseISO(this.ajax.current.last_updated),
+        "d MMM kk:mm"
+      );
+
+      // console.log(formattedDate);
+
+      this.lastUpdated.textContent = formattedDate;
+      this.condition.textContent = this.ajax.current.condition.text;
 
       this.conditionImageWrapper.innerHTML = "";
       this.conditionImageWrapper.appendChild(this.conditionImage);
-      this.condition.textContent = this.ajax.current.condition.text;
       this.conditionImage.src = this.ajax.current.condition.icon;
 
       this.changeValues();

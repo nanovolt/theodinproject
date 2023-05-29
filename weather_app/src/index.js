@@ -74,6 +74,7 @@ async function requestForecast() {
 async function app() {
   try {
     currentWeather.preload();
+    forecast.preload();
 
     await ajax.requestCityFromIP();
     storage.setIpLookup(ajax.getIpLookup());

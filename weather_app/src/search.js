@@ -73,6 +73,14 @@ export default class Search {
     }
   }
 
+  removeSelected() {
+    if (this.searchContainer.querySelector(".selected-suggestion")) {
+      this.searchContainer
+        .querySelector(".selected-suggestion")
+        .classList.remove("selected-suggestion");
+    }
+  }
+
   showSearchPreload() {
     this.searchContainer
       .querySelector(".search-preload")
@@ -110,7 +118,7 @@ export default class Search {
 
   searchFormEventListeners() {
     this.searchForm.addEventListener("click", (e) => {
-      if (e.target !== this.submitButton) {
+      if (!e.target.closest(".search-submit-button")) {
         this.searchInput.focus();
       }
     });
@@ -127,6 +135,7 @@ export default class Search {
         const q = selectedSuggestion.dataset.latlon;
         this.searchCurrentWeather(q);
         this.searchWeatherForecast(q);
+        this.removeSelected();
       } else if (this.getFormData() !== "") {
         this.hideDropdown();
         this.searchCurrentWeather(this.getFormData());
@@ -141,7 +150,7 @@ export default class Search {
 
   hideDropdown() {
     this.searchDropdown.classList.remove("active-search-dropdown");
-    this.searchObservable.hide();
+    // this.searchObservable.hide();
   }
 
   searchInputEventListeners() {

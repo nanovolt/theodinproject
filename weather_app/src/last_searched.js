@@ -58,6 +58,7 @@ export default class LastSearched {
       // this.weatherObservable.update(thisCity.dataset.latlon);
       this.search.searchCurrentWeather(thisCity.dataset.latlon);
       this.search.searchWeatherForecast(thisCity.dataset.latlon);
+      this.removeSelected();
       this.search.hideDropdown();
       // const form = document.querySelector("#search-form");
       // const data = new FormData(form);

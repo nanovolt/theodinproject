@@ -11,7 +11,7 @@
   --fontsize-l: 1.2rem;
   --fontsize-xl: 1.8rem;
   --fontsize-2xl: 2.4rem;
-  --fontsize-ultra: 3.6rem;
+  --fontsize-ultra: 3rem;
 
   --primary-color: rgb(200, 100, 250);
   --primary-color-hover: rgb(213, 130, 255);
@@ -143,12 +143,6 @@ h2 {
 .app-title {
   font-size: var(--fontsize-2xl);
   font-weight: bold;
-}
-
-.last-updated-box {
-  display: flex;
-  gap: 8px;
-  align-items: center;
 }
 
 .content-grid {

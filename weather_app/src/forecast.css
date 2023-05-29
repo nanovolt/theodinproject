@@ -1,14 +1,46 @@
 .forecast-container {
   display: grid;
   gap: 8px;
-  padding: 8px;
   border-radius: 8px;
-  background-color: white;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
   /* align-items: start; */
 }
 
 .forecast-info {
   display: grid;
   gap: 8px;
-  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+}
+
+.forecast-item {
+  display: grid;
+  justify-items: center;
+  align-content: flex-start;
+  background-color: white;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.date {
+  font-size: var(--fontsize-2xl);
+}
+
+.f-condition {
+  text-align: center;
+}
+.condition-box {
+  display: grid;
+  justify-items: center;
+}
+
+.forecast-temp {
+  font-size: var(--fontsize-ultra);
+}
+
+.forecast-temp,
+.f-more {
+  display: flex;
+}
+
+.f-more-title {
+  margin-right: 4px;
 }

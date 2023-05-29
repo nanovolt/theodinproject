@@ -8,13 +8,13 @@
     sans-serif;
   font-size: 0.625rem;
   --fontsize-m: 1rem;
-  --fontsize-l: 1.2rem;
+  --fontsize-l: 1.4rem;
   --fontsize-xl: 1.8rem;
   --fontsize-2xl: 2.4rem;
   --fontsize-ultra: 3rem;
 
-  --primary-color: rgb(200, 100, 250);
-  --primary-color-hover: rgb(213, 130, 255);
+  --primary-color: #00c9ff;
+  --primary-color-hover: #92fe9d;
 
   --light-sky: linear-gradient(90deg, #00c9ff 0%, #92fe9d 100%);
   --dark-sky: linear-gradient(90deg, #1cb5e0 0%, #000851 100%);
@@ -39,11 +39,10 @@ body {
   min-height: 100vh;
   position: relative;
   margin: 0;
-  background-color: #ddd;
   font-size: var(--fontsize-xl);
   display: flex;
   flex-direction: column;
-  /* background: var(--sunset2); */
+  background: var(--light-sky);
 }
 
 input {
@@ -90,28 +89,18 @@ main {
   margin: 0 auto;
   padding: 8px;
   display: grid;
-  /* display: flex; */
-  /* flex-wrap: wrap; */
-  /* grid-template-columns: auto auto; */
   gap: 8px;
 }
 
 footer {
   background-color: white;
   width: 100%;
-  /* height: 48px; */
   margin-top: auto;
   display: grid;
   gap: 8px;
-  padding: 8px;
+  padding-top: 8px;
   grid-template-columns: auto;
   place-items: center;
-  /* align-items: center; */
-  /* justify-content: space-around; */
-}
-
-footer a {
-  color: rgb(0, 255, 0);
 }
 
 .opacity-0 {
@@ -148,10 +137,7 @@ h2 {
 .content-grid {
   display: grid;
   gap: 8px;
-  /* grid-template-columns: auto 1fr; */
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  /* grid-template-columns: repeat(auto-fit, minmax(240px, max-content)); */
-
   align-items: flex-start;
 }
 
@@ -161,4 +147,16 @@ h2 {
 
 .chem {
   white-space: nowrap;
+}
+
+.api a {
+  color: var(--primary-color);
+}
+
+.github {
+  font-size: var(--fontsize-2xl);
+  padding: 8px;
+  background: var(--light-sky);
+  border-top-right-radius: 16px;
+  border-top-left-radius: 16px;
 }

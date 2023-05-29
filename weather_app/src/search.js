@@ -149,15 +149,11 @@ export default class Search {
   }
 
   hideDropdown() {
+    this.removeSelected();
     this.searchDropdown.classList.remove("active-search-dropdown");
-    // this.searchObservable.hide();
   }
 
   searchInputEventListeners() {
-    this.searchInput.addEventListener("keyup", () => {
-      // this.weatherObservable.update(this.searchInput.value);
-    });
-
     this.searchInput.addEventListener("keydown", (e) => {
       if (e.key === "ArrowUp") {
         e.preventDefault();
@@ -208,28 +204,6 @@ export default class Search {
       this.allowSuggestions = false;
       this.searchInput.value = "";
       this.hideDropdown();
-      // if (
-      //   e.target.closest(".last-searched") ||
-      //   e.target.closest("#search-form") ||
-      //   e.target.closest(".search-suggestions")
-      // ) {
-      //   return;
-      // }
-
-      // if (
-      //   e.target.closest(".last-searched-location") ||
-      //   e.target.closest(".suggested-location")
-      // ) {
-      //   // this.searchInput.value = "";
-      //   console.log("closest");
-
-      //   const { latlon } = e.target.closest(".location").dataset;
-      //   this.weatherObservable.update(latlon);
-      // }
-
-      // this.searchDropdown.classList.remove("active-search-dropdown");
-
-      // this.searchObservable.hide();
     });
   }
 

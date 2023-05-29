@@ -1,9 +1,6 @@
 .weather-container {
-  /* grid-area: 2 / 1 / 3 / 2; */
   display: grid;
   gap: 8px;
-  /* width: max-content; */
-  /* grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); */
   background-color: white;
   padding: 8px;
   border-radius: 8px;
@@ -11,12 +8,7 @@
 
 .main-info {
   display: grid;
-  /* display: flex; */
-  /* flex-wrap: wrap; */
-  /* align-items: flex-start; */
   grid-template-columns: auto auto;
-  /* align-items: start; */
-  /* gap: 24px; */
   column-gap: 16px;
 }
 
@@ -24,16 +16,11 @@
   display: grid;
   align-content: space-between;
 }
-.place {
-}
 
 .last-updated-box {
-  /* display: grid; */
-  /* grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); */
   gap: 8px;
   display: flex;
   flex-wrap: wrap;
-  /* align-items: center; */
 }
 
 .temp-box {
@@ -53,11 +40,7 @@
 
 .main-condition {
   display: grid;
-  /* place-items: center; */
   justify-items: center;
-  /* border-radius: 8px; */
-  /* padding: 8px; */
-  /* border: 2px solid var(--primary-color); */
 }
 
 .condition {

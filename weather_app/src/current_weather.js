@@ -161,16 +161,10 @@ export default class CurrentWeather {
       this.city.textContent = this.ajax.location.name;
       this.country.textContent = this.ajax.location.country;
 
-      // const formattedDate = format(
-      //   parseISO(this.ajax.current.last_updated),
-      //   "PPpp"
-      // );
       const formattedDate = format(
         parseISO(this.ajax.current.last_updated),
         "d MMM kk:mm"
       );
-
-      // console.log(formattedDate);
 
       this.lastUpdated.textContent = formattedDate;
       this.condition.textContent = this.ajax.current.condition.text;

@@ -32,22 +32,6 @@ export default class Forecast {
     this.preloadIcon = `<i class="fa-solid fa-spinner fa-spin"></i>`;
   }
 
-  init() {
-    this.mode = this.storage.getTempMode();
-    this.changeMode();
-  }
-
-  showCelciusOrFahrenheit(mode, el, temp, unit) {
-    console.log("show");
-    if (mode === "celcius") {
-    } else {
-      this.temp.textContent = this.json.current.temp_f;
-      this.tempFeelslike.textContent = this.json.current.feelslike_f;
-      this.visibility.textContent = this.json.current.vis_miles;
-      this.windSpeed.textContent = this.json.current.wind_mph;
-    }
-  }
-
   changeMode() {
     this.mode = this.storage.getTempMode();
 
@@ -151,41 +135,5 @@ export default class Forecast {
       this.maxTemps[i].innerHTML = this.preloadIcon;
       this.minTemps[i].innerHTML = this.preloadIcon;
     });
-
-    // this.dates.forEach((date) => {
-    //   date.innerHTML = this.preloadIcon;
-    // });
-
-    // this.avgTemps.forEach((avgTtemp) => {
-    //   avgTtemp.innerHTML = this.preloadIcon;
-    // });
-
-    // this.fConditions.forEach((condition) => {
-    //   condition.innerHTML = this.preloadIcon;
-    // });
-
-    // this.conditionImageWrappers.forEach((wrapper) => {
-    //   wrapper.innerHTML = this.preloadIcon;
-    // });
-
-    // this.fConditions.forEach((condition) => {
-    //   condition.innerHTML = this.preloadIcon;
-    // });
-
-    // this.dates.forEach((date) => {
-    //   date.innerHTML = this.preloadIcon;
-    // });
-
-    // this.dates.forEach((date) => {
-    //   date.innerHTML = this.preloadIcon;
-    // });
-    // this.fConditions[i].innerHTML = day.day.condition.text;
-    // this.fConditionImages[i].src = day.day.condition.icon;
-    // this.rainChances[i].textContent = day.day.daily_chance_of_rain;
-    // this.snowChances[i].textContent = day.day.daily_chance_of_snow;
-  }
-
-  getNotified(arg) {
-    this.showCelciusOrFahrenheit(arg);
   }
 }

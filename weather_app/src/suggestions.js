@@ -9,29 +9,8 @@ export default class SearchSuggestions {
     this.selected = -1;
   }
 
-  isOptionSelected() {}
-
-  update(query) {
-    // this.search(query);
-  }
-
-  noSuggestions() {
-    console.log("no suggestions");
-  }
-
-  updateFocus() {
-    if (document.querySelector(".selected-suggestion")) {
-      document
-        .querySelector(".selected-suggestion")
-        .classList.remove("selected-suggestion");
-    }
-
-    if (this.suggestionList.children.length !== 0) {
-      this.suggestionList.children[this.focusedSuggestion].classList.add(
-        "selected-suggestion"
-      );
-    }
-  }
+  // eslint-disable-next-line class-methods-use-this
+  update() {}
 
   removeSelected() {
     if (this.suggestionList.querySelector(".selected-suggestion")) {
@@ -44,7 +23,6 @@ export default class SearchSuggestions {
   hide() {
     this.selected = -1;
     this.removeSelected();
-    // this.suggestionList.replaceChildren();
     this.searchSuggestions.classList.add("hidden");
   }
 
@@ -55,21 +33,10 @@ export default class SearchSuggestions {
   cityEventListeners() {
     const thisCity = this.suggestionList.lastElementChild;
     thisCity.addEventListener("click", () => {
-      // console.log("latlon:", thisCity.dataset.latlon);
-      // console.log("name:", thisCity.dataset.name);
-      // console.log("city:", thisCity);
-      // this.weatherObservable.update(thisCity.dataset.latlon);
       this.search.searchCurrentWeather(thisCity.dataset.latlon);
       this.search.searchWeatherForecast(thisCity.dataset.latlon);
       this.removeSelected();
       this.search.hideDropdown();
-      // const form = document.querySelector("#search-form");
-      // const data = new FormData(form);
-      // this.search.formdata.set("city", thisCity.dataset.latlon);
-
-      // console.log("set data:", this.search.formdata);
-      // form.preventDefault();
-      // form.requestSubmit();
     });
 
     thisCity.addEventListener("mouseover", () => {
@@ -78,7 +45,6 @@ export default class SearchSuggestions {
       thisCity.classList.add("selected-suggestion");
 
       const index = Array.from(this.suggestionList.children).indexOf(thisCity);
-      // console.log("hover:", index);
 
       this.selected = index;
     });
@@ -139,7 +105,6 @@ export default class SearchSuggestions {
         this.selected = this.suggestionList.children.length - 1;
       }
 
-      // console.log("up:", this.selected);
       this.suggestionList.children[this.selected].classList.add(
         "selected-suggestion"
       );
@@ -156,12 +121,12 @@ export default class SearchSuggestions {
         this.selected = 0;
       }
 
-      // console.log("down:", this.selected);
       this.suggestionList.children[this.selected].classList.add(
         "selected-suggestion"
       );
     }
   }
 
+  // eslint-disable-next-line class-methods-use-this
   init() {}
 }

@@ -52,21 +52,10 @@ export default class LastSearched {
   cityEventListeners() {
     const thisCity = this.lastSearchedList.firstElementChild;
     thisCity.addEventListener("click", () => {
-      // console.log("latlon:", thisCity.dataset.latlon);
-      // console.log("name:", thisCity.dataset.name);
-
-      // this.weatherObservable.update(thisCity.dataset.latlon);
       this.search.searchCurrentWeather(thisCity.dataset.latlon);
       this.search.searchWeatherForecast(thisCity.dataset.latlon);
       this.removeSelected();
       this.search.hideDropdown();
-      // const form = document.querySelector("#search-form");
-      // const data = new FormData(form);
-      // this.search.formdata.set("city", thisCity.dataset.latlon);
-
-      // console.log("set data:", this.search.formdata);
-      // form.preventDefault();
-      // form.requestSubmit();
     });
 
     thisCity.addEventListener("mouseover", () => {
@@ -77,7 +66,6 @@ export default class LastSearched {
       const index = Array.from(this.lastSearchedList.children).indexOf(
         thisCity
       );
-      // console.log("hover:", index);
 
       this.selected = index;
     });
@@ -93,9 +81,7 @@ export default class LastSearched {
 
   update() {
     this.lastSearchData = this.storage.getLastSearched().reverse();
-
     const city = this.lastSearchData.at(0);
-
     this.createCity(city);
 
     if (this.lastSearchedList.children.length > 3) {
@@ -105,24 +91,6 @@ export default class LastSearched {
     if (this.lastSearchedList.children.length > 1) {
       this.removeSelected();
     }
-
-    // this.lastSearchedList.firstElementChild.classList.add(
-    //   "selected-suggestion"
-    // );
-  }
-
-  isOptionSelected() {
-    // if (this.lastSearchedList.children.length !== 0) return true;
-    // return false;
-    if (this.lastSearchedList.querySelector(".selected-suggestion")) {
-      // this.lastSearchedList
-      //   .querySelector(".selected-suggestion")
-      //   .classList.remove("selected-suggestion");
-      console.log("true");
-      return true;
-    }
-    console.log("false");
-    return false;
   }
 
   showLastSearched() {
@@ -145,9 +113,8 @@ export default class LastSearched {
     this.hide();
   }
 
+  // eslint-disable-next-line class-methods-use-this
   addAsyncSuggestions() {}
-
-  clear() {}
 
   areSuggestionsHidden() {
     return this.lastSearched.classList.contains("hidden");
@@ -167,7 +134,6 @@ export default class LastSearched {
         this.selected = this.lastSearchedList.children.length - 1;
       }
 
-      // console.log("up:", this.selected);
       this.lastSearchedList.children[this.selected].classList.add(
         "selected-suggestion"
       );
@@ -188,7 +154,6 @@ export default class LastSearched {
         this.selected = 0;
       }
 
-      // console.log("down:", this.selected);
       this.lastSearchedList.children[this.selected].classList.add(
         "selected-suggestion"
       );

@@ -10,7 +10,6 @@ export default class Dropdown {
     this.dropdown = document.querySelector(`.${this.selector}`);
     this.button = this.dropdown.querySelector(".dropdown-button");
     this.dropdownContent = this.dropdown.querySelector(".dropdown-content");
-    // this.options = Array.from(this.dropdownContent.children);
     this.options = this.dropdown.querySelectorAll(".dropdown-option");
 
     this.modes = {
@@ -28,8 +27,6 @@ export default class Dropdown {
           this.mode = option.dataset.mode;
           this.storage.setTempMode(this.mode);
 
-          // uncaught runtime error
-          // TODO if have not loaded city, changeMode() not changeValues()
           this.dropdownObservable.changeValues();
         }
 

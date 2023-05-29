@@ -205,6 +205,7 @@ export default class Search {
       if (e.target.closest(".search-container")) {
         return;
       }
+      this.allowSuggestions = false;
       this.searchInput.value = "";
       this.hideDropdown();
       // if (

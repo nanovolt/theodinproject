@@ -123,3 +123,80 @@ function fib(n) {
 const fibN = 7;
 
 console.log(`fibonacci of ${fibN}:`, fib(fibN));
+
+const list = {
+  value: 1,
+  next: {
+    value: 2,
+    next: {
+      value: 3,
+      next: {
+        value: 4,
+        next: null,
+      },
+    },
+  },
+};
+
+// eslint-disable-next-line no-shadow
+// function printList(list) {
+//   console.log("value:", list.value);
+//   if (list.next) {
+//     printList(list.next);
+//   }
+// }
+
+// eslint-disable-next-line no-shadow
+// function printList(list) {
+//   // console.log("list:", list);
+//   let { value, next } = list;
+//   // console.log(next);
+//   const arr = [];
+//   while (next) {
+//     console.log("value:", value);
+//     arr.push(value);
+//     // console.log("next:", next);
+//     value = next.value;
+//     next = next.next;
+//     if (!next) {
+//       console.log("value:", value);
+//       arr.push(value);
+//     }
+//   }
+//   // console.log(arr);
+// }
+
+// eslint-disable-next-line no-shadow
+function printList(list) {
+  let next = list;
+
+  while (next) {
+    console.log("value:", next.value);
+    next = next.next;
+  }
+}
+
+// eslint-disable-next-line no-shadow
+// function printReverseList(list) {
+//   // console.log("value:", list.value);
+//   if (list.next) {
+//     printReverseList(list.next);
+//   }
+//   console.log("reverse:", list.value);
+// }
+
+// eslint-disable-next-line no-shadow
+function printReverseList(list) {
+  let next = list;
+  const arr = [];
+  while (next) {
+    arr.push(next.value);
+    next = next.next;
+  }
+  arr.reverse().forEach((a) => {
+    console.log("reverse:", a);
+  });
+}
+
+printList(list);
+printReverseList(list);

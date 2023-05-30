@@ -61,3 +61,13 @@ function sumTo(n) {
 
 const n = 100;
 console.log(`sum to ${n}:`, sumTo(n));
+
+// calculate factorial
+
+function factorial(factN) {
+  return factN === 1 ? 1 : factN * factorial(factN - 1);
+}
+
+const factN = 5;
+
+console.log(`${factN}! =`, factorial(factN));

@@ -71,3 +71,55 @@ function factorial(factN) {
 const factN = 5;
 
 console.log(`${factN}! =`, factorial(factN));
+
+// fibonacci numbers
+
+// eslint-disable-next-line no-shadow
+// function fib(n) {
+//   if (n === 1) {
+//     return 1;
+//   }
+//   if (n === 0) {
+//     return 0;
+//   }
+
+//   return fib(n - 1) + fib(n - 2);
+// }
+
+// eslint-disable-next-line no-shadow
+// function fib(n) {
+//   return n <= 1 ? n : fib(n - 1) + fib(n - 2);
+// }
+
+// eslint-disable-next-line no-shadow
+// function fib(n) {
+//   const arr = [];
+
+//   for (let i = 0; i < n; i += 1) {
+//     if (i < 2) {
+//       arr.push(1);
+//     } else {
+//       arr.push(arr[i - 1] + arr[i - 2]);
+//     }
+//   }
+
+//   return arr[n - 1];
+// }
+
+// eslint-disable-next-line no-shadow
+function fib(n) {
+  let first = 1;
+  let second = 1;
+  let sum = 0;
+  for (let i = 3; i <= n; i += 1) {
+    sum = first + second;
+    first = second;
+    second = sum;
+  }
+
+  return second;
+}
+
+const fibN = 7;
+
+console.log(`fibonacci of ${fibN}:`, fib(fibN));

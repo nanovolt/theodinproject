@@ -36,3 +36,28 @@ function iterativePow(a, n) {
 
 console.log("recursive pow:", recursivePow(2, 4));
 console.log("iterative pow:", iterativePow(2, 4));
+
+// Sum all numbers till the given one
+
+// use for loop
+// function sumTo(n) {
+//   let sum = 0;
+//   for (let i = 1; i <= n; i += 1) {
+//     sum += i;
+//   }
+//   return sum;
+// }
+
+// use recursion
+// function sumTo(n) {
+//   return n === 1 ? n : n + sumTo(n - 1);
+// }
+
+// use arithmetic progression formula
+
+function sumTo(n) {
+  return (n * (1 + n)) / 2;
+}
+
+const n = 100;
+console.log(`sum to ${n}:`, sumTo(n));

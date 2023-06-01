@@ -200,3 +200,205 @@ function printReverseList(list) {
 
 printList(list);
 printReverseList(list);
+
+let count = 0;
+const arr = [];
+// eslint-disable-next-line no-shadow
+function collatz(n) {
+  if (n === 1) {
+    arr.push(n);
+    return count;
+  }
+  if (n % 2 === 0) {
+    arr.push(n);
+    collatz(n / 2);
+    count += 1;
+    return count;
+  }
+  if (n % 2 !== 0) {
+    arr.push(n);
+    collatz(3 * n + 1);
+    count += 1;
+    return count;
+  }
+  return count;
+}
+
+const c = 50;
+console.log(`collatz of ${c}:`, collatz(c));
+console.log(arr);
+
+// eslint-disable-next-line no-shadow
+function sumRange(n) {
+  return n === 1 ? n : n + sumRange(n - 1);
+}
+
+console.log("sumRange(3):", sumRange(3));
+
+function power(base, exp) {
+  return exp === 0 ? 1 : base * power(base, exp - 1);
+}
+
+console.log("power(2, 4):", power(2, 4));
+
+// eslint-disable-next-line no-shadow
+function fact(n) {
+  return n === 1 ? n : n * fact(n - 1);
+}
+
+console.log("fasct(5):", fact(5));
+
+const allArr = [1, 3, 4, 5, 7, 8];
+// console.log("splice", allArr.slice(0, -1));
+// function all(arr, cb) {
+//   let a = true;
+//   arr.forEach((item) => {
+//     a = cb(item);
+//     if (!a) {
+//       a = false;
+//     }
+//   });
+//   return a;
+// }
+
+// eslint-disable-next-line no-shadow
+function all(arr, cb) {
+  if (arr.length === 0) return true;
+
+  if (cb(arr.at(-1))) {
+    return all(arr.slice(0, -1), cb);
+  }
+  return false;
+}
+
+console.log(
+  "all:",
+  all(allArr, (a) => a < 9)
+);
+
+// eslint-disable-next-line no-shadow
+function productOfArray(arr) {
+  if (arr.length === 0) return 0;
+  if (arr.length === 1) return arr.at(-1);
+
+  return arr.at(-1) * productOfArray(arr.slice(0, -1));
+}
+
+console.log(`product of [0]: ${productOfArray([])}`);
+console.log(`product of [1, 2, 3]: ${productOfArray([1, 2, 3])}`);
+console.log(`product of [1, 2, 3, 10]: ${productOfArray([1, 2, 3, 10])}`);
+
+const nestedObject = {
+  data: {
+    info: {
+      stuff: {
+        thing: {
+          moreStuff: {
+            magicNumber: 44,
+            something: "foo2",
+          },
+        },
+      },
+    },
+  },
+};
+
+function contains(obj, item) {
+  // console.log(Object.values(obj));
+
+  for (const [key, value] of Object.entries(obj)) {
+    // console.log("key:", key, "value:", value);
+    // console.log("item:", item);
+    if (value === item) {
+      // console.log("FOUND! at:", key);
+      return { key, value };
+    }
+
+    if (typeof value === "object") {
+      return contains(value, item);
+    }
+  }
+  return `didn't find "${item}" :(`;
+
+  // Object.entries(obj).forEach((entry) => {
+  //   console.log(entry);
+  // });
+}
+
+const hasIt = contains(nestedObject, 44); // true
+const doesntHaveIt = contains(nestedObject, "foo"); // false
+
+console.log("hasIt:", hasIt);
+console.log("doesntHaveIt:", doesntHaveIt);
+
+const multiArray = [[[5], 3], 0, 2, ["foo"], [], [4, [5, 6]]];
+
+// eslint-disable-next-line no-shadow
+function totalIntegers(arr) {
+  let total = 0;
+  for (const item of arr) {
+    // console.log("type:", typeof item, "item:", item);
+    if (typeof item === "number") {
+      total += 1;
+    }
+
+    if (typeof item === "object") {
+      total += totalIntegers(item);
+    }
+  }
+
+  return total;
+  // arr.forEach((item) => {
+  //   if (typeof item === "number") {
+  //     return item;
+  //   }
+
+  //   return item;
+  //   // console.log(typeof item);
+  // });
+}
+const seven = totalIntegers(multiArray);
+
+console.log("number of integers in multi-dimentional array:", seven);
+
+const list1 = [1, 2, 3];
+const list2 = [[1, 2], 3];
+const list3 = [[[[[[[[[1]]]]]]]]];
+const list4 = [10, [[10], 10], [10]];
+
+// eslint-disable-next-line no-shadow
+function sumSquares(list) {
+  let total = 0;
+  for (const item of list) {
+    // console.log("type:", typeof item, "item:", item);
+    if (typeof item === "number") {
+      total += item * item;
+    }
+
+    if (typeof item === "object") {
+      total += sumSquares(item);
+    }
+  }
+
+  return total;
+}
+
+console.log(`sum of squares: ${list1}:`, sumSquares(list1));
+console.log(`sum of squares: ${list2}:`, sumSquares(list2));
+console.log(`sum of squares: ${list3}:`, sumSquares(list3));
+console.log(`sum of squares: ${list4}:`, sumSquares(list4));
+
+// eslint-disable-next-line no-shadow
+function replicate(n, item) {
+  if (n <= 0) {
+    return [];
+  }
+
+  const replicateResult = replicate(n - 1, item);
+  replicateResult.push(item);
+  return replicateResult;
+}
+
+console.log(`replicate (3, 5): ${JSON.stringify(replicate(3, 5))}`);
+console.log(`replicate (1, 24): ${JSON.stringify(replicate(1, 24))}`);
+console.log(`replicate (-2, 6): ${JSON.stringify(replicate(-2, 6))}`);

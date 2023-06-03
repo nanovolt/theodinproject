@@ -63,11 +63,19 @@ function prettyPrint(node, prefix = "", isLeft = false) {
   }
 }
 
-class Node {
+class TreeNode {
   constructor(root, left = null, right = null) {
     this.root = root;
     this.data = root;
     this.left = left;
+    this.right = right;
+  }
+
+  setLeft(left) {
+    this.left = left;
+  }
+
+  setRight(right) {
     this.right = right;
   }
 }
@@ -80,35 +88,49 @@ class BalancedBST {
     }
     if (arr.length === 1) {
       // console.log(`new node ${arr[0]}`);
-      return new Node(arr[0], null, null);
+      return new TreeNode(arr[0], null, null);
     }
 
     const root = Math.floor(arr.length / 2);
     const left = arr.slice(0, root);
     const right = arr.slice(root + 1);
 
-    console.log("left:", left, "root:", [arr[root]], "right:", right);
+    // console.log("left:", left, "root:", [arr[root]], "right:", right);
 
     const leftNode = this.buildTree(left);
     const rightNode = this.buildTree(right);
 
-    const node = new Node(arr[root], leftNode, rightNode);
-    console.log("node create:", node);
+    this.node = new TreeNode(arr[root], leftNode, rightNode);
+    // console.log("node create:", this.node);
     // prettyPrint(node);
 
-    return node;
+    return this.node;
+  }
+
+  setRoot(node) {
+    this.root = node;
+  }
+
+  insert(value, node = this.root) {
+    if (value < node.data) {
+      if (!node.left) {
+        const treeNode = new TreeNode(value);
+        node.setLeft(treeNode);
+      } else {
+        this.insert(value, node.left);
+      }
+    }
+
+    if (value > node.data) {
+      if (!node.right) {
+        const treeNode = new TreeNode(value);
+        node.setRight(treeNode);
+      } else {
+        this.insert(value, node.right);
+      }
+    }
   }
 }
-
-const tree = new BalancedBST();
-
-// const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const unsortedArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-const sortedArr = mergeSort(unsortedArr);
-console.log("unsorted array:", unsortedArr);
-console.log("sorted array:", sortedArr);
-removeDuplicates(sortedArr);
-console.log("sorted array no dupes:", sortedArr);
 
 // const arr = [
 //   "one",
@@ -123,5 +145,28 @@ console.log("sorted array no dupes:", sortedArr);
 //   "ten",
 // ];
 
+const tree = new BalancedBST();
+
+// const arr = [1, 4, 5, 8, 9];
+// const arr = [1, 4, 5, 8, 9];
+
+const unsortedArr = [6, 1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+const sortedArr = mergeSort(unsortedArr);
+// console.log("unsorted array:", unsortedArr);
+// console.log("sorted array:", sortedArr);
+removeDuplicates(sortedArr);
+// console.log("sorted array no dupes:", sortedArr);
+
 const root = tree.buildTree(sortedArr);
-prettyPrint(root);
+tree.setRoot(root);
+// tree.setRoot(root);
+// prettyPrint(root);
+// tree.insert(2, root);
+tree.insert(2);
+tree.insert(10);
+tree.insert(16);
+tree.insert(64);
+tree.insert(128);
+tree.insert(256);
+
+prettyPrint(tree.root);

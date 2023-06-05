@@ -52,6 +52,7 @@ function removeDuplicates(arr) {
 
 function prettyPrint(node, prefix = "", isLeft = false) {
   if (node === null) {
+    console.log(`┌── ${"null"}`);
     return;
   }
   if (node.right !== null) {
@@ -118,6 +119,12 @@ class BalancedBST {
   }
 
   insert(value, node = this.root) {
+    if (!this.root) {
+      const treeNode = new TreeNode(value);
+      this.root = treeNode;
+      return;
+    }
+
     if (value < node.data) {
       if (!node.left) {
         const treeNode = new TreeNode(value);
@@ -167,13 +174,38 @@ class BalancedBST {
 
   delete(value) {
     console.log("deleting:", value);
-    const { node, parent } = this.find(value);
-    if (!node) {
+    const found = this.find(value);
+    if (!found) {
       return;
     }
+    const { node, parent } = found;
 
-    // console.log("found node:", node);
-    // console.log("parent:", parent);
+    console.log("found node:", node.data);
+    if (parent) {
+      console.log("parent:", parent.data);
+    } else {
+      console.log("parent: null");
+    }
+
+    if (node === this.root) {
+      if (!node.left && !node.right) {
+        this.root = null;
+        console.log("this.root = null");
+        return;
+      }
+
+      if (node.left && !node.right) {
+        this.root = node.left;
+        console.log(`this.root attached: ${node.left.data}`);
+        return;
+      }
+
+      // if (!node.left && node.right) {
+      //   this.root = node.right;
+      //   console.log(`this.root = ${node.right.data}`);
+      //   return;
+      // }
+    }
 
     if (!node.left && !node.right) {
       console.log(value, "is a leaf");
@@ -203,22 +235,37 @@ class BalancedBST {
         "is not a leaf, node has right child:",
         node.right.data
       );
-      if (node === parent.left) {
+
+      // if (node === this.root) {
+      //   this.root = node.right;
+      //   console.log("this.root attached:", node.right.data);
+      // }
+
+      if (parent && node === parent.left) {
         parent.left = node.right;
-        console.log("parent:", parent.data, "attached:", node.right.data);
-      } else {
+        console.log("parent.left:", parent.data, "attached:", node.right.data);
+
+        console.log("node left:", node.left);
+        if (!node.left) {
+          return;
+        }
+      }
+
+      if (parent && node === parent.right) {
         parent.right = node.right;
-        console.log("parent:", parent.data, "attached:", node.right.data);
+        console.log("parent.right:", parent.data, "attached:", node.right.data);
       }
     }
 
-    if (node.right && node.left) {
-      console.log(
-        value,
-        "is not a leaf, node has both children:",
-        node.left.data,
-        node.right.data
-      );
+    if (node.right) {
+      if (node.left) {
+        console.log(
+          value,
+          "is not a leaf, node has both children:",
+          node.left.data,
+          node.right.data
+        );
+      }
       // console.log("parent:", node);
       const smallest = this.recurseLeft(node.right, node.right);
       console.log("smallest:", smallest.data);
@@ -235,15 +282,6 @@ class BalancedBST {
             "attached:",
             smallest.right.data
           );
-
-          smallest.right = node.right;
-
-          console.log(
-            "smallest:",
-            smallest.data,
-            "attached right:",
-            node.right.data
-          );
         } else {
           console.log(
             "recursive left parent:",
@@ -254,17 +292,32 @@ class BalancedBST {
         }
 
         smallest.left = node.left;
+        smallest.right = node.right;
+
+        if (node.left) {
+          console.log(
+            "smallest:",
+            smallest.data,
+            "attached left:",
+            node.left.data
+          );
+        }
+
+        // if (node.right) {
 
         console.log(
           "smallest:",
           smallest.data,
-          "attached left:",
-          node.left.data
+          "attached right:",
+          node.right.data
         );
+        // }
       } else {
         console.log("no recursive parents");
-        console.log("smallest:", smallest.data, "attached:", node.left.data);
-        smallest.left = node.left;
+        if (node.left) {
+          console.log("smallest:", smallest.data, "attached:", node.left.data);
+          smallest.left = node.left;
+        }
       }
 
       this.recurseLeftParent = null;
@@ -283,31 +336,26 @@ class BalancedBST {
           "with:",
           smallest.data
         );
-      } else {
       }
 
-      // if right has no left child, replace node with the right
-      // if (!node.right.left) {
-      //   console.log(
-      //     "it's not a leaf, node has both childs, right doesn't have left to recurse"
-      //   );
-      //   node.right.left = node.left;
-      //   if (node === parent.left) {
-      //     parent.left = node.right;
-      //   } else {
-      //     parent.right = node.right;
-      //   }
-      // }
+      // console.log("NODE:", node, "this.root:", this.root);
 
-      // but if it has, recursively find smallest, and replace
-      // if (node.right.left) {
-      //   console.log(
-      //     "it's not a leaf, node has both childs, right has left to recurse"
-      //   );
-      //   const smallest = this.recurseLeft(node.right);
-      //   console.log("smallest:", smallest);
-      // }
+      if (node === this.root) {
+        console.log("it's a root");
+        const rootData = this.root.data;
+        this.root = smallest;
+        console.log(
+          "replaced this.root:",
+          rootData,
+          "with smallest:",
+          smallest.data
+        );
+      }
     }
+
+    // if (node === this.root) {
+    //   console.log("it's a root");
+    // }
   }
 }
 
@@ -326,78 +374,127 @@ class BalancedBST {
 
 const tree = new BalancedBST();
 
-// const arr = [1, 4, 5, 8, 9];
-// const arr = [1, 4, 5, 8, 9];
+function test0() {
+  const root = tree.buildTree([]);
+  tree.setRoot(root);
+  prettyPrint(tree.root);
 
-const unsortedArr = [6, 1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 360, 324];
-const sortedArr = mergeSort(unsortedArr);
-const fullArr = [];
-for (let i = 0; i < 64; i += 1) {
-  fullArr.push(i);
+  tree.insert(10);
+  prettyPrint(tree.root);
+
+  tree.delete(999);
+  prettyPrint(tree.root);
+
+  tree.insert(5);
+  prettyPrint(tree.root);
+
+  // tree.insert(20);
+  // prettyPrint(tree.root);
+
+  // tree.insert(25);
+  // prettyPrint(tree.root);
+
+  // tree.insert(24);
+  // prettyPrint(tree.root);
+
+  tree.delete(10);
+  prettyPrint(tree.root);
+
+  // tree.delete(20);
+  // prettyPrint(tree.root);
+
+  // tree.delete(24);
+  // prettyPrint(tree.root);
+
+  // tree.delete(25);
+  // prettyPrint(tree.root);
 }
-// console.log("unsorted array:", unsortedArr);
-// console.log("sorted array:", sortedArr);
-removeDuplicates(sortedArr);
-// console.log("sorted array no dupes:", sortedArr);
 
-const root = tree.buildTree(sortedArr);
-tree.setRoot(root);
-// tree.setRoot(root);
-// prettyPrint(root);
-// tree.insert(2, root);
+function test1() {
+  const unsortedArr = [6, 1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 360, 324];
+  console.log("unsorted array:", unsortedArr);
 
-tree.insert(2);
-tree.insert(48);
-tree.insert(27);
-tree.insert(26);
-tree.insert(24);
-tree.insert(25);
+  const sortedArr = mergeSort(unsortedArr);
+  console.log("sorted array:", sortedArr);
 
-tree.insert(400);
+  removeDuplicates(sortedArr);
+  console.log("sorted array no dupes:", sortedArr);
 
-tree.insert(385);
-tree.insert(381);
-tree.insert(382);
-tree.insert(383);
-tree.insert(384);
+  const root = tree.buildTree(sortedArr);
+  tree.setRoot(root);
 
-tree.insert(550);
-tree.insert(500);
-tree.insert(600);
+  tree.insert(2);
+  tree.insert(48);
+  tree.insert(27);
+  tree.insert(26);
+  tree.insert(24);
+  tree.insert(25);
 
-// tree.insert(10);
-// tree.insert(16);
-// tree.insert(64);
-// tree.insert(128);
-// tree.insert(256);
-// tree.insert(65);
-// tree.insert(60);
-// tree.insert(50);
-// tree.insert(40);
-// tree.insert(66);
+  tree.insert(400);
 
-// tree.insert(70);
-// tree.insert(80);
-// tree.insert(90);
-// tree.insert(68);
-// tree.insert(69);
+  tree.insert(385);
+  tree.insert(381);
+  tree.insert(382);
+  tree.insert(383);
+  tree.insert(384);
 
-prettyPrint(tree.root);
-// tree.find(5);
+  tree.insert(550);
+  tree.insert(500);
+  tree.insert(600);
 
-tree.delete(23);
-prettyPrint(tree.root);
+  prettyPrint(tree.root);
 
-tree.delete(360);
-prettyPrint(tree.root);
+  tree.delete(23);
+  prettyPrint(tree.root);
 
-tree.delete(550);
-prettyPrint(tree.root);
-// tree.delete(3);
-// prettyPrint(tree.root);
+  tree.delete(360);
+  prettyPrint(tree.root);
 
-// tree.delete(64);
-// prettyPrint(tree.root);
+  tree.delete(550);
+  prettyPrint(tree.root);
 
-// tree.delete(67);
-// prettyPrint(tree.root);
+  tree.delete(400);
+  prettyPrint(tree.root);
+
+  tree.delete(67);
+  prettyPrint(tree.root);
+
+  tree.delete(8);
+  prettyPrint(tree.root);
+
+  tree.delete(9);
+  prettyPrint(tree.root);
+
+  tree.delete(24);
+  prettyPrint(tree.root);
+
+  tree.delete(385);
+  prettyPrint(tree.root);
+
+  tree.delete(5);
+  prettyPrint(tree.root);
+
+  tree.delete(500);
+  prettyPrint(tree.root);
+}
+
+function test2() {
+  const fullArr = [];
+  for (let i = 0; i < 16; i += 1) {
+    fullArr.push(i);
+  }
+  const root = tree.buildTree(fullArr);
+  tree.setRoot(root);
+
+  prettyPrint(tree.root);
+  tree.delete(1);
+  prettyPrint(tree.root);
+  tree.delete(0);
+  prettyPrint(tree.root);
+  tree.delete(2);
+  prettyPrint(tree.root);
+}
+
+test0();
+test1();
+// test2();

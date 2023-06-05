@@ -88,6 +88,11 @@ class BalancedBST {
     this.recurseLeftParent = null;
     this.levelOrderQueueArray = [];
     this.levelOrderRecursionArray = [];
+    this.preorderArray = [];
+    this.inorderArray = [];
+    this.postorderArray = [];
+    this.treeHeight = 0;
+    this.depth = 0;
   }
 
   buildTree(arr) {
@@ -147,9 +152,14 @@ class BalancedBST {
   }
 
   find(value, node = this.root) {
+    this.depth += 1;
+
     if (value === node.data) {
       // console.log("found", value, "at:", this.parent);
-      return { node, parent: this.parent };
+      // console.log("found", value, " at depth:", this.depth);
+      const d = this.depth;
+      this.depth = 0;
+      return { node, parent: this.parent, d };
     }
 
     if (value < node.data && node.left) {
@@ -382,6 +392,72 @@ class BalancedBST {
     }
     return this.levelOrderQueueArray;
   }
+
+  preorder(node = this.root) {
+    if (!node) {
+      return null;
+    }
+
+    // console.log(node.data);
+    this.preorderArray.push(node.data);
+    this.preorder(node.left);
+    this.preorder(node.right);
+
+    return this.preorderArray;
+  }
+
+  inorder(node = this.root) {
+    if (!node) {
+      return null;
+    }
+
+    this.inorder(node.left);
+    // console.log(node.data);
+    this.inorderArray.push(node.data);
+    this.inorder(node.right);
+
+    return this.inorderArray;
+  }
+
+  postorder(node = this.root) {
+    if (!node) {
+      return null;
+    }
+
+    this.postorder(node.left);
+    this.postorder(node.right);
+    // console.log(node.data);
+    this.postorderArray.push(node.data);
+
+    return this.postorderArray;
+  }
+
+  height(node = this.root) {
+    if (!node) {
+      return null;
+    }
+
+    if (!node.left && !node.right) {
+      const { n, p, d } = this.find(node.data);
+      console.log("leaf:", node.data, "at depth:", d);
+      if (d > this.treeHeight) {
+        this.treeHeight = d;
+      }
+    }
+
+    this.height(node.left);
+    this.height(node.right);
+    return this.treeHeight;
+  }
+
+  /*
+  9. Write a depth function which accepts a node and returns its depth.
+  Depth is defined as the number of edges in path from a given node to the tree’s root node.
+  */
+  // It's basically the same as find, with added depth counter, bruh -_-
+  depth(value) {
+    this.find(value);
+  }
 }
 
 // const arr = [
@@ -503,23 +579,32 @@ function test1() {
   prettyPrint(tree.root);
 
   console.log("level order array queue:", tree.levelOrderQueue());
+
+  console.log("preorder array:", tree.preorder());
+  console.log("inorder array:", tree.inorder());
+  console.log("postorder array:", tree.postorder());
+
+  console.log("tree height:", tree.height());
 }
 
 function test2() {
   const fullArr = [];
-  for (let i = 0; i < 16; i += 1) {
-    fullArr.push(i);
-  }
+
   const root = tree.buildTree(fullArr);
   tree.setRoot(root);
+  for (let i = 0; i < 16; i += 1) {
+    tree.insert(i);
+  }
+  prettyPrint(tree.root);
 
-  prettyPrint(tree.root);
-  tree.delete(1);
-  prettyPrint(tree.root);
-  tree.delete(0);
-  prettyPrint(tree.root);
-  tree.delete(2);
-  prettyPrint(tree.root);
+  console.log("level order array queue:", tree.levelOrderQueue());
+
+  // tree.delete(1);
+  // prettyPrint(tree.root);
+  // tree.delete(0);
+  // prettyPrint(tree.root);
+  // tree.delete(2);
+  // prettyPrint(tree.root);
 }
 
 test0();

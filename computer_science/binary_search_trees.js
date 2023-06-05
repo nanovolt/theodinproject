@@ -86,6 +86,8 @@ class BalancedBST {
   constructor() {
     this.parent = null;
     this.recurseLeftParent = null;
+    this.levelOrderQueueArray = [];
+    this.levelOrderRecursionArray = [];
   }
 
   buildTree(arr) {
@@ -357,6 +359,29 @@ class BalancedBST {
     //   console.log("it's a root");
     // }
   }
+
+  levelOrderQueue() {
+    if (!this.root) {
+      return null;
+    }
+
+    const queue = [];
+    queue.push(this.root);
+
+    while (queue.length !== 0) {
+      const queuedNode = queue.shift();
+      // console.log("queuedNode:", queuedNode.data);
+      this.levelOrderQueueArray.push(queuedNode.data);
+
+      if (queuedNode.left) {
+        queue.push(queuedNode.left);
+      }
+      if (queuedNode.right) {
+        queue.push(queuedNode.right);
+      }
+    }
+    return this.levelOrderQueueArray;
+  }
 }
 
 // const arr = [
@@ -476,6 +501,8 @@ function test1() {
 
   tree.delete(500);
   prettyPrint(tree.root);
+
+  console.log("level order array queue:", tree.levelOrderQueue());
 }
 
 function test2() {

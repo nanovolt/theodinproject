@@ -128,6 +128,12 @@ class BalancedBST {
   }
 
   insert(value, node = this.root) {
+    const { node: foundNode } = this.find(value);
+    if (foundNode) {
+      console.log(`insert aborted, already have:`, value);
+      return;
+    }
+
     if (!this.root) {
       const treeNode = new TreeNode(value);
       this.root = treeNode;
@@ -165,9 +171,8 @@ class BalancedBST {
 
   delete(value) {
     console.log("deleting:", value);
-    const found = this.find(value);
+    const { node, parent } = this.find(value);
 
-    const { node, parent } = found;
     if (!node) {
       return;
     }
@@ -356,6 +361,7 @@ class BalancedBST {
     }
 
     const queue = [];
+    this.levelOrderQueueArray = [];
     queue.push(this.root);
 
     while (queue.length !== 0) {
@@ -373,43 +379,49 @@ class BalancedBST {
     return this.levelOrderQueueArray;
   }
 
-  preorder(node = this.root) {
+  preorder(node = this.root, arr = []) {
     if (!node) {
       return null;
     }
 
+    arr.push(node.data);
     // console.log(node.data);
-    this.preorderArray.push(node.data);
-    this.preorder(node.left);
-    this.preorder(node.right);
+    // this.preorderArray.push(node.data);
+    this.preorder(node.left, arr);
+    this.preorder(node.right, arr);
 
-    return this.preorderArray;
+    return arr;
+    // return this.preorderArray;
   }
 
-  inorder(node = this.root) {
+  inorder(node = this.root, arr = []) {
     if (!node) {
       return null;
     }
 
-    this.inorder(node.left);
+    this.inorder(node.left, arr);
     // console.log(node.data);
-    this.inorderArray.push(node.data);
-    this.inorder(node.right);
+    // this.inorderArray.push(node.data);
+    arr.push(node.data);
+    this.inorder(node.right, arr);
 
-    return this.inorderArray;
+    return arr;
+    // return this.inorderArray;
   }
 
-  postorder(node = this.root) {
+  postorder(node = this.root, arr = []) {
     if (!node) {
       return null;
     }
 
-    this.postorder(node.left);
-    this.postorder(node.right);
+    this.postorder(node.left, arr);
+    this.postorder(node.right, arr);
     // console.log(node.data);
-    this.postorderArray.push(node.data);
+    // this.postorderArray.push(node.data);
+    arr.push(node.data);
 
-    return this.postorderArray;
+    return arr;
+    // return this.postorderArray;
   }
 
   find(value, node = this.root) {
@@ -427,20 +439,20 @@ class BalancedBST {
       this.parent = node;
       return this.find(value, node.right);
     }
-    console.log(`didn't find: ${value}`);
+    // console.log(`didn't find: ${value}`);
     return { node: null, parent: null };
   }
 
   height(node, parentHeight = 0) {
     if (!node) {
-      return null;
+      return 0;
     }
 
     let height = parentHeight;
     // console.log("height node:", node.data, "height:", height);
 
     if (!node.left && !node.right) {
-      console.log("from leaf:", node.data, "height:", height);
+      // console.log("from leaf:", node.data, "height:", height);
 
       if (height > this.nodeHeight) {
         this.nodeHeight = height;
@@ -451,6 +463,9 @@ class BalancedBST {
 
     this.height(node.left, height);
     this.height(node.right, height);
+    // const heightResult = this.nodeHeight;
+    // this.nodeHeight = 0;
+    // console.log("hhhhh", heightResult);
     return this.nodeHeight;
   }
 
@@ -476,6 +491,44 @@ class BalancedBST {
       return this.depth(target, node.right);
     }
     return null;
+  }
+
+  isBalanced(node = this.root, state = true) {
+    let currentState = state;
+    currentState = true;
+    if (!node) {
+      return null;
+    }
+
+    this.isBalanced(node.left);
+    this.nodeHeight = 0;
+    const leftSubtreeHeight = this.height(node.left);
+    this.nodeHeight = 0;
+    const rightSubtreeHeight = this.height(node.right);
+
+    if (Math.abs(leftSubtreeHeight - rightSubtreeHeight) > 1) {
+      console.log(
+        "node",
+        node.data,
+        "is unbalanced,",
+        `left subtree height:`,
+        leftSubtreeHeight,
+        `right subtree height:`,
+        rightSubtreeHeight
+      );
+      currentState = false;
+      // return false;
+    }
+
+    this.isBalanced(node.right, currentState);
+
+    return currentState;
+  }
+
+  rebalance() {
+    console.log("rebalaned tree:");
+    // console.log("this inorder:", this.inorder());
+    this.setRoot(this.buildTree(this.inorder()));
   }
 }
 
@@ -530,39 +583,63 @@ function test0() {
   // prettyPrint(tree.root);
 }
 
+function generateArray(n) {
+  const generatedArr = [];
+  let size = n;
+  let cycles = 0;
+  while (size > 0) {
+    const randomNumber = Math.round(Math.random() * 100);
+    if (!generatedArr.includes(randomNumber)) {
+      // console.log("random number:", randomNumber);`
+      generatedArr.push(randomNumber);
+      size -= 1;
+    }
+    cycles += 1;
+  }
+
+  return { generatedArr, cycles };
+}
+
 function test1() {
+  const arr = [0, 1, 2, 3, 4, 5, 6, 7, 9];
+
   const unsortedArr = [6, 1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 360, 324];
   // console.log("unsorted array:", unsortedArr);
-
-  const sortedArr = mergeSort(unsortedArr);
+  // const sortedArr = mergeSort(unsortedArr);
   // console.log("sorted array:", sortedArr);
-
-  removeDuplicates(sortedArr);
+  // removeDuplicates(sortedArr);
   // console.log("sorted array no dupes:", sortedArr);
+
+  const { generatedArr, cycles } = generateArray(16);
+
+  console.log("generated array:", generatedArr);
+  console.log("generated array length:", generatedArr.length);
+  console.log("cycles:", cycles);
+
+  const sortedArr = mergeSort(generatedArr);
+  removeDuplicates(sortedArr);
 
   const root = tree.buildTree(sortedArr);
   tree.setRoot(root);
 
-  tree.insert(2);
-  tree.insert(48);
-  tree.insert(27);
-  tree.insert(26);
-  tree.insert(24);
-  tree.insert(25);
+  // tree.insert(10);
+  // tree.insert(48);
+  // tree.insert(27);
+  // tree.insert(26);
+  // tree.insert(24);
+  // tree.insert(25);
 
-  tree.insert(400);
+  // tree.insert(400);
 
-  tree.insert(385);
-  tree.insert(381);
-  tree.insert(382);
-  tree.insert(383);
-  tree.insert(384);
+  // tree.insert(385);
+  // tree.insert(381);
+  // tree.insert(382);
+  // tree.insert(383);
+  // tree.insert(384);
 
-  tree.insert(550);
-  tree.insert(500);
-  tree.insert(600);
-
-  prettyPrint(tree.root);
+  // tree.insert(550);
+  // tree.insert(500);
+  // tree.insert(600);
 
   // tree.delete(23);
   // prettyPrint(tree.root);
@@ -603,15 +680,47 @@ function test1() {
   // console.log("inorder array:", tree.inorder());
   // console.log("postorder array:", tree.postorder());
 
-  const findNode = 67;
-  console.log(
-    `max height of ${findNode} from any leaf:`,
-    tree.height(tree.find(findNode).node)
-  );
-  console.log(
-    `depth of ${findNode} from the root:`,
-    tree.depth(tree.find(findNode).node)
-  );
+  // const findNode = 23;
+  // console.log(
+  //   `max height of ${findNode} from any leaf:`,
+  //   tree.height(tree.find(findNode).node)
+  // );
+  // console.log(
+  //   `depth of ${findNode} from the root:`,
+  //   tree.depth(tree.find(findNode).node)
+  // );
+
+  prettyPrint(tree.root);
+
+  console.log("tree.isBalanced:", tree.isBalanced());
+  console.log("level order array queue:", tree.levelOrderQueue());
+  console.log("preorder array:", tree.preorder());
+  console.log("inorder array:", tree.inorder());
+  console.log("postorder array:", tree.postorder());
+
+  tree.insert(1000);
+  tree.insert(1500);
+  tree.insert(1100);
+  tree.insert(1200);
+  tree.insert(1600);
+
+  prettyPrint(tree.root);
+
+  console.log("tree.isBalanced:", tree.isBalanced());
+  console.log("level order array queue:", tree.levelOrderQueue());
+  console.log("preorder array:", tree.preorder());
+  console.log("inorder array:", tree.inorder());
+  console.log("postorder array:", tree.postorder());
+
+  tree.rebalance();
+
+  prettyPrint(tree.root);
+
+  console.log("tree.isBalanced:", tree.isBalanced());
+  console.log("level order array queue:", tree.levelOrderQueue());
+  console.log("preorder array:", tree.preorder());
+  console.log("inorder array:", tree.inorder());
+  console.log("postorder array:", tree.postorder());
 }
 
 function test2() {

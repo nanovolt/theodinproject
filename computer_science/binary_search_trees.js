@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-classes-per-file */
 
 function mergeSort(arr) {
@@ -91,8 +93,8 @@ class BalancedBST {
     this.preorderArray = [];
     this.inorderArray = [];
     this.postorderArray = [];
-    this.treeHeight = 0;
-    this.depth = 0;
+    this.nodeDepth = 0;
+    this.nodeHeight = 0;
   }
 
   buildTree(arr) {
@@ -151,29 +153,6 @@ class BalancedBST {
     }
   }
 
-  find(value, node = this.root) {
-    this.depth += 1;
-
-    if (value === node.data) {
-      // console.log("found", value, "at:", this.parent);
-      // console.log("found", value, " at depth:", this.depth);
-      const d = this.depth;
-      this.depth = 0;
-      return { node, parent: this.parent, d };
-    }
-
-    if (value < node.data && node.left) {
-      this.parent = node;
-      return this.find(value, node.left);
-    }
-    if (value > node.data && node.right) {
-      this.parent = node;
-      return this.find(value, node.right);
-    }
-    console.log(`didn't find: ${value}`);
-    return null;
-  }
-
   recurseLeft(node, parent) {
     if (!node.left) {
       return node;
@@ -187,10 +166,11 @@ class BalancedBST {
   delete(value) {
     console.log("deleting:", value);
     const found = this.find(value);
-    if (!found) {
+
+    const { node, parent } = found;
+    if (!node) {
       return;
     }
-    const { node, parent } = found;
 
     console.log("found node:", node.data);
     if (parent) {
@@ -432,31 +412,70 @@ class BalancedBST {
     return this.postorderArray;
   }
 
-  height(node = this.root) {
+  find(value, node = this.root) {
+    if (value === node.data) {
+      // console.log("found", value, "at:", this.parent);
+      console.log("found:", value);
+      return { node, parent: this.parent };
+    }
+
+    if (value < node.data && node.left) {
+      this.parent = node;
+      return this.find(value, node.left);
+    }
+    if (value > node.data && node.right) {
+      this.parent = node;
+      return this.find(value, node.right);
+    }
+    console.log(`didn't find: ${value}`);
+    return { node: null, parent: null };
+  }
+
+  height(node, parentHeight = 0) {
     if (!node) {
       return null;
     }
 
+    let height = parentHeight;
+    // console.log("height node:", node.data, "height:", height);
+
     if (!node.left && !node.right) {
-      const { n, p, d } = this.find(node.data);
-      console.log("leaf:", node.data, "at depth:", d);
-      if (d > this.treeHeight) {
-        this.treeHeight = d;
+      console.log("from leaf:", node.data, "height:", height);
+
+      if (height > this.nodeHeight) {
+        this.nodeHeight = height;
       }
     }
 
-    this.height(node.left);
-    this.height(node.right);
-    return this.treeHeight;
+    height += 1;
+
+    this.height(node.left, height);
+    this.height(node.right, height);
+    return this.nodeHeight;
   }
 
-  /*
-  9. Write a depth function which accepts a node and returns its depth.
-  Depth is defined as the number of edges in path from a given node to the tree’s root node.
-  */
-  // It's basically the same as find, with added depth counter, bruh -_-
-  depth(value) {
-    this.find(value);
+  // eslint-disable-next-line no-shadow
+  depth(target, node = this.root) {
+    if (!target) {
+      return null;
+    }
+
+    this.nodeDepth += 1;
+
+    if (target.data === node.data) {
+      const depth = this.nodeDepth - 1;
+      // console.log("found", target.data, " at depth:", depth);
+      this.nodeDepth = 0;
+      return depth;
+    }
+
+    if (target.data < node.data && node.left) {
+      return this.depth(target, node.left);
+    }
+    if (target.data > node.data && node.right) {
+      return this.depth(target, node.right);
+    }
+    return null;
   }
 }
 
@@ -513,13 +532,13 @@ function test0() {
 
 function test1() {
   const unsortedArr = [6, 1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 360, 324];
-  console.log("unsorted array:", unsortedArr);
+  // console.log("unsorted array:", unsortedArr);
 
   const sortedArr = mergeSort(unsortedArr);
-  console.log("sorted array:", sortedArr);
+  // console.log("sorted array:", sortedArr);
 
   removeDuplicates(sortedArr);
-  console.log("sorted array no dupes:", sortedArr);
+  // console.log("sorted array no dupes:", sortedArr);
 
   const root = tree.buildTree(sortedArr);
   tree.setRoot(root);
@@ -545,46 +564,54 @@ function test1() {
 
   prettyPrint(tree.root);
 
-  tree.delete(23);
-  prettyPrint(tree.root);
+  // tree.delete(23);
+  // prettyPrint(tree.root);
 
-  tree.delete(360);
-  prettyPrint(tree.root);
+  // tree.delete(360);
+  // prettyPrint(tree.root);
 
-  tree.delete(550);
-  prettyPrint(tree.root);
+  // tree.delete(550);
+  // prettyPrint(tree.root);
 
-  tree.delete(400);
-  prettyPrint(tree.root);
+  // tree.delete(400);
+  // prettyPrint(tree.root);
 
-  tree.delete(67);
-  prettyPrint(tree.root);
+  // tree.delete(67);
+  // prettyPrint(tree.root);
 
-  tree.delete(8);
-  prettyPrint(tree.root);
+  // tree.delete(8);
+  // prettyPrint(tree.root);
 
-  tree.delete(9);
-  prettyPrint(tree.root);
+  // tree.delete(9);
+  // prettyPrint(tree.root);
 
-  tree.delete(24);
-  prettyPrint(tree.root);
+  // tree.delete(24);
+  // prettyPrint(tree.root);
 
-  tree.delete(385);
-  prettyPrint(tree.root);
+  // tree.delete(385);
+  // prettyPrint(tree.root);
 
-  tree.delete(5);
-  prettyPrint(tree.root);
+  // tree.delete(5);
+  // prettyPrint(tree.root);
 
-  tree.delete(500);
-  prettyPrint(tree.root);
+  // tree.delete(500);
+  // prettyPrint(tree.root);
 
-  console.log("level order array queue:", tree.levelOrderQueue());
+  // console.log("level order array queue:", tree.levelOrderQueue());
 
-  console.log("preorder array:", tree.preorder());
-  console.log("inorder array:", tree.inorder());
-  console.log("postorder array:", tree.postorder());
+  // console.log("preorder array:", tree.preorder());
+  // console.log("inorder array:", tree.inorder());
+  // console.log("postorder array:", tree.postorder());
 
-  console.log("tree height:", tree.height());
+  const findNode = 67;
+  console.log(
+    `max height of ${findNode} from any leaf:`,
+    tree.height(tree.find(findNode).node)
+  );
+  console.log(
+    `depth of ${findNode} from the root:`,
+    tree.depth(tree.find(findNode).node)
+  );
 }
 
 function test2() {
@@ -607,6 +634,6 @@ function test2() {
   // prettyPrint(tree.root);
 }
 
-test0();
+// test0();
 test1();
 // test2();

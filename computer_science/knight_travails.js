@@ -9,13 +9,13 @@ function SquareFactory(xArg, yArg) {
 
   const targets = [];
 
-  let renderString = `[${x}   ${y}]`;
+  let renderString = `[${x}     ${y}]`;
   function render() {
     return renderString;
   }
 
   function removePiece() {
-    renderString = `[${x}   ${y}]`;
+    renderString = `[${x}     ${y}]`;
   }
 
   function placePiece(piece) {
@@ -250,6 +250,22 @@ function GameBoardFactory() {
     return parents;
   }
 
+  function drawBoard() {
+    // console.clear();
+    for (let i = 0; i < size; i += 1) {
+      process.stdout.write(squares[i].render());
+
+      if ((i + 1) % 8 === 0) {
+        console.log("");
+      }
+    }
+
+    for (let i = 0; i < size + 16; i += 1) {
+      process.stdout.write("-");
+    }
+    console.log("");
+  }
+
   function bfs(sourceArr, destinationArr) {
     // const sourceSquare = findSquare(source[0], source[1]);
     // const destination = [4, 3];
@@ -290,15 +306,37 @@ function GameBoardFactory() {
           `You made it in ${parents.length} moves! Here's your path:`
         );
 
+        const path = [];
+
         for (let i = parents.length - 1; i >= 0; i -= 1) {
           if (i === parents.length - 1) {
+            const start = findSquare(parents[i].node[0], parents[i].node[1]);
+            start.placePiece(" o ");
+
             console.log(parents[i].node, "start");
           } else {
             console.log(parents[i].node);
+            path.push(findSquare(parents[i].node[0], parents[i].node[1]));
+            path.forEach((p, index) => {
+              p.placePiece(`#${index + 1}#`);
+            });
           }
         }
 
         console.log(queue[current].node, "finish");
+
+        for (let i = 0; i < size + 16; i += 1) {
+          process.stdout.write("-");
+        }
+        console.log();
+        console.log("o - start, x - finish, #number# - path");
+
+        const finish = findSquare(
+          queue[current].node[0],
+          queue[current].node[1]
+        );
+        finish.placePiece(" x ");
+        drawBoard();
 
         // console.log("queue:", queue);
         break;
@@ -338,22 +376,6 @@ function GameBoardFactory() {
     squares.forEach((s) => s.setTargets());
   }
 
-  function drawBoard() {
-    // console.clear();
-    for (let i = 0; i < size; i += 1) {
-      process.stdout.write(squares[i].render());
-
-      if ((i + 1) % 8 === 0) {
-        console.log("");
-      }
-    }
-
-    for (let i = 0; i < size; i += 1) {
-      process.stdout.write("-");
-    }
-    console.log("");
-  }
-
   return {
     size,
     initSquares,
@@ -387,6 +409,7 @@ gameBoard.initSquares();
 gameBoard.setNodes();
 // gameBoard.drawBoard();
 
+// eslint-disable-next-line no-unused-vars
 const knight = Knight(gameBoard);
 
 // knight.move(3, 3);

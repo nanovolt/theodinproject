@@ -18,7 +18,18 @@ module.exports = {
         use: ["html-loader"],
       },
       {
+        test: /\.css$/,
+        use: [
+          "style-loader", // inject <style> into DOM
+          "css-loader", // compile css into javascript
+        ],
+      },
+      {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
         type: "asset/resource",
       },
     ],

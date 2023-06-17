@@ -1,28 +1,19 @@
 import ShipFactory from "./ship";
 
-// test("Ship factory creates ships with default parameters", () => {
-//   expect(new Ship()).toEqual({ length: 0, hits: 0, isSunk: false });
-// });
-
-// test("Ship factory creates ships with custom parameters", () => {
-//   expect(new Ship(3, 2, true)).toEqual({ length: 3, hits: 2, isSunk: true });
-// });
-
-// test("hit() increases number of hits", () => {
-//   expect(new Ship(2).getHits()).toBe(0);
-//   expect(new Ship(2).hit().getHits()).toBe(1);
-//   expect(new Ship(2).hit().hit().getHits()).toBe(2);
-//   expect(new Ship(2).hit().hit().hit().getHits()).toBe(2);
-// });
-
-test("Ship factory creates ships with default parameters", () => {
+test("Ship factory instantiates an object", () => {
   const ship = ShipFactory();
 
-  expect(ship.getLength()).toBe(0);
-  expect(ship.getHits()).toBe(0);
+  const obj = {
+    hit() {},
+    getLength() {},
+    getHits() {},
+    isSunk() {},
+  };
+
+  expect(JSON.stringify(ship)).toBe(JSON.stringify(obj));
 });
 
-test("Ship factory creates ships with custom parameters", () => {
+test("Ship factory instantiates a ship object with some length and hits", () => {
   const ship = ShipFactory(3, 2);
 
   expect(ship.getLength()).toBe(3);

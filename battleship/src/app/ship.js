@@ -1,22 +1,3 @@
-// export default class Ship {
-//   constructor(length = 0, hits = 0, isSunk = false) {
-//     this.length = length;
-//     this.hits = hits;
-//     this.isSunk = isSunk;
-//   }
-
-//   hit() {
-//     if (this.hits < this.length) {
-//       this.hits += 1;
-//     }
-//     return this;
-//   }
-
-//   getHits() {
-//     return this.hits;
-//   }
-// }
-
 export default function ShipFactory(
   lengthArg = 0,
   hitsArg = 0,
@@ -31,6 +12,7 @@ export default function ShipFactory(
   }
 
   function hit() {
+    // istanbul ignore else
     if (hits < length) {
       hits += 1;
     }

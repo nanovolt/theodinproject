@@ -11,3 +11,13 @@ test("shows disabled cells", () => {
   cell.init();
   expect(cell.disabledCells.length).toBeGreaterThan(1);
 });
+
+test("renders string", () => {
+  const cell = CellFactory(1, 1);
+  expect(cell.renderString()).toBe("[ ]");
+});
+
+test("renders string with symbol", () => {
+  const cell = CellFactory(1, 1);
+  expect(cell.renderString()).toBe("[ ]");
+});

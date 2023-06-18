@@ -4,6 +4,16 @@ export default function CellFactory(xArg, yArg) {
 
   const disabledCells = [];
 
+  let str = `[ ]`;
+
+  function renderString() {
+    return str;
+  }
+
+  function setSymbol(symbol) {
+    str = `[${symbol}]`;
+  }
+
   function setDisabledCells() {
     let cellX = x;
     let cellY = y;
@@ -62,6 +72,8 @@ export default function CellFactory(xArg, yArg) {
   return {
     x,
     y,
+    renderString,
+    setSymbol,
     init,
     get disabledCells() {
       return disabledCells;

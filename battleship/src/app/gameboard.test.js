@@ -63,5 +63,18 @@ test("place ship correctly", () => {
     ])
   ).toBeTruthy();
 
-  console.log("for:", [7, 3], [7, 4], "disabledCells:", board.disabledCells);
+  // console.log("for:", [7, 3], [7, 4], "disabledCells:", board.disabledCells);
+});
+
+test("receives attack", () => {
+  const board = GameboardFactory();
+  board.create();
+  board.placeShip([
+    [1, 1],
+    [2, 1],
+  ]);
+
+  expect(board.receiveAttack([2, 1])).toBeTruthy();
+  expect(board.receiveAttack([1, 1])).toBeTruthy();
+  expect(board.receiveAttack([3, 1])).toBeFalsy();
 });

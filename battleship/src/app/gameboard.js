@@ -7,7 +7,7 @@ export default function GameboardFactory() {
 
   const cells = [];
   let size = 0;
-  let disabledCells = [];
+  const disabledCells = [];
 
   function findCell([x, y]) {
     return cells.find((cell) => cell.x === x && cell.y === y);
@@ -29,24 +29,45 @@ export default function GameboardFactory() {
     size = cells.length;
   }
 
+  const compareArrays = (a, b) => a.every((item, i) => item === b[i]);
+
+  function findSubArray(arr, sub) {
+    for (const item of arr) {
+      // console.log("comparing:", item, "and", sub);
+      if (compareArrays(item, sub)) {
+        // console.log("found");
+        return true;
+      }
+    }
+    return false;
+  }
+
   function placeShip(coordinates) {
     for (const coordinate of coordinates) {
-      if (disabledCells.includes(coordinate)) {
+      // console.log("finding:", coordinate);
+      // console.log("find:", findSubArray(disabledCells, coordinate));
+
+      if (!findSubArray(disabledCells, coordinate)) {
+        disabledCells.push(coordinate);
+        // console.log("pushed coordinate:", [...disabledCells]);
+      } else {
+        // console.log("for:", coordinates, "disabledCells:", [...disabledCells]);
         return false;
       }
 
-      console.log("coordinate:", coordinate);
-      // console.log(findCell(coordinate));
       const cell = findCell(coordinate);
-      console.log("d:", cell.disabledCells);
-      disabledCells = disabledCells.concat(coordinate);
-      console.log("disabledCells coordinate:", disabledCells);
+      // console.log("coordinate:", coordinate, "disabled:", cell.disabledCells);
 
       for (const d of cell.disabledCells) {
-        disabledCells.push(d);
+        // console.log("pushing disabled:", d);
+        if (!findSubArray(disabledCells, d) && !findSubArray(coordinates, d)) {
+          disabledCells.push(d);
+          // console.log("pushed disabled:", d);
+        }
       }
-      console.log("disabledCells:", disabledCells);
     }
+
+    // console.log("for:", coordinates, "disabledCells:", [...disabledCells]);
 
     return true;
   }

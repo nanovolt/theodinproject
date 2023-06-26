@@ -5,9 +5,146 @@
   src: url("assets/fonts/Roboto-Regular.ttf") format("truetype");
 }
 
-$font-color: dodgerblue;
+* {
+  box-sizing: border-box;
+}
 
 body {
+  margin: 0;
   font-family: Roboto;
-  color: $font-color;
+}
+
+main {
+  width: clamp(300px, 100%, 960px);
+  margin: 0 auto;
+}
+
+.top {
+  display: flex;
+  .winMessage {
+    font-size: 24px;
+    font-weight: bold;
+    height: 24px;
+  }
+}
+
+.container {
+  margin: auto 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.boards {
+  margin: auto 0;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  justify-content: center;
+  gap: 16px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 24px);
+  grid-auto-rows: 24px;
+
+  // gap: 2px;
+  .cell {
+    display: grid;
+
+    // box-shadow: 0 0 0 2px gray;
+    outline: solid rgb(255, 255, 255) 2px;
+    place-content: center;
+    background-color: rgb(127, 240, 255);
+  }
+
+  .hovered {
+    background-color: red;
+  }
+
+  .hit {
+    color: red;
+  }
+
+  .skull {
+    color: black;
+  }
+
+  .miss {
+    color: rgb(94, 94, 94);
+    font-size: 12px;
+  }
+}
+
+.Player {
+  .ship {
+    background-color: rgb(182, 182, 182);
+  }
+}
+
+.revealedShip {
+  background-color: rgb(182, 182, 182);
+}
+
+.shipYardContainer {
+  width: 180px;
+}
+
+.none {
+  display: none;
+}
+
+// .ship {
+//   cursor: move;
+// }
+
+.shipYard {
+  display: grid;
+  gap: 16px;
+  justify-items: self-start;
+  .ship {
+    display: grid;
+    // gap: 2px;
+    grid-auto-flow: column;
+    grid-auto-columns: 24px;
+    grid-auto-rows: 24px;
+    height: auto;
+    cursor: move;
+  }
+  .ship div {
+    background-color: #999;
+    outline: solid rgb(255, 255, 255) 2px;
+  }
+
+  .ship.snappable div {
+    background-color: rgb(0, 255, 0);
+  }
+}
+
+.port {
+  outline: 2px dotted rgb(124, 124, 124);
+  height: 24px;
+}
+
+.port5 {
+  width: 120px;
+}
+
+.port4 {
+  width: 96px;
+}
+
+.port31,
+.port32 {
+  width: 72px;
+}
+
+.port21 {
+  width: 48px;
+}
+
+.disabled {
+  color: red;
 }

@@ -78,3 +78,14 @@ test("receives attack", () => {
   expect(board.receiveAttack([1, 1])).toBeTruthy();
   expect(board.receiveAttack([3, 1])).toBeFalsy();
 });
+
+test("gets ships", () => {
+  const board = GameboardFactory();
+  board.create();
+  board.placeShip([
+    [1, 1],
+    [2, 1],
+  ]);
+
+  expect(board.ships).toBeDefined();
+});

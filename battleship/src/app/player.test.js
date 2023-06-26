@@ -3,7 +3,7 @@ import GameboardFactory from "./gameboard";
 
 test("creates player", () => {
   const player1 = Player();
-  const obj = {};
+  const obj = { madeAttacks: [] };
   expect(JSON.stringify(player1)).toBe(JSON.stringify(obj));
 });
 

@@ -8,9 +8,10 @@ export default function GameboardFactory() {
 
   const cells = [];
   let size = 0;
-  const disabledCells = [];
-  const placedCells = [];
-  const ships = [];
+
+  let disabledCells = [];
+  // let placedCells = [];
+  let ships = [];
 
   const hitShots = [];
   const missedShots = [];
@@ -18,8 +19,17 @@ export default function GameboardFactory() {
   let allShipsDestroyed = false;
 
   let sunkShips = 0;
+
+  // let disabledCellsForRemoval = [];
+
   function findCell([x, y]) {
     return cells.find((cell) => cell.x === x && cell.y === y);
+  }
+
+  function clear() {
+    disabledCells = [];
+    // placedCells = [];
+    ships = [];
   }
 
   function create() {
@@ -51,9 +61,19 @@ export default function GameboardFactory() {
     return false;
   }
 
+  function findSub(arr, sub) {
+    return arr.filter((a, i) =>
+      sub.find((s, j) => s.every((p, k) => p === a[k]))
+    );
+  }
+
+  function removeSubArray(arr, sub) {
+    return arr.filter((a) => !sub.find((s) => s[0] === a[0] && s[1] === a[1]));
+  }
+
   function findSubArrayCoordinate(arr, sub) {
     for (const item of arr) {
-      // console.log("comparing:", item, "and", sub);
+      console.log("comparing:", item, "and", sub);
       if (compareArrays(item, sub)) {
         // console.log("found");
         return item;
@@ -62,13 +82,81 @@ export default function GameboardFactory() {
     return null;
   }
 
+  function getRandomInteger(low, high) {
+    const r = Math.floor(Math.random() * (high - low + 1)) + low;
+    return r;
+  }
+
+  function removeShipFromArray(ship) {
+    ships.splice(ships.indexOf(ship), 1);
+    console.log("removed ship:", ship);
+  }
+
+  function findShipByCoordinates(coordinates) {
+    for (const ship of ships) {
+      const foundShip = findSub(ship.coordinates, coordinates);
+      if (foundShip.length > 0) {
+        return ship;
+      }
+    }
+    return null;
+  }
+
+  function recalibrateDisabledCells() {
+    disabledCells = [];
+    for (const ship of ships) {
+      // console.log(ship.disabledCellsAroundShip);
+      if (!findSubArray(disabledCells, ship.disabledCellsAroundShip)) {
+        disabledCells.push(...ship.disabledCellsAroundShip);
+      }
+    }
+
+    console.log("recalibrated disabled cells:", disabledCells.length);
+  }
+
+  function getDisabledCellsForRemoval(arr) {
+    return arr.filter(
+      (a) => !disabledCells.find((s) => s[0] === a[0] && s[1] === a[1])
+    );
+  }
+
+  function removeShip(coordinates) {
+    const ship = findShipByCoordinates(coordinates);
+    if (!ship) {
+      return null;
+    }
+
+    removeShipFromArray(ship);
+    recalibrateDisabledCells();
+
+    const disabledCellsForRemoval = getDisabledCellsForRemoval(
+      ship.disabledCellsAroundShip
+    );
+    console.log("disabledCellsForRemoval:", disabledCellsForRemoval.length);
+    return disabledCellsForRemoval;
+  }
+
   function placeShip(coordinates) {
     for (const coordinate of coordinates) {
+      if (coordinate[0] > 10 || coordinate[1] > 10) {
+        return false;
+      }
+    }
+
+    const disabledCellsAroundShip = [];
+    // console.log("findSubArray:");
+    console.log("disabledCells:", JSON.stringify(disabledCells));
+    console.log("coordinates:", JSON.stringify(coordinates));
+    console.log("find:", JSON.stringify(findSub(disabledCells, coordinates)));
+
+    for (const coordinate of coordinates) {
       // console.log("finding:", coordinate);
+
       // console.log("find:", findSubArray(disabledCells, coordinate));
 
       if (!findSubArray(disabledCells, coordinate)) {
         disabledCells.push(coordinate);
+
         // console.log("pushed coordinate:", [...disabledCells]);
       } else {
         // console.log("for:", coordinates, "disabledCells:", [...disabledCells]);
@@ -79,61 +167,91 @@ export default function GameboardFactory() {
       // console.log("coordinate:", coordinate, "disabled:", cell.disabledCells);
 
       for (const d of cell.disabledCells) {
-        // console.log("pushing disabled:", d);
+        if (!findSubArray(disabledCellsAroundShip, d)) {
+          disabledCellsAroundShip.push(d);
+        }
+
         if (!findSubArray(disabledCells, d) && !findSubArray(coordinates, d)) {
+          // console.log("pushing disabled:", d);
           disabledCells.push(d);
+
           // console.log("pushed disabled:", d);
         }
       }
     }
 
     const ship = ShipFactory(coordinates.length);
-    ships.push({ ship, coordinates });
+    ships.push({ ship, coordinates, disabledCellsAroundShip });
 
-    for (const coordinate of coordinates) {
-      placedCells.push(coordinate);
+    // for (const coordinate of coordinates) {
+    //   // placedCells.push(coordinate);
 
-      const cell = findCell(coordinate);
-      // console.log("place cell:", [cell.x, cell.y]);
-      cell.setSymbol("o");
-    }
+    //   // const cell = findCell(coordinate);
+    //   // console.log("place cell:", [cell.x, cell.y]);
+    //   // cell.setSymbol("o");
+    // }
 
-    for (const d of disabledCells) {
-      if (!findSubArray(placedCells, d)) {
-        const dc = findCell(d);
-        dc.setSymbol("-");
-      }
-    }
+    // for (const d of disabledCells) {
+    //   if (!findSubArray(placedCells, d)) {
+    //     const dc = findCell(d);
+    //     dc.setSymbol("-");
+    //   }
+    // }
 
     // console.log("for:", coordinates, "disabledCells:", [...disabledCells]);
 
     return true;
   }
 
-  function drawBoard(name) {
-    let str = "";
+  function generateShip(size) {
+    const ship = [];
+    const dir = getRandomInteger(0, 1);
 
-    console.log(name);
-    console.log("-: disabled, x: hit, .: miss, o:ship, #: sunk ship");
-    console.log(...xAxis);
+    const x = getRandomInteger(1, 10);
+    const y = getRandomInteger(1, 10);
 
-    // for (let i = 0; i < 100; i += 1) {
-    //   str += cells[i].renderString();
-    //   // console.log(cells[i].renderString());
-    // }
+    ship.push([x, y]);
 
-    for (let i = 0; i < 10; i += 1) {
-      for (let j = 0; j < 10; j += 1) {
-        str += cells[i * 10 + j].renderString();
+    if (dir) {
+      for (let i = 1; i < size; i += 1) {
+        ship.push([x + i, y]);
       }
-      if (i < 9) {
-        console.log(`${i + 1}  ${str}`);
-      } else {
-        console.log(`${i + 1} ${str}`);
+    } else {
+      for (let i = 1; i < size; i += 1) {
+        ship.push([x, y + i]);
       }
-      str = "";
     }
-    console.log("---------------------------------");
+
+    return ship;
+  }
+
+  function autoPlaceShips() {
+    const n = 0;
+
+    const fleet = [5, 4, 3, 3, 2];
+    console.clear();
+    for (const ship of fleet) {
+      let isPlaced = false;
+      while (!isPlaced) {
+        const generatedShip = generateShip(ship);
+
+        // console.log(
+        //   "generated ship:",
+        //   generatedShip.length,
+        //   JSON.stringify(generatedShip)
+        // );
+        if (placeShip(generatedShip)) {
+          isPlaced = true;
+          console.log(
+            "placed ship:",
+            generatedShip.length,
+            JSON.stringify(generatedShip)
+          );
+        }
+      }
+    }
+
+    // console.log("placeShip:", placeShip());
   }
 
   function findShip(coordinates) {
@@ -188,8 +306,11 @@ export default function GameboardFactory() {
   return {
     create,
     placeShip,
-    drawBoard,
+    removeShip,
     receiveAttack,
+    findShip,
+    autoPlaceShips,
+    clear,
     get size() {
       return size;
     },
@@ -205,5 +326,11 @@ export default function GameboardFactory() {
     get allShipsDestroyed() {
       return allShipsDestroyed;
     },
+    get disabledCells() {
+      return disabledCells;
+    },
+    // get placedCells() {
+    //   return placedCells;
+    // },
   };
 }

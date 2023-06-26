@@ -1,5 +1,5 @@
-export default function Player(b, computer = false) {
-  const board = b;
+export default function Player(boardArg, computer = false) {
+  const board = boardArg;
 
   const compareArrays = (a, b) => a.every((item, i) => item === b[i]);
 
@@ -22,6 +22,8 @@ export default function Player(b, computer = false) {
     return r;
   }
 
+  function smartAttack() {}
+
   function attack(coordinates = []) {
     if (computer) {
       let random;
@@ -40,7 +42,17 @@ export default function Player(b, computer = false) {
       return board.receiveAttack(random);
     }
 
+    if (!findSubArray(madeAttacks, coordinates)) {
+      madeAttacks.push(coordinates);
+    }
     return board.receiveAttack(coordinates);
   }
-  return { attack };
+
+  return {
+    attack,
+    findSubArray,
+    get madeAttacks() {
+      return madeAttacks;
+    },
+  };
 }

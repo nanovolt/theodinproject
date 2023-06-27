@@ -22,36 +22,58 @@ export default function Game(dragAndDropObservable) {
   let gameLoop;
 
   function removeShip(coordinates) {
-    console.log("remove ship at coordinates:", JSON.stringify(coordinates));
+    // console.log("remove ship at coordinates:", JSON.stringify(coordinates));
+    const disabledCells = playerBoard.removeShip(coordinates);
 
-    ui.removeDisabledCells(playerBoard.removeShip(coordinates));
+    if (disabledCells === null) {
+      return;
+    }
 
-    console.log("------------------------------------------------------------");
-    console.log(
-      "after remove diabled cells:",
-      JSON.stringify(playerBoard.disabledCells)
-    );
+    // console.log("d:", disabledCells);
+    // ui.removeDisabledCells(playerBoard.removeShip(coordinates));
+
+    ui.removeClasses(coordinates, ["ship"]);
+    ui.removeClasses(disabledCells, ["droppable"]);
+    ui.addClasses(disabledCells, ["droppable"]);
+
+    // console.log("------------------------------------------------------------");
+    // console.log(
+    //   "after remove diabled cells:",
+    //   JSON.stringify(playerBoard.disabledCells)
+    // );
     // console.log(
     //   "after remove placed cells:",
     //   JSON.stringify(playerBoard.placedCells)
     // );
-    console.log("after remove ships:", playerBoard.ships);
+    // console.log("after remove ships:", playerBoard.ships);
 
     // console.log("ui.removeDisabledCells:", playerBoard.disabledCellsForRemoval);
-    console.log("------------------------------------------------------------");
+    // console.log("------------------------------------------------------------");
 
     // ui.drawDisabledCells(playerBoard.disabledCells);
   }
 
+  function showDisabledSymbols() {
+    ui.showDisabledSymbols(playerBoard.disabledCells);
+  }
+
+  function hideDisabledSymbols() {
+    ui.hideDisabledSymbols(playerBoard.disabledCells);
+  }
+
   function placeShip(coordinates) {
-    console.log("place ship at coordinates:", JSON.stringify(coordinates));
-    playerBoard.placeShip(coordinates);
+    // console.log("place ship at coordinates:", JSON.stringify(coordinates));
+    playerBoard.addShip(coordinates);
 
-    console.log("diabled cells:", playerBoard.disabledCells.length);
+    // console.log("diabled cells:", playerBoard.disabledCells.length);
     // console.log("placed cells:", playerBoard.placedCells.length);
-    console.log("ships:", playerBoard.ships.length);
+    // console.log("ships:", playerBoard.ships);
 
+    ui.drawShip(coordinates);
     ui.drawDisabledCells(playerBoard.disabledCells);
+
+    // ui.addClasses(playerBoard.disabledCells, ["disabled"]);
+    // ui.removeClasses(playerBoard.disabledCells, ["droppable"]);
   }
 
   function finishGame(message) {
@@ -99,6 +121,7 @@ export default function Game(dragAndDropObservable) {
       return;
     }
 
+    ui.clearSymbols();
     ui.createBoard("Computer");
 
     computerBoard.autoPlaceShips();
@@ -181,5 +204,12 @@ export default function Game(dragAndDropObservable) {
 
   function gamePlayerVSComputer() {}
 
-  return { gamePlayerVSComputer, initButtons, placeShip, removeShip };
+  return {
+    gamePlayerVSComputer,
+    initButtons,
+    placeShip,
+    removeShip,
+    showDisabledSymbols,
+    hideDisabledSymbols,
+  };
 }

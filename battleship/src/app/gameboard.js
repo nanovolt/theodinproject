@@ -61,6 +61,16 @@ export default function GameboardFactory() {
     return false;
   }
 
+  function addSub(arr, sub) {
+    const found = sub.filter(
+      (a) => !arr.find((s) => s.every((p, k) => p === a[k]))
+    );
+
+    for (const f of found) {
+      arr.push(f);
+    }
+  }
+
   function findSub(arr, sub) {
     return arr.filter((a, i) =>
       sub.find((s, j) => s.every((p, k) => p === a[k]))
@@ -89,7 +99,7 @@ export default function GameboardFactory() {
 
   function removeShipFromArray(ship) {
     ships.splice(ships.indexOf(ship), 1);
-    console.log("removed ship:", ship);
+    // console.log("removed ship:", ship);
   }
 
   function findShipByCoordinates(coordinates) {
@@ -106,12 +116,12 @@ export default function GameboardFactory() {
     disabledCells = [];
     for (const ship of ships) {
       // console.log(ship.disabledCellsAroundShip);
-      if (!findSubArray(disabledCells, ship.disabledCellsAroundShip)) {
-        disabledCells.push(...ship.disabledCellsAroundShip);
+      if (!findSubArray(disabledCells, ship.disabled)) {
+        disabledCells.push(...ship.disabled);
       }
     }
 
-    console.log("recalibrated disabled cells:", disabledCells.length);
+    // console.log("recalibrated disabled cells:", disabledCells.length);
   }
 
   function getDisabledCellsForRemoval(arr) {
@@ -129,77 +139,52 @@ export default function GameboardFactory() {
     removeShipFromArray(ship);
     recalibrateDisabledCells();
 
-    const disabledCellsForRemoval = getDisabledCellsForRemoval(
-      ship.disabledCellsAroundShip
-    );
-    console.log("disabledCellsForRemoval:", disabledCellsForRemoval.length);
+    const disabledCellsForRemoval = getDisabledCellsForRemoval(ship.disabled);
+    // console.log("disabledCellsForRemoval:", disabledCellsForRemoval.length);
     return disabledCellsForRemoval;
   }
 
-  function placeShip(coordinates) {
+  function addShip(coordinates) {
     for (const coordinate of coordinates) {
       if (coordinate[0] > 10 || coordinate[1] > 10) {
         return false;
       }
     }
 
-    const disabledCellsAroundShip = [];
-    // console.log("findSubArray:");
-    console.log("disabledCells:", JSON.stringify(disabledCells));
-    console.log("coordinates:", JSON.stringify(coordinates));
-    console.log("find:", JSON.stringify(findSub(disabledCells, coordinates)));
+    // console.log("____________________________________________________________");
+
+    // console.log("disabledCells:", JSON.stringify(disabledCells));
+    // console.log("coordinates:", JSON.stringify(coordinates));
+    // console.log("find:", JSON.stringify(findSub(disabledCells, coordinates)));
+
+    // if didn't find coordinates in disabledCells, add them
+    if (findSub(disabledCells, coordinates).length === 0) {
+      for (const coordinate of coordinates) {
+        disabledCells.push(coordinate);
+      }
+    } else {
+      // console.log("didn't place, because found");
+      return false;
+    }
+
+    const shipDisabledCells = [];
 
     for (const coordinate of coordinates) {
-      // console.log("finding:", coordinate);
-
-      // console.log("find:", findSubArray(disabledCells, coordinate));
-
-      if (!findSubArray(disabledCells, coordinate)) {
-        disabledCells.push(coordinate);
-
-        // console.log("pushed coordinate:", [...disabledCells]);
-      } else {
-        // console.log("for:", coordinates, "disabledCells:", [...disabledCells]);
-        return false;
-      }
-
       const cell = findCell(coordinate);
-      // console.log("coordinate:", coordinate, "disabled:", cell.disabledCells);
+      // console.log("cell disabled:", cell.disabledCells);
 
-      for (const d of cell.disabledCells) {
-        if (!findSubArray(disabledCellsAroundShip, d)) {
-          disabledCellsAroundShip.push(d);
-        }
+      // console.log("find:", JSON.stringify(cell.disabledCells));
+      // console.log("in:", JSON.stringify(shipDisabledCells));
 
-        if (!findSubArray(disabledCells, d) && !findSubArray(coordinates, d)) {
-          // console.log("pushing disabled:", d);
-          disabledCells.push(d);
+      addSub(shipDisabledCells, cell.disabledCells);
 
-          // console.log("pushed disabled:", d);
-        }
-      }
+      // console.log("SHIP:", JSON.stringify(shipDisabledCells));
     }
 
     const ship = ShipFactory(coordinates.length);
-    ships.push({ ship, coordinates, disabledCellsAroundShip });
+    ships.push({ ship, coordinates, disabled: shipDisabledCells });
 
-    // for (const coordinate of coordinates) {
-    //   // placedCells.push(coordinate);
-
-    //   // const cell = findCell(coordinate);
-    //   // console.log("place cell:", [cell.x, cell.y]);
-    //   // cell.setSymbol("o");
-    // }
-
-    // for (const d of disabledCells) {
-    //   if (!findSubArray(placedCells, d)) {
-    //     const dc = findCell(d);
-    //     dc.setSymbol("-");
-    //   }
-    // }
-
-    // console.log("for:", coordinates, "disabledCells:", [...disabledCells]);
-
+    recalibrateDisabledCells();
     return true;
   }
 
@@ -240,7 +225,7 @@ export default function GameboardFactory() {
         //   generatedShip.length,
         //   JSON.stringify(generatedShip)
         // );
-        if (placeShip(generatedShip)) {
+        if (addShip(generatedShip)) {
           isPlaced = true;
           console.log(
             "placed ship:",
@@ -305,7 +290,7 @@ export default function GameboardFactory() {
 
   return {
     create,
-    placeShip,
+    addShip,
     removeShip,
     receiveAttack,
     findShip,

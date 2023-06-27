@@ -27,6 +27,15 @@ export default function UI(dragAndDropObservable) {
         cell.dataset.x = x;
         cell.dataset.y = y;
 
+        const symbol = document.createElement("div");
+        symbol.classList.add("symbol");
+        symbol.classList.add("symbolDisabled");
+        symbol.classList.add("hidden");
+
+        symbol.innerHTML = '<i class="fa-solid fa-ban"></i>';
+
+        cell.appendChild(symbol);
+
         board.appendChild(cell);
       }
     }
@@ -162,6 +171,55 @@ export default function UI(dragAndDropObservable) {
 
   function displayWinPopup() {}
 
+  function addClasses(coordinates, classes) {
+    for (const coordinate of coordinates) {
+      for (const cl of classes) {
+        const cell = document.querySelector(
+          `[data-x="${coordinate[0]}"][data-y="${coordinate[1]}"]`
+        );
+        cell.classList.add(cl);
+      }
+    }
+  }
+
+  function removeClasses(coordinates, classes) {
+    for (const coordinate of coordinates) {
+      for (const cl of classes) {
+        const cell = document.querySelector(
+          `[data-x="${coordinate[0]}"][data-y="${coordinate[1]}"]`
+        );
+        cell.classList.remove(cl);
+      }
+    }
+  }
+
+  function drawShip(coordinates) {
+    for (const c of coordinates) {
+      const shipCell = document.querySelector(
+        `[data-x="${c[0]}"][data-y="${c[1]}"]`
+      );
+      shipCell.classList.add("ship");
+    }
+  }
+
+  function showDisabledSymbols(coordinates) {
+    for (const c of coordinates) {
+      const symbol = document.querySelector(
+        `[data-x="${c[0]}"][data-y="${c[1]}"] .symbolDisabled`
+      );
+      symbol.classList.remove("hidden");
+    }
+  }
+
+  function hideDisabledSymbols(coordinates) {
+    for (const c of coordinates) {
+      const symbol = document.querySelector(
+        `[data-x="${c[0]}"][data-y="${c[1]}"] .symbolDisabled`
+      );
+      symbol.classList.add("hidden");
+    }
+  }
+
   function drawDisabledCells(coordinates) {
     for (const c of coordinates) {
       const shipCell = document.querySelector(
@@ -169,7 +227,18 @@ export default function UI(dragAndDropObservable) {
       );
       shipCell.classList.remove("droppable");
       shipCell.classList.add("disabled");
-      shipCell.innerHTML = '<i class="fa-solid fa-ban"></i>';
+      // shipCell.innerHTML = '<i class="fa-solid fa-ban"></i>';
+    }
+  }
+
+  function clearSymbols() {
+    const board = document.querySelector(".Player");
+    const cells = board.querySelectorAll(".cell");
+
+    for (const cell of cells) {
+      while (cell.firstChild) {
+        cell.removeChild(cell.firstChild);
+      }
     }
   }
 
@@ -184,7 +253,6 @@ export default function UI(dragAndDropObservable) {
       );
       shipCell.classList.add("droppable");
       shipCell.classList.remove("disabled");
-      shipCell.innerHTML = "";
     }
   }
 
@@ -197,95 +265,108 @@ export default function UI(dragAndDropObservable) {
     const ship5 = document.createElement("div");
     ship5.classList.add("ship");
 
-    const ship5cell1 = document.createElement("div");
-    ship5cell1.dataset.x = 3;
-    ship5cell1.dataset.y = 7;
-    const ship5cell2 = document.createElement("div");
-    ship5cell2.dataset.x = 4;
-    ship5cell2.dataset.y = 7;
-    const ship5cell3 = document.createElement("div");
-    ship5cell3.dataset.x = 5;
-    ship5cell3.dataset.y = 7;
-    const ship5cell4 = document.createElement("div");
-    ship5cell4.dataset.x = 6;
-    ship5cell4.dataset.y = 7;
-    const ship5cell5 = document.createElement("div");
-    ship5cell5.dataset.x = 7;
-    ship5cell5.dataset.y = 7;
+    // const ship5cell1 = document.createElement("div");
+    // ship5cell1.dataset.x = 3;
+    // ship5cell1.dataset.y = 7;
+    // const ship5cell2 = document.createElement("div");
+    // ship5cell2.dataset.x = 4;
+    // ship5cell2.dataset.y = 7;
+    // const ship5cell3 = document.createElement("div");
+    // ship5cell3.dataset.x = 5;
+    // ship5cell3.dataset.y = 7;
+    // const ship5cell4 = document.createElement("div");
+    // ship5cell4.dataset.x = 6;
+    // ship5cell4.dataset.y = 7;
+    // const ship5cell5 = document.createElement("div");
+    // ship5cell5.dataset.x = 7;
+    // ship5cell5.dataset.y = 7;
 
     const ship4 = document.createElement("div");
     ship4.classList.add("ship");
 
-    const ship4cell1 = document.createElement("div");
-    ship4cell1.dataset.x = 9;
-    ship4cell1.dataset.y = 3;
-    const ship4cell2 = document.createElement("div");
-    ship4cell2.dataset.x = 9;
-    ship4cell2.dataset.y = 4;
-    const ship4cell3 = document.createElement("div");
-    ship4cell3.dataset.x = 9;
-    ship4cell3.dataset.y = 5;
-    const ship4cell4 = document.createElement("div");
-    ship4cell4.dataset.x = 9;
-    ship4cell4.dataset.y = 6;
+    // const ship4cell1 = document.createElement("div");
+    // ship4cell1.dataset.x = 9;
+    // ship4cell1.dataset.y = 3;
+    // const ship4cell2 = document.createElement("div");
+    // ship4cell2.dataset.x = 9;
+    // ship4cell2.dataset.y = 4;
+    // const ship4cell3 = document.createElement("div");
+    // ship4cell3.dataset.x = 9;
+    // ship4cell3.dataset.y = 5;
+    // const ship4cell4 = document.createElement("div");
+    // ship4cell4.dataset.x = 9;
+    // ship4cell4.dataset.y = 6;
 
     const ship31 = document.createElement("div");
     ship31.classList.add("ship");
 
-    const ship31cell1 = document.createElement("div");
-    ship31cell1.dataset.x = 2;
-    ship31cell1.dataset.y = 4;
-    const ship31cell2 = document.createElement("div");
-    ship31cell2.dataset.x = 3;
-    ship31cell2.dataset.y = 4;
-    const ship31cell3 = document.createElement("div");
-    ship31cell3.dataset.x = 4;
-    ship31cell3.dataset.y = 4;
+    // const ship31cell1 = document.createElement("div");
+    // ship31cell1.dataset.x = 2;
+    // ship31cell1.dataset.y = 4;
+    // const ship31cell2 = document.createElement("div");
+    // ship31cell2.dataset.x = 3;
+    // ship31cell2.dataset.y = 4;
+    // const ship31cell3 = document.createElement("div");
+    // ship31cell3.dataset.x = 4;
+    // ship31cell3.dataset.y = 4;
 
     const ship32 = document.createElement("div");
     ship32.classList.add("ship");
 
-    const ship32cell1 = document.createElement("div");
-    ship32cell1.dataset.x = 4;
-    ship32cell1.dataset.y = 2;
-    const ship32cell2 = document.createElement("div");
-    ship32cell2.dataset.x = 5;
-    ship32cell2.dataset.y = 2;
-    const ship32cell3 = document.createElement("div");
-    ship32cell3.dataset.x = 6;
-    ship32cell3.dataset.y = 2;
+    // const ship32cell1 = document.createElement("div");
+    // ship32cell1.dataset.x = 4;
+    // ship32cell1.dataset.y = 2;
+    // const ship32cell2 = document.createElement("div");
+    // ship32cell2.dataset.x = 5;
+    // ship32cell2.dataset.y = 2;
+    // const ship32cell3 = document.createElement("div");
+    // ship32cell3.dataset.x = 6;
+    // ship32cell3.dataset.y = 2;
 
     const ship21 = document.createElement("div");
     ship21.classList.add("ship");
 
-    const ship21cell1 = document.createElement("div");
-    ship21cell1.dataset.x = 1;
-    ship21cell1.dataset.y = 1;
-    const ship21cell2 = document.createElement("div");
-    ship21cell2.dataset.x = 2;
-    ship21cell2.dataset.y = 1;
+    // const ship21cell1 = document.createElement("div");
+    // ship21cell1.dataset.x = 1;
+    // ship21cell1.dataset.y = 1;
+    // const ship21cell2 = document.createElement("div");
+    // ship21cell2.dataset.x = 2;
+    // ship21cell2.dataset.y = 1;
 
-    ship5.appendChild(ship5cell1);
-    ship5.appendChild(ship5cell2);
-    ship5.appendChild(ship5cell3);
-    ship5.appendChild(ship5cell4);
-    ship5.appendChild(ship5cell5);
+    for (let i = 0; i < 5; i += 1) {
+      ship5.appendChild(document.createElement("div"));
+    }
+    for (let i = 0; i < 4; i += 1) {
+      ship4.appendChild(document.createElement("div"));
+    }
+    for (let i = 0; i < 3; i += 1) {
+      ship31.appendChild(document.createElement("div"));
+      ship32.appendChild(document.createElement("div"));
+    }
+    for (let i = 0; i < 2; i += 1) {
+      ship21.appendChild(document.createElement("div"));
+    }
+    // ship5.appendChild(ship5cell1);
+    // ship5.appendChild(ship5cell2);
+    // ship5.appendChild(ship5cell3);
+    // ship5.appendChild(ship5cell4);
+    // ship5.appendChild(ship5cell5);
 
-    ship4.appendChild(ship4cell1);
-    ship4.appendChild(ship4cell2);
-    ship4.appendChild(ship4cell3);
-    ship4.appendChild(ship4cell4);
+    // ship4.appendChild(ship4cell1);
+    // ship4.appendChild(ship4cell2);
+    // ship4.appendChild(ship4cell3);
+    // ship4.appendChild(ship4cell4);
 
-    ship31.appendChild(ship31cell1);
-    ship31.appendChild(ship31cell2);
-    ship31.appendChild(ship31cell3);
+    // ship31.appendChild(ship31cell1);
+    // ship31.appendChild(ship31cell2);
+    // ship31.appendChild(ship31cell3);
 
-    ship32.appendChild(ship32cell1);
-    ship32.appendChild(ship32cell2);
-    ship32.appendChild(ship32cell3);
+    // ship32.appendChild(ship32cell1);
+    // ship32.appendChild(ship32cell2);
+    // ship32.appendChild(ship32cell3);
 
-    ship21.appendChild(ship21cell1);
-    ship21.appendChild(ship21cell2);
+    // ship21.appendChild(ship21cell1);
+    // ship21.appendChild(ship21cell2);
 
     const port5 = document.createElement("div");
     port5.classList.add("port");
@@ -348,5 +429,11 @@ export default function UI(dragAndDropObservable) {
     clearBoard,
     drawDisabledCells,
     removeDisabledCells,
+    drawShip,
+    addClasses,
+    removeClasses,
+    clearSymbols,
+    showDisabledSymbols,
+    hideDisabledSymbols,
   };
 }

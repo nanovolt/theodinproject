@@ -78,6 +78,14 @@ main {
   }
 }
 
+.symbolDisabled {
+  color: red;
+}
+
+.hidden {
+  display: none;
+}
+
 .Player {
   .ship {
     background-color: rgb(182, 182, 182);
@@ -107,15 +115,46 @@ main {
   .ship {
     display: grid;
     // gap: 2px;
+    background-color: #999;
+
     grid-auto-flow: column;
     grid-auto-columns: 24px;
     grid-auto-rows: 24px;
-    height: auto;
+    // height: auto;
     cursor: move;
   }
+
+  .cannotRotate {
+    background-color: red;
+    animation: 250ms tilt-shaking;
+  }
+
+  @keyframes tilt-shaking {
+    0% {
+      rotate: 0deg;
+    }
+    25% {
+      rotate: 45deg;
+    }
+    50% {
+      rotate: 0deg;
+    }
+    75% {
+      rotate: 45deg;
+    }
+    100% {
+      rotate: 0deg;
+    }
+  }
+
+  .vertical {
+    // transform: rotate(90deg);
+    // rotate: 90deg;
+    grid-auto-flow: row;
+  }
+
   .ship div {
-    background-color: #999;
-    outline: solid rgb(255, 255, 255) 2px;
+    outline: solid rgb(255, 255, 255) 1px;
   }
 
   .ship.snappable div {

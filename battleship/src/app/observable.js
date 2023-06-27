@@ -18,4 +18,12 @@ export default class Observable {
   removeShip(coordinates) {
     this.observers.forEach((observer) => observer.removeShip(coordinates));
   }
+
+  showDisabledSymbols() {
+    this.observers.forEach((observer) => observer.showDisabledSymbols());
+  }
+
+  hideDisabledSymbols() {
+    this.observers.forEach((observer) => observer.hideDisabledSymbols());
+  }
 }

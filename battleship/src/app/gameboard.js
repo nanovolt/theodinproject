@@ -83,7 +83,7 @@ export default function GameboardFactory() {
 
   function findSubArrayCoordinate(arr, sub) {
     for (const item of arr) {
-      console.log("comparing:", item, "and", sub);
+      // console.log("comparing:", item, "and", sub);
       if (compareArrays(item, sub)) {
         // console.log("found");
         return item;
@@ -214,7 +214,7 @@ export default function GameboardFactory() {
     const n = 0;
 
     const fleet = [5, 4, 3, 3, 2];
-    console.clear();
+    // console.clear();
     for (const ship of fleet) {
       let isPlaced = false;
       while (!isPlaced) {
@@ -227,11 +227,11 @@ export default function GameboardFactory() {
         // );
         if (addShip(generatedShip)) {
           isPlaced = true;
-          console.log(
-            "placed ship:",
-            generatedShip.length,
-            JSON.stringify(generatedShip)
-          );
+          // console.log(
+          //   "placed ship:",
+          //   generatedShip.length,
+          //   JSON.stringify(generatedShip)
+          // );
         }
       }
     }

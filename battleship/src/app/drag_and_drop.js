@@ -12,6 +12,7 @@ export default function DragAndDrop(s, dragAndDropObservable) {
   let isDragginShip = false;
 
   function detectDropTargets(e) {
+    // console.log("dropTargets = []");
     dropTargets = [];
     let DroppableCells = 0;
 
@@ -49,12 +50,11 @@ export default function DragAndDrop(s, dragAndDropObservable) {
     }
   }
 
-  function snapShip() {
+  function snapShip(cell) {
     // console.log("snappable at:", dropTargets);
     const top =
-      dropTargets[0].getBoundingClientRect().top +
-      document.documentElement.scrollTop;
-    const { left } = dropTargets[0].getBoundingClientRect();
+      cell.getBoundingClientRect().top + document.documentElement.scrollTop;
+    const { left } = cell.getBoundingClientRect();
     // console.log("top:", top);
     // console.log("left:", left);
 
@@ -84,13 +84,13 @@ export default function DragAndDrop(s, dragAndDropObservable) {
 
     // console.log("____________________________________________________________");
 
-    console.log("dragging ship ...");
+    // console.log("dragging ship ...");
     isDragginShip = true;
     moveAt(e.pageX, e.pageY);
     detectDropTargets(e);
 
     if (isSnappable) {
-      snapShip();
+      snapShip(dropTargets[0]);
       ship.classList.add("snappable");
       // console.log("snap ship");
     } else {
@@ -99,13 +99,16 @@ export default function DragAndDrop(s, dragAndDropObservable) {
   }
 
   function onTouchMove(e) {
-    hasBeenMoved = true;
+    // hasBeenMoved = true;
+
+    console.log("dragging ship ...");
+    isDragginShip = true;
 
     moveAt(e.touches[0].pageX, e.touches[0].pageY);
     detectDropTargets(e);
 
     if (isSnappable) {
-      snapShip();
+      snapShip(dropTargets[0]);
       // console.log("snap ship");
       ship.classList.add("snappable");
     } else {
@@ -267,6 +270,18 @@ export default function DragAndDrop(s, dragAndDropObservable) {
     }
   }
 
+  function moveAfterResize() {
+    const top =
+      dropTargets[0].getBoundingClientRect().top +
+      document.documentElement.scrollTop;
+    const { left } = dropTargets[0].getBoundingClientRect();
+
+    // console.log("resize:", top, left);
+
+    ship.style.top = `${top}px`;
+    ship.style.left = `${left}px`;
+  }
+
   function dragStart(e) {
     // console.log("____________________________________________________________");
     e.preventDefault();
@@ -279,7 +294,7 @@ export default function DragAndDrop(s, dragAndDropObservable) {
     console.log("dragStart");
     hasBeenMoved = false;
 
-    // console.log("dropTargets:", dropTargets);
+    console.log("drag start dropTargets:", dropTargets);
     isDragging = true;
 
     dragAndDropObservable.removeShip(extractArrayOfCoordinates(dropTargets));
@@ -347,6 +362,11 @@ export default function DragAndDrop(s, dragAndDropObservable) {
     document.removeEventListener("mousemove", onMouseMove);
     document.removeEventListener("touchmove", onTouchMove);
 
+    if (dropTargets.length > 0) {
+      window.addEventListener("resize", moveAfterResize);
+    } else {
+      window.removeEventListener("resize", moveAfterResize);
+    }
     // document.removeEventListener("mousemove", detectMove);
     // document.removeEventListener("touchmove", detectMove);
 
@@ -365,6 +385,13 @@ export default function DragAndDrop(s, dragAndDropObservable) {
     }
   }
 
+  function setDropTargets(targets) {
+    dropTargets = targets;
+
+    window.removeEventListener("resize", moveAfterResize);
+    window.addEventListener("resize", moveAfterResize);
+  }
+
   function init() {
     // console.log("init drag and drop:", ship);
 
@@ -380,5 +407,5 @@ export default function DragAndDrop(s, dragAndDropObservable) {
     document.addEventListener("touchend", cancelDrag);
   }
 
-  return { init };
+  return { init, setDropTargets };
 }

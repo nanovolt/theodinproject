@@ -22,7 +22,7 @@ export default function Game(dragAndDropObservable) {
   let gameLoop;
 
   function removeShip(coordinates) {
-    // console.log("remove ship at coordinates:", JSON.stringify(coordinates));
+    console.log("remove ship at coordinates:", JSON.stringify(coordinates));
     const disabledCells = playerBoard.removeShip(coordinates);
 
     if (disabledCells === null) {
@@ -33,7 +33,7 @@ export default function Game(dragAndDropObservable) {
     // ui.removeDisabledCells(playerBoard.removeShip(coordinates));
 
     ui.removeClasses(coordinates, ["ship"]);
-    ui.removeClasses(disabledCells, ["droppable"]);
+    ui.removeClasses(disabledCells, ["disabled"]);
     ui.addClasses(disabledCells, ["droppable"]);
 
     // console.log("------------------------------------------------------------");
@@ -69,8 +69,17 @@ export default function Game(dragAndDropObservable) {
     // console.log("placed cells:", playerBoard.placedCells.length);
     // console.log("ships:", playerBoard.ships);
 
-    ui.drawShip(coordinates);
-    ui.drawDisabledCells(playerBoard.disabledCells);
+    // ui.drawShip(coordinates);
+
+    ui.removeClasses(playerBoard.disabledCells, ["droppable"]);
+    ui.addClasses(playerBoard.disabledCells, ["disabled"]);
+
+    ui.removeClasses(coordinates, ["droppable"]);
+    ui.addClasses(coordinates, ["ship"]);
+
+    // ui.addClasses(coordinates, ["disabled"]);
+
+    // ui.drawDisabledCells(playerBoard.disabledCells);
 
     // ui.addClasses(playerBoard.disabledCells, ["disabled"]);
     // ui.removeClasses(playerBoard.disabledCells, ["droppable"]);
@@ -130,7 +139,8 @@ export default function Game(dragAndDropObservable) {
     // console.log("computerBoard.ships:", computerBoard.ships);
 
     for (const ship of computerBoard.ships) {
-      ui.placeShipsByCoordinates(".Computer", ship.coordinates);
+      // ui.placeShipsByCoordinates(".Computer", ship.coordinates);
+      ui.addClasses(ship.coordinates, ["ship"], true);
     }
 
     computerBoardElement.addEventListener("click", gameLoop);
@@ -183,15 +193,29 @@ export default function Game(dragAndDropObservable) {
   }
 
   function randomize() {
-    ui.hideShipYard();
-    ui.clearBoard(".Player");
+    // ui.hideShipYard();
+    ui.clearCells();
 
     playerBoard.clear();
     playerBoard.autoPlaceShips();
-    // console.log("computerBoard.ships:", computerBoard.ships);
+    // console.log("playerBoard.ships:", playerBoard.ships);
+
+    ui.removeClasses(playerBoard.disabledCells, ["droppable"]);
+    ui.addClasses(playerBoard.disabledCells, ["disabled"]);
 
     for (const ship of playerBoard.ships) {
-      ui.placeShipsByCoordinates(".Player", ship.coordinates);
+      // ui.placeShipsByCoordinates(".Player", ship.coordinates);
+      ui.addClasses(ship.coordinates, ["ship"]);
+      ui.removeClasses(ship.coordinates, ["droppable"]);
+
+      // console.log(
+      //   // ship,
+      //   // ship.ship.getLength(),
+      //   ship.coordinates
+      //   // playerBoard.ships.indexOf(ship)
+      // );
+
+      ui.dropShip(ship.coordinates, playerBoard, ship);
     }
   }
 

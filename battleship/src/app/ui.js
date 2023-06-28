@@ -1,6 +1,12 @@
 import DragAndDrop from "./drag_and_drop";
 
 export default function UI(dragAndDropObservable) {
+  let dragNDrop5;
+  let dragNDrop4;
+  let dragNDrop31;
+  let dragNDrop32;
+  let dragNDrop21;
+
   function createBoard(name) {
     const boards = document.querySelector(".boards");
 
@@ -41,11 +47,12 @@ export default function UI(dragAndDropObservable) {
     }
   }
 
-  function clearBoard(name) {
-    const board = document.querySelector(name);
-    const allShips = board.querySelectorAll(".ship");
-    for (const s of allShips) {
-      s.classList.remove("ship");
+  function clearCells() {
+    const cells = document.querySelectorAll(".cell");
+    for (const c of cells) {
+      c.classList.remove("ship");
+      c.classList.remove("disabled");
+      c.classList.add("droppable");
     }
   }
 
@@ -94,32 +101,32 @@ export default function UI(dragAndDropObservable) {
     showShipYard();
   }
 
-  function removeShip(ship) {
-    ship.remove();
-  }
+  // function removeShip(ship) {
+  //   ship.remove();
+  // }
 
-  function placeShipsByCoordinates(boardName, coordinates) {
-    const board = document.querySelector(boardName);
+  // function placeShipsByCoordinates(boardName, coordinates) {
+  //   const board = document.querySelector(boardName);
 
-    for (const coordinate of coordinates) {
-      const cell = board.querySelector(
-        `[data-x="${coordinate[0]}"][data-y="${coordinate[1]}"]`
-      );
-      cell.classList.add("ship");
-    }
-  }
+  //   for (const coordinate of coordinates) {
+  //     const cell = board.querySelector(
+  //       `[data-x="${coordinate[0]}"][data-y="${coordinate[1]}"]`
+  //     );
+  //     cell.classList.add("ship");
+  //   }
+  // }
 
-  function placeShip(boardName, ship) {
-    const board = document.querySelector(boardName);
+  // function placeShip(boardName, ship) {
+  //   const board = document.querySelector(boardName);
 
-    for (const shipCell of ship.children) {
-      const cell = board.querySelector(
-        `[data-x="${shipCell.dataset.x}"][data-y="${shipCell.dataset.y}"]`
-      );
-      cell.classList.add("ship");
-      removeShip(ship);
-    }
-  }
+  //   for (const shipCell of ship.children) {
+  //     const cell = board.querySelector(
+  //       `[data-x="${shipCell.dataset.x}"][data-y="${shipCell.dataset.y}"]`
+  //     );
+  //     cell.classList.add("ship");
+  //     removeShip(ship);
+  //   }
+  // }
 
   function receiveAttack(name, coordinates, board) {
     const boardElement = document.querySelector(`.${name}`);
@@ -171,36 +178,50 @@ export default function UI(dragAndDropObservable) {
 
   function displayWinPopup() {}
 
-  function addClasses(coordinates, classes) {
+  function addClasses(coordinates, classes, computer = false) {
+    let board;
+    if (computer) {
+      board = ".Computer";
+    } else {
+      board = ".Player";
+    }
+
     for (const coordinate of coordinates) {
       for (const cl of classes) {
         const cell = document.querySelector(
-          `[data-x="${coordinate[0]}"][data-y="${coordinate[1]}"]`
+          `${board} [data-x="${coordinate[0]}"][data-y="${coordinate[1]}"]`
         );
         cell.classList.add(cl);
       }
     }
   }
 
-  function removeClasses(coordinates, classes) {
+  function removeClasses(coordinates, classes, computer = false) {
+    let board;
+    if (computer) {
+      board = ".Computer";
+    } else {
+      board = ".Player";
+    }
+
     for (const coordinate of coordinates) {
       for (const cl of classes) {
         const cell = document.querySelector(
-          `[data-x="${coordinate[0]}"][data-y="${coordinate[1]}"]`
+          `${board} [data-x="${coordinate[0]}"][data-y="${coordinate[1]}"]`
         );
         cell.classList.remove(cl);
       }
     }
   }
 
-  function drawShip(coordinates) {
-    for (const c of coordinates) {
-      const shipCell = document.querySelector(
-        `[data-x="${c[0]}"][data-y="${c[1]}"]`
-      );
-      shipCell.classList.add("ship");
-    }
-  }
+  // function drawShip(coordinates) {
+  //   for (const c of coordinates) {
+  //     const shipCell = document.querySelector(
+  //       `[data-x="${c[0]}"][data-y="${c[1]}"]`
+  //     );
+  //     shipCell.classList.add("ship");
+  //   }
+  // }
 
   function showDisabledSymbols(coordinates) {
     for (const c of coordinates) {
@@ -220,20 +241,20 @@ export default function UI(dragAndDropObservable) {
     }
   }
 
-  function drawDisabledCells(coordinates) {
-    for (const c of coordinates) {
-      const shipCell = document.querySelector(
-        `[data-x="${c[0]}"][data-y="${c[1]}"]`
-      );
-      shipCell.classList.remove("droppable");
-      shipCell.classList.add("disabled");
-      // shipCell.innerHTML = '<i class="fa-solid fa-ban"></i>';
-    }
-  }
+  // function drawDisabledCells(coordinates) {
+  //   for (const c of coordinates) {
+  //     const shipCell = document.querySelector(
+  //       `[data-x="${c[0]}"][data-y="${c[1]}"]`
+  //     );
+  //     shipCell.classList.remove("droppable");
+  //     shipCell.classList.add("disabled");
+  //     // shipCell.innerHTML = '<i class="fa-solid fa-ban"></i>';
+  //   }
+  // }
 
   function clearSymbols() {
-    const board = document.querySelector(".Player");
-    const cells = board.querySelectorAll(".cell");
+    // const board = document.querySelector(".Player");
+    const cells = document.querySelectorAll(".cell");
 
     for (const cell of cells) {
       while (cell.firstChild) {
@@ -253,6 +274,63 @@ export default function UI(dragAndDropObservable) {
       );
       shipCell.classList.add("droppable");
       shipCell.classList.remove("disabled");
+    }
+  }
+
+  function dropShip(coordinates, playerBoard, ship) {
+    const shipEl = document.querySelector(
+      `[data-x="${coordinates[0][0]}"][data-y="${coordinates[0][1]}"]`
+    );
+
+    const ships = document.querySelectorAll(".shipYard .ship");
+    // console.log(ships);
+
+    const top =
+      shipEl.getBoundingClientRect().top + document.documentElement.scrollTop;
+    const { left } = shipEl.getBoundingClientRect();
+    // console.log("top:", top);
+    // console.log("left:", left);
+
+    const index = playerBoard.ships.indexOf(ship);
+    if (coordinates[0][0] === coordinates[1][0]) {
+      ships[index].classList.add("vertical");
+    } else {
+      ships[index].classList.remove("vertical");
+    }
+
+    ships[index].style.position = "absolute";
+    ships[index].style.zIndex = 0;
+
+    ships[index].style.top = `${top}px`;
+    ships[index].style.left = `${left}px`;
+
+    // console.log
+    const dropTargets = [];
+    for (const c of ship.coordinates) {
+      // console.log(c);
+      const target = document.querySelector(
+        `[data-x="${c[0]}"][data-y="${c[1]}"]`
+      );
+
+      dropTargets.push(target);
+    }
+
+    // console.log(index);
+    // console.log(dropTargets);
+    if (index === 0) {
+      dragNDrop5.setDropTargets(dropTargets);
+    }
+    if (index === 1) {
+      dragNDrop4.setDropTargets(dropTargets);
+    }
+    if (index === 2) {
+      dragNDrop31.setDropTargets(dropTargets);
+    }
+    if (index === 3) {
+      dragNDrop32.setDropTargets(dropTargets);
+    }
+    if (index === 4) {
+      dragNDrop21.setDropTargets(dropTargets);
     }
   }
 
@@ -402,11 +480,11 @@ export default function UI(dragAndDropObservable) {
 
     shipYardContainer.appendChild(shipYard);
 
-    const dragNDrop5 = DragAndDrop(ship5, dragAndDropObservable);
-    const dragNDrop4 = DragAndDrop(ship4, dragAndDropObservable);
-    const dragNDrop31 = DragAndDrop(ship31, dragAndDropObservable);
-    const dragNDrop32 = DragAndDrop(ship32, dragAndDropObservable);
-    const dragNDrop21 = DragAndDrop(ship21, dragAndDropObservable);
+    dragNDrop5 = DragAndDrop(ship5, dragAndDropObservable);
+    dragNDrop4 = DragAndDrop(ship4, dragAndDropObservable);
+    dragNDrop31 = DragAndDrop(ship31, dragAndDropObservable);
+    dragNDrop32 = DragAndDrop(ship32, dragAndDropObservable);
+    dragNDrop21 = DragAndDrop(ship21, dragAndDropObservable);
 
     dragNDrop5.init();
     dragNDrop4.init();
@@ -419,21 +497,22 @@ export default function UI(dragAndDropObservable) {
     createBoard,
     receiveAttack,
     createShipYard,
-    placeShip,
-    removeShip,
+    // placeShip,
+    // removeShip,
     clear,
     hideUI,
     showUI,
-    placeShipsByCoordinates,
-    hideShipYard,
-    clearBoard,
-    drawDisabledCells,
+    // placeShipsByCoordinates,
+    // hideShipYard,
+    clearCells,
+    // drawDisabledCells,
     removeDisabledCells,
-    drawShip,
+    // drawShip,
     addClasses,
     removeClasses,
     clearSymbols,
     showDisabledSymbols,
     hideDisabledSymbols,
+    dropShip,
   };
 }

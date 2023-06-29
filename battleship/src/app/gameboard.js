@@ -250,24 +250,14 @@ export default function GameboardFactory() {
   }
 
   function receiveAttack(coordinates) {
-    // console.log("attack:", coordinates);
-
     const ship = findShip(coordinates);
     if (ship) {
+      // console.log("hit");
       hitShots.push(coordinates);
 
-      const attackedCell = findCell(coordinates);
-      attackedCell.setSymbol("x");
-
       ship.ship.hit();
-      // console.log("hit:", coordinates);
 
       if (ship.ship.isSunk()) {
-        for (const c of ship.coordinates) {
-          const sunkCell = findCell(c);
-          sunkCell.setSymbol("#");
-        }
-
         sunkShips += 1;
         // console.log("sunk ship:", ship);
 
@@ -276,16 +266,15 @@ export default function GameboardFactory() {
           // console.log("All ship destroyed");
           allShipsDestroyed = true;
         }
+
+        return { hit: true, sunk: true };
       }
 
-      return true;
+      return { hit: true, sunk: false };
     }
     missedShots.push(coordinates);
-    const cell = findCell(coordinates);
-    cell.setSymbol(".");
-    // console.log("missed:", coordinates);
 
-    return false;
+    return { hit: false, sunk: false };
   }
 
   return {

@@ -128,44 +128,39 @@ export default function UI(dragAndDropObservable) {
   //   }
   // }
 
-  function receiveAttack(name, coordinates, board) {
-    const boardElement = document.querySelector(`.${name}`);
+  function sinkShip(boardElement, ship) {
+    for (const coordinate of ship.coordinates) {
+      const shipCell = boardElement.querySelector(
+        `[data-x="${coordinate[0]}"][data-y="${coordinate[1]}"]`
+      );
+
+      const symbol = document.createElement("div");
+      symbol.innerHTML = `<i class="fa-solid fa-skull"></i>`;
+      symbol.classList.add("skull");
+
+      const oldHit = shipCell.querySelector(".hit");
+      oldHit.remove();
+      shipCell.appendChild(symbol);
+    }
+  }
+
+  function receiveAttack(boardName, coordinates, hit, sunk, ship) {
+    const boardElement = document.querySelector(`.${boardName}`);
 
     const cell = boardElement.querySelector(
       `[data-x="${coordinates[0]}"][data-y="${coordinates[1]}"]`
     );
 
-    if (cell.classList.contains("ship")) {
-      const ship = board.findShip(coordinates);
-
-      // console.log("name:", name);
-      // console.log("ship:", ship);
-
+    if (hit) {
       const symbol = document.createElement("div");
       symbol.innerHTML = `<i class="fa-solid fa-explosion"></i>`;
       symbol.classList.add("hit");
-      // cell.classList.add("revealedShip");
-      cell.style.backgroundColor = "rgb(180, 180, 180)";
+      cell.style.backgroundColor = "#999";
 
       cell.appendChild(symbol);
 
-      if (ship.ship.isSunk()) {
-        // console.log(ship.coordinates);
-        for (const coordinate of ship.coordinates) {
-          const shipCell = boardElement.querySelector(
-            `.${name} [data-x="${coordinate[0]}"][data-y="${coordinate[1]}"]`
-          );
-          // console.log("shipCell:", shipCell);
-          // console.log("hit:", shipCell.querySelector(".hit"));
-
-          const symbol = document.createElement("div");
-          symbol.innerHTML = `<i class="fa-solid fa-skull"></i>`;
-          symbol.classList.add("skull");
-
-          const hit = shipCell.querySelector(".hit");
-          hit.remove();
-          shipCell.appendChild(symbol);
-        }
+      if (sunk) {
+        sinkShip(boardElement, ship);
       }
     } else {
       const symbol = document.createElement("div");

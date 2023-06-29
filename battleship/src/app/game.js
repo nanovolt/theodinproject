@@ -105,15 +105,37 @@ export default function Game(dragAndDropObservable) {
       return;
     }
 
-    player1.attack([x, y]);
+    let attackCoordinates = player1.attack([x, y]);
+    const { hit, sunk } = computerBoard.receiveAttack(attackCoordinates);
 
-    ui.receiveAttack("Computer", [x, y], computerBoard);
+    let ship = computerBoard.findShip(attackCoordinates);
 
-    player2.attack();
+    // if (hit) {
+    //   console.log("player 1 hit a ship");
+    //   if (sunk) {
+    //     console.log("player 1 sunk a ship");
+    //   }
+    // } else {
+    //   console.log("player 1 missed");
+    // }
+
+    ui.receiveAttack("Computer", [x, y], hit, sunk, ship);
+
+    attackCoordinates = player2.smartAttack();
+
+    const { hit: AIhit, sunk: AIsunk } =
+      playerBoard.receiveAttack(attackCoordinates);
+
+    player2.rememberLastAttack(AIhit, AIsunk, attackCoordinates);
+
+    ship = playerBoard.findShip(attackCoordinates);
+
+    ui.receiveAttack("Player", player2.madeAttacks.at(-1), AIhit, AIsunk, ship);
+
+    // player2.smartAttack();
 
     // console.log("xy", [x, y]);
     // console.log("made", player2.madeAttacks.at(-1));
-    ui.receiveAttack("Player", player2.madeAttacks.at(-1), playerBoard);
 
     if (playerBoard.allShipsDestroyed) {
       finishGame("Computer wins");
@@ -154,8 +176,8 @@ export default function Game(dragAndDropObservable) {
     playerBoard.create();
     computerBoard.create();
 
-    player1 = Player(computerBoard);
-    player2 = Player(playerBoard, true);
+    player1 = Player();
+    player2 = Player(true);
 
     ui.createBoard("Player");
   }

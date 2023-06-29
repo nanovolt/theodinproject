@@ -340,6 +340,8 @@ export default function DragAndDrop(s, dragAndDropObservable) {
     isDragging = false;
     isDragginShip = false;
 
+    console.log("isSnappable:", isSnappable);
+
     if (!isSnappable) {
       ship.style.position = "static";
       ship.classList.remove("vertical");
@@ -386,6 +388,9 @@ export default function DragAndDrop(s, dragAndDropObservable) {
   }
 
   function setDropTargets(targets) {
+    isSnappable = true;
+    // console.log("isSnappable:", isSnappable);
+
     dropTargets = targets;
 
     window.removeEventListener("resize", moveAfterResize);

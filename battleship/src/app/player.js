@@ -5,7 +5,6 @@ export default function Player(isComputer = false) {
   let newRandom = true;
 
   let lastHit = false;
-  let lastMiss = false;
   let lastSink = false;
 
   let findAjacent = false;
@@ -16,36 +15,32 @@ export default function Player(isComputer = false) {
 
   const findRow = false;
 
-  let rowAjacent = [];
+  // let rowAjacent = [];
 
   function rememberLastAttack(hit, sunk, coordinates) {
     if (hit) {
       lastHit = true;
-      lastMiss = false;
       lastSink = false;
 
       detectedHits.push(coordinates);
 
-      console.log("player 2 hit a ship");
+      // console.log("player 2 hit a ship");
       if (sunk) {
-        console.log("player 2 sunk a ship");
+        // console.log("player 2 sunk a ship");
         lastSink = true;
 
         detectedHits = [];
       }
     } else {
-      console.log("player 2 missed");
+      // console.log("player 2 missed");
       lastHit = false;
-      lastMiss = false;
       lastSink = false;
     }
   }
 
   function findSubArray(arr, sub) {
     for (const item of arr) {
-      // console.log("comparing:", item, "and", sub);
       if (compareArrays(item, sub)) {
-        // console.log("found");
         return true;
       }
     }
@@ -61,27 +56,25 @@ export default function Player(isComputer = false) {
     if (lastSink) {
       findAjacent = false;
       lastHit = false;
-      rowAjacent = [];
+      // rowAjacent = [];
     }
-
-    console.log("deteced:", JSON.stringify(detectedHits));
 
     if (detectedHits.length === 2) {
       // findRow = true;
     }
 
     if (findRow) {
-      console.log("find row");
+      // console.log("find row");
 
       if (detectedHits[0][1] === detectedHits[1][1]) {
-        console.log("row is vertical");
+        // console.log("row is vertical");
       } else {
-        console.log("row is horizontal");
+        // console.log("row is horizontal");
       }
     }
 
     if (lastHit && !findRow) {
-      console.log("last hit, try find ajacent");
+      // console.log("last hit, try find ajacent");
       findAjacent = true;
       const lastShot = madeAttacks.at(-1);
 
@@ -111,15 +104,15 @@ export default function Player(isComputer = false) {
 
     if (findAjacent && !findRow) {
       lastHit = false;
-      console.log("finding ajacent:", JSON.stringify(ajacent));
+      // console.log("finding ajacent:", JSON.stringify(ajacent));
 
       const temp = [...ajacent];
 
       for (let i = 0; i < ajacent.length; i += 1) {
-        console.log("find aj:", ajacent[i]);
+        // console.log("find aj:", ajacent[i]);
         if (!findSubArray(madeAttacks, ajacent[i])) {
           madeAttacks.push(ajacent[i]);
-          console.log("return aj:", ajacent[i]);
+          // console.log("return aj:", ajacent[i]);
           return ajacent[i];
         }
 
@@ -127,14 +120,9 @@ export default function Player(isComputer = false) {
       }
 
       ajacent = temp;
-
-      // while (!findSubArray(madeAttacks, a)) {
-      //   madeAttacks.push(a);
-      //   // const a = ajacent.shift();
-      // }
     }
 
-    console.log("random attack");
+    // console.log("random attack");
     let random;
     newRandom = true;
     while (newRandom) {
@@ -147,7 +135,6 @@ export default function Player(isComputer = false) {
         madeAttacks.push(random);
       }
     }
-    // console.log("random:", random);
     return random;
   }
 
@@ -165,7 +152,6 @@ export default function Player(isComputer = false) {
           madeAttacks.push(random);
         }
       }
-      // console.log("random:", random);
       return random;
     }
 

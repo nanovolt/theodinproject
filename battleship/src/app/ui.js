@@ -101,33 +101,6 @@ export default function UI(dragAndDropObservable) {
     showShipYard();
   }
 
-  // function removeShip(ship) {
-  //   ship.remove();
-  // }
-
-  // function placeShipsByCoordinates(boardName, coordinates) {
-  //   const board = document.querySelector(boardName);
-
-  //   for (const coordinate of coordinates) {
-  //     const cell = board.querySelector(
-  //       `[data-x="${coordinate[0]}"][data-y="${coordinate[1]}"]`
-  //     );
-  //     cell.classList.add("ship");
-  //   }
-  // }
-
-  // function placeShip(boardName, ship) {
-  //   const board = document.querySelector(boardName);
-
-  //   for (const shipCell of ship.children) {
-  //     const cell = board.querySelector(
-  //       `[data-x="${shipCell.dataset.x}"][data-y="${shipCell.dataset.y}"]`
-  //     );
-  //     cell.classList.add("ship");
-  //     removeShip(ship);
-  //   }
-  // }
-
   function sinkShip(boardElement, ship) {
     for (const coordinate of ship.coordinates) {
       const shipCell = boardElement.querySelector(
@@ -171,8 +144,6 @@ export default function UI(dragAndDropObservable) {
     }
   }
 
-  function displayWinPopup() {}
-
   function addClasses(coordinates, classes, computer = false) {
     let board;
     if (computer) {
@@ -209,15 +180,6 @@ export default function UI(dragAndDropObservable) {
     }
   }
 
-  // function drawShip(coordinates) {
-  //   for (const c of coordinates) {
-  //     const shipCell = document.querySelector(
-  //       `[data-x="${c[0]}"][data-y="${c[1]}"]`
-  //     );
-  //     shipCell.classList.add("ship");
-  //   }
-  // }
-
   function showDisabledSymbols(coordinates) {
     for (const c of coordinates) {
       const symbol = document.querySelector(
@@ -236,19 +198,7 @@ export default function UI(dragAndDropObservable) {
     }
   }
 
-  // function drawDisabledCells(coordinates) {
-  //   for (const c of coordinates) {
-  //     const shipCell = document.querySelector(
-  //       `[data-x="${c[0]}"][data-y="${c[1]}"]`
-  //     );
-  //     shipCell.classList.remove("droppable");
-  //     shipCell.classList.add("disabled");
-  //     // shipCell.innerHTML = '<i class="fa-solid fa-ban"></i>';
-  //   }
-  // }
-
   function clearSymbols() {
-    // const board = document.querySelector(".Player");
     const cells = document.querySelectorAll(".cell");
 
     for (const cell of cells) {
@@ -278,13 +228,10 @@ export default function UI(dragAndDropObservable) {
     );
 
     const ships = document.querySelectorAll(".shipYard .ship");
-    // console.log(ships);
 
     const top =
       shipEl.getBoundingClientRect().top + document.documentElement.scrollTop;
     const { left } = shipEl.getBoundingClientRect();
-    // console.log("top:", top);
-    // console.log("left:", left);
 
     const index = playerBoard.ships.indexOf(ship);
     if (coordinates[0][0] === coordinates[1][0]) {
@@ -302,7 +249,6 @@ export default function UI(dragAndDropObservable) {
     // console.log
     const dropTargets = [];
     for (const c of ship.coordinates) {
-      // console.log(c);
       const target = document.querySelector(
         `[data-x="${c[0]}"][data-y="${c[1]}"]`
       );
@@ -310,8 +256,6 @@ export default function UI(dragAndDropObservable) {
       dropTargets.push(target);
     }
 
-    // console.log(index);
-    // console.log(dropTargets);
     if (index === 0) {
       dragNDrop5.setDropTargets(dropTargets);
     }
@@ -338,73 +282,17 @@ export default function UI(dragAndDropObservable) {
     const ship5 = document.createElement("div");
     ship5.classList.add("ship");
 
-    // const ship5cell1 = document.createElement("div");
-    // ship5cell1.dataset.x = 3;
-    // ship5cell1.dataset.y = 7;
-    // const ship5cell2 = document.createElement("div");
-    // ship5cell2.dataset.x = 4;
-    // ship5cell2.dataset.y = 7;
-    // const ship5cell3 = document.createElement("div");
-    // ship5cell3.dataset.x = 5;
-    // ship5cell3.dataset.y = 7;
-    // const ship5cell4 = document.createElement("div");
-    // ship5cell4.dataset.x = 6;
-    // ship5cell4.dataset.y = 7;
-    // const ship5cell5 = document.createElement("div");
-    // ship5cell5.dataset.x = 7;
-    // ship5cell5.dataset.y = 7;
-
     const ship4 = document.createElement("div");
     ship4.classList.add("ship");
-
-    // const ship4cell1 = document.createElement("div");
-    // ship4cell1.dataset.x = 9;
-    // ship4cell1.dataset.y = 3;
-    // const ship4cell2 = document.createElement("div");
-    // ship4cell2.dataset.x = 9;
-    // ship4cell2.dataset.y = 4;
-    // const ship4cell3 = document.createElement("div");
-    // ship4cell3.dataset.x = 9;
-    // ship4cell3.dataset.y = 5;
-    // const ship4cell4 = document.createElement("div");
-    // ship4cell4.dataset.x = 9;
-    // ship4cell4.dataset.y = 6;
 
     const ship31 = document.createElement("div");
     ship31.classList.add("ship");
 
-    // const ship31cell1 = document.createElement("div");
-    // ship31cell1.dataset.x = 2;
-    // ship31cell1.dataset.y = 4;
-    // const ship31cell2 = document.createElement("div");
-    // ship31cell2.dataset.x = 3;
-    // ship31cell2.dataset.y = 4;
-    // const ship31cell3 = document.createElement("div");
-    // ship31cell3.dataset.x = 4;
-    // ship31cell3.dataset.y = 4;
-
     const ship32 = document.createElement("div");
     ship32.classList.add("ship");
 
-    // const ship32cell1 = document.createElement("div");
-    // ship32cell1.dataset.x = 4;
-    // ship32cell1.dataset.y = 2;
-    // const ship32cell2 = document.createElement("div");
-    // ship32cell2.dataset.x = 5;
-    // ship32cell2.dataset.y = 2;
-    // const ship32cell3 = document.createElement("div");
-    // ship32cell3.dataset.x = 6;
-    // ship32cell3.dataset.y = 2;
-
     const ship21 = document.createElement("div");
     ship21.classList.add("ship");
-
-    // const ship21cell1 = document.createElement("div");
-    // ship21cell1.dataset.x = 1;
-    // ship21cell1.dataset.y = 1;
-    // const ship21cell2 = document.createElement("div");
-    // ship21cell2.dataset.x = 2;
-    // ship21cell2.dataset.y = 1;
 
     for (let i = 0; i < 5; i += 1) {
       ship5.appendChild(document.createElement("div"));
@@ -419,27 +307,6 @@ export default function UI(dragAndDropObservable) {
     for (let i = 0; i < 2; i += 1) {
       ship21.appendChild(document.createElement("div"));
     }
-    // ship5.appendChild(ship5cell1);
-    // ship5.appendChild(ship5cell2);
-    // ship5.appendChild(ship5cell3);
-    // ship5.appendChild(ship5cell4);
-    // ship5.appendChild(ship5cell5);
-
-    // ship4.appendChild(ship4cell1);
-    // ship4.appendChild(ship4cell2);
-    // ship4.appendChild(ship4cell3);
-    // ship4.appendChild(ship4cell4);
-
-    // ship31.appendChild(ship31cell1);
-    // ship31.appendChild(ship31cell2);
-    // ship31.appendChild(ship31cell3);
-
-    // ship32.appendChild(ship32cell1);
-    // ship32.appendChild(ship32cell2);
-    // ship32.appendChild(ship32cell3);
-
-    // ship21.appendChild(ship21cell1);
-    // ship21.appendChild(ship21cell2);
 
     const port5 = document.createElement("div");
     port5.classList.add("port");
@@ -488,26 +355,30 @@ export default function UI(dragAndDropObservable) {
     dragNDrop21.init();
   }
 
+  function getUIReferences() {
+    const startButton = document.querySelector(".start");
+    const restartButton = document.querySelector(".restart");
+    const randomizeButton = document.querySelector(".randomize");
+    const winMessageElement = document.querySelector(".winMessage");
+
+    return { startButton, restartButton, randomizeButton, winMessageElement };
+  }
+
   return {
     createBoard,
     receiveAttack,
     createShipYard,
-    // placeShip,
-    // removeShip,
     clear,
     hideUI,
     showUI,
-    // placeShipsByCoordinates,
-    // hideShipYard,
     clearCells,
-    // drawDisabledCells,
     removeDisabledCells,
-    // drawShip,
     addClasses,
     removeClasses,
     clearSymbols,
     showDisabledSymbols,
     hideDisabledSymbols,
     dropShip,
+    getUIReferences,
   };
 }

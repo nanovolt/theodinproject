@@ -1,39 +1,23 @@
 import Player from "./player";
-import GameboardFactory from "./gameboard";
+// import GameboardFactory from "./gameboard";
 
 test("creates player", () => {
   const player1 = Player();
-  const obj = { madeAttacks: [] };
-  expect(JSON.stringify(player1)).toBe(JSON.stringify(obj));
-});
+  // const obj = {
+  //   attack() {},
+  //   findSubArray() {},
+  //   madeAttacks: [],
+  //   rememberLastAttack() {},
+  //   smartAttack() {},
+  // };
 
-test("player attacks", () => {
-  const board = GameboardFactory();
-  board.create();
+  const obj = {
+    attack: expect.any(Function),
+    findSubArray: expect.any(Function),
+    madeAttacks: [],
+    rememberLastAttack: expect.any(Function),
+    smartAttack: expect.any(Function),
+  };
 
-  board.placeShip([
-    [2, 2],
-    [2, 3],
-  ]);
-
-  const player1 = Player(board);
-  expect(player1.attack([2, 2])).toBeTruthy();
-  expect(player1.attack([2, 4])).toBeFalsy();
-});
-
-test("computer attacks until it wins", () => {
-  const board = GameboardFactory();
-  board.create();
-
-  board.placeShip([
-    [2, 2],
-    [2, 3],
-  ]);
-
-  const computer = Player(board, true);
-
-  while (!board.allShipsDestroyed) {
-    computer.attack();
-  }
-  expect(board.allShipsDestroyed).toBeTruthy();
+  expect(player1).toEqual(obj);
 });

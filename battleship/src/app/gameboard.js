@@ -3,14 +3,11 @@ import ShipFactory from "./ship";
 
 export default function GameboardFactory() {
   const side = 10;
-  const xAxis = ["    A ", "B ", "C ", "D ", "E ", "F ", "G ", "H ", "I ", "J"];
-  // const yAxis = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
   const cells = [];
   let size = 0;
 
   let disabledCells = [];
-  // let placedCells = [];
   let ships = [];
 
   const hitShots = [];
@@ -20,15 +17,12 @@ export default function GameboardFactory() {
 
   let sunkShips = 0;
 
-  // let disabledCellsForRemoval = [];
-
   function findCell([x, y]) {
     return cells.find((cell) => cell.x === x && cell.y === y);
   }
 
   function clear() {
     disabledCells = [];
-    // placedCells = [];
     ships = [];
   }
 
@@ -37,14 +31,11 @@ export default function GameboardFactory() {
       for (let x = 1; x <= side; x += 1) {
         const cell = CellFactory(x, y);
         cell.init();
-        // console.log(`cell: [${xAxis[cell.x - 1]} ${cell.y}]`);
-        // console.log("disabled cells:", cell.disabledCells);
 
         cells.push(cell);
       }
     }
 
-    // console.log(cells);
     size = cells.length;
   }
 
@@ -52,9 +43,7 @@ export default function GameboardFactory() {
 
   function findSubArray(arr, sub) {
     for (const item of arr) {
-      // console.log("comparing:", item, "and", sub);
       if (compareArrays(item, sub)) {
-        // console.log("found");
         return true;
       }
     }
@@ -72,20 +61,12 @@ export default function GameboardFactory() {
   }
 
   function findSub(arr, sub) {
-    return arr.filter((a, i) =>
-      sub.find((s, j) => s.every((p, k) => p === a[k]))
-    );
-  }
-
-  function removeSubArray(arr, sub) {
-    return arr.filter((a) => !sub.find((s) => s[0] === a[0] && s[1] === a[1]));
+    return arr.filter((a) => sub.find((s) => s.every((p, k) => p === a[k])));
   }
 
   function findSubArrayCoordinate(arr, sub) {
     for (const item of arr) {
-      // console.log("comparing:", item, "and", sub);
       if (compareArrays(item, sub)) {
-        // console.log("found");
         return item;
       }
     }
@@ -99,7 +80,6 @@ export default function GameboardFactory() {
 
   function removeShipFromArray(ship) {
     ships.splice(ships.indexOf(ship), 1);
-    // console.log("removed ship:", ship);
   }
 
   function findShipByCoordinates(coordinates) {
@@ -115,13 +95,10 @@ export default function GameboardFactory() {
   function recalibrateDisabledCells() {
     disabledCells = [];
     for (const ship of ships) {
-      // console.log(ship.disabledCellsAroundShip);
       if (!findSubArray(disabledCells, ship.disabled)) {
         disabledCells.push(...ship.disabled);
       }
     }
-
-    // console.log("recalibrated disabled cells:", disabledCells.length);
   }
 
   function getDisabledCellsForRemoval(arr) {
@@ -140,7 +117,6 @@ export default function GameboardFactory() {
     recalibrateDisabledCells();
 
     const disabledCellsForRemoval = getDisabledCellsForRemoval(ship.disabled);
-    // console.log("disabledCellsForRemoval:", disabledCellsForRemoval.length);
     return disabledCellsForRemoval;
   }
 
@@ -151,19 +127,11 @@ export default function GameboardFactory() {
       }
     }
 
-    // console.log("____________________________________________________________");
-
-    // console.log("disabledCells:", JSON.stringify(disabledCells));
-    // console.log("coordinates:", JSON.stringify(coordinates));
-    // console.log("find:", JSON.stringify(findSub(disabledCells, coordinates)));
-
-    // if didn't find coordinates in disabledCells, add them
     if (findSub(disabledCells, coordinates).length === 0) {
       for (const coordinate of coordinates) {
         disabledCells.push(coordinate);
       }
     } else {
-      // console.log("didn't place, because found");
       return false;
     }
 
@@ -171,14 +139,8 @@ export default function GameboardFactory() {
 
     for (const coordinate of coordinates) {
       const cell = findCell(coordinate);
-      // console.log("cell disabled:", cell.disabledCells);
-
-      // console.log("find:", JSON.stringify(cell.disabledCells));
-      // console.log("in:", JSON.stringify(shipDisabledCells));
 
       addSub(shipDisabledCells, cell.disabledCells);
-
-      // console.log("SHIP:", JSON.stringify(shipDisabledCells));
     }
 
     const ship = ShipFactory(coordinates.length);
@@ -188,7 +150,7 @@ export default function GameboardFactory() {
     return true;
   }
 
-  function generateShip(size) {
+  function generateShip(shipSize) {
     const ship = [];
     const dir = getRandomInteger(0, 1);
 
@@ -198,11 +160,11 @@ export default function GameboardFactory() {
     ship.push([x, y]);
 
     if (dir) {
-      for (let i = 1; i < size; i += 1) {
+      for (let i = 1; i < shipSize; i += 1) {
         ship.push([x + i, y]);
       }
     } else {
-      for (let i = 1; i < size; i += 1) {
+      for (let i = 1; i < shipSize; i += 1) {
         ship.push([x, y + i]);
       }
     }
@@ -211,32 +173,17 @@ export default function GameboardFactory() {
   }
 
   function autoPlaceShips() {
-    const n = 0;
-
     const fleet = [5, 4, 3, 3, 2];
-    // console.clear();
     for (const ship of fleet) {
       let isPlaced = false;
       while (!isPlaced) {
         const generatedShip = generateShip(ship);
 
-        // console.log(
-        //   "generated ship:",
-        //   generatedShip.length,
-        //   JSON.stringify(generatedShip)
-        // );
         if (addShip(generatedShip)) {
           isPlaced = true;
-          // console.log(
-          //   "placed ship:",
-          //   generatedShip.length,
-          //   JSON.stringify(generatedShip)
-          // );
         }
       }
     }
-
-    // console.log("placeShip:", placeShip());
   }
 
   function findShip(coordinates) {
@@ -252,18 +199,14 @@ export default function GameboardFactory() {
   function receiveAttack(coordinates) {
     const ship = findShip(coordinates);
     if (ship) {
-      // console.log("hit");
       hitShots.push(coordinates);
 
       ship.ship.hit();
 
       if (ship.ship.isSunk()) {
         sunkShips += 1;
-        // console.log("sunk ship:", ship);
 
-        // console.log("sunkShips:", sunkShips, "ships.length:", ships.length);
         if (sunkShips >= ships.length) {
-          // console.log("All ship destroyed");
           allShipsDestroyed = true;
         }
 
@@ -303,8 +246,5 @@ export default function GameboardFactory() {
     get disabledCells() {
       return disabledCells;
     },
-    // get placedCells() {
-    //   return placedCells;
-    // },
   };
 }

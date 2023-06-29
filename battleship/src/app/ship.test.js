@@ -4,13 +4,13 @@ test("Ship factory instantiates an object", () => {
   const ship = ShipFactory();
 
   const obj = {
-    hit() {},
-    getLength() {},
-    getHits() {},
-    isSunk() {},
+    hit: expect.any(Function),
+    getLength: expect.any(Function),
+    getHits: expect.any(Function),
+    isSunk: expect.any(Function),
   };
 
-  expect(JSON.stringify(ship)).toBe(JSON.stringify(obj));
+  expect(ship).toEqual(obj);
 });
 
 test("Ship factory instantiates a ship object with some length and hits", () => {

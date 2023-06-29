@@ -29,3 +29,5 @@
 [Form validation with Javascript](https://nanovolt.github.io/theodinproject/form_validation_with_javascript/)
 
 [Weather App](https://nanovolt.github.io/theodinproject/weather_app/)
+
+[Battleship](https://nanovolt.github.io/theodinproject/battleship/)

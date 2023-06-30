@@ -10,4 +10,4 @@ const game = Game(dragAndDropObservable);
 
 dragAndDropObservable.subscribe(game);
 
-game.initButtons();
+game.init();

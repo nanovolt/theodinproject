@@ -1,11 +1,13 @@
-import DragAndDrop from "./drag_and_drop";
+export default function UI() {
+  let ship5;
+  let ship4;
+  let ship31;
+  let ship32;
+  let ship21;
 
-export default function UI(dragAndDropObservable) {
-  let dragNDrop5;
-  let dragNDrop4;
-  let dragNDrop31;
-  let dragNDrop32;
-  let dragNDrop21;
+  const startButton = document.querySelector(".start");
+  const restartButton = document.querySelector(".restart");
+  const randomizeButton = document.querySelector(".randomize");
 
   function createBoard(name) {
     const boards = document.querySelector(".boards");
@@ -62,6 +64,7 @@ export default function UI(dragAndDropObservable) {
       b.remove();
     }
 
+    // console.log("remove shipyard");
     document.querySelector(".shipYard").remove();
   }
 
@@ -245,32 +248,6 @@ export default function UI(dragAndDropObservable) {
 
     ships[index].style.top = `${top}px`;
     ships[index].style.left = `${left}px`;
-
-    // console.log
-    const dropTargets = [];
-    for (const c of ship.coordinates) {
-      const target = document.querySelector(
-        `[data-x="${c[0]}"][data-y="${c[1]}"]`
-      );
-
-      dropTargets.push(target);
-    }
-
-    if (index === 0) {
-      dragNDrop5.setDropTargets(dropTargets);
-    }
-    if (index === 1) {
-      dragNDrop4.setDropTargets(dropTargets);
-    }
-    if (index === 2) {
-      dragNDrop31.setDropTargets(dropTargets);
-    }
-    if (index === 3) {
-      dragNDrop32.setDropTargets(dropTargets);
-    }
-    if (index === 4) {
-      dragNDrop21.setDropTargets(dropTargets);
-    }
   }
 
   function createShipYard() {
@@ -279,19 +256,19 @@ export default function UI(dragAndDropObservable) {
     const shipYard = document.createElement("div");
     shipYard.classList.add("shipYard");
 
-    const ship5 = document.createElement("div");
+    ship5 = document.createElement("div");
     ship5.classList.add("ship");
 
-    const ship4 = document.createElement("div");
+    ship4 = document.createElement("div");
     ship4.classList.add("ship");
 
-    const ship31 = document.createElement("div");
+    ship31 = document.createElement("div");
     ship31.classList.add("ship");
 
-    const ship32 = document.createElement("div");
+    ship32 = document.createElement("div");
     ship32.classList.add("ship");
 
-    const ship21 = document.createElement("div");
+    ship21 = document.createElement("div");
     ship21.classList.add("ship");
 
     for (let i = 0; i < 5; i += 1) {
@@ -341,27 +318,31 @@ export default function UI(dragAndDropObservable) {
     shipYard.appendChild(port21);
 
     shipYardContainer.appendChild(shipYard);
-
-    dragNDrop5 = DragAndDrop(ship5, dragAndDropObservable);
-    dragNDrop4 = DragAndDrop(ship4, dragAndDropObservable);
-    dragNDrop31 = DragAndDrop(ship31, dragAndDropObservable);
-    dragNDrop32 = DragAndDrop(ship32, dragAndDropObservable);
-    dragNDrop21 = DragAndDrop(ship21, dragAndDropObservable);
-
-    dragNDrop5.init();
-    dragNDrop4.init();
-    dragNDrop31.init();
-    dragNDrop32.init();
-    dragNDrop21.init();
   }
 
-  function getUIReferences() {
-    const startButton = document.querySelector(".start");
-    const restartButton = document.querySelector(".restart");
-    const randomizeButton = document.querySelector(".randomize");
-    const winMessageElement = document.querySelector(".winMessage");
+  function getDraggableShips() {
+    return [ship5, ship4, ship31, ship32, ship21];
+  }
 
-    return { startButton, restartButton, randomizeButton, winMessageElement };
+  function showWinMessage(message) {
+    const winMessageElement = document.querySelector(".winMessage");
+    winMessageElement.textContent = message;
+  }
+
+  function initEventListeners(start, restart, randomize) {
+    startButton.addEventListener("click", start);
+    restartButton.addEventListener("click", restart);
+    randomizeButton.addEventListener("click", randomize);
+  }
+
+  function initComputerBoardClickHandler(callback) {
+    const computerBoardElement = document.querySelector(".Computer");
+    computerBoardElement.addEventListener("click", callback);
+  }
+
+  function removeComputerBoardClickHandler(callback) {
+    const computerBoardElement = document.querySelector(".Computer");
+    computerBoardElement.removeEventListener("click", callback);
   }
 
   return {
@@ -379,6 +360,10 @@ export default function UI(dragAndDropObservable) {
     showDisabledSymbols,
     hideDisabledSymbols,
     dropShip,
-    getUIReferences,
+    showWinMessage,
+    initEventListeners,
+    initComputerBoardClickHandler,
+    removeComputerBoardClickHandler,
+    getDraggableShips,
   };
 }

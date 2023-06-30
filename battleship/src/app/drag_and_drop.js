@@ -334,10 +334,6 @@ export default function DragAndDrop(s, dragAndDropObservable) {
     } else {
       window.removeEventListener("resize", moveAfterResize);
     }
-    // document.removeEventListener("mousemove", detectMove);
-    // document.removeEventListener("touchmove", detectMove);
-
-    // console.log("____________________________________________________________");
   }
 
   function mouseUpResponse(e) {
@@ -352,9 +348,17 @@ export default function DragAndDrop(s, dragAndDropObservable) {
     }
   }
 
-  function setDropTargets(targets) {
+  function setDropTargets(coordinates) {
+    const targets = [];
+    for (const c of coordinates) {
+      const target = document.querySelector(
+        `[data-x="${c[0]}"][data-y="${c[1]}"]`
+      );
+
+      targets.push(target);
+    }
+
     isSnappable = true;
-    // console.log("isSnappable:", isSnappable);
 
     dropTargets = targets;
 
@@ -364,8 +368,6 @@ export default function DragAndDrop(s, dragAndDropObservable) {
 
   function init() {
     // console.log("init drag and drop:", ship);
-
-    // ship.addEventListener("click", rotateShip);
 
     ship.addEventListener("mouseup", mouseUpResponse);
     ship.addEventListener("touchend", mouseUpResponse);

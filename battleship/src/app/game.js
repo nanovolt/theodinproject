@@ -1,14 +1,10 @@
 import GameboardFactory from "./gameboard";
 import Player from "./player";
 import UI from "./ui";
+import DragAndDrop from "./drag_and_drop";
 
 export default function Game(dragAndDropObservable) {
-  const ui = UI(dragAndDropObservable);
-
-  const { startButton, restartButton, randomizeButton, winMessageElement } =
-    ui.getUIReferences();
-
-  let computerBoardElement;
+  const ui = UI();
 
   let playerBoard;
   let computerBoard;
@@ -17,6 +13,8 @@ export default function Game(dragAndDropObservable) {
   let player2;
 
   let gameLoop;
+
+  let draggableShips = [];
 
   function removeShip(coordinates) {
     const disabledCells = playerBoard.removeShip(coordinates);
@@ -49,8 +47,8 @@ export default function Game(dragAndDropObservable) {
   }
 
   function finishGame(message) {
-    computerBoardElement.removeEventListener("click", gameLoop);
-    winMessageElement.textContent = message;
+    ui.removeComputerBoardClickHandler(gameLoop);
+    ui.showWinMessage(message);
   }
 
   gameLoop = (e) => {
@@ -101,13 +99,13 @@ export default function Game(dragAndDropObservable) {
     ui.createBoard("Computer");
 
     computerBoard.autoPlaceShips();
-    computerBoardElement = document.querySelector(".Computer");
 
     for (const ship of computerBoard.ships) {
       ui.addClasses(ship.coordinates, ["ship"], true);
     }
 
-    computerBoardElement.addEventListener("click", gameLoop);
+    ui.initComputerBoardClickHandler(gameLoop);
+
     ui.hideUI();
   }
 
@@ -124,20 +122,32 @@ export default function Game(dragAndDropObservable) {
     ui.createBoard("Player");
   }
 
-  function initShipYard() {
-    ui.createShipYard();
-  }
+  function setDraggable() {
+    draggableShips = [];
 
-  function init() {
-    initBoardsAndPlayers();
-    initShipYard();
+    const ships = ui.getDraggableShips();
+
+    for (const ship of ships) {
+      draggableShips.push(DragAndDrop(ship, dragAndDropObservable));
+    }
+
+    for (const draggableShip of draggableShips) {
+      draggableShip.init();
+    }
   }
 
   function restart() {
-    winMessageElement.textContent = "";
+    ui.showWinMessage("");
     ui.clear();
     ui.showUI();
-    init();
+    initBoardsAndPlayers();
+    ui.createShipYard();
+
+    ui.getDraggableShips().forEach((ship) =>
+      DragAndDrop(ship, dragAndDropObservable).init()
+    );
+
+    setDraggable();
   }
 
   function randomize() {
@@ -152,19 +162,25 @@ export default function Game(dragAndDropObservable) {
     for (const ship of playerBoard.ships) {
       ui.addClasses(ship.coordinates, ["ship"]);
       ui.removeClasses(ship.coordinates, ["droppable"]);
+
       ui.dropShip(ship.coordinates, playerBoard, ship);
     }
+
+    playerBoard.ships.map((s, i) =>
+      draggableShips[i].setDropTargets(s.coordinates)
+    );
   }
 
-  function initButtons() {
-    startButton.addEventListener("click", start);
-    restartButton.addEventListener("click", restart);
-    randomizeButton.addEventListener("click", randomize);
-    init();
+  function init() {
+    ui.initEventListeners(start, restart, randomize);
+    initBoardsAndPlayers();
+    ui.createShipYard();
+
+    setDraggable();
   }
 
   return {
-    initButtons,
+    init,
     placeShip,
     removeShip,
     showDisabledSymbols,

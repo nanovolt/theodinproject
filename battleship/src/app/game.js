@@ -143,10 +143,6 @@ export default function Game(dragAndDropObservable) {
     initBoardsAndPlayers();
     ui.createShipYard();
 
-    ui.getDraggableShips().forEach((ship) =>
-      DragAndDrop(ship, dragAndDropObservable).init()
-    );
-
     setDraggable();
   }
 

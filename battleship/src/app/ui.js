@@ -64,8 +64,10 @@ export default function UI() {
       b.remove();
     }
 
-    // console.log("remove shipyard");
     document.querySelector(".shipYard").remove();
+
+    const winMessageElement = document.querySelector(".winMessage");
+    winMessageElement.classList.add("hidden");
   }
 
   function hideShipYard() {
@@ -131,7 +133,7 @@ export default function UI() {
       const symbol = document.createElement("div");
       symbol.innerHTML = `<i class="fa-solid fa-explosion"></i>`;
       symbol.classList.add("hit");
-      cell.style.backgroundColor = "#999";
+      cell.style.backgroundColor = "#555";
 
       cell.appendChild(symbol);
 
@@ -246,8 +248,8 @@ export default function UI() {
     ships[index].style.position = "absolute";
     ships[index].style.zIndex = 0;
 
-    ships[index].style.top = `${top}px`;
-    ships[index].style.left = `${left}px`;
+    ships[index].style.top = `${top + 1}px`;
+    ships[index].style.left = `${left + 1}px`;
   }
 
   function createShipYard() {
@@ -326,6 +328,7 @@ export default function UI() {
 
   function showWinMessage(message) {
     const winMessageElement = document.querySelector(".winMessage");
+    winMessageElement.classList.remove("hidden");
     winMessageElement.textContent = message;
   }
 
@@ -333,6 +336,31 @@ export default function UI() {
     startButton.addEventListener("click", start);
     restartButton.addEventListener("click", restart);
     randomizeButton.addEventListener("click", randomize);
+
+    // startButton.addEventListener("click", (e) => {
+    //   e.target.classList.add("animate");
+
+    //   console.log("start");
+    // });
+
+    // startButton.addEventListener("animationend", (e) => {
+    //   e.target.classList.remove("animate");
+    //   console.log("start end");
+    // });
+
+    // restartButton.addEventListener("click", (e) => {
+    //   e.target.classList.add("animate");
+    // });
+    // restartButton.addEventListener("animationend", (e) => {
+    //   e.target.classList.remove("animate");
+    // });
+
+    randomizeButton.addEventListener("click", (e) => {
+      e.target.classList.add("animate");
+    });
+    randomizeButton.addEventListener("animationend", (e) => {
+      e.target.classList.remove("animate");
+    });
   }
 
   function initComputerBoardClickHandler(callback) {

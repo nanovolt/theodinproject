@@ -5,6 +5,11 @@
   src: url("assets/fonts/Roboto-Regular.ttf") format("truetype");
 }
 
+$primary: rgb(100, 150, 255);
+$hover: rgb(150, 200, 255);
+$ship: #555;
+$click: blue;
+
 * {
   box-sizing: border-box;
 }
@@ -17,14 +22,65 @@ body {
 main {
   width: clamp(300px, 100%, 960px);
   margin: 0 auto;
+  display: grid;
+  gap: 8px;
+}
+
+.battleship {
+  font-size: 24px;
+  padding: 8px;
+  text-align: center;
 }
 
 .top {
+  position: relative;
   display: flex;
+  justify-content: center;
+  gap: 16px;
   .winMessage {
+    position: absolute;
+    border: 4px solid red;
+    left: 50%;
+    top: calc(100% + 8px);
+    // width: 100%;
+    text-align: center;
+    transform: translate(-50%, 0);
+    background-color: white;
+    padding: 8px;
     font-size: 24px;
     font-weight: bold;
-    height: 24px;
+    // height: 24px;
+  }
+
+  @keyframes changeBgColor {
+    0% {
+      background-color: $primary;
+    }
+
+    50% {
+      background-color: $click;
+      transform: scale(0.9);
+    }
+
+    100% {
+      background-color: $primary;
+    }
+  }
+
+  button {
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    padding: 8px;
+    background-color: $primary;
+  }
+
+  button:hover {
+    background-color: $hover;
+  }
+
+  .animate {
+    animation: changeBgColor 150ms;
   }
 }
 
@@ -47,17 +103,19 @@ main {
 
 .board {
   display: grid;
-  grid-template-columns: repeat(10, 24px);
-  grid-auto-rows: 24px;
+  grid-template-columns: repeat(10, 34px);
+  grid-auto-rows: 34px;
 
+  border: 2px solid black;
   // gap: 2px;
   .cell {
+    box-sizing: content-box;
     display: grid;
 
     // box-shadow: 0 0 0 2px gray;
-    outline: solid rgb(255, 255, 255) 2px;
+    border: solid rgb(255, 255, 255) 1px;
     place-content: center;
-    background-color: rgb(127, 240, 255);
+    background-color: $primary;
   }
 
   .hovered {
@@ -66,15 +124,17 @@ main {
 
   .hit {
     color: red;
+    font-size: 16px;
   }
 
   .skull {
     color: black;
+    font-size: 16px;
   }
 
   .miss {
-    color: rgb(94, 94, 94);
-    font-size: 12px;
+    color: black;
+    font-size: 16px;
   }
 }
 
@@ -88,13 +148,15 @@ main {
 
 .Player {
   .ship {
-    background-color: #999;
+    background-color: $ship;
   }
 }
 
-// .revealedShip {
-//   background-color: rgb(182, 182, 182);
-// }
+.boardContainer,
+.shipYardContainer {
+  display: grid;
+  gap: 8px;
+}
 
 .shipYardContainer {
   width: 180px;
@@ -104,29 +166,32 @@ main {
   display: none;
 }
 
-// .ship {
-//   cursor: move;
-// }
-
 .shipYard {
   display: grid;
   gap: 16px;
   justify-items: self-start;
+  padding-bottom: 8px;
   .ship {
+    // box-sizing: content-box;
     display: grid;
-    // gap: 2px;
-    background-color: #999;
+    gap: 2px;
+    background-color: white;
 
     grid-auto-flow: column;
-    grid-auto-columns: 24px;
-    grid-auto-rows: 24px;
-    // height: auto;
+    grid-auto-columns: 32px;
+    grid-auto-rows: 32px;
     cursor: move;
+
+    div {
+      background-color: $ship;
+    }
   }
 
   .cannotRotate {
-    background-color: red;
     animation: 250ms tilt-shaking;
+    div {
+      background-color: red;
+    }
   }
 
   @keyframes tilt-shaking {
@@ -148,13 +213,7 @@ main {
   }
 
   .vertical {
-    // transform: rotate(90deg);
-    // rotate: 90deg;
     grid-auto-flow: row;
-  }
-
-  .ship div {
-    outline: solid rgb(255, 255, 255) 1px;
   }
 
   .ship.snappable div {
@@ -163,25 +222,25 @@ main {
 }
 
 .port {
-  outline: 2px dotted rgb(124, 124, 124);
-  height: 24px;
+  outline: 2px dotted $ship;
+  height: 32px;
 }
 
 .port5 {
-  width: 120px;
+  width: 168px;
 }
 
 .port4 {
-  width: 96px;
+  width: 134px;
 }
 
 .port31,
 .port32 {
-  width: 72px;
+  width: 100px;
 }
 
 .port21 {
-  width: 48px;
+  width: 66px;
 }
 
 .disabled {

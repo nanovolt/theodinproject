@@ -91,6 +91,8 @@ export default function Game(dragAndDropObservable) {
   };
 
   function start() {
+    // ui.showWinMessage("Test message");
+
     if (playerBoard.ships.length < 5) {
       return;
     }

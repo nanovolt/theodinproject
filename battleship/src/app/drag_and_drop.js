@@ -50,8 +50,8 @@ export default function DragAndDrop(s, dragAndDropObservable) {
     // console.log("top:", top);
     // console.log("left:", left);
 
-    ship.style.top = `${top}px`;
-    ship.style.left = `${left}px`;
+    ship.style.top = `${top + 1}px`;
+    ship.style.left = `${left + 1}px`;
 
     // console.log("snapped at:", top, left);
   }
@@ -236,8 +236,8 @@ export default function DragAndDrop(s, dragAndDropObservable) {
       // console.log("top:", top);
       // console.log("left:", left);
 
-      ship.style.top = `${top}px`;
-      ship.style.left = `${left}px`;
+      ship.style.top = `${top + 1}px`;
+      ship.style.left = `${left + 1}px`;
     } else {
       ship.classList.add("cannotRotate");
 
@@ -255,8 +255,8 @@ export default function DragAndDrop(s, dragAndDropObservable) {
 
     // console.log("resize:", top, left);
 
-    ship.style.top = `${top}px`;
-    ship.style.left = `${left}px`;
+    ship.style.top = `${top + 1}px`;
+    ship.style.left = `${left + 1}px`;
   }
 
   function dragStart(e) {

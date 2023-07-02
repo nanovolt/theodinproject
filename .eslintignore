@@ -3,3 +3,4 @@ JavaScript30
 node_modules
 .vscode
 dist
+*.bundle.js

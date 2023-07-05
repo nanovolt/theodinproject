@@ -31,3 +31,5 @@
 [Weather App](https://nanovolt.github.io/theodinproject/weather_app/)
 
 [Battleship](https://nanovolt.github.io/theodinproject/battleship/)
+
+[React intro. Handle inputs and render lists](https://nanovolt.github.io/theodinproject/react_handle_inputs_and_render_lists/)

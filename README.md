@@ -33,3 +33,5 @@
 [Battleship](https://nanovolt.github.io/theodinproject/battleship/)
 
 [React intro. Handle inputs and render lists](https://nanovolt.github.io/theodinproject/react_handle_inputs_and_render_lists/)
+
+[CV Application](https://nanovolt.github.io/theodinproject/cv_application/)

@@ -13,6 +13,7 @@ class App extends Component {
       personal: {
         name: "",
         surname: "",
+        photo: "",
         title: "",
         description: "",
         email: "",
@@ -25,13 +26,13 @@ class App extends Component {
     this.componentRef = null;
   }
 
-  delete = () => {
+  delete = (photo = "") => {
     this.setState({ personal: null });
   };
 
   deleteArray = (index, category) => {
-    console.log("app remove array index:", index);
-    console.log("app remove array category:", category);
+    // console.log("app remove array index:", index);
+    // console.log("app remove array category:", category);
 
     this.setState({
       [category]: this.state[category].filter((field, i) => i !== index),
@@ -43,6 +44,7 @@ class App extends Component {
       personal: {
         name: "",
         surname: "",
+        photo: "",
         title: "",
         description: "",
         email: "",
@@ -54,7 +56,7 @@ class App extends Component {
   addArray = (category) => {
     switch (category) {
       case "education":
-        console.log("added education");
+        // console.log("added education");
         this.setState((prev) => ({
           education: prev.education.concat({
             id: uniqid(),
@@ -81,14 +83,14 @@ class App extends Component {
         }));
         break;
       default:
-        console.log("added none");
+      // console.log("added none");
     }
-    console.log("app add array category:", category);
+    // console.log("app add array category:", category);
   };
 
   edit = (category, field, value, index, arrI) => {
-    console.log("edit category:", category);
-    console.log("edit field:", field);
+    // console.log("edit category:", category);
+    // console.log("edit field:", field);
 
     this.setState((prevState) => ({
       [category]: {
@@ -101,12 +103,12 @@ class App extends Component {
   };
 
   editArray = (category, field, value, inputIndex, arrI) => {
-    console.log("edit array");
-    console.log("category:", category);
-    console.log("field:", field);
-    console.log("value:", value);
-    console.log("inputIndex:", inputIndex);
-    console.log("arrI:", arrI);
+    // console.log("edit array");
+    // console.log("category:", category);
+    // console.log("field:", field);
+    // console.log("value:", value);
+    // console.log("inputIndex:", inputIndex);
+    // console.log("arrI:", arrI);
 
     this.setState({
       [category]: this.state[category].map((item, i) => {
@@ -117,6 +119,12 @@ class App extends Component {
         return item;
       }),
     });
+  };
+
+  upload = (a) => {
+    console.log("upload:", a);
+
+    this.edit("personal", "photo", a);
   };
 
   render = () => {
@@ -133,6 +141,7 @@ class App extends Component {
           addArray={this.addArray}
           delete={this.delete}
           deleteArray={this.deleteArray}
+          upload={this.upload}
         />
         <CV ref={(el) => (this.componentRef = el)} data={this.state}></CV>
 

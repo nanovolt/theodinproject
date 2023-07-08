@@ -26,33 +26,9 @@ export default class FormFieldset extends Component {
     } else {
       this.props.add();
     }
-
-    console.log("add field");
-    // this.setState(
-    //   (prev) => ({
-    //     added: prev.added.concat(this.props.data),
-    //   }),
-    //   () => {
-    //     this.setState((prev) => ({
-    //       size: prev.added.length,
-    //     }));
-    //   }
-    // );
   };
 
   deleteFields = (index, category) => {
-    // console.log("deleting:", index);
-    // this.setState(
-    //   (prev) => ({
-    //     added: prev.added.filter((field, i) => i !== index),
-    //   }),
-    //   () => {
-    //     this.setState((prev) => ({
-    //       size: prev.added.length,
-    //     }));
-    //   }
-    // );
-
     if (this.props.isArray) {
       this.props.deleteArray(index, category);
     } else {
@@ -71,12 +47,39 @@ export default class FormFieldset extends Component {
     }
   };
 
+  upload(e) {
+    const src = URL.createObjectURL(e.target.files[0]);
+    // console.log(src);
+    this.props.upload(src);
+    // URL.revokeObjectURL(src);
+  }
+
   renderInputs = (arrI) => {
     return this.props.inputs.map((input, inputIndex) => {
       return (
         <div className="field" key={input.id}>
           <label htmlFor={input.id}>{input.label}</label>
-          {input.type !== "textarea" && (
+          {input.type === "file" && (
+            <label className="photo">
+              Upload
+              <input
+                type={input.type}
+                id={input.id}
+                name={input.id}
+                accept={input.accept}
+                onChange={(e) => this.upload(e)}
+                style={{ display: "none" }}
+              />
+            </label>
+          )}
+
+          {input.type === "file" && this.props.data.photo.length > 0 && (
+            <button onClick={() => this.props.edit("personal", "photo", "")}>
+              Remove
+            </button>
+          )}
+
+          {input.type !== "textarea" && input.type !== "file" && (
             <input
               type={input.type}
               id={input.id}
@@ -131,8 +134,7 @@ export default class FormFieldset extends Component {
   }
 
   render() {
-    console.log("props:", this.props);
-    // console.log("isArray:", Array.isArray(this.props.data));
+    // console.log("props:", this.props);
 
     return (
       <fieldset>

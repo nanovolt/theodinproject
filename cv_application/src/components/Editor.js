@@ -41,6 +41,12 @@ export default class Editor extends Component {
             inputs={[
               { id: "name", label: "Name", type: "text" },
               { id: "surname", label: "Surname", type: "text" },
+              {
+                id: "image",
+                label: "Image",
+                type: "file",
+                accept: "image/png, image/jpeg, image/jpg",
+              },
               { id: "title", label: "Title", type: "text" },
               { id: "description", label: "Description", type: "textarea" },
               { id: "email", label: "E-mail", type: "text" },
@@ -50,7 +56,8 @@ export default class Editor extends Component {
             isArray={false}
             data={this.props.data.personal}
             add={this.props.add}
-            delete={this.props.delete}></FormFieldset>
+            delete={this.props.delete}
+            upload={this.props.upload}></FormFieldset>
 
           <FormFieldset
             legend="Education"

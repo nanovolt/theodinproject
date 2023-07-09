@@ -2,6 +2,7 @@ import { Component } from "react";
 import FormFieldset from "./FormFieldset";
 
 export default class Editor extends Component {
+  // eslint-disable-next-line no-useless-constructor
   constructor(props) {
     super(props);
   }
@@ -58,6 +59,45 @@ export default class Editor extends Component {
             add={this.props.add}
             delete={this.props.delete}
             upload={this.props.upload}></FormFieldset>
+
+          <FormFieldset
+            legend="Links"
+            category="links"
+            inputs={[
+              { id: "linkName", label: "Link name", type: "text" },
+              { id: "link", label: "Link", type: "text" },
+            ]}
+            editArray={this.props.editArray}
+            isArray={true}
+            data={this.props.data.links}
+            addArray={this.props.addArray}
+            deleteArray={this.props.deleteArray}></FormFieldset>
+
+          <FormFieldset
+            legend="Skills"
+            category="skills"
+            inputs={[{ id: "skill", label: "Skill", type: "text" }]}
+            editArray={this.props.editArray}
+            isArray={true}
+            data={this.props.data.skills}
+            addArray={this.props.addArray}
+            deleteArray={this.props.deleteArray}></FormFieldset>
+
+          <FormFieldset
+            legend="Personal projects"
+            category="personalProjects"
+            inputs={[
+              { id: "projectName", label: "Project", type: "text" },
+              { id: "description", label: "Description", type: "textarea" },
+              { id: "features", label: "Features", type: "text" },
+              { id: "link", label: "Link", type: "text" },
+            ]}
+            // edit={this.props.edit}
+            editArray={this.props.editArray}
+            isArray={true}
+            data={this.props.data.personalProjects}
+            addArray={this.props.addArray}
+            deleteArray={this.props.deleteArray}></FormFieldset>
 
           <FormFieldset
             legend="Education"

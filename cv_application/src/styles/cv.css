@@ -1,0 +1,11 @@
+.CV .photo img {
+  width: 120px;
+  height: 160px;
+  object-fit: scale-down;
+  /* object-fit: cover; */
+  object-position: center;
+}
+
+.description {
+  white-space: pre-wrap;
+}

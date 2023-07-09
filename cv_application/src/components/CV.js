@@ -1,6 +1,10 @@
 import { Component } from "react";
+import "../styles/cv.css";
+import format from "date-fns/format";
+import { parseISO } from "date-fns/esm";
 
 export default class CV extends Component {
+  // eslint-disable-next-line no-useless-constructor
   constructor(props) {
     super(props);
   }
@@ -25,13 +29,11 @@ export default class CV extends Component {
         <div className="infoContainer">
           {Object.entries(this.props.data.personal).map((item) => (
             <div className={item[0]} key={item}>
-              {/* <span>{item[0]}: </span> */}
-              {item[0] === "photo" && (
+              {this.props.data.personal.photo && item[0] === "photo" && (
                 <img src={this.props.data.personal.photo} alt="" srcSet="" />
               )}
 
               {item[0] !== "photo" && item[1]}
-              {/* <span>{item[1]}</span> */}
             </div>
           ))}
         </div>
@@ -47,6 +49,74 @@ export default class CV extends Component {
         {/* <h1>CV</h1> */}
 
         {this.props.data.personal && this.renderObject()}
+
+        {this.props.data.links.length > 0 && (
+          <div className="links">
+            <h2>Links</h2>
+
+            {this.props.data.links.map((item) => {
+              return (
+                <div className="linksItem" key={item.id}>
+                  <a href={item.link} target="blank">
+                    {item.linkName}
+                  </a>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {this.props.data.skills.length > 0 && (
+          <div className="skills">
+            <h2>Skills</h2>
+
+            {this.props.data.skills.map((item) => {
+              return (
+                <div className="skillsItem" key={item.id}>
+                  {item.skill}
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {this.props.data.personalProjects.length > 0 && (
+          <div className="personalProjects">
+            <h2>Personal projects</h2>
+
+            {this.props.data.personalProjects.map((item) => {
+              return (
+                <div className="projectItem" key={item.id}>
+                  <div className="projectName">
+                    {/* <span>School: </span> */}
+                    <span>{item.projectName}</span>
+                  </div>
+
+                  <div className="description">
+                    {/* <span>Location: </span> */}
+                    <span>{item.description}</span>
+                  </div>
+                  <div className="features">
+                    {/* <span>Degree: </span> */}
+                    <span>{item.features}</span>
+                  </div>
+
+                  {item.link && (
+                    <div className="links">
+                      {/* <span>Start: </span> */}
+                      <a
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        Link
+                      </a>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
 
         {this.props.data.education.length > 0 && (
           <div className="education">
@@ -68,14 +138,20 @@ export default class CV extends Component {
                     {/* <span>Degree: </span> */}
                     <span>{item.degree}</span>
                   </div>
-                  <div className="schoolStart">
-                    {/* <span>Start: </span> */}
-                    <span>{item.dateStart}</span>
-                  </div>
-                  <div className="schoolEnd">
-                    {/* <span>End: </span> */}
-                    <span>{item.dateEnd}</span>
-                  </div>
+
+                  {item.dateStart && (
+                    <div className="date">
+                      <span>
+                        {item.dateStart &&
+                          format(parseISO(item.dateStart), "yyyy")}
+                      </span>
+                      <span> - </span>
+                      <span>
+                        {!item.dateEnd && "Present"}
+                        {item.dateEnd && format(parseISO(item.dateEnd), "yyyy")}
+                      </span>
+                    </div>
+                  )}
                 </div>
               );
             })}
@@ -105,14 +181,20 @@ export default class CV extends Component {
                     {/* <span>Tasks: </span> */}
                     <span>{item.tasks}</span>
                   </div>
-                  <div className="experiencelStart">
-                    {/* <span>Start: </span> */}
-                    <span>{item.dateStart}</span>
-                  </div>
-                  <div className="experiencelEnd">
-                    {/* <span>End: </span> */}
-                    <span>{item.dateEnd}</span>
-                  </div>
+
+                  {item.dateStart && (
+                    <div className="date">
+                      <span>
+                        {item.dateStart &&
+                          format(parseISO(item.dateStart), "yyyy")}
+                      </span>
+                      <span> - </span>
+                      <span>
+                        {!item.dateEnd && "Present"}
+                        {item.dateEnd && format(parseISO(item.dateEnd), "yyyy")}
+                      </span>
+                    </div>
+                  )}
                 </div>
               );
             })}

@@ -2,22 +2,9 @@ import { Component } from "react";
 import "../styles/fieldset.css";
 
 export default class FormFieldset extends Component {
+  // eslint-disable-next-line no-useless-constructor
   constructor(props) {
     super(props);
-
-    if (this.props.isArray) {
-      this.state = {
-        added: [],
-        size: 0,
-      };
-    } else {
-      this.state = {
-        added: [this.props.inputs.map((input) => ({ [input.id]: "" }))],
-        // added: [this.props.data],
-
-        size: 1,
-      };
-    }
   }
 
   addFields = (category) => {
@@ -73,7 +60,7 @@ export default class FormFieldset extends Component {
             </label>
           )}
 
-          {input.type === "file" && this.props.data.photo.length > 0 && (
+          {input.type === "file" && this.props.data.photo !== "" && (
             <button onClick={() => this.props.edit("personal", "photo", "")}>
               Remove
             </button>
@@ -100,7 +87,7 @@ export default class FormFieldset extends Component {
               id={input.id}
               name={input.id}
               onChange={(e) =>
-                this.props.edit(
+                this.edit(
                   this.props.category,
                   input.id,
                   e.target.value,
@@ -141,8 +128,9 @@ export default class FormFieldset extends Component {
         <legend>{this.props.legend}</legend>
 
         {this.props.data && !this.props.isArray && this.renderInputs()}
+        {this.props.data && !this.props.isArray && this.renderDelete()}
+
         {!this.props.data && !this.props.isArray && this.renderAdd()}
-        {this.props.data && this.state.size > 0 && this.renderDelete()}
 
         {this.props.isArray &&
           this.props.data.map((item, i) => {

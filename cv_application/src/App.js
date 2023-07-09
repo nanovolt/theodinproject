@@ -19,6 +19,8 @@ class App extends Component {
         email: "",
         phone: "",
       },
+      links: [],
+      skills: [],
       education: [],
       experience: [],
       personalProjects: [],
@@ -54,6 +56,8 @@ class App extends Component {
   };
 
   addArray = (category) => {
+    console.log("add:", category);
+
     switch (category) {
       case "education":
         // console.log("added education");
@@ -82,6 +86,37 @@ class App extends Component {
           }),
         }));
         break;
+
+      case "links":
+        this.setState((prev) => ({
+          links: prev.links.concat({
+            id: uniqid(),
+            linkName: "",
+            link: "",
+          }),
+        }));
+        break;
+
+      case "skills":
+        this.setState((prev) => ({
+          skills: prev.skills.concat({
+            id: uniqid(),
+            skill: "",
+          }),
+        }));
+        break;
+
+      case "personalProjects":
+        this.setState((prev) => ({
+          personalProjects: prev.personalProjects.concat({
+            id: uniqid(),
+            projectName: "",
+            description: "",
+            features: "",
+            link: "",
+          }),
+        }));
+        break;
       default:
       // console.log("added none");
     }
@@ -107,6 +142,15 @@ class App extends Component {
     // console.log("category:", category);
     // console.log("field:", field);
     // console.log("value:", value);
+
+    // if (field === "link") {
+    //   console.log(/^https:\/\//.test(value));
+
+    //   if (/^\/\/https:\/\//.test(value)) {
+    //     value = value.substring(2);
+    //   }
+    // }
+
     // console.log("inputIndex:", inputIndex);
     // console.log("arrI:", arrI);
 

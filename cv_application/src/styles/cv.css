@@ -9,3 +9,37 @@
 .description {
   white-space: pre-wrap;
 }
+
+.text-area {
+  /* border: 1px solid black; */
+  display: list-item;
+  margin-left: 1em;
+  /* outline: none; */
+}
+.text-area div {
+  display: list-item;
+}
+
+textarea {
+  resize: vertical;
+  /* height: fit-content; */
+  /* overflow-y: visible; */
+  min-height: 64px;
+  max-height: 128px;
+}
+
+.featureList,
+.taskList {
+  margin: 0;
+  padding-left: 16px;
+}
+
+.featureList li,
+.taskList li {
+  list-style-type: square;
+}
+
+.field {
+  display: grid;
+  /* grid-template-columns: auto auto; */
+}

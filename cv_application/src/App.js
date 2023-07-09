@@ -32,10 +32,7 @@ class App extends Component {
     this.setState({ personal: null });
   };
 
-  deleteArray = (index, category) => {
-    // console.log("app remove array index:", index);
-    // console.log("app remove array category:", category);
-
+  deleteArray = (category, index) => {
     this.setState({
       [category]: this.state[category].filter((field, i) => i !== index),
     });
@@ -60,7 +57,6 @@ class App extends Component {
 
     switch (category) {
       case "education":
-        // console.log("added education");
         this.setState((prev) => ({
           education: prev.education.concat({
             id: uniqid(),
@@ -118,46 +114,22 @@ class App extends Component {
         }));
         break;
       default:
-      // console.log("added none");
     }
-    // console.log("app add array category:", category);
   };
 
-  edit = (category, field, value, index, arrI) => {
-    // console.log("edit category:", category);
-    // console.log("edit field:", field);
-
+  edit = (category, field, value) => {
     this.setState((prevState) => ({
       [category]: {
         ...prevState[category],
         [field]: value,
       },
     }));
-
-    // this.setState({ [category]: { [field]: value } });
   };
 
-  editArray = (category, field, value, inputIndex, arrI) => {
-    // console.log("edit array");
-    // console.log("category:", category);
-    // console.log("field:", field);
-    // console.log("value:", value);
-
-    // if (field === "link") {
-    //   console.log(/^https:\/\//.test(value));
-
-    //   if (/^\/\/https:\/\//.test(value)) {
-    //     value = value.substring(2);
-    //   }
-    // }
-
-    // console.log("inputIndex:", inputIndex);
-    // console.log("arrI:", arrI);
-
+  editArray = (category, field, value, index) => {
     this.setState({
       [category]: this.state[category].map((item, i) => {
-        if (i === arrI) {
-          // console.log("item:", item);
+        if (i === index) {
           item[field] = value;
         }
         return item;
@@ -166,17 +138,15 @@ class App extends Component {
   };
 
   upload = (a) => {
-    console.log("upload:", a);
+    const src = URL.createObjectURL(a.target.files[0]);
+    console.log("upload:", src);
 
-    this.edit("personal", "photo", a);
+    this.edit("personal", "photo", src);
   };
 
   render = () => {
     return (
       <div className="App">
-        {/* <button onClick={print}>print</button> */}
-        {/* <Editor></Editor> */}
-
         <Editor
           edit={this.edit}
           editArray={this.editArray}

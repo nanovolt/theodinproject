@@ -98,7 +98,13 @@ export default class CV extends Component {
                   </div>
                   <div className="features">
                     {/* <span>Degree: </span> */}
-                    <span>{item.features}</span>
+                    {item.features && (
+                      <ul className="featureList">
+                        {item.features.split(";").map((item) => {
+                          return <li key={item}>{item}</li>;
+                        })}
+                      </ul>
+                    )}
                   </div>
 
                   {item.link && (
@@ -179,7 +185,14 @@ export default class CV extends Component {
                   </div>
                   <div className="tasks">
                     {/* <span>Tasks: </span> */}
-                    <span>{item.tasks}</span>
+                    {/* <span>{item.tasks}</span> */}
+                    {item.tasks && (
+                      <ul className="taskList">
+                        {item.tasks.split(";").map((item) => {
+                          return <li key={item}>{item}</li>;
+                        })}
+                      </ul>
+                    )}
                   </div>
 
                   {item.dateStart && (

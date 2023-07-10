@@ -1,4 +1,5 @@
 import { Component } from "react";
+import "../styles/editor.css";
 
 export default class Editor extends Component {
   // eslint-disable-next-line no-useless-constructor
@@ -17,8 +18,7 @@ export default class Editor extends Component {
 
   render() {
     return (
-      <div className="Editor">
-        <h1>Editor</h1>
+      <div className="editor">
         <form>
           <fieldset>
             <legend>Personal</legend>
@@ -401,14 +401,14 @@ export default class Editor extends Component {
                     }
                   />
 
-                  <label htmlFor="title">Title</label>
+                  <label htmlFor="position">Position</label>
                   <input
                     type="text"
-                    id="title"
+                    id="position"
                     onChange={(e) =>
                       this.props.editArray(
                         "experience",
-                        "title",
+                        "position",
                         e.target.value,
                         i
                       )

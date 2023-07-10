@@ -1,8 +1,10 @@
 import "./App.css";
 import { Component } from "react";
+import Header from "./components/Header";
 import Editor from "./components/Editor";
 import ReactToPrint from "react-to-print";
 import CV from "./components/CV";
+import Footer from "./components/Footer";
 import uniqid from "uniqid";
 
 class App extends Component {
@@ -53,8 +55,6 @@ class App extends Component {
   };
 
   addArray = (category) => {
-    console.log("add:", category);
-
     switch (category) {
       case "education":
         this.setState((prev) => ({
@@ -124,6 +124,11 @@ class App extends Component {
         [field]: value,
       },
     }));
+
+    if (field === "photo" && value === "") {
+      console.log("revoke:", this.srcRevoke);
+      URL.revokeObjectURL(this.srcRevoke);
+    }
   };
 
   editArray = (category, field, value, index) => {
@@ -138,36 +143,45 @@ class App extends Component {
   };
 
   upload = (a) => {
-    const src = URL.createObjectURL(a.target.files[0]);
-    console.log("upload:", src);
-
-    this.edit("personal", "photo", src);
+    this.srcRevoke = URL.createObjectURL(a.target.files[0]);
+    this.edit("personal", "photo", this.srcRevoke);
   };
 
   render = () => {
     return (
       <div className="App">
-        <Editor
-          edit={this.edit}
-          editArray={this.editArray}
-          data={this.state}
-          add={this.add}
-          addArray={this.addArray}
-          delete={this.delete}
-          deleteArray={this.deleteArray}
-          upload={this.upload}
-        />
-        <CV ref={(el) => (this.componentRef = el)} data={this.state}></CV>
+        <Header></Header>
 
-        <div className="pdf">
-          <ReactToPrint
-            trigger={() => {
-              return <button>Print</button>;
-            }}
-            content={() => this.componentRef}
-            documentTitle={document.title}
+        <main>
+          <Editor
+            edit={this.edit}
+            editArray={this.editArray}
+            data={this.state}
+            add={this.add}
+            addArray={this.addArray}
+            delete={this.delete}
+            deleteArray={this.deleteArray}
+            upload={this.upload}
           />
-        </div>
+
+          <div className="cvContainer">
+            <div className="pdf">
+              <ReactToPrint
+                trigger={() => {
+                  return <button>Generate PDF / Print</button>;
+                }}
+                content={() => this.componentRef}
+                documentTitle={document.title}
+              />
+            </div>
+
+            <CV
+              ref={(el) => (this.componentRef = el)}
+              data={this.state}
+              setEmpty={this.setEmpty}></CV>
+          </div>
+        </main>
+        <Footer></Footer>
       </div>
     );
   };

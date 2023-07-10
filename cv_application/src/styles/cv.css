@@ -1,20 +1,152 @@
-.CV .photo img {
-  width: 120px;
-  height: 160px;
-  object-fit: scale-down;
-  /* object-fit: cover; */
-  object-position: center;
+@page {
+  /* size: 290mm 210mm; */
+  margin-top: 0;
+  margin-left: 10mm;
+  margin-right: 10mm;
 }
 
-.description {
+.CV {
+  width: 210mm;
+  height: 297mm;
+  background-color: white;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: 30% 1fr;
+  grid-template-rows: 1fr;
+  align-content: start;
+}
+
+.left,
+.right {
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  padding: 8px;
+}
+
+.left {
+  border-radius: 8px 0 0 8px;
+  background-color: #272a4d;
+  color: white;
+}
+
+@media print {
+  /* a:after {
+    content: "(" attr(href) ")";
+  } */
+
+  .left {
+    border-radius: 0;
+  }
+}
+
+.personal,
+.links,
+.skills,
+.personalProjects,
+.education,
+.experience,
+.personal {
+  display: grid;
+  gap: 8px;
+}
+
+.namesurname {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.title {
+  font-size: 20px;
+}
+
+/* .description {
   white-space: pre-wrap;
+  word-wrap: break-word;
+} */
+
+.projectItem,
+.educationItem,
+.experienceItem {
+  border: 2px solid #272a4d;
+  border-radius: 8px;
+  display: grid;
+  gap: 8px;
+  padding: 8px;
+}
+
+.educationItem,
+.experienceItem {
+  justify-content: space-between;
+}
+
+.educationItem .degree,
+.experienceItem .position {
+  grid-area: 1 / 1 / 2 / 2;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.educationItem .date {
+  grid-area: 1 / 2 / 3 / 3;
+}
+
+.experienceItem .date {
+  grid-area: 1 / 2 / 6 / 3;
+}
+
+.left a {
+  color: white;
+  font-weight: bold;
+}
+
+.right a {
+  color: #272a4d;
+  font-weight: bold;
+}
+
+.CV h2 {
+  margin: 0;
+}
+
+.cvContainer {
+  display: grid;
+  gap: 8px;
+  position: sticky;
+  top: 8px;
+}
+
+.pdf button {
+  border: none;
+  padding: 8px;
+  border-radius: 8px;
+  width: 100%;
+  font-size: 16px;
+  background-color: #272a4d;
+  color: white;
+  cursor: pointer;
+}
+
+.pdf button:hover {
+  background-color: rgb(90, 180, 255);
+}
+
+.pdf button:active {
+  background-color: rgb(60, 250, 150);
+}
+
+.photo img {
+  width: 120px;
+  height: 160px;
+  /* object-fit: scale-down; */
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
 }
 
 .text-area {
-  /* border: 1px solid black; */
   display: list-item;
   margin-left: 1em;
-  /* outline: none; */
 }
 .text-area div {
   display: list-item;
@@ -22,10 +154,8 @@
 
 textarea {
   resize: vertical;
-  /* height: fit-content; */
-  /* overflow-y: visible; */
-  min-height: 64px;
-  max-height: 128px;
+  min-height: 80px;
+  max-height: 160px;
 }
 
 .featureList,
@@ -37,9 +167,4 @@ textarea {
 .featureList li,
 .taskList li {
   list-style-type: square;
-}
-
-.field {
-  display: grid;
-  /* grid-template-columns: auto auto; */
 }

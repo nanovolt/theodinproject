@@ -9,3 +9,11 @@ main {
   width: clamp(300px, 100%, 1440px);
   margin: 0 auto;
 }
+
+.scoreboard {
+  text-align: center;
+}
+
+.condition-message {
+  font-size: 24px;
+}

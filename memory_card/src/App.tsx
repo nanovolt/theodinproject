@@ -1,40 +1,96 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import "./App.css";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Cards from "./components/Cards";
-
-function shuffle(array: any[], setArr: React.Dispatch<any>) {
-  const copy = [...array];
-  for (let i = copy.length - 1; i > 0; i--) {
-    let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i
-
-    // swap elements array[i] and array[j]
-    // we use "destructuring assignment" syntax to achieve that
-    // you'll find more details about that syntax in later chapters
-    // same can be written as:
-    // let t = array[i]; array[i] = array[j]; array[j] = t
-    [copy[i], copy[j]] = [copy[j], copy[i]];
-  }
-
-  setArr(copy);
-}
+import { shuffle } from "./utils/shuffle";
+import Modal from "./components/Modal";
 
 function App() {
-  const [arr, setArr] = useState<any[]>([]);
+  // const [imageArray, setImageArray] = useState<any[]>([
+  //   { id: 0 },
+  //   { id: 1 },
+  //   { id: 2 },
+  //   { id: 3 },
+  //   { id: 4 },
+  // ]);
+
+  const [imageArray, setImageArray] = useState<any[]>([]);
+
+  const [clickedCards, setClickedCards] = useState<string[]>([]);
+  const [score, setScore] = useState(0);
+  const [highscore, setHighscore] = useState(0);
+  const [condition, setCondition] = useState<"won" | "lost" | null>(null);
+  const [conditionMessage, setConditionMessage] = useState("");
+
+  function handleCardClick(id: string) {
+    // console.log("clicked id:", id);
+
+    setImageArray(shuffle(imageArray));
+
+    // console.log("includes:", clickedCards.includes(id));
+
+    if (clickedCards.includes(id)) {
+      // console.log(`clickedCards includes ${id}`);
+      if (score > highscore) {
+        setHighscore(score);
+      }
+      setScore(0);
+      setCondition("lost");
+      setConditionMessage("You Lost");
+    } else {
+      setClickedCards((prev) => [...prev, id]);
+      // console.log(`clickedCards added ${id}`);
+      setScore((prev) => prev + 1);
+    }
+  }
+
+  useEffect(() => {
+    // console.log("score:", score);
+    // console.log("len:", clickedCards.length);
+
+    if (clickedCards.length === 10) {
+      setCondition("won");
+      setClickedCards([]);
+      if (score > highscore) {
+        setHighscore(score);
+      }
+      setConditionMessage("You won! You have good short-term memory!");
+    }
+  }, [clickedCards.length, score, highscore]);
+
+  function handleGameEnd() {
+    setScore(0);
+    setCondition(null);
+    setClickedCards([]);
+  }
 
   return (
     <div className="App">
+      {condition !== null && (
+        <Modal>
+          <div className="condition-message">{conditionMessage}</div>
+          <button onClick={handleGameEnd}>Ok</button>
+        </Modal>
+      )}
       <Header>Memory card</Header>
       <main>
-        <button onClick={() => shuffle(arr, setArr)}>Shuffle</button>
-        <Cards setArr={setArr} arr={arr}>
-          cards
-        </Cards>
+        {/* <button onClick={() => setImageArray(shuffle(imageArray))}>
+          Shuffle
+        </button> */}
+        <div className="scoreboard">
+          <div>Score: {score}</div>
+          <div>High-score: {highscore}</div>
+        </div>
+        <Cards
+          imageArray={imageArray}
+          setImageArray={setImageArray}
+          handleCardClick={handleCardClick}
+        />
       </main>
-      <Footer>Footer 2023</Footer>
+      <Footer>nanovolt 2023</Footer>
     </div>
   );
 }

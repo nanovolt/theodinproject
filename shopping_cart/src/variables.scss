@@ -1,0 +1,13 @@
+:root {
+  --background: white;
+  --text-primary: #222;
+  --text-secondary: royalblue;
+  --accent: purple;
+}
+
+[data-color-scheme="dark"] {
+  --background: #222;
+  --text-primary: white;
+  --text-secondary: grey;
+  --accent: darkred;
+}

@@ -37,3 +37,5 @@
 [CV Application](https://nanovolt.github.io/theodinproject/cv_application/)
 
 [Memory card](https://nanovolt.github.io/theodinproject/memory_card/)
+
+[Shopping cart](https://nanovolt.github.io/theodinproject/shopping_cart/)

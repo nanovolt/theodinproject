@@ -1,0 +1,138 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { cleanup } from "@testing-library/react";
+// import { expect, jest, it, test } from "@jest/globals";
+
+jest.mock("react");
+// jest.mock("react-dom/client", () => ({
+//   createRoot: jest.fn().mockName("createRoot"),
+// }));
+
+// jest.mock<typeof import("react-dom/client")>("react-dom/client", () => ({
+jest.mock("react-dom/client", () => ({
+  createRoot: jest.fn().mockName("createRoot"),
+  // hydrateRoot: jest.fn(),
+  // .mockReturnValue(true),
+  // .mockImplementation(() => ({
+  //   render: jest.fn(),
+  // })),
+}));
+
+let reactDomModule: typeof ReactDOM;
+
+const render = jest.fn().mockName("render");
+
+// https://dev.to/thetogi/jest-testing-mocking-modules-and-handling-module-state-using-typescript-and-es6-3jk4
+// https://github.com/jestjs/jest/issues/3236
+// https://mercedesbernard.com/blog/jest-mocking-strategies
+// https://jamiemagee.co.uk/blog/your-jest-tests-might-be-wrong/
+// https://stackoverflow.com/questions/45571816/reset-single-module-with-jest/54791921#54791921
+
+beforeEach(async () => {
+  (ReactDOM.createRoot as jest.Mock).mockReturnValue({ render });
+  jest.isolateModules(async () => {
+    return import("react-dom/client").then((module) => {
+      reactDomModule = module;
+    });
+  });
+});
+
+// const createRootSpy = jest.spyOn(ReactDOM, "createRoot");
+
+// document.getElementById = jest.fn().mockImplementation(() => ({ render }));
+const documentSpy = jest.spyOn(document, "getElementById");
+
+// const doc = document.createElement("div");
+// doc.setAttribute("id", "root");
+
+// document.body.appendChild(doc);
+
+// beforeEach(() => {
+//   // jest.resetAllMocks();
+//   // jest.restoreAllMocks();
+//   // jest.resetModules();
+//   // jest.resetModules();
+
+//   (ReactDOM.createRoot as jest.Mock).mockReturnValue({ render });
+//   require("./index");
+// });
+
+// afterEach(cleanup);
+
+afterEach(() => {
+  // jest.resetAllMocks();
+  // jest.clearAllMocks();
+  // jest.restoreAllMocks();
+  jest.resetModules();
+});
+
+// (ReactDOM.createRoot as jest.Mock).mockReturnValue({ render });
+// import("./index");
+
+let myModuleInstance: typeof reactDomModule;
+
+it("should call ReactDOM.createRoot once", () => {
+  myModuleInstance = reactDomModule;
+  expect(ReactDOM.createRoot).toHaveBeenCalledTimes(1);
+});
+
+it("a should call ReactDOM.createRoot once", () => {
+  myModuleInstance = reactDomModule;
+  expect(ReactDOM.createRoot).toHaveBeenCalledTimes(1);
+});
+
+// it("should call ReactDOM.createRoot once", () => {
+//   expect(documentSpy).toHaveBeenCalledTimes(1);
+//   expect(documentSpy).toHaveBeenCalledWith("root");
+// });
+
+// it("should call render with React.StrictMode", () => {
+//   expect(render).toHaveBeenCalledTimes(1);
+//   expect(render).toHaveBeenCalledWith(
+//     <React.StrictMode>
+//       <App />
+//     </React.StrictMode>
+//   );
+// });
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+// https://stackoverflow.com/a/73417000/8186223
+
+// import React from "react";
+// import ReactDOM from "react-dom/client";
+
+// const render = jest.fn().mockName("render");
+
+// jest.mock("react");
+// jest.mock("react-dom/client", () => ({
+//   createRoot: jest.fn().mockName("createRoot"),
+// }));
+
+// let documentSpy = jest.spyOn(document, "getElementById");
+
+// describe("Entry point index test", () => {
+//   const doc = document.createElement("div");
+//   doc.setAttribute("id", "root");
+
+//   beforeEach(() => {
+//     ReactDOM.createRoot.mockReturnValue({ render });
+//     import("./index");
+//   });
+
+//   it("should call ReactDOM.createRoot once", () => {
+//     expect(ReactDOM.createRoot).toHaveBeenCalledTimes(1);
+//   });
+
+//   it("should call document.getElementById with root once", () => {
+//     expect(documentSpy).toHaveBeenCalledTimes(1);
+//     expect(documentSpy).toHaveBeenCalledWith("root");
+//   });
+
+//   // it("should call render with React.StrictMode", () => {
+//   //   expect(render).toHaveBeenCalledTimes(1);
+//   //   expect(render).toHaveBeenCalledWith(<React.StrictMode />);
+//   // });
+// });

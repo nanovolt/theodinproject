@@ -1,5 +1,5 @@
 import styles from "./App.module.scss";
-import useLocalStorage from "./hooks/useLocalStorage";
+import { useLocalStorage } from "./hooks/useLocalStorage";
 import classNames from "classnames";
 
 function App() {
@@ -11,16 +11,18 @@ function App() {
   );
 
   function handleDarkModeToggle() {
-    setColorScheme((prev: string) => {
-      if (prev === "dark") return "light";
-      if (prev === "light") return "dark";
-    });
+    setColorScheme((prev: "dark" | "light") =>
+      prev === "dark" ? "light" : "dark"
+    );
   }
 
   const appClasses = classNames(styles.App, {});
 
   return (
-    <div className={appClasses} data-color-scheme={colorScheme}>
+    <div
+      className={appClasses}
+      data-color-scheme={colorScheme}
+      data-testid="app">
       <h1>Shopping cart</h1>
       <button onClick={handleDarkModeToggle}>toggle dark mode</button>
     </div>

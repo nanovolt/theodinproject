@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import App from "./App";
-import { useLocalStorage } from "./hooks/useLocalStorage";
+// import { useLocalStorage } from "./hooks/useLocalStorage";
+import { useDarkMode } from "./hooks/useDarkMode";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 
@@ -19,8 +20,12 @@ import "@testing-library/jest-dom";
 //   };
 // });
 
-jest.mock("./hooks/useLocalStorage", () => ({
-  useLocalStorage: jest.fn(),
+// jest.mock("./hooks/useLocalStorage", () => ({
+//   useLocalStorage: jest.fn(),
+// }));
+
+jest.mock("./hooks/useDarkMode", () => ({
+  useDarkMode: jest.fn(),
 }));
 
 // https://github.com/facebook/create-react-app/issues/10126
@@ -39,19 +44,21 @@ jest.mock("./hooks/useLocalStorage", () => ({
 //   })),
 // });
 
-Object.defineProperty(window, "matchMedia", {
-  writable: true,
-  value: (query: any) => ({
-    matches: true,
-  }),
-});
+// Object.defineProperty(window, "matchMedia", {
+//   writable: true,
+//   value: (query: any) => ({
+//     matches: true,
+//   }),
+// });
 
 beforeEach(() => {
-  (useLocalStorage as jest.Mock).mockName("useLocalStorage");
-  (useLocalStorage as jest.Mock).mockReturnValue([
-    "dark",
-    (cb: (mode: "dark" | "light") => string) => cb("dark"),
-  ]);
+  (useDarkMode as jest.Mock).mockName("useDarkMode");
+  // (useLocalStorage as jest.Mock).mockReturnValue([
+  //   "dark",
+  //   (cb: (mode: "dark" | "light") => string) => cb("dark"),
+  // ]);
+
+  (useDarkMode as jest.Mock).mockReturnValue(["dark", jest.fn()]);
 });
 
 it("renders shopping cart heading", () => {
@@ -60,71 +67,36 @@ it("renders shopping cart heading", () => {
   expect(heading).toBeInTheDocument();
 });
 
-it("calls useLocalStorage hook", () => {
+it(`calls useDarkMode hook`, () => {
   render(<App />);
-  expect(useLocalStorage).toHaveBeenCalledTimes(1);
-});
-
-it(`calls useLocalStorage hook with "dark" colorScheme argument`, () => {
-  Object.defineProperty(window, "matchMedia", {
-    writable: true,
-    value: (query: any) => ({
-      matches: true,
-      media: query,
-      onchange: null,
-      addListener: jest.fn(), // Deprecated
-      removeListener: jest.fn(), // Deprecated
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      dispatchEvent: jest.fn(),
-    }),
-  });
-
-  render(<App />);
-  expect(useLocalStorage).toHaveBeenCalledWith("dark", "colorScheme");
-});
-
-it(`calls useLocalStorage hook with "light" colorScheme argument`, () => {
-  Object.defineProperty(window, "matchMedia", {
-    writable: true,
-    value: (query: any) => ({
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: jest.fn(), // Deprecated
-      removeListener: jest.fn(), // Deprecated
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-      dispatchEvent: jest.fn(),
-    }),
-  });
-
-  render(<App />);
-  expect(useLocalStorage).toHaveBeenCalledWith("light", "colorScheme");
+  expect(useDarkMode).toHaveBeenCalledTimes(1);
 });
 
 it("sets dark mode on app component", () => {
   render(<App />);
 
-  userEvent.click(screen.getByText(/toggle dark mode/));
   expect(screen.getByTestId("app")).toHaveAttribute(
     "data-color-scheme",
     "dark"
   );
 });
 
-it("sets light mode on app component", () => {
-  (useLocalStorage as jest.Mock).mockReturnValue([
-    "light",
-    (cb: (mode: "dark" | "light") => string) => cb("light"),
-  ]);
+it("toggles light mode on click", () => {
+  const mockSetMode = jest.fn((arg) => {}).mockName("mockSetMode");
+  (useDarkMode as jest.Mock).mockReturnValue(["dark", mockSetMode]);
 
   render(<App />);
 
   userEvent.click(screen.getByText(/toggle dark mode/));
+  expect(mockSetMode).toHaveBeenCalledWith("light");
+});
 
-  expect(screen.getByTestId("app")).toHaveAttribute(
-    "data-color-scheme",
-    "light"
-  );
+it("toggles dark mode on click", () => {
+  const mockSetMode = jest.fn((arg) => {}).mockName("mockSetMode");
+  (useDarkMode as jest.Mock).mockReturnValue(["light", mockSetMode]);
+
+  render(<App />);
+
+  userEvent.click(screen.getByText(/toggle dark mode/));
+  expect(mockSetMode).toHaveBeenCalledWith("dark");
 });

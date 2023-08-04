@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1691128418306" clover="3.2.0">
-  <project timestamp="1691128418306" name="All files">
-    <metrics statements="16" coveredstatements="8" conditionals="8" coveredconditionals="4" methods="6" coveredmethods="3" elements="30" coveredelements="15" complexity="0" loc="16" ncloc="16" packages="2" files="3" classes="3"/>
+<coverage generated="1691171366496" clover="3.2.0">
+  <project timestamp="1691171366496" name="All files">
+    <metrics statements="29" coveredstatements="20" conditionals="14" coveredconditionals="8" methods="11" coveredmethods="7" elements="54" coveredelements="35" complexity="0" loc="29" ncloc="29" packages="2" files="4" classes="4"/>
     <package name="src">
-      <metrics statements="8" coveredstatements="8" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
+      <metrics statements="6" coveredstatements="6" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
       <file name="App.tsx" path="/home/fdr/all/dev/theodinproject/shopping_cart/src/App.tsx">
-        <metrics statements="6" coveredstatements="6" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
-        <line num="6" count="6" type="stmt"/>
-        <line num="8" count="6" type="stmt"/>
-        <line num="14" count="2" type="stmt"/>
-        <line num="15" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="19" count="6" type="stmt"/>
-        <line num="21" count="6" type="stmt"/>
+        <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="8" count="5" type="stmt"/>
+        <line num="19" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="22" count="5" type="stmt"/>
+        <line num="24" count="5" type="stmt"/>
       </file>
       <file name="index.tsx" path="/home/fdr/all/dev/theodinproject/shopping_cart/src/index.tsx">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
@@ -20,17 +18,35 @@
       </file>
     </package>
     <package name="src.hooks">
-      <metrics statements="8" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
+      <metrics statements="23" coveredstatements="14" conditionals="12" coveredconditionals="6" methods="9" coveredmethods="5"/>
+      <file name="useDarkMode.ts" path="/home/fdr/all/dev/theodinproject/shopping_cart/src/hooks/useDarkMode.ts">
+        <metrics statements="15" coveredstatements="14" conditionals="8" coveredconditionals="6" methods="6" coveredmethods="5"/>
+        <line num="9" count="5" type="stmt"/>
+        <line num="11" count="5" type="stmt"/>
+        <line num="12" count="5" type="stmt"/>
+        <line num="13" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="14" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="16" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="20" count="5" type="stmt"/>
+        <line num="21" count="5" type="stmt"/>
+        <line num="22" count="5" type="stmt"/>
+        <line num="23" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="25" count="5" type="stmt"/>
+        <line num="26" count="5" type="stmt"/>
+        <line num="29" count="5" type="stmt"/>
+        <line num="30" count="5" type="stmt"/>
+        <line num="35" count="5" type="stmt"/>
+      </file>
       <file name="useLocalStorage.ts" path="/home/fdr/all/dev/theodinproject/shopping_cart/src/hooks/useLocalStorage.ts">
         <metrics statements="8" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
-        <line num="4" count="0" type="stmt"/>
-        <line num="5" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="6" count="0" type="stmt"/>
-        <line num="8" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="10" count="0" type="stmt"/>
-        <line num="14" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="10" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="13" count="0" type="cond" truecount="0" falsecount="2"/>
         <line num="15" count="0" type="stmt"/>
-        <line num="18" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
       </file>
     </package>
   </project>

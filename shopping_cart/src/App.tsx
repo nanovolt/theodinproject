@@ -1,28 +1,28 @@
 import styles from "./App.module.scss";
-import { useLocalStorage } from "./hooks/useLocalStorage";
+import { useDarkMode } from "./hooks/useDarkMode";
 import classNames from "classnames";
 
 function App() {
-  const defaultDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  // const defaultDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-  const [colorScheme, setColorScheme] = useLocalStorage(
-    defaultDark ? "dark" : "light",
-    "colorScheme"
-  );
+  const [mode, setMode] = useDarkMode();
+  // const [colorScheme, setColorScheme] = useLocalStorage(
+  //   defaultDark ? "dark" : "light",
+  //   "colorScheme"
+  // );
 
   function handleDarkModeToggle() {
-    setColorScheme((prev: "dark" | "light") =>
-      prev === "dark" ? "light" : "dark"
-    );
+    // setColorScheme((prev: "dark" | "light") =>
+    //   prev === "dark" ? "light" : "dark"
+    // );
+
+    setMode(mode === "light" ? "dark" : "light");
   }
 
   const appClasses = classNames(styles.App, {});
 
   return (
-    <div
-      className={appClasses}
-      data-color-scheme={colorScheme}
-      data-testid="app">
+    <div className={appClasses} data-color-scheme={mode} data-testid="app">
       <h1>Shopping cart</h1>
       <button onClick={handleDarkModeToggle}>toggle dark mode</button>
     </div>

@@ -68,9 +68,7 @@ it(`sets state to "light" if prefer-color-scheme doesn't match "dark"`, () => {
   expect(value).toBe("light");
 });
 
-it(`triggers change event"`, () => {
-  let eventHandler = jest.fn().mockName("event handler");
-
+it(`triggers change event is matches and sets dark mode`, () => {
   Object.defineProperty(window, "matchMedia", {
     writable: true,
     value: (query: any) => ({
@@ -80,34 +78,46 @@ it(`triggers change event"`, () => {
       addListener: jest.fn(), // Deprecated
       removeListener: jest.fn(), // Deprecated
 
-      addEventListener: eventHandler,
-
-      // addEventListener: jest.fn((arg, cb) => {
-      //   // eventHandler();
-      //   // eventHandler.mockImplementation(cb)();
-      //   cb();
-      // }),
+      addEventListener: jest.fn((arg, cb) => {
+        cb();
+      }),
       removeEventListener: jest.fn(),
       dispatchEvent: jest.fn(),
     }),
   });
-  Storage.prototype.getItem = () => null;
 
-  // (window.addEventListener as jest.Mock).mockImplementation((type, cb) => cb());
-  // (window.addEventListener as jest.Mock)
-  //   .mockImplementation(() => {})
-  //   .mockName("event listener");
+  Storage.prototype.getItem = () => null;
 
   const { result } = renderHook(useDarkMode);
 
   const [value, setValue] = result.current;
 
-  const a = jest.fn((arg) => {});
-  eventHandler.mockImplementation((arg) => {
-    a(arg);
-  });
-  // const spy = jest.spyOn(a, "setValue");
+  expect(value).toBe("dark");
+});
 
-  // console.log(result.current);
-  expect(a).toHaveBeenCalledWith("");
+it(`triggers change event is not matches and sets light mode`, () => {
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: (query: any) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(), // Deprecated
+      removeListener: jest.fn(), // Deprecated
+
+      addEventListener: jest.fn((arg, cb) => {
+        cb();
+      }),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    }),
+  });
+
+  Storage.prototype.getItem = () => null;
+
+  const { result } = renderHook(useDarkMode);
+
+  const [value, setValue] = result.current;
+
+  expect(value).toBe("light");
 });

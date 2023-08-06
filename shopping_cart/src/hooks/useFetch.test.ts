@@ -26,11 +26,13 @@ it("fails to fetch, no response, network request failed", async () => {
   const { result } = renderHook(() => useFetch(""));
 
   const response = result.current;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let { data, isLoading, isError, errorMessage } = response;
   expect(isLoading).toBe(true);
 
   await waitFor(() => {
     const response = result.current;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     let { data, isLoading, isError, errorMessage } = response;
     // console.log("response:", response);
 
@@ -41,21 +43,20 @@ it("fails to fetch, no response, network request failed", async () => {
 });
 
 it("successfully fetches data", async () => {
-  // global.fetch = jest.fn(() =>
-  //   Promise.resolve({
-  //     ok: true,
-  //     json: () => Promise.resolve({ test: 200 }),
-  //   })
-  // ) as jest.Mock;
+  global.fetch = jest.fn(() =>
+    Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve({ test: 200 }),
+    })
+  ) as jest.Mock;
 
   // expect.assertions(2);
 
   // "https://fakestoreapi.com/products"
-  const { result } = renderHook(() =>
-    useFetch("https://fakestoreapi.com/products")
-  );
+  const { result } = renderHook(() => useFetch("some valid url"));
 
   const response = result.current;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let { data, isLoading, isError, errorMessage } = response;
   // console.log("initial:", response);
   expect(isLoading).toBe(true);
@@ -69,10 +70,11 @@ it("successfully fetches data", async () => {
     errorMessage = response.errorMessage;
 
     // console.log(response);
+
     expect(isLoading).toBe(false);
   });
   // console.log(data);
-  expect(data).not.toBeNull();
+  expect(data).toEqual({ test: 200 });
 });
 
 it("fetches data with error", async () => {
@@ -91,6 +93,7 @@ it("fetches data with error", async () => {
   );
 
   const response = result.current;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let { data, isLoading, isError, errorMessage } = response;
   // console.log("initial:", response);
   expect(isLoading).toBe(true);

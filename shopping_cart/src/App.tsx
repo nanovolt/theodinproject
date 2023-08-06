@@ -1,10 +1,14 @@
 import styles from "./App.module.scss";
 import { useDarkMode } from "./hooks/useDarkMode";
 import classNames from "classnames";
+// import { useFetch } from "./hooks/useFetch";s
 
 function App() {
   // const defaultDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  // const { data, isLoading, isError, errorMessage } = useFetch("")
 
+  // const response = useFetch("https://fakestoreapi.com/products");
+  // console.log(response);
   const [mode, setMode] = useDarkMode();
   // const [colorScheme, setColorScheme] = useLocalStorage(
   //   defaultDark ? "dark" : "light",

@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
 import styles from "./App.module.scss";
-import { Header } from "./Header";
+import { Header } from "./components/Header";
 import { useDarkMode } from "./hooks/useDarkMode";
 import classNames from "classnames";
-import { Footer } from "./Footer";
+import { Footer } from "./components/Footer";
 // import { useFetch } from "./hooks/useFetch";s
 
 function App() {

@@ -1,8 +1,8 @@
 import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 import App from "./App";
-import { Home } from "./Home";
-import { Shop } from "./Shop";
-import { About } from "./About";
+import { Home } from "./components/Home";
+import { Shop } from "./components/Shop";
+import { About } from "./components/About";
 
 export function Router() {
   const router = createBrowserRouter([

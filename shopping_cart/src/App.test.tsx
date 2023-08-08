@@ -5,11 +5,11 @@ import { useDarkMode } from "./hooks/useDarkMode";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+// import { Link, Route, Routes, useLocation } from "react-router-dom";
 
 import {
-  createBrowserRouter,
-  RouterProvider,
+  // createBrowserRouter,
+  // RouterProvider,
   BrowserRouter,
 } from "react-router-dom";
 
@@ -69,22 +69,25 @@ beforeEach(() => {
   (useDarkMode as jest.Mock).mockReturnValue(["dark", jest.fn()]);
 });
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-  },
-]);
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <App />,
+//   },
+// ]);
 
-it("renders shopping cart heading", () => {
+it("renders home link", () => {
   // render(<RouterProvider router={router} />);
-  render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  );
-  const heading = screen.getByText(/Home/i);
-  expect(heading).toBeInTheDocument();
+  // render(
+  //   <BrowserRouter>
+  //     <App />
+  //   </BrowserRouter>
+  // );
+
+  render(<App />, { wrapper: BrowserRouter });
+
+  const homeLink = screen.getByText(/Home/i);
+  expect(homeLink).toBeInTheDocument();
 });
 
 it(`calls useDarkMode hook`, () => {

@@ -11,13 +11,13 @@ export function Header({ handleToggle }: Props) {
       <nav className={styles.nav}>
         <ul>
           <li>
-            <Link to="/shopping_cart/">Home</Link>
+            <Link to="/theodinproject/shopping_cart">Home</Link>
           </li>
           <li>
-            <Link to="/shopping_cart/shop">Shop</Link>
+            <Link to="/theodinproject/shopping_cart/shop">Shop</Link>
           </li>
           <li>
-            <Link to="/shopping_cart/about">About</Link>
+            <Link to="/theodinproject/shopping_cart/about">About</Link>
           </li>
         </ul>
       </nav>

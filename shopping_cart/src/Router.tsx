@@ -8,11 +8,11 @@ export function Router() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <a href="shopping_cart">shopping_cart</a>,
+      element: <a href="theodinproject/shopping_cart">shopping_cart</a>,
       errorElement: "error",
     },
     {
-      path: "/shopping_cart",
+      path: "/theodinproject/shopping_cart",
       element: <App />,
       children: [
         {

@@ -1,0 +1,30 @@
+@use "variables";
+
+header {
+  display: flex;
+  justify-items: center;
+  background-color: var(--background);
+}
+
+nav {
+  padding: 8px;
+  width: clamp(300px, 100%, 1440px);
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+
+  li {
+    padding: 8px;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+}

@@ -5,6 +5,14 @@ import { useDarkMode } from "./hooks/useDarkMode";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 
+import { Link, Route, Routes, useLocation } from "react-router-dom";
+
+import {
+  createBrowserRouter,
+  RouterProvider,
+  BrowserRouter,
+} from "react-router-dom";
+
 // jest.mock("./hooks/useLocalStorage", () => () => ["mock value", () => {}]);
 
 // jest.mock("./hooks/useLocalStorage", () => {
@@ -61,20 +69,43 @@ beforeEach(() => {
   (useDarkMode as jest.Mock).mockReturnValue(["dark", jest.fn()]);
 });
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+  },
+]);
+
 it("renders shopping cart heading", () => {
-  render(<App />);
-  const heading = screen.getByText(/Shopping cart/i);
+  // render(<RouterProvider router={router} />);
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
+  const heading = screen.getByText(/Home/i);
   expect(heading).toBeInTheDocument();
 });
 
 it(`calls useDarkMode hook`, () => {
-  render(<App />);
+  // render(<App />);
+  // render(<RouterProvider router={router} />);
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
   expect(useDarkMode).toHaveBeenCalledTimes(1);
 });
 
 it("sets dark mode on app component", () => {
-  render(<App />);
-
+  // render(<App />);
+  // render(<RouterProvider router={router} />);
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
   expect(screen.getByTestId("app")).toHaveAttribute(
     "data-color-scheme",
     "dark"
@@ -85,7 +116,13 @@ it("toggles light mode on click", () => {
   const mockSetMode = jest.fn((arg) => {}).mockName("mockSetMode");
   (useDarkMode as jest.Mock).mockReturnValue(["dark", mockSetMode]);
 
-  render(<App />);
+  // render(<App />);
+  // render(<RouterProvider router={router} />);
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
 
   userEvent.click(screen.getByText(/toggle dark mode/));
   expect(mockSetMode).toHaveBeenCalledWith("light");
@@ -95,7 +132,13 @@ it("toggles dark mode on click", () => {
   const mockSetMode = jest.fn((arg) => {}).mockName("mockSetMode");
   (useDarkMode as jest.Mock).mockReturnValue(["light", mockSetMode]);
 
-  render(<App />);
+  // render(<App />);
+  // render(<RouterProvider router={router} />);
+  render(
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
 
   userEvent.click(screen.getByText(/toggle dark mode/));
   expect(mockSetMode).toHaveBeenCalledWith("dark");

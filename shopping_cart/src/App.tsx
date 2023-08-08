@@ -1,6 +1,9 @@
+import { Outlet } from "react-router-dom";
 import styles from "./App.module.scss";
+import { Header } from "./Header";
 import { useDarkMode } from "./hooks/useDarkMode";
 import classNames from "classnames";
+import { Footer } from "./Footer";
 // import { useFetch } from "./hooks/useFetch";s
 
 function App() {
@@ -27,8 +30,11 @@ function App() {
 
   return (
     <div className={appClasses} data-color-scheme={mode} data-testid="app">
-      <h1>Shopping cart</h1>
-      <button onClick={handleDarkModeToggle}>toggle dark mode</button>
+      <Header handleToggle={handleDarkModeToggle} />
+      <main>
+        <Outlet />
+      </main>
+      <Footer />
     </div>
   );
 }

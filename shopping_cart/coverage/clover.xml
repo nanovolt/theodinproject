@@ -1,15 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1691316421964" clover="3.2.0">
-  <project timestamp="1691316421964" name="All files">
-    <metrics statements="37" coveredstatements="37" conditionals="12" coveredconditionals="12" methods="11" coveredmethods="11" elements="60" coveredelements="60" complexity="0" loc="37" ncloc="37" packages="2" files="4" classes="4"/>
+<coverage generated="1691492534250" clover="3.2.0">
+  <project timestamp="1691492534250" name="All files">
+    <metrics statements="45" coveredstatements="40" conditionals="12" coveredconditionals="12" methods="17" coveredmethods="13" elements="74" coveredelements="65" complexity="0" loc="45" ncloc="45" packages="2" files="10" classes="10"/>
     <package name="src">
-      <metrics statements="6" coveredstatements="6" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+      <metrics statements="14" coveredstatements="9" conditionals="2" coveredconditionals="2" methods="8" coveredmethods="4"/>
+      <file name="About.tsx" path="/home/fdr/all/dev/theodinproject/shopping_cart/src/About.tsx">
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="2" count="0" type="stmt"/>
+      </file>
       <file name="App.tsx" path="/home/fdr/all/dev/theodinproject/shopping_cart/src/App.tsx">
         <metrics statements="4" coveredstatements="4" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
-        <line num="12" count="5" type="stmt"/>
-        <line num="23" count="2" type="cond" truecount="2" falsecount="0"/>
-        <line num="26" count="5" type="stmt"/>
-        <line num="28" count="5" type="stmt"/>
+        <line num="15" count="5" type="stmt"/>
+        <line num="26" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="29" count="5" type="stmt"/>
+        <line num="31" count="5" type="stmt"/>
+      </file>
+      <file name="Footer.tsx" path="/home/fdr/all/dev/theodinproject/shopping_cart/src/Footer.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="6" count="5" type="stmt"/>
+        <line num="8" count="5" type="stmt"/>
+      </file>
+      <file name="Header.tsx" path="/home/fdr/all/dev/theodinproject/shopping_cart/src/Header.tsx">
+        <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <line num="9" count="5" type="stmt"/>
+      </file>
+      <file name="Home.tsx" path="/home/fdr/all/dev/theodinproject/shopping_cart/src/Home.tsx">
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="2" count="0" type="stmt"/>
+      </file>
+      <file name="Router.tsx" path="/home/fdr/all/dev/theodinproject/shopping_cart/src/Router.tsx">
+        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+      </file>
+      <file name="Shop.tsx" path="/home/fdr/all/dev/theodinproject/shopping_cart/src/Shop.tsx">
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="2" count="0" type="stmt"/>
       </file>
       <file name="index.tsx" path="/home/fdr/all/dev/theodinproject/shopping_cart/src/index.tsx">
         <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>

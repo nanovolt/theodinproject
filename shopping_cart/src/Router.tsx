@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 import App from "./App";
 import { Home } from "./Home";
 import { Shop } from "./Shop";
@@ -8,7 +8,7 @@ export function Router() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <a href="theodinproject/shopping_cart">shopping_cart</a>,
+      element: <Link to="theodinproject/shopping_cart">shopping_cart</Link>,
       errorElement: "error",
     },
     {

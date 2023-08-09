@@ -7,21 +7,25 @@ type Props = {
 
 export function Header({ handleToggle }: Props) {
   return (
-    <header>
-      <nav className={styles.nav}>
-        <ul>
-          <li>
-            <Link to="/theodinproject/shopping_cart">Home</Link>
-          </li>
-          <li>
-            <Link to="/theodinproject/shopping_cart/shop">Shop</Link>
-          </li>
-          <li>
-            <Link to="/theodinproject/shopping_cart/about">About</Link>
-          </li>
-        </ul>
-      </nav>
-      <button onClick={handleToggle}>toggle dark mode</button>
-    </header>
+    <div className={styles.wrapper}>
+      <header>
+        <nav className={styles.nav}>
+          <ul>
+            <li>
+              <Link to="/theodinproject/shopping_cart">Home</Link>
+            </li>
+            <li>
+              <Link to="/theodinproject/shopping_cart/shop">Shop</Link>
+            </li>
+            <li>
+              <Link to="/theodinproject/shopping_cart/about">About</Link>
+            </li>
+          </ul>
+        </nav>
+        <button onClick={handleToggle} className={styles.darkModeToggle}>
+          toggle dark mode
+        </button>
+      </header>
+    </div>
   );
 }

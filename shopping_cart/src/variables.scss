@@ -3,11 +3,15 @@
   --text-primary: #222;
   --text-secondary: royalblue;
   --accent: purple;
+  --blur-accent: rgba(255, 255, 255, 0.4);
 }
+
+$bg-image: "../../public/bg-medium.jpg";
 
 [data-color-scheme="dark"] {
   --background: #222;
   --text-primary: rgb(222, 222, 222);
   --text-secondary: grey;
   --accent: darkred;
+  --blur-accent: rgba(0, 0, 0, 0.8);
 }

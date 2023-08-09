@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1691511294747" clover="3.2.0">
-  <project timestamp="1691511294747" name="All files">
+<coverage generated="1691559026376" clover="3.2.0">
+  <project timestamp="1691559026376" name="All files">
     <metrics statements="51" coveredstatements="51" conditionals="12" coveredconditionals="12" methods="20" coveredmethods="20" elements="83" coveredelements="83" complexity="0" loc="51" ncloc="51" packages="3" files="10" classes="10"/>
     <package name="src">
       <metrics statements="8" coveredstatements="8" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
@@ -41,9 +41,9 @@
       </file>
       <file name="Home.tsx" path="/home/fdr/all/dev/theodinproject/shopping_cart/src/components/Home.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="1" type="stmt"/>
-        <line num="5" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
       </file>
       <file name="Shop.tsx" path="/home/fdr/all/dev/theodinproject/shopping_cart/src/components/Shop.tsx">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>

@@ -11,6 +11,8 @@ header {
   width: clamp(300px, 100%, 1080px);
   margin: 0 auto;
   display: flex;
+  gap: 8px;
+  align-items: center;
   // grid-auto-flow: column;
   // justify-content: center;
 }
@@ -45,4 +47,24 @@ ul {
   background-color: var(--background);
   color: var(--text-primary);
   cursor: pointer;
+}
+
+.cart {
+  display: flex;
+  gap: 4px;
+  width: 48px;
+  justify-content: flex-end;
+  align-items: center;
+  color: var(--text-primary);
+}
+
+.number {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.cartButton {
+  border: 2px solid black;
+  width: 24px;
+  height: 24px;
 }

@@ -3,6 +3,7 @@ import App from "./App";
 import { Home } from "./components/Home";
 import { Shop } from "./components/Shop";
 import { About } from "./components/About";
+import { Cart } from "./components/Cart";
 
 export function Router() {
   const router = createBrowserRouter([
@@ -26,6 +27,10 @@ export function Router() {
         {
           path: "about",
           element: <About />,
+        },
+        {
+          path: "cart",
+          element: <Cart />,
         },
       ],
     },

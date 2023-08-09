@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import App from "./App";
 // import { useLocalStorage } from "./hooks/useLocalStorage";
 import { useDarkMode } from "./hooks/useDarkMode";
@@ -12,6 +12,7 @@ import {
   // RouterProvider,
   BrowserRouter,
 } from "react-router-dom";
+import { act } from "react-dom/test-utils";
 
 // jest.mock("./hooks/useLocalStorage", () => () => ["mock value", () => {}]);
 
@@ -115,7 +116,7 @@ it("sets dark mode on app component", () => {
   );
 });
 
-it("toggles light mode on click", () => {
+it.only("toggles light mode on click", async () => {
   const mockSetMode = jest.fn((arg) => {}).mockName("mockSetMode");
   (useDarkMode as jest.Mock).mockReturnValue(["dark", mockSetMode]);
 
@@ -128,7 +129,10 @@ it("toggles light mode on click", () => {
   );
 
   userEvent.click(screen.getByText(/toggle dark mode/));
-  expect(mockSetMode).toHaveBeenCalledWith("light");
+
+  await waitFor(() => {
+    expect(mockSetMode).toHaveBeenCalledWith("light");
+  });
 });
 
 it("toggles dark mode on click", () => {

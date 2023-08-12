@@ -1,10 +1,10 @@
 // import { useAddCartItem } from "../App";
 import styles from "./Cart.module.scss";
-import { CartContext } from "../App";
 import { useContext } from "react";
 import { Button } from "./Button";
 import CartItem from "./CartItem";
 import { Link } from "react-router-dom";
+import { CartContext } from "../context/CartConext";
 
 export function Cart() {
   // const { cartNumber } = useNumber();

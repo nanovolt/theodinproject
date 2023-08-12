@@ -6,27 +6,15 @@ import { Header } from "./components/Header";
 import { useDarkMode } from "./hooks/useDarkMode";
 import { Footer } from "./components/Footer";
 import { useState } from "react";
-// import { useFetch } from "./hooks/useFetch";
-import { CartItemType, CartContextType, Product } from "./types/types";
-// import { CartContext } from "./context/CartContext";
-import { createContext } from "react";
+import { CartItemType, Product } from "./types/types";
 import { DarkModeContext } from "./context/DarkModeContext";
+import { CartContext } from "./context/CartConext";
 
 // export const CartContext = createContext({
 //   cartItems:  [],
 //   currentAmount: 0,
 //   add: (product: Product) => {},
 // });
-
-export const CartContext = createContext<CartContextType>({
-  cartItems: [],
-  currentAmount: 0,
-  grandTotal: 0,
-  addCartItem: (item: Product) => {},
-  removeCartItem: (item: Product) => {},
-  deleteCartItem: (item: CartItemType) => {},
-  clearCart: () => {},
-});
 
 // const CartContext = createContext({
 //   cartItems: [],

@@ -1,10 +1,11 @@
 import styles from "./CartButton.module.scss";
-import { CartContext } from "../App";
+
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
+import { CartContext } from "../context/CartConext";
 
 export function CartButton() {
   const { currentAmount } = useContext(CartContext);

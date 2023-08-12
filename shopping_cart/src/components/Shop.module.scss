@@ -1,0 +1,42 @@
+.shop {
+  display: flex;
+  flex-wrap: wrap;
+  // grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  flex: 1;
+  width: clamp(300px, 100%, 1080px);
+  margin: 0 auto;
+  padding: 16px;
+  background-color: white;
+}
+
+.center {
+  display: grid;
+  place-items: center;
+}
+
+.left {
+  min-width: 240px;
+  flex: 1;
+
+  h2 {
+    margin-bottom: 8px;
+  }
+
+  .categories {
+    display: grid;
+    gap: 8px;
+    font-size: 18px;
+    // font-weight: 600;
+    a {
+      padding: 8px;
+    }
+    a.active {
+      background-color: rgb(204, 204, 204);
+    }
+  }
+}
+
+// flex is bigger than 2x minmax (2 x 240px)+ include a bit for padding
+.right {
+  flex: 3 510px;
+}

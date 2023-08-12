@@ -116,7 +116,9 @@ it("sets dark mode on app component", () => {
   );
 });
 
-it.only("toggles light mode on click", async () => {
+it("toggles light mode on click", async () => {
+  const user = userEvent.setup();
+
   const mockSetMode = jest.fn((arg) => {}).mockName("mockSetMode");
   (useDarkMode as jest.Mock).mockReturnValue(["dark", mockSetMode]);
 
@@ -128,14 +130,18 @@ it.only("toggles light mode on click", async () => {
     </BrowserRouter>
   );
 
-  userEvent.click(screen.getByText(/toggle dark mode/));
+  await act(async () => {
+    await user.click(screen.getByTestId("darkModeToggle"));
+  });
 
   await waitFor(() => {
     expect(mockSetMode).toHaveBeenCalledWith("light");
   });
 });
 
-it("toggles dark mode on click", () => {
+it("toggles dark mode on click", async () => {
+  const user = userEvent.setup();
+
   const mockSetMode = jest.fn((arg) => {}).mockName("mockSetMode");
   (useDarkMode as jest.Mock).mockReturnValue(["light", mockSetMode]);
 
@@ -147,6 +153,11 @@ it("toggles dark mode on click", () => {
     </BrowserRouter>
   );
 
-  userEvent.click(screen.getByText(/toggle dark mode/));
-  expect(mockSetMode).toHaveBeenCalledWith("dark");
+  await act(async () => {
+    await user.click(screen.getByTestId("darkModeToggle"));
+  });
+
+  await waitFor(() => {
+    expect(mockSetMode).toHaveBeenCalledWith("dark");
+  });
 });

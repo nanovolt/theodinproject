@@ -1,0 +1,20 @@
+@import "../variables.scss";
+
+.cart {
+  color: var(--text-primary);
+}
+
+.cartButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-primary);
+
+  .number {
+    font-size: 20px;
+    width: 24px;
+    font-weight: 600;
+    text-align: end;
+  }
+}

@@ -1,0 +1,54 @@
+.item {
+  display: grid;
+  gap: 8px;
+  border: 1px solid black;
+  padding: 8px;
+  align-items: center;
+
+  grid-template-columns: 1fr 2fr 1fr;
+  justify-items: center;
+  .imageBox {
+    grid-area: 1 / 1 / 3 / 2;
+  }
+
+  .title {
+    grid-area: 1 / 2 / 2 / 3;
+  }
+
+  .controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 18px;
+  }
+
+  .price {
+    grid-area: 1 / 3 / 2 / 4;
+    width: max-content;
+  }
+
+  .total {
+    grid-area: 2 / 3 / 3 / 4;
+    width: max-content;
+    font-size: 18;
+    font-weight: 600;
+  }
+
+  .amount {
+    width: 24px;
+    text-align: center;
+  }
+
+  .image {
+    max-width: 64px;
+    // aspect-ratio: 1;
+    // height: 100%;
+    object-fit: cover;
+  }
+
+  .delete {
+    grid-area: 3 / 1 / 3 / 4;
+    text-align: end;
+    justify-self: flex-end;
+  }
+}

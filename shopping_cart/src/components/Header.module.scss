@@ -13,12 +13,13 @@ header {
   display: flex;
   gap: 8px;
   align-items: center;
+  padding: 8px;
   // grid-auto-flow: column;
   // justify-content: center;
 }
 
 nav {
-  padding: 8px;
+  padding: 8px 0;
   flex: 1;
 }
 
@@ -28,11 +29,7 @@ ul {
   padding: 0;
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
-
-  li {
-    padding: 8px;
-  }
+  gap: 16px;
 
   a {
     text-decoration: none;
@@ -41,30 +38,16 @@ ul {
 }
 
 .darkModeToggle {
-  padding: 4px 16px;
+  // padding: 4px 16px;
   border: none;
-  outline: 2px solid #555;
+  // outline: 2px solid #555;
   background-color: var(--background);
-  color: var(--text-primary);
+  // color: var(--text-primary);
   cursor: pointer;
+  width: 32px;
+  height: 32px;
 }
 
-.cart {
-  display: flex;
-  gap: 4px;
-  width: 48px;
-  justify-content: flex-end;
-  align-items: center;
+.toggleIcon {
   color: var(--text-primary);
-}
-
-.number {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.cartButton {
-  border: 2px solid black;
-  width: 24px;
-  height: 24px;
 }

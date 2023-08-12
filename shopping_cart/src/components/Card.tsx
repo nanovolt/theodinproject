@@ -1,7 +1,7 @@
 import styles from "./Card.module.scss";
 
 import { useContext } from "react";
-import { CartItemType, Product } from "../types/types";
+import { Product } from "../types/types";
 import { Link } from "react-router-dom";
 import { Button } from "./Button";
 import { CartContext } from "../context/CartConext";

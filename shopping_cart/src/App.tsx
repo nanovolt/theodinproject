@@ -112,15 +112,15 @@ function App() {
       );
 
       setTotal((prev) => {
-        console.log("prev:", prev);
-        console.log("i.price:", item.price);
+        // console.log("prev:", prev);
+        // console.log("i.price:", item.price);
 
         const grand =
           Math.round((prev + item.price + Number.EPSILON) * 100) / 100;
         return grand;
       });
     } else {
-      console.log("pushing...");
+      // console.log("pushing...");
       setCurrentAmount((prev) => prev + 1);
 
       setTotal((prev) => {

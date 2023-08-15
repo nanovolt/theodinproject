@@ -2,13 +2,14 @@ import styles from "./App.module.scss";
 import classNames from "classnames";
 
 import { Outlet } from "react-router-dom";
-import { Header } from "./components/Header";
+// import { Header } from "./components/Header";
 import { useDarkMode } from "./hooks/useDarkMode";
 import { Footer } from "./components/Footer";
-import { useState } from "react";
-import { CartItemType, Product } from "./types/types";
-import { DarkModeContext } from "./context/DarkModeContext";
-import { CartContext } from "./context/CartConext";
+import { useState, useReducer } from "react";
+import { Cart, CartItemType, Product } from "./types/types";
+// import { DarkModeContext } from "./context/DarkModeContext";
+import { CartProvider } from "./context/CartConext";
+import { Card } from "./components/Card";
 
 // export const CartContext = createContext({
 //   cartItems:  [],
@@ -39,6 +40,12 @@ function App() {
   const [currentAmount, setCurrentAmount] = useState(0);
   const [grandTotal, setTotal] = useState(0);
 
+  const initialCartState = {
+    items: [],
+    itemsAmount: 0,
+    grandTotal: 0,
+  };
+
   function handleDarkModeToggle() {
     // setColorScheme((prev: "dark" | "light") =>
     //   prev === "dark" ? "light" : "dark"
@@ -51,28 +58,20 @@ function App() {
     setCartItems((prev) =>
       prev.map((i) => {
         if (i.id === item.id) {
-          // const a = i.amount + 1;
-
-          // console.log("remove");
-
           if (i.amount === 1) {
-            // console.log("return");
             return i;
           }
 
-          const t =
-            Math.round((i.total - i.price + Number.EPSILON) * 100) / 100;
+          const t = Math.round((i.total - i.price + Number.EPSILON) * 100) / 100;
 
           return { ...i, amount: i.amount - 1, total: t };
-          // return { ...i, amount: i.amount + 1 };
         }
         return i;
       })
     );
 
     setTotal((prev) => {
-      const grand =
-        Math.round((prev - item.price + Number.EPSILON) * 100) / 100;
+      const grand = Math.round((prev - item.price + Number.EPSILON) * 100) / 100;
       return grand;
     });
   }
@@ -81,9 +80,7 @@ function App() {
     // console.log("delete:", item.id);
 
     setTotal((prev) => {
-      const grand =
-        Math.round((prev - item.price * item.amount + Number.EPSILON) * 100) /
-        100;
+      const grand = Math.round((prev - item.price * item.amount + Number.EPSILON) * 100) / 100;
       return grand;
     });
     setCurrentAmount((prev) => prev - 1);
@@ -99,11 +96,7 @@ function App() {
       setCartItems((prev) =>
         prev.map((i) => {
           if (i.id === found.id) {
-            // const a = i.amount + 1;
-            // console.log("i++");
-
-            const t =
-              Math.round((i.total + i.price + Number.EPSILON) * 100) / 100;
+            const t = Math.round((i.total + i.price + Number.EPSILON) * 100) / 100;
             // causes updates twice with strict mode if return i.amount + 1;
             return { ...i, amount: i.amount + 1, total: t };
           }
@@ -115,8 +108,7 @@ function App() {
         // console.log("prev:", prev);
         // console.log("i.price:", item.price);
 
-        const grand =
-          Math.round((prev + item.price + Number.EPSILON) * 100) / 100;
+        const grand = Math.round((prev + item.price + Number.EPSILON) * 100) / 100;
         return grand;
       });
     } else {
@@ -124,14 +116,10 @@ function App() {
       setCurrentAmount((prev) => prev + 1);
 
       setTotal((prev) => {
-        const grand =
-          Math.round((prev + item.price + Number.EPSILON) * 100) / 100;
+        const grand = Math.round((prev + item.price + Number.EPSILON) * 100) / 100;
         return grand;
       });
-      setCartItems((prev) => [
-        ...prev,
-        { ...item, amount: 1, total: item.price },
-      ]);
+      setCartItems((prev) => [...prev, { ...item, amount: 1, total: item.price }]);
     }
   }
 
@@ -152,37 +140,50 @@ function App() {
 
   // const CC = { cartItems, currentAmount, addCartItem, removeCartItem };
 
+  const myProduct: Product = {
+    id: 2,
+    title: "test title",
+    image: "test image",
+    price: 42,
+  };
+
   return (
-    <DarkModeContext.Provider value={{ mode }}>
-      <CartContext.Provider
-        value={{
-          cartItems,
-          currentAmount,
-          addCartItem,
-          removeCartItem,
-          grandTotal,
-          deleteCartItem,
-          clearCart,
-        }}>
-        <div className={appClasses} data-color-scheme={mode} data-testid="app">
-          <Header handleDarkModeToggle={handleDarkModeToggle} />
-
-          {/* <input type="number" name="" id="" onChange={onChange} /> */}
-
-          {/* <button onClick={add}>global add</button> */}
-          {/* <div>n: {n}</div> */}
-          <main>
-            <Outlet
-            // context={
-            //   { currentAmount, addCartItem } satisfies AddCartItemContextType
-            // }
-            />
-          </main>
-          <Footer />
-        </div>
-      </CartContext.Provider>
-    </DarkModeContext.Provider>
+    <CartProvider>
+      <Card product={myProduct}></Card>
+    </CartProvider>
   );
+
+  // return (
+  //   <DarkModeContext.Provider value={{ mode }}>
+  //     <CartContext.Provider
+  //       value={{
+  //         cartItems,
+  //         currentAmount,
+  //         addCartItem,
+  //         removeCartItem,
+  //         grandTotal,
+  //         deleteCartItem,
+  //         clearCart,
+  //       }}>
+  //       <div className={appClasses} data-color-scheme={mode} data-testid="app">
+  //         <Header handleDarkModeToggle={handleDarkModeToggle} />
+
+  //         {/* <input type="number" name="" id="" onChange={onChange} /> */}
+
+  //         {/* <button onClick={add}>global add</button> */}
+  //         {/* <div>n: {n}</div> */}
+  //         <main>
+  //           <Outlet
+  //           // context={
+  //           //   { currentAmount, addCartItem } satisfies AddCartItemContextType
+  //           // }
+  //           />
+  //         </main>
+  //         <Footer />
+  //       </div>
+  //     </CartContext.Provider>
+  //   </DarkModeContext.Provider>
+  // );
 }
 
 // export function useAddCartItem() {

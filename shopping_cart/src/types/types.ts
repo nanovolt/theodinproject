@@ -10,12 +10,25 @@ export type CartItemType = Product & {
   total: number;
 };
 
-export type CartContextType = {
-  cartItems: CartItemType[];
-  currentAmount: number;
+export type Cart = {
+  items: CartItemType[];
+  itemsAmount: number;
   grandTotal: number;
-  addCartItem: (item: Product) => void;
-  removeCartItem: (item: Product) => void;
-  deleteCartItem: (item: CartItemType) => void;
-  clearCart: () => void;
+};
+
+// export type CartDispatch = {
+//   addCartItem: (item: Product) => void;
+//   removeCartItem: (item: Product) => void;
+//   deleteCartItem: (item: CartItemType) => void;
+//   clearCart: () => void;
+// };
+
+export type CartAction = {
+  type: string;
+  product?: Product;
+};
+
+export type DarkModeAction = {
+  type: string;
+  mode: "dark" | "light";
 };

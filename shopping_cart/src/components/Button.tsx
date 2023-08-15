@@ -10,13 +10,7 @@ type Props = {
   style?: {};
 };
 
-export function Button({
-  className,
-  onClick,
-  children,
-  disabled,
-  style,
-}: Props) {
+export function Button({ className, onClick, children, disabled, style }: Props) {
   const cn = classNames(styles.button, className);
   return (
     <button style={style} className={cn} onClick={onClick} disabled={disabled}>

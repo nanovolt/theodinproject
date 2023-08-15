@@ -8,8 +8,8 @@ import App from "./App";
 import { Home } from "./components/Home";
 import { Shop } from "./components/Shop";
 import { About } from "./components/About";
-import { Cart } from "./components/Cart";
-import { Products } from "./components/Products";
+// import { Cart } from "./components/Cart";
+// import { Products } from "./components/Products";
 
 export function Router() {
   const router = createBrowserRouter([
@@ -37,47 +37,20 @@ export function Router() {
           element: <Shop />,
           children: [
             // {
-            //   index: true,
+            //   path: ":category",
             //   element: <Products />,
-            // },
-            {
-              path: ":category",
-              element: <Products />,
-            },
-            // {
-            //   path: "men's-clothing",
-            //   element: "men's clothing",
-            // },
-            // {
-            //   path: "women's-clothing",
-            //   element: "women's clothing",
-            // },
-            // {
-            //   path: "jewelry",
-            //   element: "jewelry",
-            // },
-            // {
-            //   path: "electronics",
-            //   element: "electronics",
             // },
           ],
         },
-        // {
-        //   path: "shop/:category",
-        //   element: <Products />,
-        // },
-        // {
-        //   path: "shop/:category",
-        //   element: <Products />,
-        // },
+
         {
           path: "about",
           element: <About />,
         },
-        {
-          path: "cart",
-          element: <Cart />,
-        },
+        // {
+        //   path: "cart",
+        //   element: <Cart />,
+        // },
       ],
     },
   ]);

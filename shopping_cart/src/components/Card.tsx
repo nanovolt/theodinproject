@@ -1,37 +1,61 @@
 import styles from "./Card.module.scss";
 
-import { useContext } from "react";
 import { Product } from "../types/types";
 import { Link } from "react-router-dom";
 import { Button } from "./Button";
-import { CartContext } from "../context/CartConext";
+import { useCart, useCartDispatch } from "../context/CartConext";
 
-export function Card(props: Product) {
-  const { addCartItem, removeCartItem, cartItems } = useContext(CartContext);
+type Props = {
+  product: Product;
+};
 
-  const { id, title, price, image } = props;
-  const cartItem = cartItems.find((item) => item.id === id);
+export function Card({ product }: Props) {
+  const cart = useCart();
+  const cartDispatch = useCartDispatch();
+
+  // console.log("cart:", cart);
+  const { id, title, price, image } = product;
+  const cartItem = cart.items.find((item) => item.id === id);
 
   return (
-    <div className={styles.card} id={String(id)}>
-      <div className={styles.title}>{title}</div>
+    <section className={styles.card} aria-label="Product">
+      <h3 className={styles.title}>{title}</h3>
       <img className={styles.image} src={image} alt="" srcSet="" />
-      <div className={styles.price}>$ {price}</div>
+      <div className={styles.price} aria-label={`Price: $${price}`}>
+        $ {price}
+      </div>
 
       <div className={styles.cartControls}>
         {cartItem && (
           <Button
-            onClick={() => removeCartItem(props)}
+            onClick={() => {
+              cartDispatch({
+                type: "removed_item",
+                product: product,
+              });
+            }}
             disabled={cartItem && cartItem.amount <= 1}>
             -
           </Button>
         )}
 
-        {cartItem && <div className={styles.amount}>{cartItem.amount}</div>}
+        {cartItem && (
+          <div
+            className={styles.amount}
+            aria-label={`In the cart: ${cartItem.amount}`}
+            aria-live="assertive">
+            {cartItem.amount}
+          </div>
+        )}
 
         <Button
           disabled={cartItem && cartItem.amount >= 10}
-          onClick={() => addCartItem(props)}>
+          onClick={() => {
+            cartDispatch({
+              type: "added_item",
+              product: product,
+            });
+          }}>
           {cartItem ? "+" : "Add to cart"}
         </Button>
 
@@ -41,6 +65,6 @@ export function Card(props: Product) {
           </Link>
         )}
       </div>
-    </div>
+    </section>
   );
 }

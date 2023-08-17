@@ -24,7 +24,9 @@ export type Cart = {
 // };
 
 export type CartAction = {
-  type: string;
+  type: "added_item" | "removed_item" | "deleted_item" | "cleared_cart";
+  // type: string;
+
   product?: Product;
 };
 

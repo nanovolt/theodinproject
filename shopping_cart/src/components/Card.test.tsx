@@ -1,7 +1,7 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { Card } from "./Card";
 import { BrowserRouter } from "react-router-dom";
-import { CartProvider } from "../context/CartConext";
+import { CartProvider } from "../context/CartContext";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 
@@ -41,10 +41,7 @@ it("adds a product to the cart", async () => {
     await user.click(addButton);
   });
 
-  await waitFor(() => {
-    expect(screen.getByRole("generic", { name: "In the cart: 1" })).toBeVisible();
-  });
-
+  expect(screen.getByRole("generic", { name: "In the cart: 1" })).toBeVisible();
   expect(screen.queryByRole("button", { name: "Add to cart" })).toBeFalsy();
   expect(screen.getByRole("button", { name: "-" })).toBeVisible();
   expect(screen.getByRole("button", { name: "+" })).toBeVisible();
@@ -76,9 +73,7 @@ it("removes a product from the cart", async () => {
     await user.click(addButton);
   });
 
-  await waitFor(() => {
-    expect(screen.getByRole("generic", { name: "In the cart: 3" })).toBeVisible();
-  });
+  expect(screen.getByRole("generic", { name: "In the cart: 3" })).toBeVisible();
 
   const removeButton = screen.getByRole("button", { name: "-" });
 
@@ -106,11 +101,7 @@ it(`disables "-" button if there is 1 item in the cart`, async () => {
     await user.click(addButton);
   });
 
-  const removeButton = screen.getByRole("button", { name: "-" });
-
-  await waitFor(() => {
-    expect(removeButton).toBeDisabled();
-  });
+  expect(screen.getByRole("button", { name: "-" })).toBeDisabled();
 });
 
 it(`disables "+" button if there are 10 items in the cart`, async () => {
@@ -131,9 +122,5 @@ it(`disables "+" button if there are 10 items in the cart`, async () => {
     }
   });
 
-  const addMoreButton = screen.getByRole("button", { name: "+" });
-
-  await waitFor(() => {
-    expect(addMoreButton).toBeDisabled();
-  });
+  expect(screen.getByRole("button", { name: "+" })).toBeDisabled();
 });

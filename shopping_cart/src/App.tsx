@@ -8,9 +8,9 @@ import { Footer } from "./components/Footer";
 import { useState, useReducer } from "react";
 import { Cart, CartItemType, Product } from "./types/types";
 // import { DarkModeContext } from "./context/DarkModeContext";
-import { CartProvider } from "./context/CartConext";
+import { CartProvider } from "./context/CartContext";
 import { Card } from "./components/Card";
-
+import { ErrorBoundary } from "react-error-boundary";
 // export const CartContext = createContext({
 //   cartItems:  [],
 //   currentAmount: 0,
@@ -21,6 +21,23 @@ import { Card } from "./components/Card";
 //   cartItems: [],
 //   addToCart: () => {},
 // });
+
+function Fallback({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) {
+  // Call resetErrorBoundary() to reset the error boundary and retry the render.
+
+  return (
+    <div role="alert">
+      <p>Something went wrong:</p>
+      <pre style={{ color: "red" }}>{error.message}</pre>
+    </div>
+  );
+}
+
+const logError = (error: Error, info: { componentStack: string }) => {
+  // Do something with the error, e.g. log to an external API
+  console.log("logError:", error);
+  console.log("componentStack:", info.componentStack);
+};
 
 function App() {
   // const defaultDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -148,9 +165,11 @@ function App() {
   };
 
   return (
-    <CartProvider>
-      <Card product={myProduct}></Card>
-    </CartProvider>
+    <ErrorBoundary FallbackComponent={Fallback} onError={logError}>
+      <CartProvider>
+        <Card product={myProduct}></Card>
+      </CartProvider>
+    </ErrorBoundary>
   );
 
   // return (

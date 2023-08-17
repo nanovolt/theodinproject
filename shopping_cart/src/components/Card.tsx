@@ -3,7 +3,7 @@ import styles from "./Card.module.scss";
 import { Product } from "../types/types";
 import { Link } from "react-router-dom";
 import { Button } from "./Button";
-import { useCart, useCartDispatch } from "../context/CartConext";
+import { useCart, useCartDispatch } from "../context/CartContext";
 
 type Props = {
   product: Product;

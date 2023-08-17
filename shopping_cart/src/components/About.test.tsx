@@ -3,5 +3,5 @@ import { About } from "./About";
 
 it("renders About component", () => {
   render(<About />);
-  expect(screen.getByText(/Lorem ipsum/)).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: "About us" })).toBeVisible();
 });

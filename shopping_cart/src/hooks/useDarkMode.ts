@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 
 export type DarkModeState = "dark" | "light";
-export type SetDarkModeState = React.Dispatch<
-  React.SetStateAction<DarkModeState>
->;
+export type SetDarkModeState = React.Dispatch<React.SetStateAction<DarkModeState>>;
 
 export function useDarkMode() {
   const preferDarkQuery = "(prefers-color-scheme: dark)";

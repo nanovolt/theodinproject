@@ -79,6 +79,14 @@
 //     data = all;
 //   }
 
+// if (isLoading) {
+//   return (
+//     <div className={loading}>
+//       <FontAwesomeIcon title="Spinning fan" icon={faFan} spin size="8x" />
+//     </div>
+//   );
+// }
+
 //   return (
 //     <section className={styles.products}>
 //       <h2>{category ? categoryName : "All"}</h2>

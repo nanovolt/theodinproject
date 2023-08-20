@@ -15,25 +15,17 @@ Object.defineProperty(window, "matchMedia", {
   }),
 });
 
-// Object.defineProperty(window, "localStorage", {
-//   value: (query: any) => ({
-//     getItem: () => "dark",
-//   }),
-// });
-
 it(`sets state to "dark" if storage returns "dark"`, () => {
   Storage.prototype.getItem = () => "dark";
   const { result } = renderHook(useDarkMode);
-  const [value, setValue] = result.current;
-  // console.log(result.current);
+  const [value] = result.current;
   expect(value).toBe("dark");
 });
 
 it(`sets state to "light" if storage returns "light"`, () => {
   Storage.prototype.getItem = () => "light";
   const { result } = renderHook(useDarkMode);
-  const [value, setValue] = result.current;
-  // console.log(result.current);
+  const [value] = result.current;
   expect(value).toBe("light");
 });
 
@@ -41,8 +33,7 @@ it(`sets state to "dark" if prefer-color-scheme matches dark"`, () => {
   Storage.prototype.getItem = () => null;
 
   const { result } = renderHook(useDarkMode);
-  const [value, setValue] = result.current;
-  // console.log(result.current);
+  const [value] = result.current;
   expect(value).toBe("dark");
 });
 
@@ -63,12 +54,11 @@ it(`sets state to "light" if prefer-color-scheme doesn't match "dark"`, () => {
   Storage.prototype.getItem = () => null;
 
   const { result } = renderHook(useDarkMode);
-  const [value, setValue] = result.current;
-  // console.log(result.current);
+  const [value] = result.current;
   expect(value).toBe("light");
 });
 
-it(`triggers change event is matches and sets dark mode`, () => {
+it(`triggers change event if matches and sets dark mode`, () => {
   Object.defineProperty(window, "matchMedia", {
     writable: true,
     value: (query: any) => ({
@@ -89,13 +79,11 @@ it(`triggers change event is matches and sets dark mode`, () => {
   Storage.prototype.getItem = () => null;
 
   const { result } = renderHook(useDarkMode);
-
-  const [value, setValue] = result.current;
-
+  const [value] = result.current;
   expect(value).toBe("dark");
 });
 
-it(`triggers change event is not matches and sets light mode`, () => {
+it(`triggers change event if not matches and sets light mode`, () => {
   Object.defineProperty(window, "matchMedia", {
     writable: true,
     value: (query: any) => ({
@@ -116,8 +104,6 @@ it(`triggers change event is not matches and sets light mode`, () => {
   Storage.prototype.getItem = () => null;
 
   const { result } = renderHook(useDarkMode);
-
-  const [value, setValue] = result.current;
-
+  const [value] = result.current;
   expect(value).toBe("light");
 });

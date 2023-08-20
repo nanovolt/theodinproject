@@ -1,14 +1,8 @@
-import { createContext, useContext, useReducer } from "react";
-import { DarkModeState, useDarkMode } from "../hooks/useDarkMode";
-import { DarkModeAction } from "../types/types";
+import React, { createContext, useContext, useEffect, useReducer } from "react";
+import { DarkMode, DarkModeAction, DarkModeDispatch } from "../types/types";
 
-type DarkModeContextType = {
-  mode: "dark" | "light";
-};
-
-const DarkModeContext = createContext<DarkModeContextType>({
-  mode: "dark",
-});
+const DarkModeContext = createContext<DarkMode>("dark");
+const DarkModeDispatchContext = createContext<DarkModeDispatch>(() => {});
 
 type Props = {
   children: React.ReactNode;
@@ -18,24 +12,52 @@ export function useDarkModeContext() {
   return useContext(DarkModeContext);
 }
 
-export function DarkModeProvider({ children }: Props) {
-  const [mode, setDarkMode] = useDarkMode();
+export function useDarkModeDispatchContext() {
+  return useContext(DarkModeDispatchContext);
+}
 
-  const [cart, dispatchCart] = useReducer(darkModeReducer, "light");
+export function DarkModeProvider({ children }: Props) {
+  function getInitialMode() {
+    const lsVal = window.localStorage.getItem("colorMode");
+    if (lsVal) {
+      return lsVal === "dark" ? "dark" : "light";
+    } else {
+      return window.matchMedia(preferDarkQuery).matches ? "dark" : "light";
+    }
+  }
+  const preferDarkQuery = "(prefers-color-scheme: dark)";
+  const initialMode = getInitialMode();
+
+  const [mode, modeDispatch] = useReducer(darkModeReducer, initialMode);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia(preferDarkQuery);
+    const handleChange = () => {
+      modeDispatch({ type: "setTo", mode: mediaQuery.matches ? "dark" : "light" });
+    };
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("colorMode", mode);
+  }, [mode]);
 
   return (
-    <DarkModeContext.Provider value={{ mode }}>
-      {children}
+    <DarkModeContext.Provider value={mode}>
+      <DarkModeDispatchContext.Provider value={modeDispatch}>
+        {children}
+      </DarkModeDispatchContext.Provider>
     </DarkModeContext.Provider>
   );
 }
 
-function darkModeReducer(state: DarkModeState, action: DarkModeAction) {
+function darkModeReducer(state: DarkMode, action: DarkModeAction) {
   switch (action.type) {
-    case "dark":
-      return "light";
-    case "light":
-      return "dark";
+    case "toggle":
+      return state === "light" ? "dark" : "light";
+    case "setTo":
+      return action.mode!;
     default:
       throw Error(`Unknown action: ${action.type}`);
   }

@@ -1,0 +1,15 @@
+.categories {
+  display: grid;
+  gap: 4px;
+  font-size: 18px;
+  // font-weight: 600;
+  .category {
+    padding: 8px;
+  }
+  a {
+    padding: 8px;
+  }
+  a.active {
+    background-color: rgb(204, 204, 204);
+  }
+}

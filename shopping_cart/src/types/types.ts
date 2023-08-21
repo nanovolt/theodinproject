@@ -52,7 +52,7 @@ export type DarkModeAction = {
 export type DarkMode = "dark" | "light";
 export type DarkModeDispatch = React.Dispatch<DarkModeAction>;
 
-export type Products = Record<string, Product[]> | [];
+export type Products = Record<string, Product[]>;
 
 export type ProductsContextType = {
   products: Products;

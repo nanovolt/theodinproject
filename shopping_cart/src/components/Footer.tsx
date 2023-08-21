@@ -1,5 +1,4 @@
 import styles from "./Footer.module.scss";
-
 import classNames from "classnames";
 
 export function Footer() {
@@ -17,7 +16,7 @@ export function Footer() {
           Unsplash
         </a>
       </div>
-      <div>nanovolt 2023</div>
+      <div aria-label="made by nanovolt">nanovolt 2023</div>
     </footer>
   );
 }

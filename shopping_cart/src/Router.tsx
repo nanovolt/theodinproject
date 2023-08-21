@@ -1,22 +1,18 @@
-import {
-  createBrowserRouter,
-  Link,
-  RouterProvider,
-  ScrollRestoration,
-} from "react-router-dom";
+import { createBrowserRouter, Link, RouterProvider, ScrollRestoration } from "react-router-dom";
 import App from "./App";
 import { Home } from "./components/Home";
 import { Shop } from "./components/Shop";
 import { About } from "./components/About";
+import { Error } from "./components/Error";
+import { Products } from "./components/Products";
 // import { Cart } from "./components/Cart";
-// import { Products } from "./components/Products";
 
 export function Router() {
   const router = createBrowserRouter([
     {
       path: "/",
       element: <Link to="theodinproject/shopping_cart">shopping_cart</Link>,
-      errorElement: "error",
+      errorElement: <Error />,
     },
     {
       path: "/theodinproject/shopping_cart",
@@ -36,10 +32,10 @@ export function Router() {
           path: "shop",
           element: <Shop />,
           children: [
-            // {
-            //   path: ":category",
-            //   element: <Products />,
-            // },
+            {
+              path: ":category",
+              element: <Products />,
+            },
           ],
         },
 

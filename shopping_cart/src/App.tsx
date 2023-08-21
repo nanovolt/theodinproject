@@ -17,7 +17,9 @@ function App() {
       <CartProvider>
         <div className={appClasses} data-color-scheme={mode} data-testid="app">
           <Header />
-          <main>{/* <Outlet /> */}</main>
+          <main>
+            <Outlet />
+          </main>
           <Footer />
         </div>
       </CartProvider>

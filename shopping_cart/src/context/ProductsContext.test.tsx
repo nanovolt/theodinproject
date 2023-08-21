@@ -16,7 +16,7 @@ it("successfully gets data", async () => {
     errorMessage: "",
   });
 
-  const desiredProducts = {
+  const desiredProducts: Products = {
     all: productsMock,
     "men's clothing": getAllByCategory("men's clothing", productsMock),
     "women's clothing": getAllByCategory("women's clothing", productsMock),
@@ -66,6 +66,6 @@ it("gets empty data", async () => {
   );
 
   await waitFor(() => {
-    expect(state).toEqual([]);
+    expect(state).toEqual({});
   });
 });

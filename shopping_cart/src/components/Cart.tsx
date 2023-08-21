@@ -1,6 +1,4 @@
-// import { useAddCartItem } from "../App";
 import styles from "./Cart.module.scss";
-import { useContext } from "react";
 import { Button } from "./Button";
 import { Link } from "react-router-dom";
 import { useCart, useCartDispatch } from "../context/CartContext";
@@ -40,7 +38,8 @@ export function Cart() {
               type: "cleared_cart",
             });
           }}
-          className={styles.purchaseButton}>
+          className={styles.purchaseButton}
+        >
           Purchase
         </Button>
       </div>

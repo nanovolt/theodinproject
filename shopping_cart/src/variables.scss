@@ -2,12 +2,13 @@
   --background: rgb(222, 222, 222);
   --text-primary: #222;
   --icon-size: 32px;
-  // --blur-accent: rgba(255, 255, 255, 0.4);
+  --blur-accent: rgba(255, 255, 255, 0.534);
 }
 
 $bg-image: "../../public/bg-medium.jpg";
 
 [data-color-scheme="dark"] {
   --background: #222;
+  --blur-accent: rgba(0, 0, 0, 0.774);
   --text-primary: rgb(222, 222, 222);
 }

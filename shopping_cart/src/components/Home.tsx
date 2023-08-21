@@ -1,15 +1,9 @@
-import { useEffect } from "react";
 import styles from "./Home.module.scss";
 import { Link } from "react-router-dom";
-
-// import { useAddCartItem } from "../App";
+import { useTitle } from "../hooks/useTitle";
 
 export function Home() {
-  // console.log(useAddCartItem());
-
-  useEffect(() => {
-    document.title = "Shopping cart | Home";
-  }, []);
+  useTitle("Shopping cart | Home");
 
   return (
     <>

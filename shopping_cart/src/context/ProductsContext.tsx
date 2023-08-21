@@ -7,7 +7,7 @@ import { useFetch } from "../hooks/useFetch";
 const defaultProducts: Product[] = [];
 
 const ProductsContext = createContext<ProductsContextType>({
-  products: [],
+  products: {},
   isLoading: false,
   isError: false,
   errorMessage: "",
@@ -33,7 +33,7 @@ export function ProductsProvider({ children, initialState = defaultProducts }: P
     "https://fakestoreapi.com/products"
   );
 
-  let products: Products = [];
+  let products: Products = {};
   if (data) {
     products = {
       all: data,

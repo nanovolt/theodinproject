@@ -9,30 +9,12 @@
   background-color: white;
 }
 
-.center {
-  display: grid;
-  place-items: center;
-}
-
 .left {
   min-width: 240px;
   flex: 1;
 
   h2 {
     margin-bottom: 8px;
-  }
-
-  .categories {
-    display: grid;
-    gap: 8px;
-    font-size: 18px;
-    // font-weight: 600;
-    a {
-      padding: 8px;
-    }
-    a.active {
-      background-color: rgb(204, 204, 204);
-    }
   }
 }
 

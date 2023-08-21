@@ -1,68 +1,23 @@
-import { useEffect } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import styles from "./Shop.module.scss";
+import { useTitle } from "../hooks/useTitle";
+import { CategoryList } from "./CategoryList";
 
 export function Shop() {
-  useEffect(() => {
-    document.title = "Shopping cart | Shop";
-  }, []);
+  useTitle("Shopping cart | Shop");
 
   return (
     <div className={styles.shop}>
       <div className={styles.left}>
-        <h2>Category</h2>
-        <div className={styles.categories}>
-          <div className="category">
-            <NavLink
-              to="all"
-              className={({ isActive, isPending }) =>
-                isPending ? "pending" : isActive ? styles.active : ""
-              }
-            >
-              All
-            </NavLink>
-          </div>
-          <div className="category">
-            <NavLink
-              to="men's-clothing"
-              className={({ isActive, isPending }) =>
-                isPending ? "pending" : isActive ? styles.active : ""
-              }
-            >
-              Men's clothing
-            </NavLink>
-          </div>
-          <div className="category">
-            <NavLink
-              to="women's-clothing"
-              className={({ isActive, isPending }) =>
-                isPending ? "pending" : isActive ? styles.active : ""
-              }
-            >
-              Women's clothing
-            </NavLink>
-          </div>
-          <div className="category">
-            <NavLink
-              to="jewelery"
-              className={({ isActive, isPending }) =>
-                isPending ? "pending" : isActive ? styles.active : ""
-              }
-            >
-              Jewelery
-            </NavLink>
-          </div>
-          <div className="category">
-            <NavLink
-              to="electronics"
-              className={({ isActive, isPending }) =>
-                isPending ? "pending" : isActive ? styles.active : ""
-              }
-            >
-              Electronics
-            </NavLink>
-          </div>
-        </div>
+        <CategoryList
+          list={[
+            { id: 1, category: "All", to: "all" },
+            { id: 2, category: "Men's clothing", to: "men's-clothing" },
+            { id: 3, category: "Women's clothing", to: "women's-clothing" },
+            { id: 4, category: "Jewelery", to: "jewelery" },
+            { id: 5, category: "Electronics", to: "electronics" },
+          ]}
+        />
       </div>
       <div className={styles.right}>
         <Outlet />

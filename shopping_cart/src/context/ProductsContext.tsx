@@ -8,7 +8,7 @@ const defaultProducts: Product[] = [];
 
 const ProductsContext = createContext<ProductsContextType>({
   products: {},
-  isLoading: false,
+  isLoading: true,
   isError: false,
   errorMessage: "",
 });
@@ -36,7 +36,7 @@ export function ProductsProvider({ children, initialState = defaultProducts }: P
   let products: Products = {};
   if (data) {
     products = {
-      all: data,
+      all: data.map((p) => ({ id: p.id, title: p.title, price: p.price, image: p.image })),
       "men's clothing": getAllByCategory("men's clothing", data),
       "women's clothing": getAllByCategory("women's clothing", data),
       jewelery: getAllByCategory("jewelery", data),

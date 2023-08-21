@@ -14,16 +14,14 @@ export function useFetch<T>(url: string) {
         // console.log("response:", response);
 
         if (!response.ok) {
-          // console.log("response is not ok");
           throw new Error(response.statusText);
         }
         setData(await response.json());
-        setIsLoading(false);
       } catch (err: any) {
         setErrorMessage(err.message);
         setIsError(true);
+      } finally {
         setIsLoading(false);
-        // console.log(isError);
       }
     }
 

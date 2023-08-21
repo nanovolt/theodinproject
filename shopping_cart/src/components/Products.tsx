@@ -26,13 +26,16 @@ export function Products() {
   const { category } = useParams();
   const { products, isLoading, isError, errorMessage } = useProducts();
 
+  // console.log("params:", category);
+  // console.log("products:", products);
+
   if (isError) {
-    return <div>Products: Error: ${errorMessage}</div>;
+    return <div>Something went wrong: Error: {errorMessage}</div>;
   }
 
   if (isLoading) {
     return (
-      <div className={loading}>
+      <div className={loading} aria-label="fan">
         <FontAwesomeIcon title="Spinning fan" icon={faFan} spin size="8x" />
       </div>
     );
@@ -47,7 +50,7 @@ export function Products() {
 
     return (
       <section className={styles.products}>
-        <h2>{category ? categoryName : "All"}</h2>
+        <h2>{categoryName}</h2>
 
         <div className={styles.cards}>
           {data.map((product) => {

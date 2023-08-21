@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import styles from "./Shop.module.scss";
 import { useTitle } from "../hooks/useTitle";
 import { CategoryList } from "./CategoryList";

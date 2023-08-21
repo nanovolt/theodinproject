@@ -17,7 +17,7 @@ it("successfully gets data", async () => {
   });
 
   const desiredProducts: Products = {
-    all: productsMock,
+    all: productsMock.map((p) => ({ id: p.id, title: p.title, price: p.price, image: p.image })),
     "men's clothing": getAllByCategory("men's clothing", productsMock),
     "women's clothing": getAllByCategory("women's clothing", productsMock),
     jewelery: getAllByCategory("jewelery", productsMock),

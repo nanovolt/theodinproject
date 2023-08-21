@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>5/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">41.66% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/12</span>
+                <span class='fraction'>5/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/4</span>
+                <span class='fraction'>1/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">71.42% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/7</span>
+                <span class='fraction'>5/7</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -145,14 +145,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -214,15 +214,15 @@ type Props = {
   product: Product;
 };
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >Card(</span>{ product }: Props) {
-  const cart = <span class="cstat-no" title="statement not covered" >useCart();</span>
-  const cartDispatch = <span class="cstat-no" title="statement not covered" >useCartDispatch();</span>
+export function Card({ product }: Props) {
+  const cart = useCart();
+  const cartDispatch = useCartDispatch();
 &nbsp;
   // console.log("cart:", cart);
-  const { id, title, price, image } = <span class="cstat-no" title="statement not covered" >product;</span>
-  const cartItem = <span class="cstat-no" title="statement not covered" >cart.items.find(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; <span class="cstat-no" title="statement not covered" >item.id === id)</span>;</span>
+  const { id, title, price, image } = product;
+  const cartItem = cart.items.find(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; <span class="cstat-no" title="statement not covered" >item.id === id)</span>;
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  return (</span>
+  return (
     &lt;section className={styles.card} aria-label="Product"&gt;
       &lt;h3 className={styles.title}&gt;{title}&lt;/h3&gt;
       &lt;img className={styles.image} src={image} alt="" srcSet="" /&gt;
@@ -232,7 +232,7 @@ export function <span class="fstat-no" title="function not covered" >Card(</span
 &nbsp;
       &lt;div className={styles.cartControls}&gt;
         {cartItem &amp;&amp; (
-          &lt;Button
+<span class="branch-1 cbranch-no" title="branch not covered" >          &lt;Button</span>
             onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; {
 <span class="cstat-no" title="statement not covered" >              cartDispatch({</span>
                 type: "removed_item",
@@ -245,7 +245,7 @@ export function <span class="fstat-no" title="function not covered" >Card(</span
         )}
 &nbsp;
         {cartItem &amp;&amp; (
-          &lt;div
+<span class="branch-1 cbranch-no" title="branch not covered" >          &lt;div</span>
             className={styles.amount}
             aria-label={`In the cart: ${cartItem.amount}`}
             aria-live="assertive"&gt;
@@ -254,18 +254,18 @@ export function <span class="fstat-no" title="function not covered" >Card(</span
         )}
 &nbsp;
         &lt;Button
-          disabled={cartItem &amp;&amp; cartItem.amount &gt;= 10}
+          disabled={cartItem &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >cartItem.amount &gt;= 10}</span>
           onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; {
 <span class="cstat-no" title="statement not covered" >            cartDispatch({</span>
               type: "added_item",
               product: product,
             });
           }}&gt;
-          {cartItem ? "+" : "Add to cart"}
+          {cartItem ? <span class="branch-0 cbranch-no" title="branch not covered" >"+" </span>: "Add to cart"}
         &lt;/Button&gt;
 &nbsp;
         {cartItem &amp;&amp; (
-          &lt;Link to="/theodinproject/shopping_cart/cart"&gt;
+<span class="branch-1 cbranch-no" title="branch not covered" >          &lt;Link to="/theodinproject/shopping_cart/cart"&gt;</span>
             &lt;div className={styles.toCart}&gt;To cart&lt;/div&gt;
           &lt;/Link&gt;
         )}
@@ -280,7 +280,7 @@ export function <span class="fstat-no" title="function not covered" >Card(</span
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-08-21T09:05:35.650Z
+                at 2023-08-21T17:47:43.496Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

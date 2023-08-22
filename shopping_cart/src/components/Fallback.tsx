@@ -17,6 +17,6 @@ export function Fallback({
 
 export const logError = (error: Error, info: { componentStack: string }) => {
   // Do something with the error, e.g. log to an external API
-  console.log("logError:", error);
-  console.log("componentStack:", info.componentStack);
+  // console.log("logError:", error);
+  // console.log("componentStack:", info.componentStack);
 };

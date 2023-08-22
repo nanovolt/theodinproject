@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/16</span>
+                <span class='fraction'>16/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/6</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/15</span>
+                <span class='fraction'>15/15</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -103,67 +103,67 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { useState, useEffect } from "react";
 &nbsp;
 export type DarkModeState = "dark" | "light";
 export type SetDarkModeState = React.Dispatch&lt;React.SetStateAction&lt;DarkModeState&gt;&gt;;
 &nbsp;
-export function <span class="fstat-no" title="function not covered" >useDarkMode(</span>) {
-  const preferDarkQuery = <span class="cstat-no" title="statement not covered" >"(prefers-color-scheme: dark)";</span>
+export function useDarkMode() {
+  const preferDarkQuery = "(prefers-color-scheme: dark)";
 &nbsp;
-  const [mode, setMode] = <span class="cstat-no" title="statement not covered" >useState&lt;DarkModeState&gt;(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-    const lsVal = <span class="cstat-no" title="statement not covered" >window.localStorage.getItem("colorMode");</span>
-<span class="cstat-no" title="statement not covered" >    if (lsVal) {</span>
-<span class="cstat-no" title="statement not covered" >      return lsVal === "dark" ? "dark" : "light";</span>
+  const [mode, setMode] = useState&lt;DarkModeState&gt;(() =&gt; {
+    const lsVal = window.localStorage.getItem("colorMode");
+    if (lsVal) {
+      return lsVal === "dark" ? "dark" : "light";
     } else {
-<span class="cstat-no" title="statement not covered" >      return window.matchMedia(preferDarkQuery).matches ? "dark" : "light";</span>
+      return window.matchMedia(preferDarkQuery).matches ? "dark" : "light";
     }
   });
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-    const mediaQuery = <span class="cstat-no" title="statement not covered" >window.matchMedia(preferDarkQuery);</span>
-    const handleChange = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >      setMode(mediaQuery.matches ? "dark" : "light");</span>
+  useEffect(() =&gt; {
+    const mediaQuery = window.matchMedia(preferDarkQuery);
+    const handleChange = () =&gt; {
+      setMode(mediaQuery.matches ? "dark" : "light");
     };
-<span class="cstat-no" title="statement not covered" >    mediaQuery.addEventListener("change", handleChange);</span>
-<span class="cstat-no" title="statement not covered" >    return <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >mediaQuery.removeEventListener("change", handleChange);</span></span>
+    mediaQuery.addEventListener("change", handleChange);
+    return () =&gt; mediaQuery.removeEventListener("change", handleChange);
   }, []);
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  useEffect(<span class="fstat-no" title="function not covered" >()</span> =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    window.localStorage.setItem("colorMode", mode);</span>
+  useEffect(() =&gt; {
+    window.localStorage.setItem("colorMode", mode);
   }, [mode]);
 &nbsp;
   // we're doing it this way instead of as an effect so we only
   // set the localStorage value if they explicitly change the default
-<span class="cstat-no" title="statement not covered" >  return [mode, setMode] as const;</span>
+  return [mode, setMode] as const;
 }
 &nbsp;</pre></td></tr></table></pre>
 
@@ -172,7 +172,7 @@ export function <span class="fstat-no" title="function not covered" >useDarkMode
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-08-21T17:47:43.496Z
+                at 2023-08-22T06:40:37.416Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

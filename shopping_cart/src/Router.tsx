@@ -5,7 +5,7 @@ import { Shop } from "./components/Shop";
 import { About } from "./components/About";
 import { Error } from "./components/Error";
 import { Products } from "./components/Products";
-// import { Cart } from "./components/Cart";
+import { Cart } from "./components/Cart";
 
 export function Router() {
   const router = createBrowserRouter([
@@ -33,6 +33,10 @@ export function Router() {
           element: <Shop />,
           children: [
             {
+              index: true,
+              element: "Uh oh. No category selected.",
+            },
+            {
               path: ":category",
               element: <Products />,
             },
@@ -43,10 +47,10 @@ export function Router() {
           path: "about",
           element: <About />,
         },
-        // {
-        //   path: "cart",
-        //   element: <Cart />,
-        // },
+        {
+          path: "cart",
+          element: <Cart />,
+        },
       ],
     },
   ]);

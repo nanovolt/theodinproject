@@ -34,7 +34,8 @@ export function Card({ product }: Props) {
                 product: product,
               });
             }}
-            disabled={cartItem && cartItem.amount <= 1}>
+            disabled={cartItem && cartItem.amount <= 1}
+          >
             -
           </Button>
         )}
@@ -43,7 +44,8 @@ export function Card({ product }: Props) {
           <div
             className={styles.amount}
             aria-label={`In the cart: ${cartItem.amount}`}
-            aria-live="assertive">
+            aria-live="assertive"
+          >
             {cartItem.amount}
           </div>
         )}
@@ -55,7 +57,8 @@ export function Card({ product }: Props) {
               type: "added_item",
               product: product,
             });
-          }}>
+          }}
+        >
           {cartItem ? "+" : "Add to cart"}
         </Button>
 

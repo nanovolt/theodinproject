@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">62.5% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">41.66% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/12</span>
+                <span class='fraction'>12/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/4</span>
+                <span class='fraction'>4/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">71.42% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/7</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -133,7 +133,10 @@
 <a name='L68'></a><a href='#L68'>68</a>
 <a name='L69'></a><a href='#L69'>69</a>
 <a name='L70'></a><a href='#L70'>70</a>
-<a name='L71'></a><a href='#L71'>71</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -145,17 +148,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">35x</span>
+<span class="cline-any cline-yes">35x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">35x</span>
+<span class="cline-any cline-yes">35x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">24x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">35x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -164,10 +164,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -186,7 +186,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -220,7 +226,7 @@ export function Card({ product }: Props) {
 &nbsp;
   // console.log("cart:", cart);
   const { id, title, price, image } = product;
-  const cartItem = cart.items.find(<span class="fstat-no" title="function not covered" >(i</span>tem) =&gt; <span class="cstat-no" title="statement not covered" >item.id === id)</span>;
+  const cartItem = cart.items.find((item) =&gt; item.id === id);
 &nbsp;
   return (
     &lt;section className={styles.card} aria-label="Product"&gt;
@@ -232,40 +238,43 @@ export function Card({ product }: Props) {
 &nbsp;
       &lt;div className={styles.cartControls}&gt;
         {cartItem &amp;&amp; (
-<span class="branch-1 cbranch-no" title="branch not covered" >          &lt;Button</span>
-            onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >              cartDispatch({</span>
+          &lt;Button
+            onClick={() =&gt; {
+              cartDispatch({
                 type: "removed_item",
                 product: product,
               });
             }}
-            disabled={cartItem &amp;&amp; cartItem.amount &lt;= 1}&gt;
+            disabled={cartItem &amp;&amp; cartItem.amount &lt;= 1}
+          &gt;
             -
           &lt;/Button&gt;
         )}
 &nbsp;
         {cartItem &amp;&amp; (
-<span class="branch-1 cbranch-no" title="branch not covered" >          &lt;div</span>
+          &lt;div
             className={styles.amount}
             aria-label={`In the cart: ${cartItem.amount}`}
-            aria-live="assertive"&gt;
+            aria-live="assertive"
+          &gt;
             {cartItem.amount}
           &lt;/div&gt;
         )}
 &nbsp;
         &lt;Button
-          disabled={cartItem &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >cartItem.amount &gt;= 10}</span>
-          onClick={<span class="fstat-no" title="function not covered" >()</span> =&gt; {
-<span class="cstat-no" title="statement not covered" >            cartDispatch({</span>
+          disabled={cartItem &amp;&amp; cartItem.amount &gt;= 10}
+          onClick={() =&gt; {
+            cartDispatch({
               type: "added_item",
               product: product,
             });
-          }}&gt;
-          {cartItem ? <span class="branch-0 cbranch-no" title="branch not covered" >"+" </span>: "Add to cart"}
+          }}
+        &gt;
+          {cartItem ? "+" : "Add to cart"}
         &lt;/Button&gt;
 &nbsp;
         {cartItem &amp;&amp; (
-<span class="branch-1 cbranch-no" title="branch not covered" >          &lt;Link to="/theodinproject/shopping_cart/cart"&gt;</span>
+          &lt;Link to="/theodinproject/shopping_cart/cart"&gt;
             &lt;div className={styles.toCart}&gt;To cart&lt;/div&gt;
           &lt;/Link&gt;
         )}
@@ -280,7 +289,7 @@ export function Card({ product }: Props) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-08-21T17:47:43.496Z
+                at 2023-08-22T06:40:37.416Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

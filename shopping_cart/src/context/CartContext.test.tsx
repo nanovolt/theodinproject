@@ -1,13 +1,13 @@
-import { Cart } from "../types/types";
+import { CartType } from "../types/types";
 import { CartProvider, useCart, useCartDispatch } from "./CartContext";
 import { render, screen, waitFor } from "@testing-library/react";
 import { useEffect } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-const initialState: Cart = { items: [], itemsAmount: 0, grandTotal: 0 };
+const initialState: CartType = { items: [], itemsAmount: 0, grandTotal: 0 };
 
 it("cart context returns default value, if no context provider given", async () => {
-  let state: Cart;
+  let state: CartType;
 
   const Test = () => {
     state = useCart();
@@ -38,7 +38,7 @@ it("dispatch context returns default value, if no context provider given", async
 });
 
 it("initializes reducer", async () => {
-  let state: Cart;
+  let state: CartType;
   const Test = () => {
     state = useCart();
     // const cartDispatch = useCartDispatch();
@@ -59,7 +59,7 @@ it("initializes reducer", async () => {
 });
 
 it("adds items", async () => {
-  let state: Cart;
+  let state: CartType;
 
   const Test = () => {
     state = useCart();
@@ -119,7 +119,7 @@ it("adds items", async () => {
     </CartProvider>
   );
 
-  const desiredState: Cart = {
+  const desiredState: CartType = {
     grandTotal: 222,
     itemsAmount: 2,
     items: [
@@ -148,7 +148,7 @@ it("adds items", async () => {
 });
 
 it("does not remove an item from the cart if there is only one such item in the cart", () => {
-  const initialState: Cart = {
+  const initialState: CartType = {
     grandTotal: 180,
     itemsAmount: 2,
     items: [
@@ -196,7 +196,7 @@ it("does not remove an item from the cart if there is only one such item in the 
 });
 
 it("removes items", () => {
-  const initialState: Cart = {
+  const initialState: CartType = {
     grandTotal: 291,
     itemsAmount: 2,
     items: [
@@ -245,7 +245,7 @@ it("removes items", () => {
     </CartProvider>
   );
 
-  let desiredState: Cart = {
+  let desiredState: CartType = {
     grandTotal: 180,
     itemsAmount: 2,
     items: [
@@ -271,7 +271,7 @@ it("removes items", () => {
 });
 
 it("deletes items", () => {
-  const initialState: Cart = {
+  const initialState: CartType = {
     grandTotal: 291,
     itemsAmount: 2,
     items: [
@@ -315,7 +315,7 @@ it("deletes items", () => {
     </CartProvider>
   );
 
-  let desiredState: Cart = {
+  let desiredState: CartType = {
     grandTotal: 207,
     itemsAmount: 1,
     items: [
@@ -333,7 +333,7 @@ it("deletes items", () => {
 });
 
 it("clears cart (deletes all cart items)", () => {
-  const initialState: Cart = {
+  const initialState: CartType = {
     grandTotal: 291,
     itemsAmount: 2,
     items: [
@@ -376,7 +376,7 @@ it("clears cart (deletes all cart items)", () => {
     </CartProvider>
   );
 
-  let desiredState: Cart = {
+  let desiredState: CartType = {
     grandTotal: 0,
     itemsAmount: 0,
     items: [],
@@ -391,7 +391,7 @@ it("throws error if dispatch given icorrect action type", () => {
   // console.error = () => {};
   const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
 
-  const initialState: Cart = {
+  const initialState: CartType = {
     grandTotal: 291,
     itemsAmount: 2,
     items: [

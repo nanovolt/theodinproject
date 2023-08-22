@@ -25,7 +25,7 @@ export type CartItemType = Product & {
   total: number;
 };
 
-export type Cart = {
+export type CartType = {
   items: CartItemType[];
   itemsAmount: number;
   grandTotal: number;

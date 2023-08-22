@@ -1,19 +1,19 @@
 import { createContext, useContext, useReducer } from "react";
-import { Cart, CartItemType, CartAction } from "../types/types";
+import { CartType, CartItemType, CartAction } from "../types/types";
 
-const defaultCart: Cart = {
+const defaultCart: CartType = {
   items: [],
   itemsAmount: 0,
   grandTotal: 0,
 };
 
-const CartContext = createContext<Cart>(defaultCart);
+const CartContext = createContext<CartType>(defaultCart);
 
 const CartDispatchContext = createContext<React.Dispatch<CartAction>>(() => "some default return");
 
 type Props = {
   children: React.ReactNode;
-  initialState?: Cart;
+  initialState?: CartType;
 };
 
 export function useCart() {
@@ -35,7 +35,7 @@ export function CartProvider({ children, initialState = defaultCart }: Props) {
   );
 }
 
-function cartReducer(state: Cart, action: CartAction): Cart {
+function cartReducer(state: CartType, action: CartAction): CartType {
   switch (action.type) {
     case "added_item": {
       const found = state.items.find((i) => i.id === action.product!.id);

@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { CartItem } from "./CartItem";
 import { CartProvider } from "../context/CartContext";
-import { Cart } from "../types/types";
+import { CartType } from "../types/types";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 
@@ -23,7 +23,7 @@ const item2 = {
   total: 207,
 };
 
-const initialState: Cart = {
+const initialState: CartType = {
   grandTotal: 291,
   itemsAmount: 2,
   items: [item1, item2],

@@ -31,7 +31,9 @@ export function Cart() {
       </div>
       <div className={styles.purchase}>
         <h2>Payment</h2>
-        <div className={styles.grandTotal}>Total: $ {cart.grandTotal}</div>
+        <div className={styles.grandTotal} aria-label={`Grand total is $${cart.grandTotal}`}>
+          Total: $ {cart.grandTotal}
+        </div>
         <Button
           onClick={() => {
             cartDispatch({

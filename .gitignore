@@ -4,3 +4,4 @@ node_modules
 .vscode
 key.js
 coverage
+.env

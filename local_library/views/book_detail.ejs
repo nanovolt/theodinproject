@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<%- include('partials/head', {title: title}); %>
+
+<body>
+  <main>
+    <%- include('partials/sidebar'); %>
+    <div class="content">
+      <h1>
+        <%= title %>
+      </h1>
+      <h2>
+        <%= book.title %>
+      </h2>
+      <p>
+        <span>Author: </span>
+        <a href=" <%= book.author.url %>"><%= book.author.name %></a>
+      </p>
+      <p>
+        <span>Summary: </span>
+        <%= book.summary %>
+      </p>
+      <p>
+        <span>ISBN: </span>
+        <%= book.isbn %>
+      </p>
+      <p>
+        <span>Genre:</span>
+        <% book.genre.forEach((genre, index)=> { %>
+        <a href=" <%= genre.url %>"><%= genre.name %></a>
+        <% if (index < book.genre.length - 1) { %>
+        ,
+        <% } %>
+        <%}) %>
+      </p>
+      <% book_instances.forEach(book=> { %>
+      <ul>
+        <li>
+          <% if (book.status === "Available") { %>
+          <span class="success"><%= book.status %></span>
+          <% } else if (book.status === "Maintenance") { %>
+          <span class="danger"><%= book.status %></span>
+          <% } else { %>
+          <span class="warning"><%= book.status %></span>
+          <% } %>
+          <p><%= book.imprint %></p>
+
+          <% if (book.status !== "Available") { %>
+          <span>Due: <%= book.due_back_formatted %></span>
+          <% } %>
+          <p>
+            id:
+            <a href="<%= book.url %>"><%= book.id %></a>
+          </p>
+        </li>
+      </ul>
+      <%}) %>
+      <% if (!book_instances) { %>
+      <p>There are no copies of this book in the library</p>
+      <% } %>
+    </div>
+  </main>
+</body>
+
+</html>

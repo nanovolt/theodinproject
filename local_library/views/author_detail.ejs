@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<%- include('partials/head', {title: title}); %>
+
+<body>
+  <main>
+    <%- include('partials/sidebar'); %>
+    <div class="content">
+      <h1>
+        Author:
+        <%= author.name %>
+      </h1>
+      <% if (author.birth_date) { %>
+      <p>(<%= author.birth_date %> - <%= author.death_date %>)</p>
+      <% } else { %>
+      <p>( Unknown )</p>
+      <% } %>
+      <h2>
+        Books
+      </h2>
+      <% author_books.forEach(book=> { %>
+      <ul>
+        <li>
+          <a href="<%= book.url %>"><%= book.title %></a>
+          <p><%= book.summary %></p>
+        </li>
+      </ul>
+      <%}) %>
+      <% if (author_books.length === 0) { %>
+      <p>This author has no books</p>
+      <% } %>
+    </div>
+  </main>
+</body>
+
+</html>

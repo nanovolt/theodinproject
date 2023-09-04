@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<%- include('partials/head', {title: title}); %>
+
+<body>
+  <main>
+    <%- include('partials/sidebar'); %>
+    <div class="content">
+      <h1>
+        <%= title %>
+      </h1>
+      <ul>
+        <% bookinstance_list.forEach(book=> { %>
+
+        <li>
+          <a href="<%= book.url %>">
+            <%= book.book.title %>
+          </a>
+          <span>(<%= book.imprint %>)</span>
+          <% if (book.status === "Available") { %>
+          <span class="success"><%= book.status %></span>
+          <% } else if (book.status === "Maintenance") { %>
+          <span class="danger"><%= book.status %></span>
+          <% } else { %>
+          <span class="warning"><%= book.status %></span>
+          <% } %>
+
+          <% if (book.status !== "Available") { %>
+          <span>Due: <%= book.due_back_formatted %></span>
+          <% } %>
+        </li>
+        <%}) %>
+      </ul>
+      <% if (!bookinstance_list) { %>
+      <h2>There are no book copies in this library.</h2>
+      <% } %>
+    </div>
+  </main>
+</body>
+
+</html>

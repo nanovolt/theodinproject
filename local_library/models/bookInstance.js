@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+const { DateTime } = require("luxon");
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
 const BookInstanceSchema = new Schema({
   book: { type: Schema.Types.ObjectId, ref: "Book", required: true }, // reference to the associated book
@@ -17,7 +18,12 @@ const BookInstanceSchema = new Schema({
 // Virtual for bookinstance's URL
 BookInstanceSchema.virtual("url").get(function () {
   // We don't use an arrow function as we'll need the this object
-  return `/catalog/bookinstance/${this._id}`;
+  // console.log(this.id);
+  return `/catalog/bookinstance/${this.id}`;
+});
+
+BookInstanceSchema.virtual("due_back_formatted").get(function () {
+  return DateTime.fromJSDate(this.due_back).toLocaleString(DateTime.DATE_MED);
 });
 
 // Export model

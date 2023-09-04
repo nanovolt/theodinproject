@@ -12,4 +12,17 @@ main aside {
   min-width: 240px;
 }
 main .content {
+  flex: 1 320px;
+}
+
+.success {
+  color: green;
+}
+
+.danger {
+  color: red;
+}
+
+.warning {
+  color: orange;
 }

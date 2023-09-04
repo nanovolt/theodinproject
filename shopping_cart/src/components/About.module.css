@@ -1,0 +1,11 @@
+.about {
+  width: clamp(300px, 100%, 1080px);
+  flex: 1;
+  margin: 0 auto;
+  padding: 16px;
+  background-color: white;
+  text-align: center;
+  display: grid;
+  gap: 16px;
+  align-content: flex-start;
+}/*# sourceMappingURL=About.module.css.map */

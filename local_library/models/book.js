@@ -13,6 +13,7 @@ const BookSchema = new Schema({
 // Virtual for book's URL
 BookSchema.virtual("url").get(function () {
   // We don't use an arrow function as we'll need the this object
+  // eslint-disable-next-line no-underscore-dangle
   return `/catalog/book/${this._id}`;
 });
 

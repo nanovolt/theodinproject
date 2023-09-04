@@ -1,0 +1,18 @@
+.products {
+  padding: 24px;
+}
+.products h2 {
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 8px;
+}
+
+.center {
+  display: grid;
+  place-items: center;
+}/*# sourceMappingURL=Products.module.css.map */

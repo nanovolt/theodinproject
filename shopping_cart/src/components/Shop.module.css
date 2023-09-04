@@ -1,0 +1,21 @@
+.shop {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  width: clamp(300px, 100%, 1080px);
+  margin: 0 auto;
+  padding: 16px;
+  background-color: white;
+}
+
+.left {
+  min-width: 240px;
+  flex: 1;
+}
+.left h2 {
+  margin-bottom: 8px;
+}
+
+.right {
+  flex: 3 510px;
+}/*# sourceMappingURL=Shop.module.css.map */

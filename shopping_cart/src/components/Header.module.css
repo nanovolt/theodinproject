@@ -1,0 +1,44 @@
+:root {
+  --background: rgb(222, 222, 222);
+  --text-primary: #222;
+  --icon-size: 32px;
+  --blur-accent: rgba(255, 255, 255, 0.534);
+}
+
+[data-color-scheme=dark] {
+  --background: #222;
+  --blur-accent: rgba(0, 0, 0, 0.774);
+  --text-primary: rgb(222, 222, 222);
+}
+
+.wrapper {
+  background-color: var(--background);
+  border-bottom: 2px solid #555;
+}
+
+header {
+  width: clamp(300px, 100%, 1080px);
+  margin: 0 auto;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+}
+
+nav {
+  padding: 8px 0;
+  flex: 1;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+}
+ul a {
+  text-decoration: none;
+  color: var(--text-primary);
+}/*# sourceMappingURL=Header.module.css.map */

@@ -1,0 +1,14 @@
+.categories {
+  display: grid;
+  gap: 4px;
+  font-size: 18px;
+}
+.categories .category {
+  padding: 8px;
+}
+.categories a {
+  padding: 8px;
+}
+.categories a.active {
+  background-color: rgb(204, 204, 204);
+}/*# sourceMappingURL=CategoryList.module.css.map */

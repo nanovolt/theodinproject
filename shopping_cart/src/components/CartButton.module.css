@@ -1,0 +1,30 @@
+:root {
+  --background: rgb(222, 222, 222);
+  --text-primary: #222;
+  --icon-size: 32px;
+  --blur-accent: rgba(255, 255, 255, 0.534);
+}
+
+[data-color-scheme=dark] {
+  --background: #222;
+  --blur-accent: rgba(0, 0, 0, 0.774);
+  --text-primary: rgb(222, 222, 222);
+}
+
+.cart {
+  color: var(--text-primary);
+}
+
+.cartButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-primary);
+}
+.cartButton .number {
+  font-size: 20px;
+  width: 24px;
+  font-weight: 600;
+  text-align: end;
+}/*# sourceMappingURL=CartButton.module.css.map */

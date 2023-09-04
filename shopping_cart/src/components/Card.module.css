@@ -1,0 +1,51 @@
+.card {
+  border: 1px solid #555;
+  padding: 8px;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  gap: 8px;
+  justify-items: center;
+  align-items: center;
+}
+.card .title {
+  text-align: center;
+}
+.card .image {
+  width: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  max-width: 120px;
+}
+.card .price {
+  display: grid;
+  align-items: flex-end;
+  font-size: 24px;
+  font-weight: 600;
+}
+.card .cartControls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+.card .cartControls .addRemove {
+  padding: 4px 16px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+}
+.card .cartControls .amount {
+  width: 18px;
+  text-align: center;
+}
+.card .cartControls .toCart {
+  padding: 4px 16px;
+  font-weight: 600;
+  font-size: 18px;
+  background-color: rgb(0, 180, 0);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}/*# sourceMappingURL=Card.module.css.map */

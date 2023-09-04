@@ -1,0 +1,12 @@
+.darkModeToggle {
+  border: none;
+  background-color: var(--background);
+  cursor: pointer;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  padding: 0;
+}
+
+.toggleIcon {
+  color: var(--text-primary);
+}/*# sourceMappingURL=DarkModeButton.module.css.map */

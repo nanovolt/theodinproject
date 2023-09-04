@@ -1,0 +1,52 @@
+.cart {
+  width: clamp(300px, 100%, 1080px);
+  padding: 16px;
+  background-color: white;
+  margin: 0 auto;
+  display: flex;
+  gap: 16px;
+  flex: 1;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.left {
+  flex: 1 1;
+  display: grid;
+  gap: 8px;
+}
+
+.items {
+  display: grid;
+  gap: 8px;
+}
+
+.purchase {
+  min-width: 240px;
+  flex: 1 1;
+  display: grid;
+  gap: 8px;
+  align-content: flex-start;
+}
+.purchase .grandTotal {
+  font-size: 24px;
+  font-weight: 6000;
+}
+
+.empty {
+  width: clamp(300px, 100%, 1080px);
+  flex: 1;
+  margin: 0 auto;
+  padding: 16px;
+  background-color: white;
+  text-align: center;
+  display: grid;
+  gap: 16px;
+  align-content: flex-start;
+  text-align: center;
+  font-size: 24px;
+}
+
+.purchaseButton {
+  background-color: rgb(0, 174, 255);
+}/*# sourceMappingURL=Cart.module.css.map */

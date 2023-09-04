@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const asyncHandler = require("express-async-handler");
 const Genre = require("../models/genre");
 

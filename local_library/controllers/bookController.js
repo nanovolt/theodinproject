@@ -1,13 +1,47 @@
+/* eslint-disable no-unused-vars */
 const asyncHandler = require("express-async-handler");
+const mongoose = require("mongoose");
 const Book = require("../models/book");
+const Author = require("../models/author");
+const Genre = require("../models/genre");
+const BookInstance = require("../models/bookInstance");
+
+mongoose.set("strictQuery", false);
 
 exports.index = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Site Home Page");
+  // res.send("NOT IMPLEMENTED: Site Home Page");
+  // const total = await Book.countDocuments().exec();
+  // res.render("index", { title: "Local library", total });
+
+  // Get details of books, book instances, authors and genre counts (in parallel)
+  const [numBooks, numBookInstances, numAvailableBookInstances, numAuthors, numGenres] =
+    await Promise.all([
+      Book.countDocuments({}).exec(),
+      BookInstance.countDocuments({}).exec(),
+      BookInstance.countDocuments({ status: "Available" }).exec(),
+      Author.countDocuments({}).exec(),
+      Genre.countDocuments({}).exec(),
+    ]);
+
+  res.render("index", {
+    title: "Local Library Home",
+    book_count: numBooks,
+    book_instance_count: numBookInstances,
+    book_instance_available_count: numAvailableBookInstances,
+    author_count: numAuthors,
+    genre_count: numGenres,
+  });
 });
 
 // Display list of all books.
 exports.book_list = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Book list");
+  // res.send("NOT IMPLEMENTED: Book list");
+
+  const allBooks = await Book.find({}, "title author").sort({ title: 1 }).populate("author").exec();
+
+  console.log(allBooks);
+
+  res.render("book_list", { title: "Book List", book_list: allBooks });
 });
 
 // Display detail page for a specific book.

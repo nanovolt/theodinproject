@@ -1,220 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/fa.css">
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="wrapper">
 
-        <div class="dashboard">
-            <div class="sidebar">
-                <a href="#">
-                    <div class="logo_wrapper">
-                        <div class="logo">
-                            <!-- <a href=""></a> -->
-                            <img src="abstract.svg" alt="" srcset="">
-                            <span>Dashboard</span>
-                        </div>
-                    </div>
-                </a>
-
-                <nav class="sidebar_nav_top">
-                    <ul>
-                        <li><a class="sidenav" href=""><span class="icon sidebar_icon home"></span>Home</a></li>
-                        <li><a class="sidenav" href=""><span class="icon sidebar_icon profile"></span>Profile</a></li>
-                        <li><a class="sidenav" href=""><span class="icon sidebar_icon messages"></span>Messages</a></li>
-                        <li><a class="sidenav" href=""><span class="icon sidebar_icon history"></span>History</a></li>
-                        <li><a class="sidenav" href=""><span class="icon sidebar_icon tasks"></span>Tasks</a></li>
-                        <li><a class="sidenav" href=""><span class="icon sidebar_icon communities"></span>Communities</a></li>
-                    </ul>
-                </nav>
-                <nav class="sidebar_nav_bottom">
-                    <ul>
-                        <li><a class="sidenav" href=""><span class="icon sidebar_icon settings"></span>Settings</a></li>
-                        <li><a class="sidenav" href=""><span class="icon sidebar_icon support"></span>Support</a></li>
-                        <li><a class="sidenav" href=""><span class="icon sidebar_icon privacy"></span>Privacy</a></li>
-                    </ul>
-                </nav>
-
+      <div class="dashboard">
+        <div class="sidebar">
+          <a href="#">
+            <div class="logo_wrapper">
+              <div class="logo">
+                <!-- <a href=""></a> -->
+                <img src="abstract.svg" alt="" srcset="">
+                <span>Dashboard</span>
+              </div>
             </div>
-            <div class="header">
-                <div class="header_top">
-                    <button class="icon menu_button" onclick="toggle_menu()"></button>
-                    <div class="top_left">
-                        <div class="icon search"></div>
-                        <input class="search_input" type="search" name="" id="">
-                    </div>
-                    
-                    <div class="top_right">
-                        <div class="notifications"></div>
-                        <div class="account">
-                            <div class="account_image"></div>
-                            <div class="account_title">Morgan Oakley</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="header_bottom">
-                    <div class="header_bottom_left">
-                        <div class="account_image"></div>
-                        <div class="greetings">
-                            <div>Hi there,</div>
-                            <div><b>Morgan Oakley (@morgan)</b></div>
-                        </div>
-                    </div>
-                    
-                    <div class="controls">
-                        <button class="new">New</button>
-                        <button class="upload">Upload</button>
-                        <button class="share">Share</button>
-                    </div>
-                </div>
-            </div>
-            <div class="main">
+          </a>
 
-                <div class="project_wrapper">
-                    <div class="projects_title">Your Projects</div>
-                    <div class="projects">
-                    
-                        <div class="project">
-                            <div class="project_title">Project 1</div>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor quam iure cumque officia voluptatum atque odit modi quibusdam cum voluptas.</p>
-                            <div class="project_controls">
-                                <div class="icon star"></div>
-                                <div class="icon eye"></div>
-                                <div class="icon fork"></div>
-                            </div>
-                        </div>
-                        <div class="project">
-                            <div class="project_title">Project 2</div>
-                            <p>Ullam dolores magni veniam facilis ratione laborum! Optio, debitis ipsam! At labore vero incidunt quod ipsam, aspernatur asperiores id facilis.</p>
-                            <div class="project_controls">
-                                <div class="icon star"></div>
-                                <div class="icon eye"></div>
-                                <div class="icon fork"></div>
-                            </div>
-                        </div>
-                        <div class="project">
-                            <div class="project_title">Project 3</div>
-                            <p>Veniam modi alias temporibus cupiditate, facere vel qui ratione suscipit, nemo odit iusto eveniet eius accusamus perferendis, praesentium officia facilis.</p>
-                            <div class="project_controls">
-                                <div class="icon star"></div>
-                                <div class="icon eye"></div>
-                                <div class="icon fork"></div>
-                            </div>
-                        </div>
-                        <div class="project">
-                            <div class="project_title">Project 4</div>
-                            <p>Unde ipsum quod omnis, quam totam, odio soluta qui facere voluptas sapiente sequi error aliquam fuga, quis natus repellat. Quis?</p>
-                            <div class="project_controls">
-                                <div class="icon star"></div>
-                                <div class="icon eye"></div>
-                                <div class="icon fork"></div>
-                            </div>
-                        </div>
-                        <div class="project">
-                            <div class="project_title">Project 5</div>
-                            <p>Eligendi nemo culpa provident aperiam impedit excepturi voluptas! Fuga magnam ex tempora? Illum, nisi architecto molestias qui odit et sit.</p>
-                            <div class="project_controls">
-                                <div class="icon star"></div>
-                                <div class="icon eye"></div>
-                                <div class="icon fork"></div>
-                            </div>
-                        </div>
-                        <div class="project">
-                            <div class="project_title">Project 6</div>
-                            <p>Repellat facere recusandae quasi autem eos. Odit corporis ipsam asperiores? Accusantium saepe dolores nesciunt aliquid harum doloribus, libero vel omnis?</p>
-                            <div class="project_controls">
-                                <div class="icon star"></div>
-                                <div class="icon eye"></div>
-                                <div class="icon fork"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="right_sidebar">
-                    <div class="announcements_wrapper">
-                        <div class="announcements_title">Announcements</div>
-                        <div class="announcements">
-                            <div class="ann">
-                                <div class="ann_title">Site Maintenace</div>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro, minima?</p>
-                            </div>
-                            <hr>
-                            <div class="ann">
-                                <div class="ann_title">Community Share Day</div>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, a.</p>
-                            </div>
-                            <hr>
-                            <div class="ann">
-                                <div class="ann_title">Updated Privacy Policy</div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati, repellendus!</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="trending_wrapper">
-                        <div class="trending_title">Trending</div>
-                        <div class="trending">
-                            <div class="trend">
-                                <div class="trend_img"></div>
-                                <div class="trend_at">@tegan</div>
-                                <div class="trend_description">World Peace Builder</div>
-                            </div>
-                            <div class="trend">
-                                <div class="trend_img"></div>
-                                <div class="trend_at">@morgan</div>
-                                <div class="trend_description">Super Cool Project</div>
-                            </div>
-                            <div class="trend">
-                                <div class="trend_img"></div>
-                                <div class="trend_at">@kendall</div>
-                                <div class="trend_description">Life Changing App</div>
-                            </div>
-                            <div class="trend">
-                                <div class="trend_img"></div>
-                                <div class="trend_at">@alex</div>
-                                <div class="trend_description">No Traffic Maker</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          <nav class="sidebar_nav_top">
+            <ul>
+              <li><a class="sidenav" href=""><span class="icon sidebar_icon home"></span>Home</a>
+              </li>
+              <li><a class="sidenav" href=""><span
+                    class="icon sidebar_icon profile"></span>Profile</a></li>
+              <li><a class="sidenav" href=""><span
+                    class="icon sidebar_icon messages"></span>Messages</a></li>
+              <li><a class="sidenav" href=""><span
+                    class="icon sidebar_icon history"></span>History</a></li>
+              <li><a class="sidenav" href=""><span class="icon sidebar_icon tasks"></span>Tasks</a>
+              </li>
+              <li><a class="sidenav" href=""><span
+                    class="icon sidebar_icon communities"></span>Communities</a>
+              </li>
+            </ul>
+          </nav>
+          <nav class="sidebar_nav_bottom">
+            <ul>
+              <li><a class="sidenav" href=""><span
+                    class="icon sidebar_icon settings"></span>Settings</a></li>
+              <li><a class="sidenav" href=""><span
+                    class="icon sidebar_icon support"></span>Support</a></li>
+              <li><a class="sidenav" href=""><span
+                    class="icon sidebar_icon privacy"></span>Privacy</a></li>
+            </ul>
+          </nav>
+
         </div>
+        <div class="header">
+          <div class="header_top">
+            <button class="icon menu_button" onclick="toggle_menu()"></button>
+            <div class="top_left">
+              <div class="icon search"></div>
+              <input class="search_input" type="search" name="" id="">
+            </div>
+
+            <div class="top_right">
+              <div class="notifications"></div>
+              <div class="account">
+                <div class="account_image"></div>
+                <div class="account_title">Morgan Oakley</div>
+              </div>
+            </div>
+          </div>
+          <div class="header_bottom">
+            <div class="header_bottom_left">
+              <div class="account_image"></div>
+              <div class="greetings">
+                <div>Hi there,</div>
+                <div><b>Morgan Oakley (@morgan)</b></div>
+              </div>
+            </div>
+
+            <div class="controls">
+              <button class="new">New</button>
+              <button class="upload">Upload</button>
+              <button class="share">Share</button>
+            </div>
+          </div>
+        </div>
+        <div class="main">
+
+          <div class="project_wrapper">
+            <div class="projects_title">Your Projects</div>
+            <div class="projects">
+
+              <div class="project">
+                <div class="project_title">Project 1</div>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor
+                  quam iure cumque officia voluptatum atque odit modi quibusdam
+                  cum voluptas.</p>
+                <div class="project_controls">
+                  <div class="icon star"></div>
+                  <div class="icon eye"></div>
+                  <div class="icon fork"></div>
+                </div>
+              </div>
+              <div class="project">
+                <div class="project_title">Project 2</div>
+                <p>Ullam dolores magni veniam facilis ratione laborum! Optio,
+                  debitis ipsam! At labore vero incidunt quod ipsam, aspernatur
+                  asperiores id facilis.</p>
+                <div class="project_controls">
+                  <div class="icon star"></div>
+                  <div class="icon eye"></div>
+                  <div class="icon fork"></div>
+                </div>
+              </div>
+              <div class="project">
+                <div class="project_title">Project 3</div>
+                <p>Veniam modi alias temporibus cupiditate, facere vel qui ratione
+                  suscipit, nemo odit iusto eveniet eius accusamus perferendis,
+                  praesentium officia facilis.</p>
+                <div class="project_controls">
+                  <div class="icon star"></div>
+                  <div class="icon eye"></div>
+                  <div class="icon fork"></div>
+                </div>
+              </div>
+              <div class="project">
+                <div class="project_title">Project 4</div>
+                <p>Unde ipsum quod omnis, quam totam, odio soluta qui facere
+                  voluptas sapiente sequi error aliquam fuga, quis natus repellat.
+                  Quis?</p>
+                <div class="project_controls">
+                  <div class="icon star"></div>
+                  <div class="icon eye"></div>
+                  <div class="icon fork"></div>
+                </div>
+              </div>
+              <div class="project">
+                <div class="project_title">Project 5</div>
+                <p>Eligendi nemo culpa provident aperiam impedit excepturi voluptas!
+                  Fuga magnam ex tempora? Illum, nisi architecto molestias qui
+                  odit et sit.</p>
+                <div class="project_controls">
+                  <div class="icon star"></div>
+                  <div class="icon eye"></div>
+                  <div class="icon fork"></div>
+                </div>
+              </div>
+              <div class="project">
+                <div class="project_title">Project 6</div>
+                <p>Repellat facere recusandae quasi autem eos. Odit corporis ipsam
+                  asperiores? Accusantium saepe dolores nesciunt aliquid harum
+                  doloribus, libero vel omnis?</p>
+                <div class="project_controls">
+                  <div class="icon star"></div>
+                  <div class="icon eye"></div>
+                  <div class="icon fork"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="right_sidebar">
+            <div class="announcements_wrapper">
+              <div class="announcements_title">Announcements</div>
+              <div class="announcements">
+                <div class="ann">
+                  <div class="ann_title">Site Maintenace</div>
+                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Porro, minima?</p>
+                </div>
+                <hr>
+                <div class="ann">
+                  <div class="ann_title">Community Share Day</div>
+                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Ipsam, a.</p>
+                </div>
+                <hr>
+                <div class="ann">
+                  <div class="ann_title">Updated Privacy Policy</div>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Obcaecati, repellendus!</p>
+                </div>
+              </div>
+            </div>
+            <div class="trending_wrapper">
+              <div class="trending_title">Trending</div>
+              <div class="trending">
+                <div class="trend">
+                  <div class="trend_img"></div>
+                  <div class="trend_at">@tegan</div>
+                  <div class="trend_description">World Peace Builder</div>
+                </div>
+                <div class="trend">
+                  <div class="trend_img"></div>
+                  <div class="trend_at">@morgan</div>
+                  <div class="trend_description">Super Cool Project</div>
+                </div>
+                <div class="trend">
+                  <div class="trend_img"></div>
+                  <div class="trend_at">@kendall</div>
+                  <div class="trend_description">Life Changing App</div>
+                </div>
+                <div class="trend">
+                  <div class="trend_img"></div>
+                  <div class="trend_at">@alex</div>
+                  <div class="trend_description">No Traffic Maker</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </div>
     <!-- <p style="width:min-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error esse magnam sequi. Aspernatur dolorem id consequatur veniam quasi voluptatum repudiandae odio illo architecto sunt, ratione nostrum ipsa atque aliquam suscipit laborum quo assumenda. Eveniet tempora, cum atque fuga, minima beatae quod consequatur optio obcaecati a dolorum ipsum pariatur error at quia labore qui autem saepe odit ea recusandae aliquid corrupti? Excepturi molestias tempora accusantium voluptatum iste velit voluptate sequi! Alias, adipisci harum ratione quisquam eligendi reiciendis. Maiores, quisquam dolor. Aperiam exercitationem tenetur similique nemo ex beatae quos excepturi autem! Dolores, quas! Est, velit rem provident odit vitae quis magni accusantium.</p> -->
     <script>
-        let close_menu = document.createElement("button");
-        let sidebar = document.querySelector(".sidebar");
-        let logo_wrapper = document.querySelector(".logo_wrapper");
-        close_menu.classList.add("icon");
-        close_menu.classList.add("close_menu");
-        // close_menu.textContent = "X";
-        let menu_state = false;
-        close_menu.onclick = toggle_menu;
+      let close_menu = document.createElement("button");
+      let sidebar = document.querySelector(".sidebar");
+      let logo_wrapper = document.querySelector(".logo_wrapper");
+      close_menu.classList.add("icon");
+      close_menu.classList.add("close_menu");
+      // close_menu.textContent = "X";
+      let menu_state = false;
+      close_menu.onclick = toggle_menu;
 
-        function toggle_menu() {
-            
-            // logo_wrapper.insertAdjacentElement("afterend", close_menu);
-            if (!menu_state) {
-                sidebar.style.display = "block";
-                document.body.style = `overflow-y: hidden;`;
-                logo_wrapper.appendChild(close_menu);
-                menu_state = true;
-            } else {
-                sidebar.style.display = "none";
-                document.body.style = `overflow-y: visible;`;
-                menu_state = false;
-            }
-            
+      function toggle_menu() {
+
+        // logo_wrapper.insertAdjacentElement("afterend", close_menu);
+        if (!menu_state) {
+          sidebar.style.display = "block";
+          document.body.style = `overflow-y: hidden;`;
+          logo_wrapper.appendChild(close_menu);
+          menu_state = true;
+        } else {
+          sidebar.style.display = "none";
+          document.body.style = `overflow-y: visible;`;
+          menu_state = false;
         }
+
+      }
     </script>
-</body>
+  </body>
 
 </html>

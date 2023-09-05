@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<%- include('partials/head', {title: title}); %>
+
+<body>
+  <main>
+    <%- include('partials/sidebar'); %>
+    <div class="content">
+      <h1>
+        <%= title %>
+      </h1>
+      <form
+        action=""
+        method="POST"
+        autocomplete="off"
+      >
+        <div>
+
+          <label for="first_name">First name:</label>
+          <input
+            type="text"
+            id="first_name"
+            name="first_name"
+            placeholder='First name'
+            required=true
+            value="<%= typeof author === 'undefined' ? "" : author.first_name %>"
+          >
+        </div>
+        <div>
+          <label for="family_name">Family name:</label>
+          <input
+            type="text"
+            id="family_name"
+            name="family_name"
+            placeholder='Family name'
+            required=true
+            value="<%= typeof author === 'undefined' ? "" : author.family_name %>"
+          >
+        </div>
+        <div>
+          <label for="date_of_birth">Date of birth:</label>
+          <input
+            type="date"
+            id="date_of_birth"
+            name="date_of_birth"
+            placeholder='dd/mm/yyyy'
+            value="<%= typeof author === 'undefined' ? "" : author.date_of_birth %>"
+          >
+        </div>
+        <div>
+          <label for="date_of_death">Date of death:</label>
+          <input
+            type="date"
+            id="date_of_death"
+            name="date_of_death"
+            placeholder='dd/mm/yyyy'
+            value="<%= typeof author === 'undefined' ? "" : author.date_of_death %>"
+          >
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+      <% if (typeof errors !== 'undefined' ) { %>
+      <ul>
+        <% errors.forEach(error=> { %>
+        <li>
+          <%= error.msg %>
+        </li>
+        <%}) %>
+      </ul>
+      <% } %>
+    </div>
+  </main>
+</body>
+
+</html>

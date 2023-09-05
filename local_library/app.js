@@ -13,7 +13,7 @@ const catalogRouter = require("./routes/catalog"); // Import routes for "catalog
 const app = express();
 
 mongoose.set("strictQuery", false);
-console.log(`MONGO_URL:`, process.env.MONGO_URL);
+// console.log(`MONGO_URL:`, process.env.MONGO_URL);
 
 async function main() {
   await mongoose.connect(process.env.MONGO_URL);

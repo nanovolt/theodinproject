@@ -58,6 +58,7 @@
             id="summary"
             placeholder="Summary"
             required="true"
+            rows="8"
           ><%= typeof book === "undefined" ? "" : book.summary %></textarea>
         </div>
         <div class="block">
@@ -74,14 +75,13 @@
         <div class="block">
           <label for="">Genre:</label>
           <% genres.forEach(genre=> { %>
-          <% console.log("type of genre.checked, book_form, 76:", genre.checked)%>
           <div class="checkbox">
             <input
               type="checkbox"
               name="genre"
               id="<%= genre._id%>"
               value="<%= genre._id%>"
-              <%= typeof genre.checked !== 'undefined' ? "checked" : '' %>
+              <%= typeof genre.checked !== 'undefined' ? genre.checked : '' %>
             >
             <label for="<%= genre._id%>"><%= genre.name%></label>
           </div>

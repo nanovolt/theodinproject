@@ -8,7 +8,6 @@ const Book = require("../models/book");
 exports.bookinstance_list = asyncHandler(async (req, res, next) => {
   const allBookInstances = await BookInstance.find().populate("book").exec();
 
-  console.log(allBookInstances);
   res.render("bookinstance_list", {
     title: "Book Instance List",
     bookinstance_list: allBookInstances,
@@ -89,12 +88,32 @@ exports.bookinstance_create_post = [
 
 // Display BookInstance delete form on GET.
 exports.bookinstance_delete_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: BookInstance delete GET");
+  const instance = await BookInstance.findById(req.params.id).populate("book").exec();
+  // console.log("params id:", req.params.id);
+  // console.log("instance:", instance);
+
+  if (!instance) {
+    res.redirect("/catalog/bookinstances");
+  } else {
+    res.render("bookinstance_delete", {
+      title: "Delete book:",
+      bookinstance: instance,
+    });
+  }
 });
 
 // Handle BookInstance delete on POST.
 exports.bookinstance_delete_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: BookInstance delete POST");
+  const instance = await BookInstance.findById(req.params.id).exec();
+  if (!instance) {
+    res.render("bookinstance_delete", {
+      title: "Delete book:",
+      bookinstance: instance,
+    });
+  } else {
+    await BookInstance.findByIdAndRemove(req.body.bookinstanceID);
+    res.redirect("/catalog/bookinstances");
+  }
 });
 
 // Display BookInstance update form on GET.

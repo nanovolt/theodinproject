@@ -7,9 +7,10 @@
     <%- include('partials/sidebar'); %>
     <div class="content">
       <h1>
-        ID:
+        <%= title %>:
         <%= bookinstance.id %>
       </h1>
+      <%- console.log(bookinstance) %>
       <p>Title: <a href="<%= bookinstance.book.url %>"><%= bookinstance.book.title %></a></p>
       <p>Imprint: <%= bookinstance.imprint %> </p>
       <p>
@@ -25,10 +26,20 @@
       <% if (bookinstance.status !== "Available") { %>
       <p>Due back: <%= bookinstance.due_back_formatted %> </p>
       <% } %>
-      <hr>
-      <div>
-        <a href="<%= `${bookinstance.url}/delete` %>">Delete book instance</a>
-      </div>
+      <p>Do you really want to delete this book instance?</p>
+      <form
+        action=""
+        method="POST"
+      >
+        <input
+          type="hidden"
+          id="<%= bookinstance._id %>"
+          name="bookinstanceID"
+          value="<%= bookinstance._id %>"
+          required
+        >
+        <button type="submit">Delete</button>
+      </form>
     </div>
   </main>
 </body>

@@ -135,12 +135,41 @@ exports.book_create_post = [
 
 // Display book delete form on GET.
 exports.book_delete_get = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Book delete GET");
+  const [book, allBookInstances] = await Promise.all([
+    Book.findById(req.params.id).populate("author").populate("genre").exec(),
+    BookInstance.find({ book: req.params.id }).exec(),
+  ]);
+  // console.log("book:", book);
+  // console.log("allBookInstances:", allBookInstances);
+
+  if (!book) {
+    res.redirect("/catalog/books");
+  }
+
+  res.render("book_delete", {
+    title: "Delete book",
+    book,
+    book_instances: allBookInstances,
+  });
 });
 
 // Handle book delete on POST.
 exports.book_delete_post = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Book delete POST");
+  const [book, allBookInstances] = await Promise.all([
+    Book.findById(req.params.id).populate("author").populate("genre").exec(),
+    BookInstance.find({ book: req.params.id }).exec(),
+  ]);
+
+  if (allBookInstances.length > 0) {
+    res.render("book_delete", {
+      title: "Delete book",
+      book,
+      book_instances: allBookInstances,
+    });
+  } else {
+    await Book.findByIdAndRemove(req.body.bookID);
+    res.redirect("/catalog/books");
+  }
 });
 
 // Display book update form on GET.
@@ -163,7 +192,7 @@ exports.book_update_get = asyncHandler(async (req, res, next) => {
   for (const genre of allGenres) {
     for (const bookGenre of book.genre) {
       if (genre._id.toString() === bookGenre._id.toString()) {
-        genre.checked = "true";
+        genre.checked = "checked";
       }
     }
   }
@@ -224,9 +253,10 @@ exports.book_update_post = [
       // Mark our selected genres as checked.
       for (const genre of allGenres) {
         if (book.genre.indexOf(genre._id) > -1) {
-          genre.checked = "true";
+          genre.checked = "checked";
         }
       }
+
       res.render("book_form", {
         title: "Update Book",
         authors: allAuthors,

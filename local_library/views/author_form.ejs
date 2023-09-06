@@ -13,9 +13,9 @@
         action=""
         method="POST"
         autocomplete="off"
+        class="form"
       >
-        <div>
-
+        <div class="block">
           <label for="first_name">First name:</label>
           <input
             type="text"
@@ -26,7 +26,7 @@
             value="<%= typeof author === 'undefined' ? "" : author.first_name %>"
           >
         </div>
-        <div>
+        <div class="block">
           <label for="family_name">Family name:</label>
           <input
             type="text"
@@ -37,7 +37,7 @@
             value="<%= typeof author === 'undefined' ? "" : author.family_name %>"
           >
         </div>
-        <div>
+        <div class="block">
           <label for="date_of_birth">Date of birth:</label>
           <input
             type="date"
@@ -47,7 +47,7 @@
             value="<%= typeof author === 'undefined' ? "" : author.date_of_birth %>"
           >
         </div>
-        <div>
+        <div class="block">
           <label for="date_of_death">Date of death:</label>
           <input
             type="date"

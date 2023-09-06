@@ -30,6 +30,13 @@
         <% } %>
         <%}) %>
       </p>
+      <hr>
+      <div>
+        <a href="<%= `${book.url}/delete` %>">Delete book</a>
+      </div>
+      <div>
+        <a href="<%= `${book.url}/update` %>">Update book</a>
+      </div>
       <% book_instances.forEach(book=> { %>
       <ul>
         <li>
@@ -55,6 +62,7 @@
       <% if (!book_instances) { %>
       <p>There are no copies of this book in the library</p>
       <% } %>
+
     </div>
   </main>
 </body>

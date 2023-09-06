@@ -13,16 +13,19 @@
         action=""
         method="POST"
         autocomplete="off"
+        class="form"
       >
-        <label for="name">Genre:</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          placeholder='Fantasy, Poetry etc.'
-          required=true
-          value="<%= typeof genre === 'undefined' ? "" : genre.name %>"
-        >
+        <div class="block">
+          <label for="name">Genre:</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder='Fantasy, Poetry etc.'
+            required=true
+            value="<%= typeof genre === 'undefined' ? "" : genre.name %>"
+          >
+        </div>
         <button type="submit">Submit</button>
       </form>
       <% if (typeof errors !== 'undefined' ) { %>

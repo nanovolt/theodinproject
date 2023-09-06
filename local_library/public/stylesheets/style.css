@@ -26,3 +26,30 @@ main .content {
 .warning {
   color: orange;
 }
+
+.form {
+  display: grid;
+  gap: 8px;
+}
+
+.form button {
+  width: fit-content;
+}
+
+.block {
+  display: grid;
+  max-width: 320px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.checkbox input {
+  margin: 0;
+}
+.checkbox label {
+  line-height: normal;
+}

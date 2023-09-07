@@ -156,13 +156,11 @@ exports.genre_update_post = [
   asyncHandler(async (req, res, next) => {
     // Extract the validation errors from a request.
     const errors = validationResult(req);
-    console.log("errors", errors);
     // Create a genre object with escaped and trimmed data.
     const genre = new Genre({ name: req.body.name, _id: req.params.id });
 
     if (!errors.isEmpty()) {
       // There are errors. Render the form again with sanitized values/error messages.
-      console.log("render error");
       res.render("genre_form", {
         title: "Update Genre",
         genre,

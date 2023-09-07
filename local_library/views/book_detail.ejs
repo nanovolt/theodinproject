@@ -32,11 +32,12 @@
       </p>
       <hr>
       <div>
-        <a href="<%= `${book.url}/delete` %>">Delete book</a>
-      </div>
-      <div>
         <a href="<%= `${book.url}/update` %>">Update book</a>
       </div>
+      <div>
+        <a href="<%= `${book.url}/delete` %>">Delete book</a>
+      </div>
+      <h2>Copies</h2>
       <% book_instances.forEach(book=> { %>
       <ul>
         <li>
@@ -59,7 +60,7 @@
         </li>
       </ul>
       <%}) %>
-      <% if (!book_instances) { %>
+      <% if (book_instances.length === 0) { %>
       <p>There are no copies of this book in the library</p>
       <% } %>
 

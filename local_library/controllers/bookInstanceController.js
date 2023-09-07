@@ -96,7 +96,7 @@ exports.bookinstance_delete_get = asyncHandler(async (req, res, next) => {
     res.redirect("/catalog/bookinstances");
   } else {
     res.render("bookinstance_delete", {
-      title: "Delete book:",
+      title: "Delete book instance:",
       bookinstance: instance,
     });
   }
@@ -107,7 +107,7 @@ exports.bookinstance_delete_post = asyncHandler(async (req, res, next) => {
   const instance = await BookInstance.findById(req.params.id).exec();
   if (!instance) {
     res.render("bookinstance_delete", {
-      title: "Delete book:",
+      title: "Delete book instance:",
       bookinstance: instance,
     });
   } else {

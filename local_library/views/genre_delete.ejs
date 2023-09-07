@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<%- include('partials/head', {title: title}); %>
+
+<body>
+  <main>
+    <%- include('partials/sidebar'); %>
+    <div class="content">
+      <h1>
+        <%= title %>
+        <%= genre.name %>
+      </h1>
+
+      <% if (genre_books.length > 0) { %>
+      <p>Delete the following books before attempting to delete this genre.</p>
+      <% genre_books.forEach(book=> { %>
+      <ul>
+        <li>
+          <a href="<%= book.url %>">
+            <%= book.title %>
+          </a>
+          <p><%= book.summary %></p>
+        </li>
+      </ul>
+      <%}) %>
+      <% } else { %>
+      <p>Do you really want to delete this Genre?</p>
+      <form
+        action=""
+        method="POST"
+      >
+        <input
+          type="hidden"
+          id="<%= genre._id %>"
+          name="genreID"
+          value="<%= genre._id %>"
+          required
+        >
+        <button type="submit">Delete</button>
+      </form>
+      <% } %>
+
+
+    </div>
+  </main>
+</body>
+
+</html>

@@ -5,24 +5,48 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const log = require("debug")("app");
+const compression = require("compression");
+const helmet = require("helmet");
+const RateLimit = require("express-rate-limit");
 
 const indexRouter = require("./routes/index");
 const catalogRouter = require("./routes/catalog"); // Import routes for "catalog" area of site
 
 const app = express();
 
-mongoose.set("strictQuery", false);
-// console.log(`MONGO_URL:`, process.env.MONGO_URL);
+log(".env MONGO_URL:", process.env.MONGO_URL);
+console.log(".env NODE_ENV:", process.env.NODE_ENV);
 
+mongoose.set("strictQuery", false);
 async function main() {
   await mongoose.connect(process.env.MONGO_URL);
 }
-main().catch((err) => console.log(err));
+main().catch((err) => log(err));
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
+// Set up rate limiter: maximum of twenty requests per minute
+const limiter = RateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 100,
+});
+// Apply rate limiter to all requests
+app.use(limiter);
+
+app.disable("x-powered-by");
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: false,
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+    },
+  })
+);
+app.use(compression()); // Compress all routes
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

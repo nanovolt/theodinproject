@@ -3,18 +3,22 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
-    "dev": "nodemon ./bin/www",
-    "serverstart": "DEBUG=local-library:* npm run dev"
+    "node": "node ./bin/www",
+    "mon": "nodemon ./bin/www",
+    "dev": "DEBUG=local-library:*,app npm run mon",
+    "start": "NODE_ENV=production npm run node"
   },
   "dependencies": {
+    "compression": "^1.7.4",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^16.3.1",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "express-async-handler": "^1.2.0",
+    "express-rate-limit": "^6.11.0",
     "express-validator": "^7.0.1",
+    "helmet": "^7.0.0",
     "http-errors": "~1.6.3",
     "luxon": "^3.4.2",
     "mongoose": "^7.5.0",

@@ -62,8 +62,6 @@ exports.bookinstance_create_post = [
       due_back: req.body.due_back,
     });
 
-    console.log(bookInstance);
-
     if (!errors.isEmpty()) {
       // There are errors.
       // Render form again with sanitized values and error messages.
@@ -89,8 +87,6 @@ exports.bookinstance_create_post = [
 // Display BookInstance delete form on GET.
 exports.bookinstance_delete_get = asyncHandler(async (req, res, next) => {
   const instance = await BookInstance.findById(req.params.id).populate("book").exec();
-  // console.log("params id:", req.params.id);
-  // console.log("instance:", instance);
 
   if (!instance) {
     res.redirect("/catalog/bookinstances");

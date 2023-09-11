@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<%- include("partials/head")  %>
+
+<body>
+  <%- include("partials/header")  %>
+  <div class="main-wrapper">
+    <%- include("partials/navigation")  %>
+    <main>
+      <h2><%= category.name %> </h2>
+      <div class="controls">
+        <div><a href="<%= category.id %>/update">Update</a></div>
+        <div><a href="<%= category.id %>/delete">Delete</a></div>
+      </div>
+      <h3>Parent category: <%= category.parent === null ? "No parent" : category.parent%> </h3>
+      <div>
+        <h3>Child categories:</h3>
+        <% if (childCategories.length > 0) { %>
+        <% childCategories.forEach(cat=> { %>
+        <div><%= cat.name %></div>
+        <%}) %>
+        <% } else { %>
+        <div>-None-</div>
+        <% } %>
+      </div>
+
+    </main>
+  </div>
+  <%- include("partials/footer")  %>
+</body>
+
+</html>

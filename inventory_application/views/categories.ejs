@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<%- include("partials/head")  %>
+
+<body>
+  <%- include("partials/header")  %>
+  <div class="main-wrapper">
+    <%- include("partials/navigation")  %>
+    <main>
+      <h2><%= title %></h2>
+      <% if (categories.length > 0) { %>
+      <div class="category-list">
+
+        <% categories.forEach(cat => { %>
+        <% const name = cat.name %>
+        <% if (!cat.parent) { %>
+        <div class="category-item">
+          <div
+            class="category-name"
+            title="<%= cat.name %>"
+          >
+            <a href="category/<%= cat.id %>">
+              <%= cat.name %>
+            </a>
+            <% categories.forEach(cat => { %>
+            <% if (name === cat.parent) { %>
+            <div><a href="category/<%= cat.id %>">
+                -<%= cat.name %>
+              </a></div>
+            <% } %>
+            <% }) %>
+          </div>
+        </div>
+        <% } %>
+        <% }) %>
+      </div>
+      <% } else { %>
+      <p>Category list is empty</p>
+      <% } %>
+    </main>
+  </div>
+  <%- include("partials/footer")  %>
+</body>
+
+</html>

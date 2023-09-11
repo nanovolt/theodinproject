@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= message %></title>
+  <link
+    rel="stylesheet"
+    href="/stylesheets/style.css"
+  />
+  <script
+    src="/javascripts/script.js"
+    defer
+  ></script>
+
+</head>
+
+<body>
+  <div class="main-wrapper">
+    <main class="error-page">
+      <h1><%= message %></h1>
+      <h2><%= error.status %></h2>
+      <!-- <pre><%= error.stack %></pre> -->
+      <a href="/">Return home</a>
+    </main>
+  </div>
+  <%- include("partials/footer")  %>
+</body>
+
+</html>

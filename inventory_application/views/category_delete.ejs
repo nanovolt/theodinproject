@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<%- include("partials/head")  %>
+
+<body>
+  <%- include("partials/header")  %>
+  <div class="main-wrapper">
+    <%- include("partials/navigation")  %>
+    <main>
+      <h2><%= category.name %> </h2>
+      <div>
+        <% if (childCategories.length > 0) { %>
+        <p>Delete the following child categories before attempting to delete this category</p>
+        <% childCategories.forEach(cat=> { %>
+        <div><%= cat.name %></div>
+        <%}) %>
+        <% } else { %>
+        <p>Do you really want to delete this category?</p>
+        <form
+          action=""
+          method="POST"
+        >
+          <input
+            type="hidden"
+            id="<%= category._id %>"
+            name="categoryID"
+            value="<%= category._id %>"
+            required
+          >
+          <button type="submit">Delete</button>
+        </form>
+        <% } %>
+      </div>
+    </main>
+  </div>
+  <%- include("partials/footer")  %>
+</body>
+
+</html>

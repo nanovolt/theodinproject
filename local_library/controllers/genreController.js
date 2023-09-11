@@ -124,7 +124,6 @@ exports.genre_delete_post = asyncHandler(async (req, res, next) => {
 // Display Genre update form on GET.
 exports.genre_update_get = asyncHandler(async (req, res, next) => {
   const genre = await Genre.findById(req.params.id).exec();
-
   if (genre === null) {
     // No results.
     const err = new Error("Genre not found");

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<%- include("partials/head")  %>
+
+<body>
+  <%- include("partials/header")  %>
+  <div class="main-wrapper">
+    <%- include("partials/navigation")  %>
+    <main>
+      <h2><%= title %></h2>
+      <form
+        action=""
+        method="POST"
+      >
+        <div class="block">
+          <label for="category">Category</label>
+          <input
+            type="text"
+            id="category"
+            name="category"
+            placeholder="category..."
+            value="<%= typeof categoryValue === 'undefined' ? "" : categoryValue %>"
+          >
+          <div class="input-errors">
+            <% if (typeof errors !== 'undefined' ) { %>
+            <% errors.map(error => { %>
+            <% if (error.path === "category") { %>
+            <div class="input-error"><%= error.msg %></div>
+            <% } %>
+            <% }) %>
+            <% } %>
+          </div>
+        </div>
+        <div class="block">
+          <label for="parent">Parent:</label>
+          <select
+            name="parent"
+            id="parent"
+          >
+            <option value="">--No parent--</option>
+            <% categories.forEach(cat=> { %>
+            <option
+              value="<%= cat.name%>"
+              <% if (typeof cat !== 'undefined') { %>
+              <%= selected_parent === cat.name ? 'selected' : ""%>
+              <% } %>
+            ><%= cat.name%></option>
+            <%}) %>
+          </select>
+        </div>
+        <div>
+          <% if (typeof isCategoryPresent !== "undefined" && isCategoryPresent) { %>
+          <div>The exact category "<%= categoryValue %>" with parent "<%= selected_parent %>" is already present</div>
+          <% } %>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </main>
+  </div>
+  <% include("partials/footer")  %>
+</body>
+
+</html>

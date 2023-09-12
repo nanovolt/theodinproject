@@ -25,6 +25,7 @@ exports.postCreate = [
     .trim()
     .notEmpty()
     .withMessage("category field is required")
+    .bail()
     .isLength({ min: 3 })
     .withMessage("too short, minimum length: 3")
     .isLength({ max: 64 })
@@ -46,11 +47,6 @@ exports.postCreate = [
 
   asyncHandler(async (req, res) => {
     const errors = validationResult(req);
-
-    const category = new Category({
-      name: req.body.category,
-      parent: req.body.parent === "" ? null : req.body.parent,
-    });
 
     const isCategoryExists = await Category.findOne({
       name: req.body.category,
@@ -88,7 +84,11 @@ exports.postCreate = [
       res.locals.errors = errors.array();
       res.render("category_form");
     } else {
-      await category.save();
+      const category = await Category.create({
+        name: req.body.category,
+        parent: req.body.parent === "" ? null : req.body.parent,
+      });
+      // await category.save();
       res.redirect(category.url);
     }
   }),
@@ -198,14 +198,14 @@ exports.postUpdate = [
       res.locals.errors = errors.array();
       console.log(res.locals.errors);
       res.render("category_form");
-    } else {
-      // DIFFERENCE: changed to find and update
-      const oldCategory = await Category.findById(req.params.id).exec();
-      const updatedCategory = await Category.findByIdAndUpdate(req.params.id, category);
-      await Category.updateMany({ parent: oldCategory.name }, { parent: category.name });
-
-      res.redirect(updatedCategory.url);
     }
+
+    // DIFFERENCE: changed to find and update
+    const oldCategory = await Category.findById(req.params.id).exec();
+    const updatedCategory = await Category.findByIdAndUpdate(req.params.id, category);
+    await Category.updateMany({ parent: oldCategory.name }, { parent: category.name });
+
+    res.redirect(updatedCategory.url);
   }),
 ];
 
@@ -228,7 +228,7 @@ exports.getDelete = asyncHandler(async (req, res, next) => {
 });
 
 exports.postDelete = asyncHandler(async (req, res) => {
-  const category = await Category.findById(req.params.id).exec();
+  const category = await Category.findById(req.body.categoryID).exec();
 
   if (category === null) {
     res.redirect("/categories");

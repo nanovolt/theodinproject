@@ -14,7 +14,7 @@
         method="POST"
       >
         <div class="block">
-          <label for="category">Category</label>
+          <label for="category">Category <span class="star">*</span></label>
           <input
             type="text"
             id="category"
@@ -33,7 +33,7 @@
           </div>
         </div>
         <div class="block">
-          <label for="parent">Parent:</label>
+          <label for="parent">Parent</label>
           <select
             name="parent"
             id="parent"
@@ -58,7 +58,7 @@
       </form>
     </main>
   </div>
-  <% include("partials/footer")  %>
+  <%- include("partials/footer")  %>
 </body>
 
 </html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<%- include("partials/head")  %>
+
+<body>
+  <%- include("partials/header")  %>
+  <div class="main-wrapper">
+    <%- include("partials/navigation")  %>
+    <main>
+      <div class="product">
+
+
+        <h2><%- title %></h2>
+        <div class="controls">
+          <div class="control-link"><a href="<%= product.id %>/update">Update</a></div>
+          <div class="control-link"><a href="<%= product.id %>/delete">Delete</a></div>
+        </div>
+        <div>
+          <div>Description: </div>
+          <pre><%- product.description === "" ? "No description" : product.description %></pre>
+        </div>
+        <div>
+          Category:
+          <a href="<%= product.category.url %>"><%- product.category.name %></a>
+        </div>
+        <div>Price: <%= product.price %> &#8376;</div>
+        <div>Number in stock: <%= product.numberInStock %></div>
+      </div>
+    </main>
+  </div>
+  <%- include("partials/footer")  %>
+</body>
+
+</html>

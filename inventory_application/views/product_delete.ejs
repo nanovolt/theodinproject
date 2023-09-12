@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<%- include("partials/head")  %>
+
+<body>
+  <%- include("partials/header")  %>
+  <div class="main-wrapper">
+    <%- include("partials/navigation")  %>
+    <main>
+      <h2><%- product.name %> </h2>
+      <div>
+        <p>Do you really want to delete this product?</p>
+        <form
+          action=""
+          method="POST"
+        >
+          <input
+            type="hidden"
+            id="<%= product.id %>"
+            name="productID"
+            value="<%= product.id %>"
+            required
+          >
+          <button type="submit">Delete</button>
+        </form>
+      </div>
+    </main>
+  </div>
+  <%- include("partials/footer")  %>
+</body>
+
+</html>

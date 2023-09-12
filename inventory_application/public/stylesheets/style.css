@@ -83,6 +83,29 @@ footer {
   background-color: white;
 }
 
+.product-item,
+.category-item {
+  padding: 8px;
+  border: 1px solid rgb(100, 100, 100);
+}
+
+.control-link {
+  padding: 4px;
+  border: 1px solid rgb(100, 100, 100);
+}
+
+table,
+th,
+td {
+  padding: 8px;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+pre {
+  font: 16px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 0;
+}
 ul {
   margin: 0;
   padding: 0;
@@ -94,13 +117,21 @@ form {
   gap: 8px;
 }
 
+.product {
+  display: grid;
+  gap: 4px;
+}
+
 form button {
   width: fit-content;
 }
 
 .block {
   display: grid;
+  gap: 4px;
   max-width: 320px;
+  padding: 8px;
+  border: 1px solid rgb(100, 100, 100);
 }
 
 .checkbox {
@@ -119,7 +150,7 @@ form button {
 
 .error-page {
   margin: 0 auto;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .category-item {
@@ -131,4 +162,12 @@ form button {
 .controls {
   display: flex;
   gap: 4px;
+}
+
+.star {
+  color: red;
+}
+
+textarea {
+  resize: vertical;
 }

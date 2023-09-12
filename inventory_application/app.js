@@ -9,6 +9,7 @@ const log = require("debug")("app");
 
 const indexRouter = require("./routes/index");
 const categoryRouter = require("./routes/category");
+const productRouter = require("./routes/product");
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/category", categoryRouter);
+app.use("/product", productRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

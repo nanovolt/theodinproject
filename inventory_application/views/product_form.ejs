@@ -12,6 +12,7 @@
       <form
         action=""
         method="POST"
+        enctype="multipart/form-data"
       >
         <div class="block">
           <label for="name">Name <span class="star">*</span></label>
@@ -20,7 +21,7 @@
             id="name"
             name="name"
             placeholder="name..."
-            value="<%- typeof nameValue === 'undefined' ? "" : nameValue %>"
+            value="<%- typeof product === 'undefined' ? "" : product.name %>"
           >
           <div class="input-errors">
             <% errors.map(error => { %>
@@ -37,13 +38,40 @@
             name="description"
             placeholder="description..."
             rows="10"
-          ><%- typeof descriptionValue === 'undefined' ? "" : descriptionValue %></textarea>
+          ><%- typeof product === 'undefined' ? "" : product.description %></textarea>
           <div class="input-errors">
             <% errors.map(error => { %>
             <% if (error.path === "description") { %>
             <div class="input-error"><%= error.msg %></div>
             <% } %>
             <% }) %>
+          </div>
+        </div>
+        <div class="block">
+          <% if (typeof product !== "undefined" && product.imageUrl !== "") { %>
+          <div class="image-box">
+            <img
+              src="/data/uploads/<%= product.imageUrl %>"
+              alt=""
+              srcset=""
+            >
+          </div>
+          <% } %>
+          <label for="image">Image</label>
+          <input
+            type="file"
+            name="image"
+            id="image"
+            class="image-input"
+          >
+          <div>
+            <input
+              type="checkbox"
+              name="deleteImage"
+              id="deleteImage"
+              <%= typeof deleteImageValue !== "undefined" ? deleteImageValue : "" %>
+            >
+            <label for="deleteImage">Delete</label>
           </div>
         </div>
         <div class="block">
@@ -57,7 +85,7 @@
             <option
               value="<%= cat.name%>"
               <% if (typeof cat !== 'undefined') { %>
-              <%= selectedCategory === cat.name ? 'selected' : ""%>
+              <%= typeof product !== "undefined" && product.category.name === cat.name ? 'selected' : ""%>
               <% } %>
             ><%= cat.name%></option>
             <%}) %>
@@ -77,7 +105,7 @@
             step="0.01"
             id="price"
             name="price"
-            value="<%= typeof priceValue === 'undefined' ? "" : priceValue %>"
+            value="<%= typeof product === 'undefined' ? "" : product.price %>"
           >
           <div class="input-errors">
             <% errors.map(error => { %>
@@ -93,7 +121,7 @@
             type="text"
             id="numberInStock"
             name="numberInStock"
-            value="<%= typeof numberInStockValue === 'undefined' ? "" : numberInStockValue %>"
+            value="<%= typeof product === 'undefined' ? "" : product.numberInStock %>"
           >
           <div class="input-errors">
             <% errors.map(error => { %>
@@ -103,7 +131,10 @@
             <% }) %>
           </div>
         </div>
-        <button type="submit">Submit</button>
+        <div>
+          <a href="<%= typeof product !== "undefined" ? `/product/${product.id}` : "/" %>"><button type="button">Cancel</button></a>
+          <button type="submit">Submit</button>
+        </div>
       </form>
     </main>
   </div>

@@ -16,6 +16,13 @@
           <div class="control-link"><a href="<%= product.id %>/update">Update</a></div>
           <div class="control-link"><a href="<%= product.id %>/delete">Delete</a></div>
         </div>
+        <div class="image-box">
+          <% if (product.imageUrl === "") { %>
+          <span>No image</span>
+          <% } else { %>
+          <img src="/data/uploads/<%= product.imageUrl %>">
+          <% } %>
+        </div>
         <div>
           <div>Description: </div>
           <pre><%- product.description === "" ? "No description" : product.description %></pre>

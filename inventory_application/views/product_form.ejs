@@ -83,11 +83,11 @@
             <option value="">--No category--</option>
             <% categories.forEach(cat=> { %>
             <option
-              value="<%= cat.name%>"
+              value="<%- cat.name%>"
               <% if (typeof cat !== 'undefined') { %>
-              <%= typeof product !== "undefined" && product.category.name === cat.name ? 'selected' : ""%>
+              <%- typeof product !== "undefined" && product.category.name === cat.name ? 'selected' : ""%>
               <% } %>
-            ><%= cat.name%></option>
+            ><%- cat.name%></option>
             <%}) %>
           </select>
           <div class="input-errors">
@@ -129,6 +129,23 @@
             <div class="input-error"><%= error.msg %></div>
             <% } %>
             <% }) %>
+          </div>
+        </div>
+        <div class="block">
+          <label for="code">Confirmation code</label>
+          <input
+            type="text"
+            id="code"
+            name="code"
+          >
+          <div class="input-errors">
+            <% if (typeof errors !== 'undefined' ) { %>
+            <% errors.map(error => { %>
+            <% if (error.path === "code") { %>
+            <div class="input-error"><%= error.msg %></div>
+            <% } %>
+            <% }) %>
+            <% } %>
           </div>
         </div>
         <div>

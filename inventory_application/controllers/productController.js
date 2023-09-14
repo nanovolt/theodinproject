@@ -113,6 +113,18 @@ exports.postCreate = [
 
   body("deleteImage").trim().escape().toBoolean(),
 
+  body("code")
+    .trim()
+    .notEmpty()
+    .withMessage("Enter Confirmation code")
+    .bail()
+    .escape()
+    .custom(async (value) => {
+      if (value !== process.env.CODE) {
+        throw new Error("Confirmation code is incorrect, try again");
+      }
+    }),
+
   asyncHandler(async (req, res) => {
     log("req.body:", req.body);
     log("req.file:", req.file);
@@ -156,7 +168,7 @@ exports.postCreate = [
       price: req.body.price === "" ? 0.0 : req.body.price,
       numberInStock: req.body.numberInStock === "" ? 0 : req.body.numberInStock,
       imageUrl: req.file ? req.file.filename : "",
-      imageMimeType: req.file.mimetype,
+      imageMimeType: req.file ? req.file.mimetype : "",
     });
 
     res.redirect(newProduct.url);
@@ -253,14 +265,25 @@ exports.postUpdate = [
 
   body("deleteImage").trim().escape().toBoolean(),
 
+  body("code")
+    .trim()
+    .notEmpty()
+    .withMessage("Enter Confirmation code")
+    .bail()
+    .escape()
+    .custom(async (value) => {
+      if (value !== process.env.CODE) {
+        throw new Error("Confirmation code is incorrect, try again");
+      }
+    }),
+
   asyncHandler(async (req, res) => {
     const errors = validationResult(req);
 
-    // log("req.body:", req.body);
-    // log("req.file:", req.file);
-    // log("deleteImage:", req.body.deleteImage);
+    log("req.body:", req.body);
+    log("req.file:", req.file);
+    log("deleteImage:", req.body.deleteImage);
 
-    const oldProduct = await Product.findById(req.params.id).select("imageUrl");
     // log("old:", oldProduct);
 
     if (!errors.isEmpty()) {
@@ -273,6 +296,8 @@ exports.postUpdate = [
       // log("res.locals.errors:", res.locals.errors);
 
       const categories = await Category.find().exec();
+
+      const oldProduct = await Product.findById(req.params.id).select("imageUrl");
 
       const product = {
         id: oldProduct.id,
@@ -291,6 +316,8 @@ exports.postUpdate = [
       res.render("product_form");
       return;
     }
+
+    const oldProduct = await Product.findById(req.params.id).select("imageUrl");
 
     let imageUrl = "";
     let imageMimeType = "";
@@ -312,6 +339,8 @@ exports.postUpdate = [
           deleteImageFromFS(oldProduct.imageUrl);
         }
       }
+      // console.log(342, req.file === true);
+
       imageUrl = req.file ? req.file.filename : oldProduct.imageUrl;
       imageMimeType = req.file ? req.file.mimetype : oldProduct.imageMimeType;
     }
@@ -350,15 +379,40 @@ exports.getDelete = asyncHandler(async (req, res, next) => {
   return null;
 });
 
-exports.postDelete = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.body.productID);
+exports.postDelete = [
+  body("code")
+    .trim()
+    .notEmpty()
+    .withMessage("Enter Confirmation code")
+    .bail()
+    .escape()
+    .custom(async (value) => {
+      if (value !== process.env.CODE) {
+        throw new Error("Confirmation code is incorrect, try again");
+      }
+    }),
 
-  if (product) {
-    if (product.imageUrl !== "") {
-      deleteImageFromFS(product.imageUrl);
+  asyncHandler(async (req, res) => {
+    const errors = validationResult(req);
+
+    const product = await Product.findById(req.body.productID);
+
+    // if have errors
+    if (!errors.isEmpty()) {
+      res.locals.title = "Delete product";
+      res.locals.product = product;
+      res.locals.errors = errors.array();
+      res.render("product_delete");
+      return;
     }
-    await Product.findByIdAndRemove(req.params.id);
-  }
 
-  res.redirect("/products");
-});
+    if (product) {
+      if (product.imageUrl !== "") {
+        deleteImageFromFS(product.imageUrl);
+      }
+      await Product.findByIdAndRemove(req.params.id);
+    }
+
+    res.redirect("/products");
+  }),
+];

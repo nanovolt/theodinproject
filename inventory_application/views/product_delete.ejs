@@ -22,6 +22,23 @@
             value="<%= product.id %>"
             required
           >
+          <div class="block">
+            <label for="code">Confirmation code</label>
+            <input
+              type="text"
+              id="code"
+              name="code"
+            >
+            <div class="input-errors">
+              <% if (typeof errors !== 'undefined' ) { %>
+              <% errors.map(error => { %>
+              <% if (error.path === "code") { %>
+              <div class="input-error"><%= error.msg %></div>
+              <% } %>
+              <% }) %>
+              <% } %>
+            </div>
+          </div>
           <button type="submit">Delete</button>
         </form>
       </div>

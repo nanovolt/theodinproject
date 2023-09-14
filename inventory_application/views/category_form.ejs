@@ -20,7 +20,7 @@
             id="category"
             name="category"
             placeholder="category..."
-            value="<%= typeof categoryValue === 'undefined' ? "" : categoryValue %>"
+            value="<%- typeof categoryValue === 'undefined' ? "" : categoryValue %>"
           >
           <div class="input-errors">
             <% if (typeof errors !== 'undefined' ) { %>
@@ -45,9 +45,26 @@
               <% if (typeof cat !== 'undefined') { %>
               <%= selected_parent === cat.name ? 'selected' : ""%>
               <% } %>
-            ><%= cat.name%></option>
+            ><%- cat.name%></option>
             <%}) %>
           </select>
+        </div>
+        <div class="block">
+          <label for="code">Confirmation code</label>
+          <input
+            type="text"
+            id="code"
+            name="code"
+          >
+          <div class="input-errors">
+            <% if (typeof errors !== 'undefined' ) { %>
+            <% errors.map(error => { %>
+            <% if (error.path === "code") { %>
+            <div class="input-error"><%= error.msg %></div>
+            <% } %>
+            <% }) %>
+            <% } %>
+          </div>
         </div>
         <div>
           <% if (typeof isCategoryPresent !== "undefined" && isCategoryPresent) { %>

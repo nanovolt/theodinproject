@@ -18,15 +18,15 @@
         <div class="category-item">
           <div
             class="category-name"
-            title="<%= cat.name %>"
+            title="<%- cat.name %>"
           >
             <a href="category/<%= cat.id %>">
-              <%= cat.name %>
+              <%- cat.name %>
             </a>
             <% categories.forEach(cat => { %>
             <% if (name === cat.parent) { %>
             <div><a href="category/<%= cat.id %>">
-                -<%= cat.name %>
+                --<%- cat.name %>
               </a></div>
             <% } %>
             <% }) %>

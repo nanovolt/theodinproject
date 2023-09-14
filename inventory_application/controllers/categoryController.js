@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 const Category = require("../models/category");
+const Product = require("../models/product");
 
 exports.getCategories = asyncHandler(async (req, res) => {
   const categories = await Category.find().exec();
@@ -45,8 +46,33 @@ exports.postCreate = [
 
   body("parent").trim().isLength({ max: 64 }).withMessage("too long, maximum length: 64").escape(),
 
+  body("code")
+    .trim()
+    .notEmpty()
+    .withMessage("Enter Confirmation code")
+    .bail()
+    .escape()
+    .custom(async (value) => {
+      if (value !== process.env.CODE) {
+        throw new Error("Confirmation code is incorrect, try again");
+      }
+    }),
+
   asyncHandler(async (req, res) => {
     const errors = validationResult(req);
+
+    // if have errors
+    if (!errors.isEmpty()) {
+      const categories = await Category.find().exec();
+      res.locals.categories = categories;
+
+      res.locals.title = "Create category";
+      res.locals.categoryValue = req.body.category;
+      res.locals.selected_parent = req.body.parent;
+      res.locals.errors = errors.array();
+      res.render("category_form");
+      return;
+    }
 
     const isCategoryExists = await Category.findOne({
       name: req.body.category,
@@ -54,10 +80,6 @@ exports.postCreate = [
     })
       .collation({ locale: "en", strength: 2 })
       .exec();
-
-    // console.log("category:", req.body.category);
-    // console.log("parent:", req.body.parent);
-    // console.log(isCategoryExists);
 
     if (isCategoryExists) {
       const categories = await Category.find().exec();
@@ -73,29 +95,18 @@ exports.postCreate = [
       return;
     }
 
-    // if have errors
-    if (!errors.isEmpty()) {
-      const categories = await Category.find().exec();
-      res.locals.categories = categories;
-
-      res.locals.title = "Create category";
-      res.locals.categoryValue = req.body.category;
-      res.locals.selected_parent = req.body.parent;
-      res.locals.errors = errors.array();
-      res.render("category_form");
-    } else {
-      const category = await Category.create({
-        name: req.body.category,
-        parent: req.body.parent === "" ? null : req.body.parent,
-      });
-      // await category.save();
-      res.redirect(category.url);
-    }
+    const category = await Category.create({
+      name: req.body.category,
+      parent: req.body.parent === "" ? null : req.body.parent,
+    });
+    // await category.save();
+    res.redirect(category.url);
   }),
 ];
 
 exports.getCategory = asyncHandler(async (req, res, next) => {
   const category = await Category.findById(req.params.id).exec();
+  const parent = await Category.findOne({ name: category.parent }).exec();
   const childCategories = await Category.find({ parent: category.name }).exec();
 
   if (category === null) {
@@ -106,6 +117,7 @@ exports.getCategory = asyncHandler(async (req, res, next) => {
 
   res.locals.title = category.name;
   res.locals.category = category;
+  res.locals.parent = parent;
   res.locals.childCategories = childCategories;
   res.render("category");
   return null;
@@ -150,8 +162,33 @@ exports.postUpdate = [
 
   body("parent").trim().isLength({ max: 64 }).withMessage("too long, maximum length: 64").escape(),
 
+  body("code")
+    .trim()
+    .notEmpty()
+    .withMessage("Enter Confirmation code")
+    .bail()
+    .escape()
+    .custom(async (value) => {
+      if (value !== process.env.CODE) {
+        throw new Error("Confirmation code is incorrect, try again");
+      }
+    }),
+
   asyncHandler(async (req, res) => {
     const errors = validationResult(req);
+
+    // if have errors
+    if (!errors.isEmpty()) {
+      const categories = await Category.find().exec();
+      res.locals.categories = categories;
+
+      res.locals.title = "Update category";
+      res.locals.categoryValue = req.body.category;
+      res.locals.selected_parent = req.body.parent;
+      res.locals.errors = errors.array();
+      res.render("category_form");
+      return;
+    }
 
     // DIFFERENCE: added _id
     const category = new Category({
@@ -167,10 +204,6 @@ exports.postUpdate = [
       .collation({ locale: "en", strength: 2 })
       .exec();
 
-    // console.log("category:", req.body.category);
-    // console.log("parent:", req.body.parent);
-    // console.log(isCategoryExists);
-
     if (isCategoryExists) {
       const categories = await Category.find().exec();
       res.locals.categories = categories;
@@ -180,24 +213,8 @@ exports.postUpdate = [
       res.locals.selected_parent = req.body.parent;
       res.locals.isCategoryPresent = true;
       res.locals.errors = errors.array();
-      console.log(res.locals.errors);
       res.render("category_form");
-      // console.log("cat exists");
-      // res.redirect(category.url);
       return;
-    }
-
-    // if have errors
-    if (!errors.isEmpty()) {
-      const categories = await Category.find().exec();
-      res.locals.categories = categories;
-
-      res.locals.title = "Update category";
-      res.locals.categoryValue = req.body.category;
-      res.locals.selected_parent = req.body.parent;
-      res.locals.errors = errors.array();
-      console.log(res.locals.errors);
-      res.render("category_form");
     }
 
     // DIFFERENCE: changed to find and update
@@ -212,6 +229,9 @@ exports.postUpdate = [
 exports.getDelete = asyncHandler(async (req, res, next) => {
   const category = await Category.findById(req.params.id).exec();
   const childCategories = await Category.find({ parent: category.name }).exec();
+  const products = await Product.find({ category }).exec();
+
+  console.log("products:", products);
 
   if (category === null) {
     const err = new Error("Category not found");
@@ -222,18 +242,48 @@ exports.getDelete = asyncHandler(async (req, res, next) => {
   res.locals.title = "Delete category";
   res.locals.category = category;
   res.locals.childCategories = childCategories;
-  res.locals.method = "POST";
+  res.locals.products = products;
+
   res.render("category_delete");
   return null;
 });
 
-exports.postDelete = asyncHandler(async (req, res) => {
-  const category = await Category.findById(req.body.categoryID).exec();
+exports.postDelete = [
+  body("code")
+    .trim()
+    .notEmpty()
+    .withMessage("Enter Confirmation code")
+    .bail()
+    .escape()
+    .custom(async (value) => {
+      if (value !== process.env.CODE) {
+        throw new Error("Confirmation code is incorrect, try again");
+      }
+    }),
 
-  if (category === null) {
-    res.redirect("/categories");
-  } else {
-    await Category.findByIdAndDelete(req.params.id);
-    res.redirect("/categories");
-  }
-});
+  asyncHandler(async (req, res) => {
+    const errors = validationResult(req);
+
+    const category = await Category.findById(req.body.categoryID).exec();
+    const childCategories = await Category.find({ parent: category.name }).exec();
+    const products = await Product.find({ category }).exec();
+
+    // if have errors
+    if (!errors.isEmpty()) {
+      res.locals.title = "Delete category";
+      res.locals.category = category;
+      res.locals.childCategories = childCategories;
+      res.locals.products = products;
+      res.locals.errors = errors.array();
+      res.render("category_delete");
+      return;
+    }
+
+    if (category === null) {
+      res.redirect("/categories");
+    } else {
+      await Category.findByIdAndDelete(req.params.id);
+      res.redirect("/categories");
+    }
+  }),
+];

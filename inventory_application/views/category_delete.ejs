@@ -10,27 +10,57 @@
     <main>
       <h2><%= category.name %> </h2>
       <div>
-        <% if (childCategories.length > 0) { %>
+        <% if (typeof childCategories !== "undefined" &&  childCategories.length > 0) { %>
         <p>Delete the following child categories before attempting to delete this category</p>
         <% childCategories.forEach(cat=> { %>
-        <div><%= cat.name %></div>
+        <div><a href="<%= cat.url %>"><%= cat.name %></a></div>
         <%}) %>
-        <% } else { %>
-        <p>Do you really want to delete this category?</p>
-        <form
-          action=""
-          method="POST"
-        >
-          <input
-            type="hidden"
-            id="<%= category._id %>"
-            name="categoryID"
-            value="<%= category._id %>"
-            required
-          >
-          <button type="submit">Delete</button>
-        </form>
+        <%} %>
+
+        <% if (typeof products !== "undefined" &&  products.length > 0) { %>
+        <p>Delete the following products before attempting to delete this category</p>
+        <% products.forEach(prod=> { %>
+        <div>
+          <a href="<%= prod.url %>"><%= prod.name %></a>
+        </div>
+        <%}) %>
         <% } %>
+
+        <% if (typeof childCategories !== "undefined" && typeof products !== "undefined" && childCategories.length === 0 &&  products.length === 0) { %>
+        <div>
+          <p>Do you really want to delete this category?</p>
+          <form
+            action=""
+            method="POST"
+          >
+            <input
+              type="hidden"
+              id="<%= category._id %>"
+              name="categoryID"
+              value="<%= category._id %>"
+              required
+            >
+            <div class="block">
+              <label for="code">Confirmation code</label>
+              <input
+                type="text"
+                id="code"
+                name="code"
+              >
+              <div class="input-errors">
+                <% if (typeof errors !== 'undefined' ) { %>
+                <% errors.map(error => { %>
+                <% if (error.path === "code") { %>
+                <div class="input-error"><%= error.msg %></div>
+                <% } %>
+                <% }) %>
+                <% } %>
+              </div>
+            </div>
+        </div>
+        <button type="submit">Delete</button>
+        <% } %>
+        </form>
       </div>
     </main>
   </div>

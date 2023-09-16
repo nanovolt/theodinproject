@@ -1,0 +1,12 @@
+{
+  "foo": false,
+  "NODE_ENV": "iambatmat",
+  "database": {
+    "host": "127.0.0.1",
+    "port": 5984,
+    "obj": {
+      "a": "1",
+      "b": "2"
+    }
+  }
+}

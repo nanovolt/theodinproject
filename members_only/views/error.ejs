@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= error %></title>
+  <link
+    rel="stylesheet"
+    href="/stylesheets/style.css"
+  />
+</head>
+
+<body>
+  <div class="main-wrapper">
+    <main class="error-page">
+      <a href="/">Return home</a>
+      <pre><%= message %></pre>
+      <h2><%= error.status %></h2>
+      <pre><%= error.stack %></pre>
+    </main>
+  </div>
+  <%- include("partials/footer")  %>
+</body>
+
+</html>

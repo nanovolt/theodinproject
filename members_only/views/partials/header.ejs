@@ -1,5 +1,27 @@
 <div class="header-wrapper">
   <header>
-    <h1>"Members only"</h1>
+    <a href="/">
+      <h1 class="header-name">Members only</h1>
+    </a>
+    <span class="auth-links">
+      <% if (typeof user === "undefined") { %>
+      <a href="/signup">
+        <span class="link-button">
+          Sign up
+        </span>
+      </a>
+      <a href="/login">
+        <span class="link-button">
+          Log in
+        </span>
+      </a>
+      <% } else { %>
+      <a href="/logout">
+        <span class="link-button">
+          Log out
+        </span>
+      </a>
+      <% } %>
+    </span>
   </header>
 </div>

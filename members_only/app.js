@@ -1,13 +1,16 @@
+const nconf = require("nconf");
 const log = require("debug")("app");
+const path = require("path");
 
 const createError = require("http-errors");
-const express = require("express");
-const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const nconf = require("nconf");
+const express = require("express");
+const passport = require("passport");
+const mongoose = require("mongoose");
 
 const indexRouter = require("./routes/index");
+const auth = require("./auth");
 
 nconf
   .argv()
@@ -17,10 +20,15 @@ nconf
 // log(`nconf.get():`, nconf.get());
 // log(`process.env:`, process.env);
 
+mongoose.set("strictQuery", false);
+async function main() {
+  await mongoose.connect(nconf.get("mongodb"));
+}
+main().catch((err) => log(err));
+
 const app = express();
 log(`app.get("env"):`, app.get("env"));
 
-// view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
@@ -29,6 +37,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+auth(express, app, passport);
+
+app.use((req, res, next) => {
+  // log("req.user:", req.user);
+  res.locals.user = req.user;
+  next();
+});
 
 app.use("/", indexRouter);
 

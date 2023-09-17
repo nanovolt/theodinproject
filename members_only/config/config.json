@@ -1,12 +1,4 @@
 {
-  "foo": false,
-  "NODE_ENV": "iambatmat",
-  "database": {
-    "host": "127.0.0.1",
-    "port": 5984,
-    "obj": {
-      "a": "1",
-      "b": "2"
-    }
-  }
+  "NODE_ENV": "development",
+  "mongodb": "mongodb+srv://nv:M9RDqQgaEx9AGXPx@cluster0.bcb302o.mongodb.net/members_only?retryWrites=true&w=majority"
 }

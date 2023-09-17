@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<%- include("partials/head")  %>
+
+<body>
+  <%- include("partials/header")  %>
+  <div class="main-wrapper">
+    <main>
+      <h1>Sign Up</h1>
+      <div class="form-container">
+        <form
+          action=""
+          method="POST"
+        >
+          <div class="form-item">
+            <div class="form-label-input-box">
+              <label for="firstname">First name</label>
+              <input
+                name="firstname"
+                id="firstname"
+                placeholder="firstname"
+                type="text"
+                value="<%- typeof firstnameValue !== 'undefined' ?  firstnameValue : ""%>"
+              />
+            </div>
+            <% if (typeof errors !== 'undefined' ) { %>
+            <div class="input-errors">
+              <% errors.map(error => { %>
+              <% if (error.path === "firstname") { %>
+              <div class="input-error"><%= error.msg %></div>
+              <% } %>
+              <% }) %>
+            </div>
+            <% } %>
+          </div>
+          <div class="form-item">
+            <div class="form-label-input-box">
+              <label for="lastname">Last name</label>
+              <input
+                name="lastname"
+                id="lastname"
+                placeholder="lastname"
+                type="text"
+                value="<%- typeof lastnameValue !== 'undefined' ?  lastnameValue : ""%>"
+              />
+            </div>
+            <% if (typeof errors !== 'undefined' ) { %>
+            <div class="input-errors">
+              <% errors.map(error => { %>
+              <% if (error.path === "lastname") { %>
+              <div class="input-error"><%= error.msg %></div>
+              <% } %>
+              <% }) %>
+            </div>
+            <% } %>
+          </div>
+          <div class="form-item">
+            <div class="form-label-input-box">
+              <label for="username">Username <span class="red-star">*</span></label>
+              <input
+                name="username"
+                id="username"
+                placeholder="username"
+                type="text"
+                value="<%- typeof usernameValue !== 'undefined' ?  usernameValue : ""%>"
+              />
+            </div>
+            <% if (typeof errors !== 'undefined' ) { %>
+            <div class="input-errors">
+              <% errors.map(error => { %>
+              <% if (error.path === "username") { %>
+              <div class="input-error"><%= error.msg %></div>
+              <% } %>
+              <% }) %>
+            </div>
+            <% } %>
+          </div>
+          <div class="form-item">
+            <div class="form-label-input-box">
+              <label for="password">Password <span class="red-star">*</span></label>
+              <input
+                name="password"
+                id="password"
+                type="password"
+                value="<%- typeof passwordValue !== 'undefined' ?  passwordValue : ""%>"
+              />
+            </div>
+            <% if (typeof errors !== 'undefined' ) { %>
+            <div class="input-errors">
+              <% errors.map(error => { %>
+              <% if (error.path === "password") { %>
+              <div class="input-error"><%= error.msg %></div>
+              <% } %>
+              <% }) %>
+            </div>
+            <% } %>
+          </div>
+          <div class="form-item">
+            <div class="form-label-input-box">
+              <label for="confirm">Confirm password <span class="red-star">*</span></label>
+              <input
+                name="confirm"
+                id="confirm"
+                type="password"
+                value="<%- typeof confirmValue !== 'undefined' ?  confirmValue : ""%>"
+              />
+            </div>
+            <% if (typeof errors !== 'undefined' ) { %>
+            <div class="input-errors">
+              <% errors.map(error => { %>
+              <% if (error.path === "confirm") { %>
+              <div class="input-error"><%= error.msg %></div>
+              <% } %>
+              <% }) %>
+            </div>
+            <% } %>
+          </div>
+          <button class="form-button">Sign Up</button>
+        </form>
+      </div>
+    </main>
+  </div>
+  <%- include("partials/footer")  %>
+</body>
+
+</html>

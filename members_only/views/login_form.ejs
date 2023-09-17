@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<%- include("partials/head")  %>
+
+<body>
+  <%- include("partials/header")  %>
+  <div class="main-wrapper">
+    <main>
+      <h1>Log in</h1>
+      <div class="form-container">
+        <form
+          action=""
+          method="POST"
+        >
+          <div class="form-item">
+            <div class="form-label-input-box">
+              <label for="username">Username </label>
+              <input
+                name="username"
+                id="username"
+                placeholder="username"
+                type="text"
+                value="<%- typeof usernameValue !== 'undefined' ?  usernameValue : ""%>"
+              />
+            </div>
+            <% if (typeof errors !== 'undefined' ) { %>
+            <div class="input-errors">
+              <% errors.map(error => { %>
+              <% if (error.path === "username") { %>
+              <div class="input-error"><%= error.msg %></div>
+              <% } %>
+              <% }) %>
+            </div>
+            <% } %>
+          </div>
+          <div class="form-item">
+            <div class="form-label-input-box">
+              <label for="password">Password</label>
+              <input
+                name="password"
+                id="password"
+                type="password"
+                value="<%- typeof passwordValue !== 'undefined' ?  passwordValue : ""%>"
+              />
+            </div>
+            <% if (typeof errors !== 'undefined' ) { %>
+            <div class="input-errors">
+              <% errors.map(error => { %>
+              <% if (error.path === "password") { %>
+              <div class="input-error"><%= error.msg %></div>
+              <% } %>
+              <% }) %>
+            </div>
+            <% } %>
+          </div>
+          <button class="form-button">Log in</button>
+        </form>
+      </div>
+    </main>
+  </div>
+  <%- include("partials/footer")  %>
+</body>
+
+</html>

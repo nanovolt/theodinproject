@@ -6,9 +6,11 @@
 <body>
   <%- include("partials/header")  %>
   <div class="main-wrapper">
-    <%- include("partials/navigation")  %>
     <main>
       <h2>heading</h2>
+      <% if (typeof user !== "undefined") {%>
+      <h1>Welcome back, <%= user.username %></h1>
+      <% } %>
     </main>
   </div>
   <%- include("partials/footer")  %>

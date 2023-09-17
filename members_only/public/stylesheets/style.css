@@ -42,8 +42,32 @@ header {
   width: clamp(320px, 100%, 1080px);
   margin: 0 auto;
   padding: 8px;
+  display: flex;
+  gap: 8px;
+  /* flex-wrap: wrap; */
+  align-items: center;
+  justify-content: space-between;
 }
 
+.header-name {
+  white-space: nowrap;
+  font-size: 24px;
+}
+
+.auth-links {
+  display: flex;
+  gap: 8px;
+}
+
+.link-button {
+  white-space: nowrap;
+  padding: 8px 4px;
+  border: 1px solid black;
+}
+
+.link-button:hover {
+  background-color: #c9c9c9;
+}
 .main-wrapper {
   display: flex;
   gap: 8px;
@@ -77,12 +101,71 @@ ul {
 form {
   display: grid;
   gap: 8px;
+  border: 1px solid #999;
+  padding: 8px;
 }
 
 form button {
   width: fit-content;
 }
 
+.form-button {
+  font-size: 24px;
+}
+
 textarea {
   resize: vertical;
+}
+
+input[type="text"],
+input[type="password"] {
+  border: 1px solid black;
+  padding: 4px;
+}
+
+.red-star {
+  color: red;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.form-label-input-box {
+  display: flex;
+  flex-wrap: wrap;
+  /* padding: 8px; */
+  /* border: 1px solid #999; */
+  gap: 8px;
+  align-items: center;
+  /* width: fit-content; */
+}
+
+.form-label-input-box label {
+  min-width: 160px;
+  white-space: nowrap;
+}
+
+.form-label-input-box input {
+  flex: auto;
+  min-width: 24ch;
+  max-width: 48ch;
+  /* width: clamp(24ch, 48ch, 48ch); */
+}
+
+.input-errors {
+  margin-top: 8px;
+  background-color: rgb(255, 148, 148);
+  width: fit-content;
+  padding: 0 8px;
+}
+.form-item-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+input[type="checkbox"] {
+  margin: 0;
+  border: 1px solid black;
+  width: 32px;
+  height: 32px;
 }

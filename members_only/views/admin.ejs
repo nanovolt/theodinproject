@@ -8,6 +8,13 @@
   <div class="main-wrapper">
     <main>
       <h1>Admin page</h1>
+      <div>
+        <% if (user.admin) { %>
+        <p>You are an admin</p>
+        <% } else { %>
+        <p>You are not an admin</p>
+        <% } %>
+      </div>
       <div class="form-container">
         <form
           action=""
@@ -34,7 +41,6 @@
             </div>
             <% } %>
           </div>
-
           <button class="form-button">Submit</button>
         </form>
       </div>

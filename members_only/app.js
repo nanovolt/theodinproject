@@ -10,6 +10,8 @@ const passport = require("passport");
 const mongoose = require("mongoose");
 
 const indexRouter = require("./routes/index");
+const adminRouter = require("./routes/admin");
+
 const auth = require("./auth");
 
 nconf
@@ -47,6 +49,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/", indexRouter);
+app.use("/admin", adminRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

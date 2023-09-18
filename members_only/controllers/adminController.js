@@ -9,6 +9,7 @@ exports.get = asyncHandler(async (req, res, next) => {
   log("user:", req.user);
   if (!req.user) {
     next();
+    return;
   }
 
   res.locals.title = "Admin page | Members only";

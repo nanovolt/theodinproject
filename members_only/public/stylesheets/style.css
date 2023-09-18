@@ -60,6 +60,7 @@ header {
 }
 
 .link-button {
+  display: inline-block;
   white-space: nowrap;
   padding: 8px 4px;
   border: 1px solid black;
@@ -147,7 +148,7 @@ input[type="password"] {
 .form-label-input-box input {
   flex: auto;
   min-width: 24ch;
-  max-width: 48ch;
+  max-width: 480px;
   /* width: clamp(24ch, 48ch, 48ch); */
 }
 
@@ -168,4 +169,68 @@ input[type="checkbox"] {
   border: 1px solid black;
   width: 32px;
   height: 32px;
+}
+
+nav ul {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: center;
+  gap: 8px;
+}
+
+.message-form {
+  border: none;
+  padding: 0;
+  margin-bottom: 8px;
+}
+.input-center {
+  font-size: 24px;
+  justify-content: center;
+}
+
+.messages {
+  margin-top: 8px;
+  display: grid;
+  gap: 8px;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.message {
+  display: grid;
+  /* grid-template-columns: minmax(auto, 320px) auto; */
+
+  /* grid-template-columns: auto; */
+  grid-auto-flow: column;
+
+  border: 1px solid black;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 480px;
+  /* width: clamp(auto, auto, 480px); */
+}
+
+.message .left {
+  display: grid;
+  gap: 4px;
+  padding: 8px;
+  /* width: 480px; */
+  /* max-width: 320px; */
+}
+
+.message .author,
+.message .date {
+  font-size: 14px;
+}
+.message .text {
+  font-size: 18px;
+  /* width: inherit; */
+  /* word-wrap: break-word; */
+  overflow-wrap: anywhere;
+}
+
+.message .right {
+  border: 1px solid black;
+  padding: 8px;
+  margin-right: 8px;
 }

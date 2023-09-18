@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<%- include("partials/head")  %>
+
+<body>
+  <%- include("partials/header")  %>
+  <div class="main-wrapper">
+    <main>
+      <h1>Club</h1>
+      <h2>members</h2>
+      <% if (members.length > 0) { %>
+      <ul>
+        <% members.forEach(member => { %>
+        <li><%= member.member.username %></li>
+        <% }) %>
+      </ul>
+      <% } else { %>
+      <div>No members</div>
+      <% } %>
+      <div><a href="/club/leave">
+          <span class="link-button">
+            Leave club
+          </span>
+        </a></div>
+    </main>
+  </div>
+  <%- include("partials/footer")  %>
+</body>
+
+</html>

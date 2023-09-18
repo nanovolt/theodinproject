@@ -7,10 +7,51 @@
   <%- include("partials/header")  %>
   <div class="main-wrapper">
     <main>
-      <h2>heading</h2>
       <% if (typeof user !== "undefined") {%>
-      <h1>Welcome back, <%= user.username %></h1>
+      <div>
+        <form
+          action=""
+          class="message-form"
+          method="POST"
+        >
+          <div class="form-label-input-box input-center">
+            <input
+              type="text"
+              name="message"
+            >
+          </div>
+        </form>
+      </div>
       <% } %>
+
+      <% if (messages.length !== 0) { %>
+      <section class="messages">
+        <% messages.forEach(message => { %>
+        <div class="message">
+          <div class="left">
+            <% if (isMember && typeof message.author !== "undefined") { %>
+            <div class="author"><%- message.author.username %></div>
+            <% } %>
+            <p class="text"><%- message.message %> </p>
+            <% if ( isMember && typeof message.date !== "undefined") { %>
+            <div class="date"><%= message.dateFormat %></div>
+            <% } %>
+          </div>
+          <% if (typeof user !== "undefined" && user.admin) { %>
+          <a href="/delete/<%= message.id %>">
+            <span class="right">
+              Delete
+            </span>
+          </a>
+          <% } %>
+        </div>
+        <% }) %>
+      </section>
+      <% } else { %>
+      <p>No messages</p>
+      <% } %>
+
+
     </main>
   </div>
   <%- include("partials/footer")  %>

@@ -11,6 +11,7 @@ const mongoose = require("mongoose");
 
 const indexRouter = require("./routes/index");
 const adminRouter = require("./routes/admin");
+const clubRouter = require("./routes/club");
 
 const auth = require("./auth");
 
@@ -50,6 +51,7 @@ app.use((req, res, next) => {
 
 app.use("/", indexRouter);
 app.use("/admin", adminRouter);
+app.use("/club", clubRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

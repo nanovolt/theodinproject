@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<%- include("partials/head")  %>
+
+<body>
+  <%- include("partials/header")  %>
+  <div class="main-wrapper">
+    <main>
+      <h1>Join club</h1>
+      <div class="form-container">
+        <form
+          action=""
+          method="POST"
+        >
+          <div class="form-item">
+            <div class="form-label-input-box">
+              <label for="secretcode">Code</label>
+              <input
+                name="secretcode"
+                id="secretcode"
+                placeholder="code"
+                type="text"
+                value="<%- typeof secretcodeValue !== 'undefined' ?  secretcodeValue : ""%>"
+              />
+            </div>
+            <% if (typeof errors !== 'undefined' ) { %>
+            <div class="input-errors">
+              <% errors.map(error => { %>
+              <% if (error.path === "secretcode") { %>
+              <div class="input-error"><%= error.msg %></div>
+              <% } %>
+              <% }) %>
+            </div>
+            <% } %>
+          </div>
+          <button class="form-button">Join</button>
+        </form>
+      </div>
+    </main>
+  </div>
+  <%- include("partials/footer")  %>
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-// const log = require("debug")("routes:admin");
+// const log = require("debug")("router:admin");
 const express = require("express");
 const adminController = require("../controllers/adminController");
 

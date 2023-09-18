@@ -5,6 +5,7 @@
     </a>
     <span class="auth-links">
       <% if (typeof user === "undefined") { %>
+
       <a href="/signup">
         <span class="link-button">
           Sign up
@@ -16,6 +17,11 @@
         </span>
       </a>
       <% } else { %>
+      <a href="/club">
+        <span class="link-button">
+          Club
+        </span>
+      </a>
       <a href="/logout">
         <span class="link-button">
           Log out

@@ -4,8 +4,11 @@ import "./App.css";
 function App() {
   const [data, setData] = useState();
   useEffect(() => {
-    fetch("http://localhost:3000", { method: "get" })
-      .then((res) => res.json())
+    fetch("http://localhost:3000/", { method: "get" })
+      .then((res) => {
+        console.log(res);
+        return res.json();
+      })
       .then((d) => {
         console.log(d);
         setData(d);

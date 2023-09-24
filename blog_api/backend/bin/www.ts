@@ -1,10 +1,11 @@
 #!/usr/bin/env node
+import debug from "debug";
+import http from "http";
+import { app } from "../app";
 
-const debug = require("debug")("blog-api:server");
-const http = require("http");
-const app = require("../app");
+const log = debug("blog-api:server");
 
-function normalizePort(val) {
+function normalizePort(val: string) {
   const port = parseInt(val, 10);
 
   if (Number.isNaN(port)) {
@@ -25,7 +26,7 @@ app.set("port", port);
 
 const server = http.createServer(app);
 
-function onError(error) {
+function onError(error: NodeJS.ErrnoException) {
   if (error.syscall !== "listen") {
     throw error;
   }
@@ -49,8 +50,8 @@ function onError(error) {
 
 function onListening() {
   const addr = server.address();
-  const bind = typeof addr === "string" ? `pipe ${addr}` : `http://localhost:${addr.port}`;
-  debug(`Listening on ${bind}`);
+  const bind = typeof addr === "string" ? `pipe ${addr}` : `http://localhost:${addr?.port}`;
+  log(`Listening on ${bind}`);
 }
 
 server.listen(port);

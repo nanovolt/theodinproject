@@ -4,7 +4,9 @@ import "./App.css";
 function App() {
   const [data, setData] = useState();
   useEffect(() => {
-    fetch("http://localhost:3000/", { method: "get" })
+    fetch("http://localhost:3000/", {
+      method: "get",
+    })
       .then((res) => {
         console.log(res);
         return res.json();

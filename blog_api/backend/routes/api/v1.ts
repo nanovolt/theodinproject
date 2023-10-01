@@ -9,7 +9,7 @@ router.post("/login", authController.postLogin);
 
 router.use(passport.authenticate("jwt", { session: false }));
 
-router.get("/protected", (req, res, next) => {
+router.get("/protected", (req, res) => {
   res.send("protected");
 });
 export default router;

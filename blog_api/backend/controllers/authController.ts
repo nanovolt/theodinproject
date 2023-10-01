@@ -1,11 +1,10 @@
 import "dotenv/config";
-// import express from "express";
 import asyncHandler from "express-async-handler";
 import { body, validationResult } from "express-validator";
 import createError from "http-errors";
 import bcrypt from "bcryptjs";
 import { User } from "../models/user";
-// import { passport } from "../config/passport";
+import { passport } from "../config/passport";
 import { issueJWT } from "../config/jwt";
 
 export const authController = {
@@ -58,7 +57,7 @@ export const authController = {
       try {
         const hashedPassword = await bcrypt.hash(req.body.password, bcrypt.genSaltSync(10));
         const user = await User.create({ username: req.body.username, password: hashedPassword });
-        const token = issueJWT(user);
+        const token = issueJWT(user.id);
         res.json({ user, token });
       } catch (e) {
         return next(e);
@@ -102,25 +101,42 @@ export const authController = {
         return next(createError(400, "Validation failed", { validationErrors: errors.array() }));
       }
 
-      try {
-        const user = await User.findOne({ username: req.body.username });
-        if (user) {
-          const isPasswordCorrect = bcrypt.compareSync(req.body.password, user.password);
-
-          if (isPasswordCorrect) {
-            const token = issueJWT(user);
-            res.json({ user, token });
-            return;
+      passport.authenticate(
+        "local",
+        { session: false },
+        (err: unknown, user: { id: string }, info: { message: string }) => {
+          console.log("user:", user);
+          if (err || !user) {
+            return next(createError(400, { message: info ? info.message : "Login failed" }));
           }
-
-          next(createError(400, "invalid password"));
-          return;
+          const token = issueJWT(user);
+          res.json({ user, token });
         }
+      )(req, res);
 
-        next(createError(400, "invalid username"));
-      } catch (e) {
-        next(e);
-      }
+      //
     }),
   ],
 };
+
+// for login POST instead passport.authenticate can use:
+
+// try {
+//   const user = await User.findOne({ username: req.body.username });
+//   if (user) {
+//     const isPasswordCorrect = bcrypt.compareSync(req.body.password, user.password);
+
+//     if (isPasswordCorrect) {
+//       const token = issueJWT(user);
+//       res.json({ user, token });
+//       return;
+//     }
+
+//     next(createError(400, "invalid password"));
+//     return;
+//   }
+
+//   next(createError(400, "invalid username"));
+// } catch (e) {
+//   next(e);
+// }

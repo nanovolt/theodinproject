@@ -6,7 +6,7 @@
     "nodemon": "nodemon --swc ./bin/www.ts",
     "watch": "ts-node --swc ./src/bin/www.ts",
     "watch_tsc": "tsc -w & nodemon ./dist/src/bin/www",
-    "dev": "DEBUG=config:*,blog-api:*,app,controller:* npm run nodemon",
+    "dev": "DEBUG=config:*,blog-api:*,app,controllers:*,routes:* npm run nodemon",
     "prestart": "npm run build",
     "start": "NODE_ENV=production node ./dist/bin/www",
     "tsnode": "ts-node --swc script.ts",

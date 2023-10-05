@@ -5,7 +5,7 @@ import { IUser } from "../types/models";
 const userSchema = new Schema<IUser>({
   username: { type: String, required: true },
   password: { type: String, required: true },
-  refreshToken: [String],
+  apiKey: String,
 });
 
 // userSchema.static("comparePasswords", function (compare: string) {

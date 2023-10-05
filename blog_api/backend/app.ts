@@ -6,10 +6,12 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import cors from "cors";
-
 import "./config/mongodb";
 import indexRoute from "./routes/index";
 import v1 from "./routes/api/v1";
+
+import { passport } from "./config/passport";
+import { expressSession } from "./config/session";
 
 const log = debug("app");
 
@@ -30,6 +32,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use(expressSession);
+// app.use(passport.initialize());
+app.use(passport.session());
 
 // routes
 app.use("/", indexRoute);

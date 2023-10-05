@@ -4,10 +4,10 @@ import asyncHandler from "express-async-handler";
 import { body, validationResult } from "express-validator";
 import createError from "http-errors";
 import bcrypt from "bcryptjs";
+import { nanoid } from "nanoid";
+
 import { User } from "../models/user";
 import { passport } from "../config/passport";
-import { extractPayload, extractToken, issueJWT } from "../config/jwt";
-
 const log = debug("controllers:auth");
 
 export const authController = {
@@ -59,24 +59,14 @@ export const authController = {
 
       try {
         const hashedPassword = await bcrypt.hash(req.body.password, bcrypt.genSaltSync(10));
-        const user = await User.create({ username: req.body.username, password: hashedPassword });
-
-        const accessToken = issueJWT(
-          { id: user.id },
-          { secret: process.env.ACCESS_TOKEN_SECRET, expiresIn: "30s" }
-        );
-
-        const refreshToken = issueJWT(
-          { id: user.id },
-          { secret: process.env.REFRESH_TOKEN_SECRET, expiresIn: "90s" }
-        );
-
-        const updatedUser = await User.findByIdAndUpdate(user._id, {
-          $push: { refreshToken: extractToken(refreshToken.token) },
+        const apiKey = nanoid(32);
+        await User.create({
+          username: req.body.username,
+          password: hashedPassword,
+          apiKey: apiKey,
         });
 
-        res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 90000 });
-        res.json({ updatedUser, accessToken, refreshToken });
+        res.status(201).json({ message: "user created", apiKey: apiKey });
       } catch (e) {
         return next(e);
       }
@@ -119,70 +109,27 @@ export const authController = {
         return next(createError(400, "Validation failed", { validationErrors: errors.array() }));
       }
 
-      // return 400 if already logged in, (checked by having valid refresh token)
-      const refreshToken = extractPayload(req);
-      if (refreshToken) {
-        log("extract payload:", refreshToken);
-        const user = User.findById(refreshToken.sub);
-        if (user) {
-          return next(createError(400, "Already logged in"));
-        }
-      }
-
       // user: admin
       // password: 1234
       passport.authenticate(
         "local",
-        { session: false },
-        async (err: unknown, user: { id: string }, info: { message: string }) => {
-          // log("user:", user);
+        async (err: unknown, user: Express.User, info: { message: string }) => {
+          log(info);
           if (err || !user) {
             return next(createError(400, { message: info ? info.message : "Login failed" }));
           }
 
-          const accessToken = issueJWT(
-            { id: user.id },
-            { secret: process.env.ACCESS_TOKEN_SECRET, expiresIn: "30s" }
-          );
+          req.login(user, (e) => {
+            if (e) {
+              log("login error:", e);
+              return next(createError(500, { message: e }));
+            }
 
-          const refreshToken = issueJWT(
-            { id: user.id },
-            { secret: process.env.REFRESH_TOKEN_SECRET, expiresIn: "90s" }
-          );
-
-          // await User.findByIdAndUpdate(user.id, { refreshToken: refreshToken.token });
-          await User.findByIdAndUpdate(user.id, {
-            $push: { refreshToken: extractToken(refreshToken.token) },
+            log("user authorized");
+            res.json({ message: "user authorized", user });
           });
-
-          res.cookie("refreshToken", refreshToken, { httpOnly: true, maxAge: 90000 });
-
-          log("authentication passed");
-          res.json({ user, accessToken, refreshToken });
         }
       )(req, res, next);
     }),
   ],
 };
-
-// for login POST instead passport.authenticate can use:
-
-// try {
-//   const user = await User.findOne({ username: req.body.username });
-//   if (user) {
-//     const isPasswordCorrect = bcrypt.compareSync(req.body.password, user.password);
-
-//     if (isPasswordCorrect) {
-//       const token = issueJWT(user);
-//       res.json({ user, token });
-//       return;
-//     }
-
-//     next(createError(400, "invalid password"));
-//     return;
-//   }
-
-//   next(createError(400, "invalid username"));
-// } catch (e) {
-//   next(e);
-// }

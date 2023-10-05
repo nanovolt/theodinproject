@@ -5,7 +5,7 @@ export interface IUser {
   name: string;
   username: string;
   password: string;
-  refreshToken: [string];
+  apiKey: string;
 }
 
 // Put all user instance methods in this interface:

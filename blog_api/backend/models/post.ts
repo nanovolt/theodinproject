@@ -6,7 +6,7 @@ import { DateTime } from "luxon";
 const postSchema = new Schema<Post>(
   {
     title: { type: String, required: true, maxlength: 16 },
-    text: { type: String, required: true, maxlength: 5000 },
+    text: { type: String, required: true, maxlength: 10000 },
     date: { type: Date, required: true },
     category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
     author: { type: Schema.Types.ObjectId, ref: "User", required: true },

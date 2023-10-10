@@ -23,10 +23,10 @@ export const validateCreatePost = [
     .withMessage("text is not a string")
     .bail()
     .trim()
-    .isLength({ max: 5000 })
-    .withMessage("Maximum length: 5000")
-    .bail()
-    .escape(),
+    .isLength({ max: 10000 })
+    .withMessage("Maximum length: 10000")
+    .bail(),
+
   body("date")
     .exists({ values: "falsy" })
     .withMessage("date is required (received: empty string | 0 | false | null | undefined)")
@@ -93,10 +93,10 @@ export const validateUpdatePost = [
     .withMessage("text is not a string")
     .bail()
     .trim()
-    .isLength({ max: 5000 })
-    .withMessage("Maximum length: 5000")
-    .bail()
-    .escape(),
+    .isLength({ max: 10000 })
+    .withMessage("Maximum length: 10000")
+    .bail(),
+
   body("date")
     .optional()
     .exists({ values: "falsy" })

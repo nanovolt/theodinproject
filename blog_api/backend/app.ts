@@ -7,7 +7,6 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import cors from "cors";
 import "./config/mongodb";
-import indexRoute from "./routes/index";
 import v1 from "./routes/api/v1";
 
 import { passport } from "./config/passport";
@@ -19,7 +18,8 @@ export const app = express();
 
 const corsOptions: cors.CorsOptions = {
   // credentials: true,
-  origin: "http://localhost:3001",
+  origin: ["http://localhost:3001"],
+  exposedHeaders: "Authorization",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));
@@ -38,12 +38,11 @@ app.use(expressSession);
 app.use(passport.session());
 
 // routes
-app.use("/", indexRoute);
 app.use("/api/v1", v1);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  next(createError(404));
+  next(createError(404, "oops, page not found"));
 });
 
 // error handler
@@ -54,7 +53,8 @@ app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
   if (err instanceof HttpError) {
     res.status(err.status);
   } else {
-    log("error handler: non-http error:", err);
+    log("error handler: non-http error:");
+    log(err);
     res.status(500);
   }
 

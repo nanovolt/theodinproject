@@ -3,14 +3,13 @@ import debug from "debug";
 import passport from "passport";
 import { Strategy as LocalStategy } from "passport-local";
 import bcrypt from "bcryptjs";
-import { User } from "../models/user";
+import { UserModel } from "../models/user";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const log = debug("config:passport");
 
 const localStrategy = new LocalStategy(async (username, password, done) => {
   try {
-    const user = await User.findOne({ username });
+    const user = await UserModel.findOne({ username });
     if (!user) {
       return done(null, false, { message: "Incorrect username" });
     }
@@ -30,13 +29,13 @@ passport.use("local", localStrategy);
 
 // adds passport property to req.session
 passport.serializeUser(function (user, cb) {
-  log("serializeUser user:", user);
+  log("passport.serializeUser:", user);
   cb(null, user.id);
 });
 
 passport.deserializeUser(async (id, cb) => {
   try {
-    const user = await User.findById(id);
+    const user = await UserModel.findById(id);
     return cb(null, { id: user!.id, username: user!.username });
   } catch (e) {
     return cb(e);

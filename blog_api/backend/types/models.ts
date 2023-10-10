@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 
 export interface IUser {
   _id: string;
@@ -7,6 +7,20 @@ export interface IUser {
   password: string;
   apiKey: string;
 }
+
+export type Post = {
+  title: string;
+  text: string;
+  date: Date;
+  category: Types.ObjectId;
+  author: Types.ObjectId;
+  viewCount: number;
+  isPublished: boolean;
+};
+
+export type Category = {
+  title: string;
+};
 
 // Put all user instance methods in this interface:
 export interface IUserMethods {

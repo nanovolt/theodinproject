@@ -1,11 +1,12 @@
-import debug from "debug";
+// import debug from "debug";
+// const log = debug("controllers:access");
 import createError from "http-errors";
 import asyncHandler from "express-async-handler";
-import { User } from "../models/user";
-const log = debug("controllers:access");
+import { UserModel } from "../models/user";
 
 export const accessController = {
   authorize: asyncHandler(async (req, res, next) => {
+    // can skip authenticaion for api use, use api key as credentials
     if (!req.isAuthenticated()) {
       return next(createError(401, "not authenticated"));
     }
@@ -14,8 +15,7 @@ export const accessController = {
       return next(createError(401, "no api key"));
     }
 
-    log("access: header:", req.headers.authorization);
-    const user = await User.findOne({ apiKey: req.headers.authorization });
+    const user = await UserModel.findOne({ apiKey: req.headers.authorization });
     if (!user) {
       return next(createError(401, "incorrect api key"));
     }

@@ -1,16 +1,9 @@
-// const log = require("debug")("db");
-// const mongoose = require("mongoose");
 // require("dotenv").config();
-// const session = require("express-session");
-import session from "express-session";
 // import MongoStore from "connect-mongo";
+import session from "express-session";
 import RedisStore from "connect-redis";
 import { redisClient } from "./redis";
-
-// const dbOptions = {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// };
+// import { redisClient } from "ioredis";
 
 const expressSession = session({
   secret: process.env.EXPRESS_SESSION_SECRET,
@@ -26,7 +19,8 @@ const expressSession = session({
     prefix: "blog_api:",
   }),
   cookie: {
-    maxAge: 1000 * 60,
+    // maxAge 1 hour
+    maxAge: 1000 * 60 * 60 * 1,
     // httpOnly: true,
   },
   rolling: true,

@@ -122,3 +122,24 @@ it(`shows no category heading if no params given`, async () => {
 
   expect(screen.getByRole("heading", { name: "no category" })).toBeVisible();
 });
+
+it(`shows 404 error if data is null or undefined`, async () => {
+  mockedUseFetch.mockReturnValue({
+    data: productsMock,
+    isLoading: false,
+    isError: false,
+    errorMessage: "",
+  });
+
+  render(
+    <MemoryRouter initialEntries={["/shop/123"]}>
+      <ProductsProvider>
+        <Routes>
+          <Route path="/shop/:category" element={<Products />} />
+        </Routes>
+      </ProductsProvider>
+    </MemoryRouter>
+  );
+
+  expect(screen.getByRole("heading", { name: "Error 404: 123 not found" })).toBeVisible();
+});

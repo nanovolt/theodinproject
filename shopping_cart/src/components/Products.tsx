@@ -48,6 +48,11 @@ export function Products() {
     const split = category.split("-").join(" ");
     const data = products[split];
 
+    if (!data) {
+      // read TODO.md. Fix undefined
+      return <h2>Error 404: {category} not found</h2>;
+    }
+
     return (
       <section className={styles.products}>
         <h2>{categoryName}</h2>

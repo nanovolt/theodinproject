@@ -1,10 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
+import "./index.module.scss";
+import { Router } from "./Router";
+import { ErrorBoundary } from "react-error-boundary";
+import { DarkModeProvider } from "./context/DarkModeContext";
+import { Fallback } from "./components/Fallback";
+import { logError } from "./components/Fallback.log";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
+
+root.render(
   <React.StrictMode>
-    <App />
+    <ErrorBoundary FallbackComponent={Fallback} onError={logError}>
+      <DarkModeProvider>
+        <Router />
+      </DarkModeProvider>
+    </ErrorBoundary>
   </React.StrictMode>
 );

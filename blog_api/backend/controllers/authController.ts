@@ -11,6 +11,19 @@ import { passport } from "../config/passport";
 const log = debug("controllers:auth");
 
 export const authController = {
+  getMe: [
+    asyncHandler(async (req, res, next) => {
+      if (req.isAuthenticated()) {
+        res.json({
+          message: "user authenticated",
+          user: req.user,
+        });
+        return;
+      }
+
+      next(createError(401, { message: "user not authenticated" }));
+    }),
+  ],
   postRegister: [
     asyncHandler(async (req, res, next) => {
       if (req.isAuthenticated()) {
@@ -27,7 +40,30 @@ export const authController = {
           apiKey: apiKey,
         });
 
-        res.status(201).json({ message: "user created", apiKey: apiKey });
+        // i copy and pasted this authentication from login, so that user gets authenticated right away
+        passport.authenticate(
+          "local",
+          async (err: unknown, user: Express.User, info: { message: string }) => {
+            log(info);
+            if (err || !user) {
+              log(err);
+              return next(createError(400, { message: info ? info.message : "Login failed" }));
+            }
+
+            req.login(user, (e) => {
+              if (e) {
+                log("login error:", e);
+                return next(createError(500, { message: e }));
+              }
+
+              log("user authorized");
+              return res.json({ message: "user authorized", user });
+            });
+          }
+        )(req, res, next);
+
+        // uh oh
+        // res.status(201).json({ message: "user created", apiKey: apiKey });
       } catch (e) {
         return next(e);
       }

@@ -12,6 +12,8 @@ const log = debug("routes:api:v1");
 
 const router = express.Router();
 
+router.get("/me", authController.getMe);
+
 // these 2 routes don't use authentication, they're always public
 router.post("/register", validateRegister, authController.postRegister);
 router.post("/login", validateLogin, authController.postLogin);

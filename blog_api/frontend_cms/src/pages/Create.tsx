@@ -1,7 +1,7 @@
 import { useTitle } from "../hooks/useTitle";
 
 export const Create = () => {
-  useTitle("Blog CMS | Create");
+  useTitle("Create | Blog CMS");
 
   return (
     <div>

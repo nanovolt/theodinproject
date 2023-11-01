@@ -21,7 +21,8 @@ const expressSession = session({
   cookie: {
     // maxAge 1 hour
     maxAge: 1000 * 60 * 60 * 1,
-    // httpOnly: true,
+    httpOnly: true,
+    sameSite: "strict",
   },
   rolling: true,
 });

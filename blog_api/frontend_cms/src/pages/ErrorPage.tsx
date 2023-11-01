@@ -1,7 +1,10 @@
 import { Link, isRouteErrorResponse, useRouteError } from "react-router-dom";
 import styles from "./ErrorPage.module.scss";
+import { useTitle } from "../hooks/useTitle";
 
 export function ErrorPage() {
+  useTitle("Error | Blog CMS");
+
   const error = useRouteError();
 
   if (isRouteErrorResponse(error)) {

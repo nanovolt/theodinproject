@@ -1,7 +1,7 @@
 import { useTitle } from "../hooks/useTitle";
 
 export function Home() {
-  useTitle("Blog CMS | Home");
+  useTitle("Home | Blog CMS");
 
   return (
     <div>

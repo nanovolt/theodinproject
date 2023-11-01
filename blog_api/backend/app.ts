@@ -17,8 +17,8 @@ const log = debug("app");
 export const app = express();
 
 const corsOptions: cors.CorsOptions = {
-  // credentials: true,
-  origin: ["http://localhost:3001"],
+  credentials: true,
+  origin: ["http://localhost:3001", "http://localhost:5173"],
   exposedHeaders: "Authorization",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
@@ -54,9 +54,14 @@ app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
     res.status(err.status);
   } else {
     log("error handler: non-http error:");
-    log(err);
-    res.status(500);
+    log(JSON.stringify(err));
+    console.log("error:");
+    console.log(err);
+    if (err === "Error: failed to deserialize user") {
+      return res.status(401).json({ error: "user not found" });
+    }
+    return res.status(500).json({});
   }
 
-  res.json(err);
+  return res.json(err);
 });

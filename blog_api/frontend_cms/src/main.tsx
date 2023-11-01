@@ -6,6 +6,9 @@ import { ErrorBoundary } from "react-error-boundary";
 import { DarkModeProvider } from "./context/DarkModeContext";
 import { Fallback } from "./components/Fallback";
 import { logError } from "./components/Fallback.log";
+import { Provider } from "react-redux";
+
+import { store } from "./app/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
@@ -13,7 +16,9 @@ root.render(
   <React.StrictMode>
     <ErrorBoundary FallbackComponent={Fallback} onError={logError}>
       <DarkModeProvider>
-        <Router />
+        <Provider store={store}>
+          <Router />
+        </Provider>
       </DarkModeProvider>
     </ErrorBoundary>
   </React.StrictMode>

@@ -4,6 +4,7 @@ import passport from "passport";
 import { Strategy as LocalStategy } from "passport-local";
 import bcrypt from "bcryptjs";
 import { UserModel } from "../models/user";
+import createHttpError from "http-errors";
 
 const log = debug("config:passport");
 
@@ -19,7 +20,7 @@ const localStrategy = new LocalStategy(async (username, password, done) => {
       return done(null, false, { message: "Incorrect password" });
     }
 
-    return done(null, { id: user!.id, username: user!.username });
+    return done(null, { id: user.id, username: user.username });
   } catch (err) {
     return done(err);
   }
@@ -36,9 +37,12 @@ passport.serializeUser(function (user, cb) {
 passport.deserializeUser(async (id, cb) => {
   try {
     const user = await UserModel.findById(id);
-    return cb(null, { id: user!.id, username: user!.username });
+    if (!user) {
+      throw Error();
+    }
+    return cb(null, { id: user.id, username: user.username });
   } catch (e) {
-    return cb(e);
+    return cb(createHttpError(401, { message: "failed to deserialize user" }));
   }
 });
 

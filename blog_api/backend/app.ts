@@ -18,7 +18,7 @@ export const app = express();
 
 const corsOptions: cors.CorsOptions = {
   credentials: true,
-  origin: ["http://localhost:3001", "http://localhost:5173"],
+  origin: [process.env.CORS_HOST],
   exposedHeaders: "Authorization",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };

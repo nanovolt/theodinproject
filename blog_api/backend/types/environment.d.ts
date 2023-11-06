@@ -9,6 +9,8 @@ declare global {
       ACCESS_TOKEN_SECRET: string;
       REFRESH_TOKEN_SECRET: string;
       EXPRESS_SESSION_SECRET: string;
+      REDIS_URL: string;
+      CORS_HOST: string;
     }
   }
 

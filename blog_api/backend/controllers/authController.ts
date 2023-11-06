@@ -76,6 +76,7 @@ export const authController = {
         return;
       }
 
+      // return;
       // user: admin
       // password: Admin123
       passport.authenticate(

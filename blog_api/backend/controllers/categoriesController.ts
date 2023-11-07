@@ -1,5 +1,6 @@
 // import debug from "debug";
 // const log = debug("controllers:cms");
+
 import createError from "http-errors";
 import asyncHandler from "express-async-handler";
 import { CategoryModel } from "../models/category";
@@ -7,9 +8,15 @@ import mongoose from "mongoose";
 import { PostModel } from "../models/post";
 
 export const categoriesController = {
-  createCategory: asyncHandler(async (req, res) => {
+  createCategory: asyncHandler(async (req, res, next) => {
     const { title } = req.body;
+
     const newCategory = await CategoryModel.create({ title: title });
+
+    if (!newCategory) {
+      return next(createError(400, { error: "could not create category" }));
+    }
+
     res.json(newCategory);
   }),
 
@@ -19,7 +26,6 @@ export const categoriesController = {
     if (categories.length === 0) {
       return next(createError(404, { error: "categories not found" }));
     }
-
     res.json(categories);
   }),
 

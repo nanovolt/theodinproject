@@ -28,7 +28,3 @@ export interface IUserMethods {
 }
 
 export type UserModel = Model<IUser, IUserMethods>;
-
-// export interface UserModel extends Model<IUser> {
-//   comparePasswords(): boolean;
-// }

@@ -8,7 +8,7 @@ export const accessController = {
   authorize: asyncHandler(async (req, res, next) => {
     // can skip authenticaion for api use, use api key as credentials
     if (!req.isAuthenticated()) {
-      return next(createError(401, "not authenticated"));
+      return next(createError(401, { error: "user not authenticated" }));
     }
 
     // if (!req.headers.authorization) {

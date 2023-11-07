@@ -1,67 +1,88 @@
-import { body, validationResult } from "express-validator";
+import { Result, body, validationResult } from "express-validator";
 import createError from "http-errors";
 import { NextFunction, Request, Response } from "express";
+import he from "he";
 
 export const validateCreatePost = [
   body("title")
     .exists({ values: "falsy" })
-    .withMessage("title is required (received: empty string | 0 | false | null | undefined)")
+    .withMessage("Title is required (received: empty string | 0 | false | null | undefined)")
     .bail()
     .isString()
-    .withMessage("title is not a string")
+    .withMessage("Title is not a string")
     .bail()
     .trim()
-    .isLength({ max: 64 })
-    .withMessage("Maximum length: 64")
+    .isLength({ min: 1 })
+    .withMessage("Minimum length: 1")
     .bail()
-    .escape(),
+    .isLength({ max: 128 })
+    .withMessage("Maximum length: 128")
+    .bail()
+    .customSanitizer((value) => {
+      return he.encode(value);
+    }),
+
   body("text")
     .exists({ values: "falsy" })
-    .withMessage("text is required (received: empty string | 0 | false | null | undefined)")
+    .withMessage("Text is required (received: empty string | 0 | false | null | undefined)")
     .bail()
     .isString()
-    .withMessage("text is not a string")
+    .withMessage("Text is not a string")
     .bail()
     .trim()
+    .isLength({ min: 1 })
+    .withMessage("Minimum length: 1")
+    .bail()
     .isLength({ max: 10000 })
     .withMessage("Maximum length: 10000")
-    .bail(),
+    .bail()
+    .customSanitizer((value) => {
+      return he.encode(value);
+    }),
 
   body("date")
     .exists({ values: "falsy" })
-    .withMessage("date is required (received: empty string | 0 | false | null | undefined)")
+    .withMessage("Date is required (received: empty string | 0 | false | null | undefined)")
     .bail()
     .isString()
-    .withMessage("category is not a string")
+    .withMessage("Date is not a string")
     .bail()
     .trim()
     .isISO8601()
-    .withMessage("date is not in ISO8601 format")
+    .withMessage("Date is not in ISO8601 format")
     .bail(),
+
   body("category")
     .exists({ values: "falsy" })
-    .withMessage("category is required (received: empty string | 0 | false | null | undefined)")
+    .withMessage("Category is required (received: empty string | 0 | false | null | undefined)")
     .bail()
     .isString()
-    .withMessage("category is not a string")
+    .withMessage("Category is not a string")
     .bail()
     .trim()
+    .isLength({ min: 1 })
+    .withMessage("Minimum length: 1")
+    .bail()
     .isLength({ max: 64 })
     .withMessage("Maximum length: 64")
     .bail()
-    .escape(),
+    .matches(/^[\w]+$/)
+    .withMessage("Category allows letters only"),
+
   body("isPublished")
     .exists({ values: "null" })
-    .withMessage("category is required (received: null | undefined)")
+    .withMessage("isPublished is required (received: null | undefined)")
     .bail()
     .isBoolean()
     .withMessage("isPublished is not a boolean"),
+
   (req: Request, res: Response, next: NextFunction) => {
-    const errors = validationResult(req);
+    const errors: Result = validationResult(req);
 
     if (!errors.isEmpty()) {
       return next(createError(400, "Validation error", { errors: errors.array() }));
     }
+
     next();
   },
 ];
@@ -71,74 +92,91 @@ export const validateUpdatePost = [
   body("title")
     .optional()
     .exists({ values: "falsy" })
-    .withMessage("title is falsy (received: empty string | 0 | false | null | undefined)")
+    .withMessage("Title is falsy (received: empty string | 0 | false | null | undefined)")
     .bail()
     .isString()
-    .withMessage("title is not a string")
+    .withMessage("Title is not a string")
     .bail()
     .trim()
-    .isLength({ max: 16 })
-    .withMessage("Maximum length: 16")
+    .isLength({ min: 1 })
+    .withMessage("Minimum length: 1")
     .bail()
-    .escape()
-    .custom(async (input) => {
-      console.log("typeof title === 'string':", typeof input === "string");
+    .isLength({ max: 128 })
+    .withMessage("Maximum length: 128")
+    .bail()
+    .customSanitizer((value) => {
+      return he.encode(value);
     }),
+
   body("text")
     .optional()
     .exists({ values: "falsy" })
-    .withMessage("text is falsy (received: empty string | 0 | false | null | undefined)")
+    .withMessage("Text is falsy (received: empty string | 0 | false | null | undefined)")
     .bail()
     .isString()
-    .withMessage("text is not a string")
+    .withMessage("Text is not a string")
     .bail()
     .trim()
+    .isLength({ min: 1 })
+    .withMessage("Minimum length: 1")
+    .bail()
     .isLength({ max: 10000 })
     .withMessage("Maximum length: 10000")
-    .bail(),
+    .bail()
+    .customSanitizer((value) => {
+      return he.encode(value);
+    }),
 
   body("date")
     .optional()
     .exists({ values: "falsy" })
-    .withMessage("date is falsy (received: empty string | 0 | false | null | undefined)")
+    .withMessage("Date is falsy (received: empty string | 0 | false | null | undefined)")
     .bail()
     .isString()
-    .withMessage("text is not a string")
+    .withMessage("Date is not a string")
     .bail()
     .trim()
     .isISO8601()
-    .withMessage("date is not in ISO8601 format")
+    .withMessage("Date is not in ISO8601 format")
     .bail(),
+
   body("category")
     .optional()
     .exists({ values: "falsy" })
-    .withMessage("category is falsy (received: empty string | 0 | false | null | undefined)")
+    .withMessage("Category is falsy (received: empty string | 0 | false | null | undefined)")
     .bail()
     .isString()
-    .withMessage("category is not a string")
+    .withMessage("Category is not a string")
     .bail()
     .trim()
+    .isLength({ min: 1 })
+    .withMessage("Minimum length: 1")
+    .bail()
     .isLength({ max: 64 })
     .withMessage("Maximum length: 64")
     .bail()
-    .escape(),
+    .matches(/^[\w]+$/)
+    .withMessage("Category allows letters only")
+    .bail(),
 
   body("isPublished")
     .optional()
     .exists({ values: "null" })
-    .withMessage("category is falsy (received: null | undefined)")
+    .withMessage("Category is falsy (received: null | undefined)")
     .bail()
     .isBoolean()
     .withMessage("isPublished is not a boolean"),
+
   body("viewCount")
     .optional()
     .exists({ values: "null" })
-    .withMessage("category is falsy (received: null | undefined)")
+    .withMessage("Category is falsy (received: null | undefined)")
     .bail()
     .isNumeric()
-    .withMessage("viewCount is not a number"),
+    .withMessage("View count is not a number"),
+
   (req: Request, res: Response, next: NextFunction) => {
-    const errors = validationResult(req);
+    const errors: Result = validationResult(req);
 
     if (!errors.isEmpty()) {
       return next(createError(400, "Validation error", { errors: errors.array() }));

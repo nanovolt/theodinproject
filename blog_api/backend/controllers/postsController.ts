@@ -26,11 +26,13 @@ export const postsController = {
     if (posts.length === 0) {
       return next(createError(404, { error: "posts not found" }));
     }
+
     res.json(posts);
   }),
 
   readPost: asyncHandler(async (req, res, next) => {
     const { id } = req.params;
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return next(createError(404, { error: "post not found" }));
     }
@@ -48,6 +50,7 @@ export const postsController = {
 
   updatePost: asyncHandler(async (req, res, next) => {
     const { id } = req.params;
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return next(createError(404, { error: "post not found" }));
     }
@@ -65,6 +68,7 @@ export const postsController = {
 
   deletePost: asyncHandler(async (req, res, next) => {
     const { id } = req.params;
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return next(createError(404, { error: "post not found" }));
     }

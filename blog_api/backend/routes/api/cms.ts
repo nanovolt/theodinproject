@@ -5,7 +5,7 @@ import { validateCreateCategory } from "../../validators/categoriesValidators";
 import { validateCreatePost, validateUpdatePost } from "../../validators/postsValidators";
 import { categoriesController } from "../../controllers/categoriesController";
 
-// categories CRUD
+// categories CR-D
 router.post("/categories", validateCreateCategory, categoriesController.createCategory);
 router.get("/categories", categoriesController.readCategories);
 router.delete("/categories/:id", categoriesController.deleteCategory);

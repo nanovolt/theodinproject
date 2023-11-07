@@ -11,6 +11,7 @@ declare global {
       EXPRESS_SESSION_SECRET: string;
       REDIS_URL: string;
       CORS_HOST: string;
+      CORS_LOCAL_HOST: string;
     }
   }
 

@@ -21,19 +21,21 @@ export const authController = {
         return;
       }
 
-      next(createError(401, { message: "user not authenticated" }));
+      next(createError(401, { error: "user not authenticated" }));
     }),
   ],
   postRegister: [
     asyncHandler(async (req, res, next) => {
       if (req.isAuthenticated()) {
-        res.json({ message: "already logged in" });
+        next(createError(400, { error: "already logged in" }));
         return;
       }
 
       try {
+        // bcrypt.getnSaltSync in the old days it was 8
         const hashedPassword = await bcrypt.hash(req.body.password, bcrypt.genSaltSync(10));
         const apiKey = nanoid(32);
+
         await UserModel.create({
           username: req.body.username,
           password: hashedPassword,
@@ -44,16 +46,16 @@ export const authController = {
         passport.authenticate(
           "local",
           async (err: unknown, user: Express.User, info: { message: string }) => {
-            log(info);
+            log("info:", info);
             if (err || !user) {
-              log(err);
-              return next(createError(400, { message: info ? info.message : "Login failed" }));
+              log("err:", err);
+              return next(createError(401, { error: info ? info.message : "Login failed" }));
             }
 
             req.login(user, (e) => {
               if (e) {
                 log("login error:", e);
-                return next(createError(500, { message: e }));
+                return next(createError(500, { error: e }));
               }
 
               log("user authorized");
@@ -62,7 +64,7 @@ export const authController = {
           }
         )(req, res, next);
 
-        // uh oh
+        // or just responde with 201
         // res.status(201).json({ message: "user created", apiKey: apiKey });
       } catch (e) {
         return next(e);
@@ -72,7 +74,7 @@ export const authController = {
   postLogin: [
     asyncHandler(async (req, res, next) => {
       if (req.isAuthenticated()) {
-        res.json({ message: "already logged in" });
+        next(createError(400, { error: "already logged in" }));
         return;
       }
 
@@ -82,16 +84,16 @@ export const authController = {
       passport.authenticate(
         "local",
         async (err: unknown, user: Express.User, info: { message: string }) => {
-          log(info);
+          log("info:", info);
           if (err || !user) {
-            log(err);
-            return next(createError(400, { message: info ? info.message : "Login failed" }));
+            log("err:", err);
+            return next(createError(400, { error: info ? info.message : "Login failed" }));
           }
 
           req.login(user, (e) => {
             if (e) {
               log("login error:", e);
-              return next(createError(500, { message: e }));
+              return next(createError(500, { error: e }));
             }
 
             log("user authorized");

@@ -1,5 +1,4 @@
-import { Schema } from "mongoose";
-import { mongoConn } from "../config/mongodb";
+import mongoose, { Schema } from "mongoose";
 import { IUser } from "../types/models";
 
 const userSchema = new Schema<IUser>(
@@ -19,4 +18,4 @@ const userSchema = new Schema<IUser>(
 //   return this.username === compare;
 // });
 
-export const UserModel = mongoConn.model<IUser>("User", userSchema);
+export const UserModel = mongoose.model<IUser>("User", userSchema);

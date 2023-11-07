@@ -12,12 +12,12 @@ const localStrategy = new LocalStategy(async (username, password, done) => {
   try {
     const user = await UserModel.findOne({ username });
     if (!user) {
-      return done(null, false, { message: "Incorrect username" });
+      return done(null, false, { message: "Incorrect username or password" });
     }
 
     const match = await bcrypt.compare(password, user.password);
     if (!match) {
-      return done(null, false, { message: "Incorrect password" });
+      return done(null, false, { message: "Incorrect password or password" });
     }
 
     return done(null, { id: user.id, username: user.username });

@@ -12,16 +12,15 @@ const redisClient = createClient({
 });
 
 async function startRedis() {
-  await redisClient
-    .connect()
-    .then(() => {
-      log("redis connected");
-    })
-    .catch((err) => {
-      console.log("failed to connect to redis");
-      console.log(err);
-    });
+  try {
+    await redisClient.connect();
+    log("redis client established connection with Fly.io Redis Upstash");
+  } catch (err) {
+    log("redis client failed to connect to Fly.io Redis Upstash");
+    log(err);
+  }
 }
+
 startRedis();
 
 // process.on("SIGINT", async () => {

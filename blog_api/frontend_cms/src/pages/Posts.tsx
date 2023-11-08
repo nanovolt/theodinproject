@@ -9,7 +9,8 @@ export const Posts = () => {
   if (isSuccess) {
     return (
       <div>
-        {data.map((category) => (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        {data.map((category: any) => (
           <div key={category._id}>{category.title}</div>
         ))}
       </div>

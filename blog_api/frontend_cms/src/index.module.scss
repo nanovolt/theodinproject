@@ -4,6 +4,7 @@ body {
     "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: var(--fs-base);
 }
 
 code {
@@ -30,4 +31,9 @@ h6 {
 
 li a.active {
   text-decoration: underline;
+}
+
+input {
+  font-size: var(--fs-input);
+  border: none;
 }

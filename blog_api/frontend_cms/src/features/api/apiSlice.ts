@@ -1,4 +1,11 @@
-import { BaseQueryFn, createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import {
+  BaseQueryFn,
+  // FetchArgs,
+  // FetchBaseQueryError,
+  // FetchBaseQueryMeta,
+  createApi,
+  fetchBaseQuery,
+} from "@reduxjs/toolkit/query/react";
 import { currentUserApiSlice } from "../currentUser/currentUserSlice";
 import { RootState } from "../../app/store";
 
@@ -8,7 +15,7 @@ const customBaseQuery: BaseQueryFn =
   // FetchBaseQueryError, // Error
   // FetchBaseQueryMeta // Meta
   async (args, api, extraOptions) => {
-    const baseQuery = fetchBaseQuery({ baseUrl: "http://localhost:3000/api/v1" });
+    const baseQuery = fetchBaseQuery({ baseUrl: import.meta.env.VITE_APP_API_URL, timeout: 30000 });
 
     const { data, error } = await baseQuery(args, api, extraOptions);
 
@@ -18,9 +25,6 @@ const customBaseQuery: BaseQueryFn =
     if (error && error.status === 401) {
       const state = api.getState() as RootState;
       const currentUserData = state.api.queries["me(undefined)"]!.data;
-
-      console.log("401 error");
-      console.log("currentUserData:", currentUserData);
 
       if (currentUserData) {
         api.dispatch(currentUserApiSlice.util.resetApiState());

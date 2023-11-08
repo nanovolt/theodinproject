@@ -68,7 +68,7 @@ it(`triggers change event if matches and sets dark mode`, () => {
       addListener: jest.fn(), // Deprecated
       removeListener: jest.fn(), // Deprecated
 
-      addEventListener: jest.fn((arg, cb) => {
+      addEventListener: jest.fn((_arg, cb) => {
         cb();
       }),
       removeEventListener: jest.fn(),
@@ -93,7 +93,7 @@ it(`triggers change event if not matches and sets light mode`, () => {
       addListener: jest.fn(), // Deprecated
       removeListener: jest.fn(), // Deprecated
 
-      addEventListener: jest.fn((arg, cb) => {
+      addEventListener: jest.fn((_arg, cb) => {
         cb();
       }),
       removeEventListener: jest.fn(),

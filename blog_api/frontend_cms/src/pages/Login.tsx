@@ -1,20 +1,52 @@
 import styles from "./Login.module.scss";
 import { useTitle } from "../hooks/useTitle";
-import { FormEvent, useState } from "react";
 import { currentUserApiSlice } from "../features/currentUser/currentUserSlice";
 import { Navigate, useLocation } from "react-router-dom";
 import { RouterLocation } from "../types/types";
 import { navigationActions, selectInitialRoute } from "../features/routerNavigation/navigation";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExclamationTriangle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import classNames from "classnames";
+
+type Inputs = {
+  username: string;
+  password: string;
+};
+
+const LoginInputSchema = z.object({
+  username: z.string().min(3, "Username must be at least 3 characters"),
+  password: z.string().min(2, "Password must be at least 2 characters"),
+});
+// .superRefine((values, contenxt) => {});
+
+// const LoginServerErrorSchema = z.object({
+//   status: z.number(),
+//   data: z.object({
+//     message: z.string(),
+//     errors: z.array(z.string()).optional(),
+//   }),
+// });
+
+// type LoginInputs = z.infer<typeof LoginInputSchema>;
+// type LoginServerErrors = z.infer<typeof LoginServerErrorSchema>;
 
 export const Login = () => {
   useTitle("Log In | Blog CMS");
 
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  //
-
-  const [isSent, setIsSent] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    // setError,
+    formState: { errors, isSubmitting, touchedFields },
+  } = useForm<Inputs>({
+    mode: "onBlur",
+    resolver: zodResolver(LoginInputSchema),
+  });
 
   const [login, { isError, error }] = currentUserApiSlice.useLoginMutation();
 
@@ -24,17 +56,12 @@ export const Login = () => {
   const initialRoute = useAppSelector(selectInitialRoute);
   const dispatch = useAppDispatch();
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-
-    setUsername("");
-    setPassword("");
-    //
-
-    setIsSent(true);
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    const { username, password } = data;
 
     await login({ username, password });
-  }
+    console.log(data);
+  };
 
   if (!initialRoute) {
     let newRoute;
@@ -67,40 +94,81 @@ export const Login = () => {
 
   if (isError) {
     console.log(error);
-    return (
-      <div>
-        <pre>{JSON.stringify(error, null, 2)}</pre>
-      </div>
-    );
+
+    // if (error) {
+    //   if (error?.data) {
+    //     console.log(error.data);
+    //   }
+    // }
+
+    // return (
+    //   <div>
+    //     <pre>{JSON.stringify(error, null, 2)}</pre>
+    //   </div>
+    // );
   }
 
+  const usernameCn = classNames({
+    [styles.invalid]: errors.username,
+    [styles.valid]: touchedFields.username && !errors.username,
+  });
+
+  const passwordCn = classNames({
+    [styles.invalid]: errors.password,
+    [styles.valid]: touchedFields.password && !errors.password,
+  });
+
   return (
-    <div>
+    <div className={styles.formContainer}>
       <h2>Log In</h2>
 
-      <form className={styles.loginForm} onSubmit={handleSubmit}>
+      <form className={styles.loginForm} onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.formItem}>
           <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            name="password"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+          <div className={styles.inputAndSymbol}>
+            <input className={usernameCn} type="text" id="username" {...register("username")} />
+            {errors.username && (
+              <FontAwesomeIcon icon={faExclamationTriangle} className={styles.red} />
+            )}
+            {touchedFields.username && !errors.username && (
+              <FontAwesomeIcon icon={faCheckCircle} className={styles.green} />
+            )}
+          </div>
+
+          <ErrorMessage
+            errors={errors}
+            name="username"
+            render={({ message }) => (
+              <div>
+                <span>{message}</span>
+              </div>
+            )}
           />
         </div>
 
         <div className={styles.formItem}>
           <label htmlFor="password">password</label>
-          <input
-            type="password"
-            id="password"
+          <div className={styles.inputAndSymbol}>
+            <input className={passwordCn} type="password" id="password" {...register("password")} />
+            {errors.password && (
+              <FontAwesomeIcon icon={faExclamationTriangle} className={styles.red} />
+            )}
+            {touchedFields.password && !errors.password && (
+              <FontAwesomeIcon icon={faCheckCircle} className={styles.green} />
+            )}
+          </div>
+          <ErrorMessage
+            errors={errors}
             name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            render={({ message }) => (
+              <div>
+                <span>{message}</span>
+              </div>
+            )}
           />
         </div>
-        <button type="submit" disabled={isSent}>
+
+        <button type="submit" disabled={isSubmitting}>
           Log In
         </button>
       </form>

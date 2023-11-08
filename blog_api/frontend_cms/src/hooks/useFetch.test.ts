@@ -1,11 +1,10 @@
-import { FetchedProduct } from "../types/types";
 import { useFetch } from "./useFetch";
 import { renderHook, waitFor } from "@testing-library/react";
 
 it("fails to fetch, no response, network request failed", async () => {
   const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
 
-  const { result } = renderHook(() => useFetch<FetchedProduct[]>(""));
+  const { result } = renderHook(() => useFetch(""));
 
   let response = result.current;
   expect(response.isLoading).toBe(true);
@@ -28,7 +27,7 @@ it("successfully fetches data", async () => {
     json: () => Promise.resolve({ test: 200 }),
   } as Response);
 
-  const { result } = renderHook(() => useFetch<FetchedProduct[]>("some valid url"));
+  const { result } = renderHook(() => useFetch("some valid url"));
 
   let response = result.current;
   expect(response.isLoading).toBe(true);
@@ -52,7 +51,7 @@ it("fetches data with error", async () => {
     json: () => Promise.resolve(),
   } as Response);
 
-  const { result } = renderHook(() => useFetch<FetchedProduct[]>("some valid url"));
+  const { result } = renderHook(() => useFetch("some valid url"));
 
   let response = result.current;
   expect(response.isLoading).toBe(true);

@@ -4,7 +4,7 @@ import {
   useDarkModeContext,
   useDarkModeDispatchContext,
 } from "./DarkModeContext";
-import { useEffect } from "react";
+import { ErrorInfo, useEffect } from "react";
 import { DarkModeState } from "../hooks/useDarkMode";
 import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
@@ -13,7 +13,7 @@ import { ErrorBoundary } from "react-error-boundary";
 beforeEach(() => {
   Object.defineProperty(window, "matchMedia", {
     writable: true,
-    value: (query: any) => ({
+    value: (query: unknown) => ({
       matches: true,
       media: query,
       onchange: null,
@@ -121,7 +121,7 @@ it(`sets "dark" mode if media prefer-color-scheme matches "dark"`, async () => {
 it(`sets "light" mode if media prefer-color-scheme doesn't match "dark"`, async () => {
   Object.defineProperty(window, "matchMedia", {
     writable: true,
-    value: (query: any) => ({
+    value: (query: unknown) => ({
       matches: false,
       media: query,
       onchange: null,
@@ -157,13 +157,13 @@ it(`sets "light" mode if media prefer-color-scheme doesn't match "dark"`, async 
 it(`triggers matchMedia change event when media prefer-color-scheme matches "dark"`, async () => {
   Object.defineProperty(window, "matchMedia", {
     writable: true,
-    value: (query: any) => ({
+    value: (query: unknown) => ({
       matches: true,
       media: query,
       onchange: null,
       addListener: jest.fn(), // Deprecated
       removeListener: jest.fn(), // Deprecated
-      addEventListener: jest.fn((arg, cb) => {
+      addEventListener: jest.fn((_arg, cb) => {
         cb();
       }),
       removeEventListener: jest.fn(),
@@ -195,13 +195,13 @@ it(`triggers matchMedia change event when media prefer-color-scheme matches "dar
 it(`triggers matchMedia change event when media prefer-color-scheme doesn't match "dark"`, async () => {
   Object.defineProperty(window, "matchMedia", {
     writable: true,
-    value: (query: any) => ({
+    value: (query: unknown) => ({
       matches: false,
       media: query,
       onchange: null,
       addListener: jest.fn(), // Deprecated
       removeListener: jest.fn(), // Deprecated
-      addEventListener: jest.fn((arg, cb) => {
+      addEventListener: jest.fn((_arg, cb) => {
         cb();
       }),
       removeEventListener: jest.fn(),
@@ -335,6 +335,10 @@ it("throws error if dispatch given icorrect action type", async () => {
     error: Error;
     resetErrorBoundary: () => void;
   }) {
+    // trying to fix typescript errors to compile for docker,
+    // don't have time to figure out
+    // why did i added this resetErrorBoundary ?
+    resetErrorBoundary();
     return (
       <div role="alert">
         <h1>Error Boundary</h1>
@@ -344,10 +348,10 @@ it("throws error if dispatch given icorrect action type", async () => {
     );
   }
 
-  const logError = (error: Error, info: { componentStack: string }) => {
+  const logError = (error: Error, info: ErrorInfo) => {
     // Do something with the error, e.g. log to an external API
-    // console.log("logError:", error);
-    // console.log("componentStack:", info.componentStack);
+    console.log("logError:", error);
+    console.log("componentStack:", info.componentStack);
   };
 
   render(

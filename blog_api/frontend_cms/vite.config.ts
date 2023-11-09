@@ -5,8 +5,9 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   css: {
+    devSourcemap: true,
     modules: {
-      // generateScopedName: "[name]_[local]_[hash:base64:2]",
+      generateScopedName: "[local]_[name]_[hash:base64:4]",
     },
   },
 });

@@ -22,8 +22,13 @@ const expressSession = session({
     // maxAge 1 hour
     maxAge: 1000 * 60 * 60 * 1,
     httpOnly: true,
-    sameSite: "none",
-    secure: true,
+
+    // production
+    // sameSite: "none",
+    // secure: true,
+
+    // development
+    sameSite: "strict",
   },
   rolling: true,
 });

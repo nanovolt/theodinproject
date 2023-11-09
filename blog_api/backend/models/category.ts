@@ -3,7 +3,7 @@ import { Category } from "../types/models";
 
 const categorySchema = new Schema<Category>(
   {
-    title: { type: String, required: true, unique: true, maxlength: 640 },
+    title: { type: String, required: true, unique: true, maxlength: 64 },
   },
   { versionKey: false }
 );

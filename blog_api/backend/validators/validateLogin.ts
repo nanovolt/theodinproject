@@ -13,6 +13,9 @@ export const validateLogin = [
     .bail()
     .isLength({ min: 1 })
     .withMessage("Minimum length: 1")
+    .bail()
+    .isLength({ max: 10 })
+    .withMessage("Maximum length: 10")
     .bail(),
 
   body("password")
@@ -25,8 +28,12 @@ export const validateLogin = [
     .bail()
     .isLength({ min: 1 })
     .withMessage("Minimum length: 1")
-    .bail(),
-
+    .bail()
+    .custom(async (input) => {
+      if (input === "please") {
+        throw Error("Magic word doesn't work :(");
+      }
+    }),
   (req: Request, res: Response, next: NextFunction) => {
     const errors: Result = validationResult(req);
 

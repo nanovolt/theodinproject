@@ -9,6 +9,8 @@ import cors from "cors";
 import "./config/mongodb";
 import v1 from "./routes/api/v1";
 
+import helmet from "helmet";
+
 import { passport } from "./config/passport";
 import { expressSession } from "./config/session";
 import { MongooseError } from "mongoose";
@@ -16,6 +18,9 @@ import { MongooseError } from "mongoose";
 const log = debug("app");
 
 export const app = express();
+
+app.use(helmet());
+app.set("trust proxy", true);
 
 const corsOptions: cors.CorsOptions = {
   credentials: true,

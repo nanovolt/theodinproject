@@ -1,0 +1,87 @@
+.formContainer {
+  width: clamp(300px, 100%, 250px);
+  color: var(--text-primary);
+}
+
+.registerForm {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0 auto;
+}
+
+.formItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 320px;
+}
+
+.red {
+  color: red;
+}
+
+.green {
+  color: rgb(0, 255, 0);
+}
+
+.errorMessage {
+  margin: 0;
+  color: red;
+  font-weight: 600;
+}
+
+.submit {
+  width: fit-content;
+  align-self: center;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  font-size: var(--fs-xl);
+  color: var(--button-color);
+  background-color: var(--button-bg);
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .submit:hover {
+    background-color: dodgerblue;
+  }
+}
+
+.submit:active {
+  background-color: lime;
+}
+
+.inputAndSymbol {
+  max-width: 320px;
+  display: flex;
+  flex-direction: row;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.input {
+  width: 0;
+  padding: 8px;
+  font-size: 20px;
+  flex: 1;
+  border-radius: 4px;
+  outline: 2px solid rgba(0, 0, 0, 0);
+  color: var(--text-primary);
+  background-color: var(--backgrount-input);
+}
+
+.formItem input:focus {
+  outline: 2px solid dodgerblue;
+}
+
+.valid {
+  outline: 2px solid rgb(0, 255, 0);
+}
+
+.invalid {
+  outline: 2px solid rgb(255, 0, 0);
+}

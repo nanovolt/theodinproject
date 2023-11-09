@@ -2,16 +2,22 @@
   font-size: 0.625rem;
   --background: rgb(222, 222, 222);
   --backgrount-content: #f0f0f0;
+  --backgrount-input: white;
   --text-primary: #222;
   --icon-size: 32px;
+  --icon-small-size: 24px;
   --fs-base: 1.8rem;
   --fs-input: 2.2rem;
   --fs-xl: 2.4rem;
-  --button-color: #666;
+  --button-color: white;
+  --button-bg: #222;
 }
 
 [data-color-scheme="dark"] {
   --background: #222;
+  --backgrount-input: #222;
   --backgrount-content: #111;
   --text-primary: rgb(222, 222, 222);
+  --button-color: black;
+  --button-bg: #888;
 }

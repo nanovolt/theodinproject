@@ -29,6 +29,7 @@ export const currentUserApiSlice = apiSlice.injectEndpoints({
 
       providesTags: ["Me"],
     }),
+
     login: builder.mutation<any, Credentials>({
       query: (credentials) => ({
         url: "login",
@@ -36,6 +37,7 @@ export const currentUserApiSlice = apiSlice.injectEndpoints({
         body: credentials,
         credentials: "include",
       }),
+
       async onQueryStarted(_arg, { queryFulfilled }) {
         try {
           await queryFulfilled;
@@ -45,6 +47,7 @@ export const currentUserApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["Me"],
     }),
+
     register: builder.mutation<any, RegisterCredentials>({
       query: (credentials) => ({
         url: "register",
@@ -52,20 +55,23 @@ export const currentUserApiSlice = apiSlice.injectEndpoints({
         body: credentials,
         credentials: "include",
       }),
+
       async onQueryStarted(_arg, { queryFulfilled }) {
         try {
           await queryFulfilled;
-        } catch {
-          //
+        } catch (err) {
+          // console.log(err);
         }
       },
       invalidatesTags: ["Me"],
     }),
+
     logout: builder.query<any, void>({
       query: () => ({
         url: "logout",
         credentials: "include",
       }),
+
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;

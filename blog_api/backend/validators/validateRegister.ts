@@ -20,7 +20,7 @@ export const validateRegister = [
     .bail()
     //if input doesn't math regex return 400 response with validation error
     .custom(async (input: string) => {
-      if (!input.match(/^[a-zA-Z0-9_]*$/)) {
+      if (!input.match(/^[a-zA-Z0-9_-]*$/)) {
         throw Error(`Only letters, numbers, '-'(dash), '_'(underscore) allowed`);
       }
     })

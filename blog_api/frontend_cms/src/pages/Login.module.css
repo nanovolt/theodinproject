@@ -1,5 +1,5 @@
 .formContainer {
-  width: clamp(300px, 100%, 480px);
+  width: clamp(300px, 100%, 360px);
   color: var(--text-primary);
 }
 
@@ -9,39 +9,6 @@
   flex-direction: column;
   gap: 8px;
   margin: 0 auto;
-}
-
-.formItem {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.red {
-  color: red;
-}
-
-.green {
-  color: rgb(0, 255, 0);
-}
-
-.errorMessage {
-  margin: 0;
-  color: red;
-  font-weight: 600;
-}
-
-.serverError {
-  color: Red;
-  background-color: rgba(255, 0, 0, 0.267);
-  padding: 4px;
-  border-radius: 4px;
-  display: grid;
-  justify-items: center;
-}
-
-.serverError p {
-  margin: 0;
 }
 
 .submit {
@@ -72,80 +39,10 @@
   cursor: not-allowed;
 }
 
-.inputAndSymbol {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  border-radius: 4px;
-  gap: 8px;
-  outline: 2px solid var(--backgrount-input);
-  /* background-color: var(--backgrount-input); */
-}
-
-.inputBox {
-  flex: 1;
-  /* max-width: 320px; */
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
-  /* outline: 2px solid rgba(0, 0, 0, 0); */
-  color: var(--text-primary);
-  background-color: var(--backgrount-input);
-}
-
-.inputBox:focus-within {
-  /* outline: 2px solid dodgerblue; */
-  /* cursor: auto; */
-}
-
-.iconColor {
-  color: var(--text-primary);
-}
-
-.input {
-  width: 0;
-  padding: 8px;
-  font-size: 20px;
-  flex: 1;
-  border-radius: 4px;
-  outline: none;
-  background-color: var(--backgrount-input);
-  color: var(--text-primary);
-}
-
-.formItem input:focus .inputBox {
-  /* outline: 2px solid dodgerblue; */
-}
-
 .valid {
   outline: 2px solid rgb(0, 255, 0);
 }
 
 .invalid {
   outline: 2px solid rgb(255, 0, 0);
-}
-
-.seePassword {
-  background-color: rgba(0, 0, 0, 0);
-  height: 36px;
-  width: 36px;
-  font-size: 24px;
-  border: none;
-  border-left: 1px solid var(--text-primary);
-  /* border-radius: 4px; */
-  /* margin-right: 4px; */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-}
-
-.iconBox {
-  width: var(--icon-small-size);
-  font-size: var(--icon-small-size);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 4px;
 }

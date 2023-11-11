@@ -1,4 +1,4 @@
-import styles from "./RegisterForm.module.css";
+import styles from "./Register.module.css";
 import { useTitle } from "../hooks/useTitle";
 import { currentUserApiSlice } from "../features/currentUser/currentUserSlice";
 import { Navigate, useLocation } from "react-router-dom";
@@ -7,58 +7,103 @@ import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { navigationActions, selectInitialRoute } from "../features/routerNavigation/navigation";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExclamationTriangle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import classNames from "classnames";
-import { ErrorMessage } from "@hookform/error-message";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormItemInput } from "../components/FormItemInput";
+import { FormItemPassword } from "../components/FormItemPassword";
+import { FormError } from "../components/FormError";
 
-type Inputs = {
-  username: string;
-  password: string;
-  confirm_password: string;
-};
+const RegisterInputSchema = z
+  .object({
+    username: z
+      .string()
+      .min(1, "Username is required")
+      .min(3, "Username must be at least 3 characters"),
+    password: z
+      .string()
+      .min(1, "Password is required")
+      .min(2, "Password must be at least 2 characters"),
+    confirm_password: z
+      .string()
+      .min(1, "Confirm password is required")
+      .min(2, "Confirm password must be at least 2 characters"),
+  })
+  .superRefine((values, context) => {
+    if (values.password !== values.confirm_password) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ["confirm_password"],
+        message: `Confirm password in not correct`,
+      });
+    }
+    // idk what it does
+    // return z.NEVER;
+  });
 
-const RegisterInputSchema = z.object({
-  username: z
-    .string()
-    .min(1, "Username is required")
-    .min(3, "Username must be at least 3 characters"),
-  password: z
-    .string()
-    .min(1, "Password is required")
-    .min(2, "Password must be at least 2 characters"),
-  confirm_password: z
-    .string()
-    .min(1, "Password is required")
-    .min(2, "Password must be at least 2 characters"),
+const ServerValidationErrorSchema = z.object({
+  status: z.number(),
+  data: z.object({
+    message: z.string(),
+    errors: z.array(
+      z.object({
+        location: z.string(),
+        msg: z.string(),
+        path: z.string(),
+        type: z.string(),
+        value: z.string(),
+      })
+    ),
+  }),
 });
+
+const ServerErrorSchema = z.object({
+  status: z.number(),
+  data: z.object({
+    message: z.string(),
+    error: z.string(),
+  }),
+});
+
+type RegisterInputs = z.infer<typeof RegisterInputSchema>;
 
 export const Register = () => {
   useTitle("Register | Blog CMS");
 
-  const {
-    register,
-    handleSubmit,
-    // setError,
-    formState: { errors, isSubmitting, touchedFields },
-  } = useForm<Inputs>({
-    mode: "onBlur",
+  const formContext = useForm<RegisterInputs>({
+    mode: "onTouched",
+    reValidateMode: "onChange",
     resolver: zodResolver(RegisterInputSchema),
   });
 
-  const [registerUser, { isError, error }] = currentUserApiSlice.useRegisterMutation();
+  const {
+    handleSubmit,
+    setError,
+    setValue,
+    getValues,
+    getFieldState,
+    // control,
+    formState: { errors, isSubmitting, touchedFields },
+  } = formContext;
 
+  const [registerUser, { isError, error: registerError, reset }] =
+    currentUserApiSlice.useRegisterMutation();
   const { data: currentUser, isLoading } = currentUserApiSlice.useMeQuery();
 
   const location = useLocation() as RouterLocation;
   const initialRoute = useAppSelector(selectInitialRoute);
   const dispatch = useAppDispatch();
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<RegisterInputs> = async (data) => {
     const { username, password, confirm_password } = data;
-
     await registerUser({ username, password, confirm_password });
+  };
+
+  const onInvalid = () => {
+    type inputKey = keyof RegisterInputs;
+    Object.keys(getValues()).map((inputName) => {
+      if (!Object.keys(touchedFields).includes(inputName)) {
+        setValue(inputName as inputKey, "", { shouldTouch: true });
+      }
+    });
   };
 
   if (!initialRoute) {
@@ -89,115 +134,56 @@ export const Register = () => {
     return <Navigate to={initialRoute} replace />;
   }
 
-  if (isError) {
-    return (
-      <div>
-        <pre>{JSON.stringify(error, null, 2)}</pre>
-      </div>
-    );
+  const serverValidationErrorResult = ServerValidationErrorSchema.safeParse(registerError);
+  const serverErrorResult = ServerErrorSchema.safeParse(registerError);
+
+  // if got validation errors from server
+  // here we get an array of errors
+  if (isError && serverValidationErrorResult.success) {
+    // if reset() is called, server-side not-validation error will be erased by next form revalidation,
+    // see reValidateMode: "onBlur" on useForm params
+    reset();
+    const errors = serverValidationErrorResult.data.data.errors;
+    type inputKey = keyof RegisterInputs;
+
+    errors.map((err) => {
+      if (!getFieldState(err.path as inputKey).error)
+        setError(err.path as inputKey, { message: err.msg });
+    });
   }
 
-  const usernameCn = classNames(styles.input, {
-    [styles.invalid]: errors.username,
-    [styles.valid]: touchedFields.username && !errors.username,
-  });
-
-  const passwordCn = classNames(styles.input, {
-    [styles.invalid]: errors.password,
-    [styles.valid]: touchedFields.password && !errors.password,
-  });
-
-  const confirmPasswordCn = classNames(styles.input, {
-    [styles.invalid]: errors.confirm_password,
-    [styles.valid]: touchedFields.confirm_password && !errors.confirm_password,
-  });
+  // here server validation is passed
+  // if server still returns an error
+  // in this case we can't identify individual form input
+  // so we show general error message at the bottom of form
+  // or use any notification toaster
+  else if (isError && serverErrorResult.success) {
+    const errorMessage = serverErrorResult.data.data.error;
+    if (!errors.root) {
+      setError("root.serverError", { message: errorMessage });
+    }
+  }
 
   return (
     <div className={styles.formContainer}>
       <h2>Register</h2>
-      <form className={styles.registerForm} onSubmit={handleSubmit(onSubmit)}>
-        <div className={styles.formItem}>
-          <label htmlFor="username">Username</label>
 
-          <div className={styles.inputAndSymbol}>
-            <input className={usernameCn} type="text" id="username" {...register("username")} />
+      <FormProvider {...formContext}>
+        <form
+          className={styles.registerForm}
+          onSubmit={handleSubmit(onSubmit, onInvalid)}
+          autoComplete="off"
+        >
+          <FormItemInput label="Username" name="username" />
+          <FormItemPassword label="Password" name="password" />
+          <FormItemPassword label="Confirm password" name="confirm_password" />
+          <FormError />
 
-            {errors.username && (
-              <FontAwesomeIcon icon={faExclamationTriangle} className={styles.red} />
-            )}
-            {touchedFields.username && !errors.username && (
-              <FontAwesomeIcon icon={faCheckCircle} className={styles.green} />
-            )}
-          </div>
-
-          <ErrorMessage
-            errors={errors}
-            name="username"
-            render={({ message }) => (
-              <div>
-                <span className={styles.errorMessage}>{message}</span>
-              </div>
-            )}
-          />
-        </div>
-
-        <div className={styles.formItem}>
-          <label htmlFor="password">Password</label>
-          <div className={styles.inputAndSymbol}>
-            <input className={passwordCn} type="password" id="password" {...register("password")} />
-
-            {errors.password && (
-              <FontAwesomeIcon icon={faExclamationTriangle} className={styles.red} />
-            )}
-            {touchedFields.password && !errors.password && (
-              <FontAwesomeIcon icon={faCheckCircle} className={styles.green} />
-            )}
-          </div>
-
-          <ErrorMessage
-            errors={errors}
-            name="password"
-            render={({ message }) => (
-              <div>
-                <span className={styles.errorMessage}>{message}</span>
-              </div>
-            )}
-          />
-        </div>
-
-        <div className={styles.formItem}>
-          <label htmlFor="confirm_password">Confirm password</label>
-          <div className={styles.inputAndSymbol}>
-            <input
-              className={confirmPasswordCn}
-              type="password"
-              id="confirm_password"
-              {...register("confirm_password")}
-            />
-
-            {errors.confirm_password && (
-              <FontAwesomeIcon icon={faExclamationTriangle} className={styles.red} />
-            )}
-            {touchedFields.confirm_password && !errors.confirm_password && (
-              <FontAwesomeIcon icon={faCheckCircle} className={styles.green} />
-            )}
-          </div>
-
-          <ErrorMessage
-            errors={errors}
-            name="confirm_password"
-            render={({ message }) => (
-              <div>
-                <span className={styles.errorMessage}>{message}</span>
-              </div>
-            )}
-          />
-        </div>
-
-        <button className={styles.submit} type="submit" disabled={isSubmitting}>
-          Register
-        </button>
-      </form>
+          <button className={styles.submit} type="submit" disabled={isSubmitting}>
+            Register
+          </button>
+        </form>
+      </FormProvider>
     </div>
   );
 };

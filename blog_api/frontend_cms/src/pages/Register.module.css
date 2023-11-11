@@ -1,5 +1,5 @@
 .formContainer {
-  width: clamp(300px, 100%, 250px);
+  width: clamp(300px, 100%, 360px);
   color: var(--text-primary);
 }
 

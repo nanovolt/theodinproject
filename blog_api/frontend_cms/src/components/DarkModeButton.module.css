@@ -1,0 +1,18 @@
+.darkModeToggle {
+  border: none;
+  background-color: var(--background-button);
+  cursor: pointer;
+  width: var(--icon-size);
+  height: var(--icon-size);
+  border-radius: 50%;
+}
+
+@media (hover: hover) {
+  .darkModeToggle:hover {
+    background-color: dodgerblue;
+  }
+}
+
+.toggleIcon {
+  color: var(--text-primary);
+}

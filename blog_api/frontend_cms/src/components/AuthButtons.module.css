@@ -1,0 +1,22 @@
+.authButtons {
+  display: flex;
+  gap: 16px;
+}
+
+.active {
+  outline: 2px solid var(--text-primary);
+}
+
+.link {
+  text-decoration: none;
+  color: var(--text-primary);
+  padding: 8px;
+  background-color: var(--background-button);
+  border-radius: 4px;
+}
+
+@media (hover: hover) {
+  .link:hover {
+    background-color: dodgerblue;
+  }
+}

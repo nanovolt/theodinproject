@@ -3,8 +3,9 @@
   --background: rgb(222, 222, 222);
   --backgrount-content: #f0f0f0;
   --backgrount-input: white;
+  --background-button: #cecece;
   --text-primary: #222;
-  --icon-size: 32px;
+  --icon-size: 36px;
   --icon-small-size: 24px;
   --fs-base: 1.8rem;
   --fs-input: 2.2rem;
@@ -17,6 +18,7 @@
   --background: #222;
   --backgrount-input: #222;
   --backgrount-content: #111;
+  --background-button: #333;
   --text-primary: rgb(222, 222, 222);
   --button-color: black;
   --button-bg: #888;

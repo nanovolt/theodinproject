@@ -1,4 +1,4 @@
-import styles from "./DarkModeButton.module.scss";
+import styles from "./DarkModeButton.module.css";
 import classNames from "classnames";
 import { useDarkModeContext, useDarkModeDispatchContext } from "../context/DarkModeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

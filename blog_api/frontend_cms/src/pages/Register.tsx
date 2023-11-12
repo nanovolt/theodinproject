@@ -86,6 +86,7 @@ export const Register = () => {
 
   const [registerUser, { isError, error: registerError, reset }] =
     currentUserApiSlice.useRegisterMutation();
+
   const { data: currentUser, isLoading } = currentUserApiSlice.useMeQuery();
 
   const location = useLocation() as RouterLocation;

@@ -11,7 +11,7 @@ type RegisterCredentials = {
   confirm_password: string;
 };
 
-type meQueryResponse = {
+type meQueryRespone = {
   message: string;
   user: {
     id: string;
@@ -19,9 +19,29 @@ type meQueryResponse = {
   };
 };
 
+type LoginMutationResponse = {
+  message: string;
+  user: {
+    id: string;
+    username: string;
+  };
+};
+
+type RegisterMutationResponse = {
+  message: string;
+  user: {
+    id: string;
+    username: string;
+  };
+};
+
+type LogoutQueryResponse = {
+  message: string;
+};
+
 export const currentUserApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    me: builder.query<meQueryResponse, void>({
+    me: builder.query<meQueryRespone, void>({
       query: () => ({
         url: "me",
         credentials: "include",
@@ -30,7 +50,7 @@ export const currentUserApiSlice = apiSlice.injectEndpoints({
       providesTags: ["Me"],
     }),
 
-    login: builder.mutation<any, Credentials>({
+    login: builder.mutation<LoginMutationResponse, Credentials>({
       query: (credentials) => ({
         url: "login",
         method: "POST",
@@ -48,7 +68,7 @@ export const currentUserApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["Me"],
     }),
 
-    register: builder.mutation<any, RegisterCredentials>({
+    register: builder.mutation<RegisterMutationResponse, RegisterCredentials>({
       query: (credentials) => ({
         url: "register",
         method: "POST",
@@ -66,7 +86,7 @@ export const currentUserApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["Me"],
     }),
 
-    logout: builder.query<any, void>({
+    logout: builder.query<LogoutQueryResponse, void>({
       query: () => ({
         url: "logout",
         credentials: "include",

@@ -6,7 +6,3 @@
   display: grid;
   justify-items: center;
 }
-
-.serverError p {
-  margin: 0;
-}

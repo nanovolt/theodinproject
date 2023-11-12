@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import { counterReducer } from "../features/counter/counterSlice";
 import { apiSlice } from "../features/api/apiSlice";
 import { navigationReducer } from "../features/routerNavigation/navigation";
+import { drawerReducer } from "../features/drawer/drawerSlice";
 
 export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
     counter: counterReducer,
     navigation: navigationReducer,
+    drawer: drawerReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
 });

@@ -102,6 +102,7 @@ export const Login = () => {
       newRoute = location.pathname;
     }
 
+    console.log("new route:", newRoute);
     dispatch(navigationActions.setInitialRoute(newRoute));
   }
 

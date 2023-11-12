@@ -15,7 +15,7 @@ import { Register } from "./pages/Register.tsx";
 import { ProtectedRoute } from "./pages/ProtectedRoute.tsx";
 import { Logout } from "./pages/Logout.tsx";
 import { Posts } from "./pages/Posts.tsx";
-import { GetUser } from "./pages/GetUser.tsx";
+import { Categories } from "./pages/Categories.tsx";
 
 export function Router() {
   const router = createBrowserRouter(
@@ -39,7 +39,7 @@ export function Router() {
           <Route path="logout" element={<Logout />} />
           <Route path="create" element={<Create />} />
           <Route path="posts" element={<Posts />} />
-          <Route path="getuser" element={<GetUser />} />
+          <Route path="categories" element={<Categories />} />
         </Route>
       </Route>
     )

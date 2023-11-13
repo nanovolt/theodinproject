@@ -6,6 +6,10 @@
   flex-direction: column;
 }
 
+.linkList {
+  flex-direction: row;
+}
+
 @media (max-width: 768px) {
   .linkList {
     flex-direction: column;

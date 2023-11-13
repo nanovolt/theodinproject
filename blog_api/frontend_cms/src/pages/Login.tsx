@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { FormItemInput } from "../components/FormItemInput";
 import { FormItemPassword } from "../components/FormItemPassword";
 import { FormError } from "../components/FormError";
+import { ServerErrorSchema, ServerValidationErrorSchema } from "../zod/serverErrorsValidation";
 // import { DevTool } from "@hookform/devtools";
 
 const LoginInputSchema = z.object({
@@ -24,30 +25,6 @@ const LoginInputSchema = z.object({
     .min(2, "Password must be at least 2 characters"),
 });
 // .superRefine((values, contenxt) => {});
-
-const ServerValidationErrorSchema = z.object({
-  status: z.number(),
-  data: z.object({
-    message: z.string(),
-    errors: z.array(
-      z.object({
-        location: z.string(),
-        msg: z.string(),
-        path: z.string(),
-        type: z.string(),
-        value: z.string(),
-      })
-    ),
-  }),
-});
-
-const ServerErrorSchema = z.object({
-  status: z.number(),
-  data: z.object({
-    message: z.string(),
-    error: z.string(),
-  }),
-});
 
 type LoginInputs = z.infer<typeof LoginInputSchema>;
 // type ServerError = z.infer<typeof ServerErrorSchema>;

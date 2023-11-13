@@ -5,11 +5,12 @@ import styles from "./FormItemInput.module.css";
 import { useFormContext } from "react-hook-form";
 
 type Props = {
-  label: string;
+  label?: string;
   name: string;
+  showErrors?: boolean;
 };
 
-export const FormItemInput = ({ label, name }: Props) => {
+export const FormItemInput = ({ label, name, showErrors }: Props) => {
   const {
     register,
     formState: { touchedFields, isSubmitting, errors },
@@ -17,22 +18,24 @@ export const FormItemInput = ({ label, name }: Props) => {
 
   return (
     <div className={styles.formItem}>
-      <label htmlFor={name}>{label}</label>
+      {label && <label htmlFor={name}>{label}</label>}
 
       <div className={styles.inputAndSymbol}>
         <div className={styles.inputBox}>
           <input className={styles.input} type="text" id={name} {...register(name)} />
         </div>
 
-        <span className={styles.iconBox}>
-          {errors.username && (
-            <FontAwesomeIcon icon={faExclamationTriangle} className={styles.red} />
-          )}
+        {showErrors && (
+          <span className={styles.iconBox}>
+            {errors[name] && (
+              <FontAwesomeIcon icon={faExclamationTriangle} className={styles.red} />
+            )}
 
-          {!errors.username && touchedFields[name] && !isSubmitting && !errors.root && (
-            <FontAwesomeIcon icon={faCheckCircle} className={styles.green} />
-          )}
-        </span>
+            {!errors[name] && touchedFields[name] && !isSubmitting && !errors.root && (
+              <FontAwesomeIcon icon={faCheckCircle} className={styles.green} />
+            )}
+          </span>
+        )}
       </div>
 
       <ErrorMessage

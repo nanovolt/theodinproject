@@ -1,9 +1,9 @@
 :root {
   font-size: 0.625rem;
   --background: rgb(222, 222, 222);
-  --drawer-bg: rgba(222, 222, 222, 0.8);
-  --backgrount-content: #f0f0f0;
-  --backgrount-input: white;
+  --drawer-bg: rgb(222, 222, 222);
+  --background-content: #f0f0f0;
+  --background-input: white;
   --background-button: #cecece;
   --text-primary: #222;
   --icon-size: 2.2rem;
@@ -18,9 +18,9 @@
 
 [data-color-scheme="dark"] {
   --background: #222;
-  --drawer-bg: rgba(0, 0, 0, 0.8);
-  --backgrount-input: #222;
-  --backgrount-content: #111;
+  --drawer-bg: #222;
+  --background-input: #222;
+  --background-content: #111;
   --background-button: #333;
   --text-primary: rgb(222, 222, 222);
   --button-color: white;

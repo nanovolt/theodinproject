@@ -71,7 +71,7 @@
   border-radius: 4px;
   outline: 2px solid rgba(0, 0, 0, 0);
   color: var(--text-primary);
-  background-color: var(--backgrount-input);
+  background-color: var(--background-input);
 }
 
 .formItem input:focus {

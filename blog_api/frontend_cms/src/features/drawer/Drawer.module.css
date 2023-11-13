@@ -3,7 +3,8 @@
   background-color: var(--drawer-bg);
   right: 0;
   top: 0;
-  width: clamp(240px, 80vw, 480px);
+  /* width: clamp(240px, 80vw, 480px); */
+  min-width: 240px;
   height: 100%;
   padding: 8px;
   z-index: 2;

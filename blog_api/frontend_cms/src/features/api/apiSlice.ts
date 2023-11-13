@@ -45,6 +45,6 @@ export const apiSlice = createApi({
   //   baseUrl: "http://localhost:3000/api/v1",
   // }),
   baseQuery: customBaseQuery,
-  tagTypes: ["Me", "Categories"],
+  tagTypes: ["Me", "Categories", "Posts"],
   endpoints: () => ({}),
 });

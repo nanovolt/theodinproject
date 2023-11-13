@@ -33,7 +33,7 @@ export function Header() {
   return (
     <div className={styles.headerWrapper}>
       <header>
-        <div className="left">
+        <div className={styles.left}>
           <Logo title="Blog CMS" />
         </div>
         <div className={styles.right}>

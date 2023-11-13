@@ -1,5 +1,5 @@
 .categoriesContainer {
-  width: clamp(300px, 100%, 360px);
+  /* width: clamp(300px, 100%, 960px);   */
   color: var(--text-primary);
   display: flex;
   flex-direction: column;
@@ -49,9 +49,15 @@
   background-color: var(--background-input);
 }
 
+.categoryList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
 .listItem {
   display: flex;
   background-color: var(--background);
+  /* min-width: 100px; */
   padding: 8px;
   border-radius: 4px;
   align-items: center;

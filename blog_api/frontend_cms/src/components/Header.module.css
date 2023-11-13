@@ -23,6 +23,10 @@ header {
   }
 }
 
+.left a {
+  padding: 0;
+}
+
 .right {
   display: flex;
   gap: 8px;

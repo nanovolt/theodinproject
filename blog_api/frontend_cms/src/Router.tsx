@@ -9,12 +9,12 @@ import App from "./App";
 
 import { Home } from "./pages/Home";
 import { ErrorPage } from "./pages/ErrorPage.tsx";
-import { Create } from "./pages/Create";
+import { Create } from "./features/posts/Create.tsx";
 import { Login } from "./pages/Login.tsx";
 import { Register } from "./pages/Register.tsx";
 import { ProtectedRoute } from "./pages/ProtectedRoute.tsx";
 import { Logout } from "./pages/Logout.tsx";
-import { Posts } from "./pages/Posts.tsx";
+import { Posts } from "./features/posts/Posts.tsx";
 import { Categories } from "./features/categories/Categories.tsx";
 
 export function Router() {

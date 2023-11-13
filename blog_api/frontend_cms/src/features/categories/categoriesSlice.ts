@@ -33,6 +33,7 @@ export const categoriesApiSlice = apiSlice.injectEndpoints({
             ]
           : [{ type: "Categories", id: "LIST" }],
     }),
+
     createCategory: builder.mutation<Category, CreateCategoryPayload>({
       query: (payload) => ({
         url: "cms/categories",
@@ -43,6 +44,7 @@ export const categoriesApiSlice = apiSlice.injectEndpoints({
 
       invalidatesTags: [{ type: "Categories", id: "LIST" }],
     }),
+
     deleteCategory: builder.mutation<Category, DeleteCategoryPayload>({
       query: (payload) => ({
         url: `cms/categories/${payload._id}`,

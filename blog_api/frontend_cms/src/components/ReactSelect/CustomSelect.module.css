@@ -1,0 +1,15 @@
+.selectList {
+  width: 0;
+  flex: 1;
+  border: 2px solid var(--text-primary);
+  font-size: var(--fs-input);
+  line-height: 1.3;
+  background-color: var(--background-content);
+  padding: 8px;
+  /* padding: 8px 16px; */
+  /* border-radius: none; */
+}
+
+.menu {
+  color: red;
+}

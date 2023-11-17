@@ -2,7 +2,6 @@
   color: Red;
   background-color: rgba(255, 0, 0, 0.267);
   padding: 4px;
-  border-radius: 4px;
   display: grid;
   justify-items: center;
 }

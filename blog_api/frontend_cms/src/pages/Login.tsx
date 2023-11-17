@@ -12,6 +12,7 @@ import { FormItemInput } from "../components/FormItemInput";
 import { FormItemPassword } from "../components/FormItemPassword";
 import { FormError } from "../components/FormError";
 import { ServerErrorSchema, ServerValidationErrorSchema } from "../zod/serverErrorsValidation";
+import { useEffect } from "react";
 // import { DevTool } from "@hookform/devtools";
 
 const LoginInputSchema = z.object({
@@ -58,7 +59,12 @@ export const Login = () => {
 
   const onSubmit: SubmitHandler<LoginInputs> = async (data) => {
     const { username, password } = data;
-    await login({ username, password });
+
+    try {
+      await login({ username, password }).unwrap();
+    } catch {
+      // reset();
+    }
   };
 
   const onInvalid = () => {
@@ -71,19 +77,70 @@ export const Login = () => {
     });
   };
 
+  let newRoute = "";
+
+  useEffect(() => {
+    if (!initialRoute) {
+      dispatch(navigationActions.setInitialRoute(newRoute));
+    }
+
+    const serverValidationErrorResult = ServerValidationErrorSchema.safeParse(loginError);
+    const serverErrorResult = ServerErrorSchema.safeParse(loginError);
+
+    // if got validation errors from server
+    // here we get an array of errors
+    if (isError && serverValidationErrorResult.success) {
+      // if reset() is called, server-side not-validation error will be erased by next form revalidation,
+      // see reValidateMode: "onBlur" on useForm params
+      reset();
+      console.log("reset");
+
+      const errors = serverValidationErrorResult.data.data.errors;
+      type inputKey = keyof LoginInputs;
+
+      errors.map((err) => {
+        if (!getFieldState(err.path as inputKey).error)
+          setError(err.path as inputKey, { message: err.msg });
+      });
+    }
+
+    // here server validation is passed
+    // if server still returns an error
+    // in this case we can't identify individual form input
+    // so we show general error message at the bottom of form
+    // or use any notification toaster
+    else if (isError && serverErrorResult.success) {
+      const errorMessage = serverErrorResult.data.data.error;
+      if (!errors.root) {
+        setError("root.serverError", { message: errorMessage });
+      }
+    } else if (isError && !serverValidationErrorResult.success && !serverErrorResult.success) {
+      setError("root.serverError", { message: "Unexpected Error. Try again later" });
+    }
+  }, [
+    dispatch,
+    errors.root,
+    getFieldState,
+    initialRoute,
+    isError,
+    loginError,
+    newRoute,
+    reset,
+    setError,
+  ]);
+
   if (!initialRoute) {
-    let newRoute;
     if (location.state?.type === "url") {
       newRoute = location.state.from === "/logout" ? "/" : location.state.from;
     } else {
       newRoute = location.pathname;
     }
 
-    console.log("new route:", newRoute);
-    dispatch(navigationActions.setInitialRoute(newRoute));
+    // console.log("new route:", newRoute);
+    // dispatch(navigationActions.setInitialRoute(newRoute));
   }
 
-  if (isLoading) {
+  if (!isSubmitting && isLoading) {
     if (location.state?.type === "url") {
       return <></>;
     }
@@ -101,38 +158,6 @@ export const Login = () => {
     return <Navigate to={initialRoute} replace={true} />;
   }
 
-  const serverValidationErrorResult = ServerValidationErrorSchema.safeParse(loginError);
-  const serverErrorResult = ServerErrorSchema.safeParse(loginError);
-
-  // if got validation errors from server
-  // here we get an array of errors
-  if (isError && serverValidationErrorResult.success) {
-    // if reset() is called, server-side not-validation error will be erased by next form revalidation,
-    // see reValidateMode: "onBlur" on useForm params
-    reset();
-    const errors = serverValidationErrorResult.data.data.errors;
-    type inputKey = keyof LoginInputs;
-
-    errors.map((err) => {
-      if (!getFieldState(err.path as inputKey).error)
-        setError(err.path as inputKey, { message: err.msg });
-    });
-  }
-
-  // here server validation is passed
-  // if server still returns an error
-  // in this case we can't identify individual form input
-  // so we show general error message at the bottom of form
-  // or use any notification toaster
-  else if (isError && serverErrorResult.success) {
-    const errorMessage = serverErrorResult.data.data.error;
-    if (!errors.root) {
-      setError("root.serverError", { message: errorMessage });
-    }
-  } else if (isError && !serverValidationErrorResult.success && !serverErrorResult.success) {
-    setError("root.serverError", { message: "Unexpected Error" });
-  }
-
   return (
     <div className={styles.formContainer}>
       {/* <DevTool control={control} /> */}
@@ -143,7 +168,7 @@ export const Login = () => {
           onSubmit={handleSubmit(onSubmit, onInvalid)}
           autoComplete="off"
         >
-          <FormItemInput label="Username" name="username" />
+          <FormItemInput label="Username" name="username" showErrors={true} />
           <FormItemPassword label="Password" name="password" />
           <FormError />
 

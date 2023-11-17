@@ -12,20 +12,16 @@ export const postsController = {
     const newPost = await PostModel.create({
       ...req.body,
       date: DateTime.fromISO(req.body.date).toJSDate(),
-      author: req.user!.id,
+      authorId: req.user!.id,
     });
 
     res.json(newPost);
   }),
 
-  readPosts: asyncHandler(async (req, res, next) => {
+  readPosts: asyncHandler(async (req, res) => {
     const posts = await PostModel.find()
-      .populate("category", "title")
-      .populate("author", "username");
-
-    if (posts.length === 0) {
-      return next(createError(404, { error: "posts not found" }));
-    }
+      .populate("categoryId", "title")
+      .populate("authorId", "username");
 
     res.json(posts);
   }),
@@ -38,8 +34,8 @@ export const postsController = {
     }
 
     const post = await PostModel.findById(id)
-      .populate("category", "title")
-      .populate("author", "username");
+      .populate("categoryId", "title")
+      .populate("authorId", "username");
 
     if (!post) {
       return next(createError(404, { error: "post not found" }));
@@ -56,8 +52,8 @@ export const postsController = {
     }
 
     const post = await PostModel.findByIdAndUpdate(id, { ...req.body }, { new: true })
-      .populate("category", "title")
-      .populate("author", "username");
+      .populate("categoryId", "title")
+      .populate("authorId", "username");
 
     if (!post) {
       return next(createError(404, { error: "post not found" }));

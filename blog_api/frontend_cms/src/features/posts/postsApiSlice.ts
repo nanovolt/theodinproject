@@ -3,14 +3,28 @@ import { apiSlice } from "../api/apiSlice";
 type Post = {
   _id: string;
   title: string;
-  text: string;
+  content: string;
   date: string;
-  category: null;
-  author: null;
+  categoryId: null | {
+    _id: string;
+    title: string;
+  };
+  authorId: null | {
+    _id: string;
+    username: string;
+  };
   viewCount: number;
   isPublished: boolean;
   dateFormat: string;
   id: string;
+};
+
+type CreatedPost = {
+  title: string;
+  content: string;
+  date: string;
+  categoryId: string;
+  isPublished: boolean;
 };
 
 export const postsApiSlice = apiSlice.injectEndpoints({
@@ -29,14 +43,24 @@ export const postsApiSlice = apiSlice.injectEndpoints({
           : [{ type: "Posts", id: "LIST" }],
     }),
 
-    createPost: builder.mutation({
+    createPost: builder.mutation<void, CreatedPost>({
       query: (payload) => ({
         url: "cms/posts",
         method: "POST",
         body: payload,
         credentials: "include",
       }),
-      invalidatesTags: [{ type: "Posts", id: "List" }],
+      invalidatesTags: [{ type: "Posts", id: "LIST" }],
+    }),
+
+    deletePost: builder.mutation<void, { id: string }>({
+      query: (payload) => ({
+        url: `cms/posts/${payload.id}`,
+        method: "DELETE",
+        body: payload,
+        credentials: "include",
+      }),
+      invalidatesTags: (_result, _error, arg) => [{ type: "Posts", id: arg.id }],
     }),
   }),
 });

@@ -15,7 +15,7 @@ const customBaseQuery: BaseQueryFn =
   // FetchBaseQueryError, // Error
   // FetchBaseQueryMeta // Meta
   async (args, api, extraOptions) => {
-    const baseQuery = fetchBaseQuery({ baseUrl: import.meta.env.VITE_APP_API_URL, timeout: 30000 });
+    const baseQuery = fetchBaseQuery({ baseUrl: import.meta.env.VITE_APP_API_URL, timeout: 3000 });
 
     const { data, error } = await baseQuery(args, api, extraOptions);
 

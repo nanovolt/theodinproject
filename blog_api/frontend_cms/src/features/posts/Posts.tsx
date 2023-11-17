@@ -1,21 +1,37 @@
 import { useTitle } from "../../hooks/useTitle";
-import { postsApiSlice } from "./postsSlice";
+import { postsApiSlice } from "./postsApiSlice";
+// import parse from "html-react-parser";
+import styles from "./Posts.module.css";
 
 export const Posts = () => {
   useTitle("Posts | Blog CMS");
 
-  const { data, isSuccess } = postsApiSlice.useGetPostsQuery();
+  const { data: posts, isSuccess } = postsApiSlice.useGetPostsQuery();
+
+  const [deletePost] = postsApiSlice.useDeletePostMutation();
 
   let content = null;
   if (isSuccess) {
-    content = data.map((post) => (
-      <div key={post._id}>
-        <h2>{post.title}</h2>
-        <p>{post.text}</p>
-        <p>{post.author}</p>
-        <p>{post.category}</p>
+    content = posts.map((post) => (
+      <div key={post._id} className={styles.post}>
+        <div>
+          <a href={`posts/${post._id}`}>
+            <h2>{post.title}</h2>
+          </a>
+        </div>
+        {/* {parse(post.content)} */}
+        {/* <p>{post.authorId ? post.authorId.username : "Unknown author"}</p> */}
+        <p>{post.categoryId ? post.categoryId.title : "No category"}</p>
         <p>{post.dateFormat}</p>
-        <p>{post.isPublished}</p>
+        <div className={styles.postControls}>
+          <button
+            onClick={async () => {
+              await deletePost({ id: post._id });
+            }}
+          >
+            Delete
+          </button>
+        </div>
       </div>
     ));
   }

@@ -7,12 +7,12 @@ const postSchema = new Schema<Post>(
   {
     // title at validation allows 128
     // text at validation allows 10 000
-    // maxlength multiplied by 10 because saving html-entities
+    // maxlength multiplied by 10 because need to store html-entities
     title: { type: String, required: true, maxlength: 1280 },
-    text: { type: String, required: true, maxlength: 100000 },
+    content: { type: String, required: true, maxlength: 100000 },
     date: { type: Date, required: true },
-    category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
-    author: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    categoryId: { type: Schema.Types.ObjectId, ref: "Category", required: true },
+    authorId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     viewCount: { type: Number, default: 0 },
     isPublished: { type: Boolean, required: true },
   },
@@ -26,7 +26,7 @@ postSchema.virtual("dateFormat").get(function () {
 
 postSchema.post("init", function (doc: Post) {
   doc.title = he.decode(doc.title);
-  doc.text = he.decode(doc.text);
+  doc.content = he.decode(doc.content);
 });
 
 // postSchema.virtual("url").get(function (): string {

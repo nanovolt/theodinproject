@@ -2,17 +2,17 @@
   font-size: 0.625rem;
   --background: rgb(222, 222, 222);
   --drawer-bg: rgb(222, 222, 222);
-  --background-content: #f0f0f0;
-  --background-input: white;
+  --background-content: white;
+  --background-input: #eeeeee;
   --background-button: #cecece;
-  --text-primary: #222;
+  --text-primary: #444;
   --icon-size: 2.2rem;
   --icon-small-size: 24px;
   --fs-base: 1.8rem;
   --fs-input: 2.2rem;
   --fs-xl: 2.4rem;
-  --button-color: black;
-  --button-bg: #666;
+  --button-color: rgb(255, 255, 255);
+  --button-bg: #333;
   --hover: dodgerblue;
 }
 
@@ -23,6 +23,6 @@
   --background-content: #111;
   --background-button: #333;
   --text-primary: rgb(222, 222, 222);
-  --button-color: white;
-  --button-bg: #888;
+  --button-color: rgb(32, 32, 32);
+  --button-bg: #e6e6e6;
 }

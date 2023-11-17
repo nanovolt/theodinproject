@@ -1,0 +1,9 @@
+.button {
+  background-color: var(--button-bg);
+  color: var(--button-color);
+}
+
+.tools {
+  border: 2px solid var(--text-primary);
+  width: fit-content;
+}

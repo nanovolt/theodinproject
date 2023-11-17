@@ -3,6 +3,7 @@ import { counterReducer } from "../features/counter/counterSlice";
 import { apiSlice } from "../features/api/apiSlice";
 import { navigationReducer } from "../features/routerNavigation/navigation";
 import { drawerReducer } from "../features/drawer/drawerSlice";
+import { editorReducer } from "../features/posts/EditorSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     counter: counterReducer,
     navigation: navigationReducer,
     drawer: drawerReducer,
+    editor: editorReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(apiSlice.middleware),
 });

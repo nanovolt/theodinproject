@@ -11,6 +11,7 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { FormItemInput } from "../components/FormItemInput";
 import { FormItemPassword } from "../components/FormItemPassword";
 import { FormError } from "../components/FormError";
+import { useEffect } from "react";
 
 const RegisterInputSchema = z
   .object({
@@ -95,7 +96,12 @@ export const Register = () => {
 
   const onSubmit: SubmitHandler<RegisterInputs> = async (data) => {
     const { username, password, confirm_password } = data;
-    await registerUser({ username, password, confirm_password });
+
+    try {
+      await registerUser({ username, password, confirm_password }).unwrap();
+    } catch {
+      reset();
+    }
   };
 
   const onInvalid = () => {
@@ -107,15 +113,61 @@ export const Register = () => {
     });
   };
 
-  if (!initialRoute) {
-    let newRoute;
-    if (location.state?.type === "url") {
-      newRoute = location.state.from;
-    } else {
-      newRoute = location.pathname;
+  useEffect(() => {
+    if (!initialRoute) {
+      let newRoute;
+      if (location.state?.type === "url") {
+        newRoute = location.state.from;
+      } else {
+        newRoute = location.pathname;
+      }
+      dispatch(navigationActions.setInitialRoute(newRoute));
     }
-    dispatch(navigationActions.setInitialRoute(newRoute));
-  }
+
+    const serverValidationErrorResult = ServerValidationErrorSchema.safeParse(registerError);
+    const serverErrorResult = ServerErrorSchema.safeParse(registerError);
+
+    // if got validation errors from server
+    // here we get an array of errors
+    if (isError && serverValidationErrorResult.success) {
+      // if reset() is called, server-side not-validation error will be erased by next form revalidation,
+      // see reValidateMode: "onBlur" on useForm params
+      reset();
+      const errors = serverValidationErrorResult.data.data.errors;
+      type inputKey = keyof RegisterInputs;
+
+      errors.map((err) => {
+        if (!getFieldState(err.path as inputKey).error)
+          setError(err.path as inputKey, { message: err.msg });
+      });
+    }
+
+    // here server validation is passed
+    // if server still returns an error
+    // in this case we can't identify individual form input
+    // so we show general error message at the bottom of form
+    // or use any notification toaster
+    else if (isError && serverErrorResult.success) {
+      const errorMessage = serverErrorResult.data.data.error;
+      if (!errors.root) {
+        setError("root.serverError", { message: errorMessage });
+      }
+    } else if (isError && !serverValidationErrorResult.success && !serverErrorResult.success) {
+      setError("root.serverError", { message: "Unexpected Error. Try again later" });
+    }
+  }, [
+    dispatch,
+    errors.root,
+    getFieldState,
+    initialRoute,
+    isError,
+    location.pathname,
+    location.state.from,
+    location.state?.type,
+    registerError,
+    reset,
+    setError,
+  ]);
 
   if (isLoading) {
     if (location.state?.type === "url") {
@@ -135,36 +187,6 @@ export const Register = () => {
     return <Navigate to={initialRoute} replace />;
   }
 
-  const serverValidationErrorResult = ServerValidationErrorSchema.safeParse(registerError);
-  const serverErrorResult = ServerErrorSchema.safeParse(registerError);
-
-  // if got validation errors from server
-  // here we get an array of errors
-  if (isError && serverValidationErrorResult.success) {
-    // if reset() is called, server-side not-validation error will be erased by next form revalidation,
-    // see reValidateMode: "onBlur" on useForm params
-    reset();
-    const errors = serverValidationErrorResult.data.data.errors;
-    type inputKey = keyof RegisterInputs;
-
-    errors.map((err) => {
-      if (!getFieldState(err.path as inputKey).error)
-        setError(err.path as inputKey, { message: err.msg });
-    });
-  }
-
-  // here server validation is passed
-  // if server still returns an error
-  // in this case we can't identify individual form input
-  // so we show general error message at the bottom of form
-  // or use any notification toaster
-  else if (isError && serverErrorResult.success) {
-    const errorMessage = serverErrorResult.data.data.error;
-    if (!errors.root) {
-      setError("root.serverError", { message: errorMessage });
-    }
-  }
-
   return (
     <div className={styles.formContainer}>
       <h2>Register</h2>
@@ -175,7 +197,7 @@ export const Register = () => {
           onSubmit={handleSubmit(onSubmit, onInvalid)}
           autoComplete="off"
         >
-          <FormItemInput label="Username" name="username" />
+          <FormItemInput label="Username" name="username" showErrors={true} />
           <FormItemPassword label="Password" name="password" />
           <FormItemPassword label="Confirm password" name="confirm_password" />
           <FormError />

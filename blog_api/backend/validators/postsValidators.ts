@@ -22,12 +22,12 @@ export const validateCreatePost = [
       return he.encode(value);
     }),
 
-  body("text")
+  body("content")
     .exists({ values: "falsy" })
-    .withMessage("Text is required (received: empty string | 0 | false | null | undefined)")
+    .withMessage("Content is required (received: empty string | 0 | false | null | undefined)")
     .bail()
     .isString()
-    .withMessage("Text is not a string")
+    .withMessage("Content is not a string")
     .bail()
     .trim()
     .isLength({ min: 1 })
@@ -52,12 +52,12 @@ export const validateCreatePost = [
     .withMessage("Date is not in ISO8601 format")
     .bail(),
 
-  body("category")
+  body("categoryId")
     .exists({ values: "falsy" })
-    .withMessage("Category is required (received: empty string | 0 | false | null | undefined)")
+    .withMessage("Category id is required (received: empty string | 0 | false | null | undefined)")
     .bail()
     .isString()
-    .withMessage("Category is not a string")
+    .withMessage("Category id is not a string")
     .bail()
     .trim()
     .isLength({ min: 1 })
@@ -108,13 +108,13 @@ export const validateUpdatePost = [
       return he.encode(value);
     }),
 
-  body("text")
+  body("content")
     .optional()
     .exists({ values: "falsy" })
-    .withMessage("Text is falsy (received: empty string | 0 | false | null | undefined)")
+    .withMessage("Content is falsy (received: empty string | 0 | false | null | undefined)")
     .bail()
     .isString()
-    .withMessage("Text is not a string")
+    .withMessage("Content is not a string")
     .bail()
     .trim()
     .isLength({ min: 1 })
@@ -140,13 +140,13 @@ export const validateUpdatePost = [
     .withMessage("Date is not in ISO8601 format")
     .bail(),
 
-  body("category")
+  body("categoryId")
     .optional()
     .exists({ values: "falsy" })
-    .withMessage("Category is falsy (received: empty string | 0 | false | null | undefined)")
+    .withMessage("Category id is falsy (received: empty string | 0 | false | null | undefined)")
     .bail()
     .isString()
-    .withMessage("Category is not a string")
+    .withMessage("Category id is not a string")
     .bail()
     .trim()
     .isLength({ min: 1 })

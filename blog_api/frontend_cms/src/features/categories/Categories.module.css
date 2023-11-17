@@ -1,5 +1,6 @@
 .categoriesContainer {
   /* width: clamp(300px, 100%, 960px);   */
+  padding: 8px;
   color: var(--text-primary);
   display: flex;
   flex-direction: column;
@@ -40,11 +41,11 @@
 
 .input {
   width: 0;
+  max-width: 20ch;
   flex: 1;
   padding: 8px 16px;
   font-size: var(--fs-input);
-  border-radius: 4px;
-  outline: 2px solid rgba(0, 0, 0, 0);
+  outline: 2px solid var(--text-primary);
   color: var(--text-primary);
   background-color: var(--background-input);
 }
@@ -59,7 +60,6 @@
   background-color: var(--background);
   /* min-width: 100px; */
   padding: 8px;
-  border-radius: 4px;
   align-items: center;
   justify-content: space-between;
 }

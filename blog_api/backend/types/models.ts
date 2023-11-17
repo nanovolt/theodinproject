@@ -10,10 +10,10 @@ export interface IUser {
 
 export type Post = {
   title: string;
-  text: string;
+  content: string;
   date: Date;
-  category: Types.ObjectId;
-  author: Types.ObjectId;
+  categoryId: Types.ObjectId;
+  authorId: Types.ObjectId;
   viewCount: number;
   isPublished: boolean;
 };

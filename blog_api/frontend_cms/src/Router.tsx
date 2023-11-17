@@ -9,7 +9,7 @@ import App from "./App";
 
 import { Home } from "./pages/Home";
 import { ErrorPage } from "./pages/ErrorPage.tsx";
-import { Create } from "./features/posts/Create.tsx";
+import { Editor } from "./features/posts/Editor.tsx";
 import { Login } from "./pages/Login.tsx";
 import { Register } from "./pages/Register.tsx";
 import { ProtectedRoute } from "./pages/ProtectedRoute.tsx";
@@ -37,7 +37,7 @@ export function Router() {
 
         <Route element={<ProtectedRoute redirectPath="/login" />}>
           <Route path="logout" element={<Logout />} />
-          <Route path="create" element={<Create />} />
+          <Route path="create" element={<Editor />} />
           <Route path="posts" element={<Posts />} />
           <Route path="categories" element={<Categories />} />
         </Route>

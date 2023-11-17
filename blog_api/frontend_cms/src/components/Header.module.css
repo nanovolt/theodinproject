@@ -42,7 +42,6 @@ header {
   padding: 8px;
   background-color: var(--background-button);
   border: none;
-  border-radius: 4px;
 }
 
 .menuIcon {

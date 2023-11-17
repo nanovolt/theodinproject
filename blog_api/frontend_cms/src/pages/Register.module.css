@@ -1,6 +1,8 @@
 .formContainer {
   width: clamp(300px, 100%, 360px);
   color: var(--text-primary);
+  justify-self: center;
+  padding: 8px;
 }
 
 .registerForm {
@@ -37,7 +39,6 @@
   align-self: center;
   padding: 8px;
   border: none;
-  border-radius: 4px;
   font-size: var(--fs-xl);
   color: var(--button-color);
   background-color: var(--button-bg);
@@ -54,6 +55,12 @@
   background-color: lime;
 }
 
+.submit[disabled] {
+  background: repeating-linear-gradient(45deg, #dbdbdb, #dbdbdb 5px, #999999 2px, #999999 10px);
+  /* color: black; */
+  cursor: not-allowed;
+}
+
 .inputAndSymbol {
   max-width: 320px;
   display: flex;
@@ -68,7 +75,6 @@
   padding: 8px;
   font-size: 20px;
   flex: 1;
-  border-radius: 4px;
   outline: 2px solid rgba(0, 0, 0, 0);
   color: var(--text-primary);
   background-color: var(--background-input);

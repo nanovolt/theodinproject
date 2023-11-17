@@ -1,0 +1,14 @@
+.ProseMirror {
+  /* max-width: 60ch; */
+  /* width: clamp(240px, 100%, 60ch); */
+  min-height: 260px;
+  padding: 8px;
+  /* background-color: var(--background); */
+  border: 2px solid var(--text-primary);
+  /* min-width: 240px; */
+  overflow-wrap: anywhere;
+  /* hyphens: auto; */
+  align-self: center;
+  outline: none;
+  white-space: break-spaces;
+}

@@ -20,12 +20,8 @@ export const categoriesController = {
     res.json(newCategory);
   }),
 
-  readCategories: asyncHandler(async (req, res, next) => {
+  readCategories: asyncHandler(async (req, res) => {
     const categories = await CategoryModel.find();
-
-    if (categories.length === 0) {
-      return next(createError(404, { error: "categories not found" }));
-    }
     res.json(categories);
   }),
 

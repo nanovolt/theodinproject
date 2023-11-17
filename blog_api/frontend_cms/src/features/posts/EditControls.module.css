@@ -1,0 +1,26 @@
+.editControls {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  gap: 4px;
+  padding: 4px;
+  /* background-color: var(--background); */
+  border: 2px solid var(--text-primary);
+  align-self: flex-start;
+}
+
+.group {
+  display: flex;
+  gap: 4px;
+}
+
+.editControls button {
+  padding: 4px;
+}
+
+.active {
+  background-color: var(--button-bg);
+  color: var(--button-color);
+  /* background-color: var(--background-button); */
+  /* color: var(--text-primary); */
+}

@@ -53,7 +53,7 @@ export const categoriesApiSlice = apiSlice.injectEndpoints({
         credentials: "include",
       }),
 
-      invalidatesTags: (result, error, { _id }) => [{ type: "Categories", id: _id }],
+      invalidatesTags: (_result, _error, { _id }) => [{ type: "Categories", id: _id }],
     }),
   }),
 });

@@ -2,6 +2,7 @@
   /* max-width: 60ch; */
   /* width: clamp(240px, 100%, 60ch); */
   min-height: 260px;
+  /* width: 100%; */
   padding: 8px;
   /* background-color: var(--background); */
   border: 2px solid var(--text-primary);
@@ -12,3 +13,121 @@
   outline: none;
   white-space: break-spaces;
 }
+
+.tiptap h1,
+h2,
+h3,
+h4,
+p {
+  margin: 8px 0;
+}
+
+.tiptap blockquote {
+  border-left: 2px solid var(--text-primary);
+  padding-left: 1rem;
+}
+
+.tiptap ul,
+.tiptap ol {
+  margin-left: 24px;
+  /* border-left: 2px solid var(--text-primary); */
+  /* padding-left: 1rem; */
+}
+
+.tiptap ul {
+  list-style-type: disc;
+}
+
+.tiptap ol {
+  list-style-type: decimal;
+}
+
+.tiptap a {
+  font-size: var(--fs-base);
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.tiptap a:hover {
+  background-color: var(--background-content);
+  color: rgb(0, 183, 255);
+}
+
+.tiptap code {
+  display: inline-block;
+}
+.tiptap .code {
+  background-color: var(--background);
+  border-radius: 8px;
+  box-decoration-break: clone;
+  color: var(--text-primary);
+  /* font-size: 0.9rem; */
+  padding: 4px;
+}
+
+.tiptap .codeblock {
+  display: flex;
+  max-width: 100%;
+  /* flex: 1; */
+  background-color: #414141;
+  color: white;
+  padding: 4px;
+  border-radius: 8px;
+  overflow-x: scroll;
+  white-space: pre-wrap;
+  /* white-space: nowrap; */
+  margin: 0;
+}
+
+/* .hljs-comment,
+.hljs-quote {
+  color: #616161;
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-attribute,
+.hljs-tag,
+.hljs-name,
+.hljs-regexp,
+.hljs-link,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class {
+  color: #f98181;
+}
+
+.hljs-number,
+.hljs-meta,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params {
+  color: #fbbc88;
+}
+
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet {
+  color: #b9f18d;
+}
+
+.hljs-title,
+.hljs-section {
+  color: #faf594;
+}
+
+.hljs-keyword,
+.hljs-selector-tag {
+  color: #70cff8;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: 700;
+} */

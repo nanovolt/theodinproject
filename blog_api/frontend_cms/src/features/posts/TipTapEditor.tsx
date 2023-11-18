@@ -1,8 +1,9 @@
-import { EditorProvider, FloatingMenu, BubbleMenu } from "@tiptap/react";
+import { EditorProvider } from "@tiptap/react";
 
 import { MenuBar } from "./MenuBar";
-import styles from "./TipTapEditor.module.css";
 import "./TipTapEditor.css";
+
+import styles from "./TipTapEditor.module.css";
 import { extensions } from "./Extentions";
 import { Post } from "./EditorSlice";
 
@@ -24,9 +25,7 @@ export const TipTapEditor = ({ post }: TipTapEditorProps) => {
         content={post.content}
         slotBefore={<MenuBar />}
       >
-        {/* <StateHandler /> */}
-        <FloatingMenu>menu</FloatingMenu>
-        <BubbleMenu>menu</BubbleMenu>
+        {}
       </EditorProvider>
     </div>
   );

@@ -1,6 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.module.css";
+
+// this css is for language syntax highlighting
+import "./tokyo-night-dark.min.css";
+
 import { Router } from "./Router";
 import { ErrorBoundary } from "react-error-boundary";
 import { DarkModeProvider } from "./context/DarkModeContext";

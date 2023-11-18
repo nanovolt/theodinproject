@@ -1,3 +1,14 @@
+/* @import "github.min.css";
+
+@media (prefers-color-scheme: dark) {
+  @import "github-dark.min.css";
+} */
+
+/* Assume light mode by default */
+/* @import "github.min.css" screen; */
+/* Supersede dark mode when applicable */
+/* @import "github-dark.min.css" screen and (prefers-color-scheme: dark); */
+
 :root {
   font-size: 0.625rem;
   --background: rgb(222, 222, 222);
@@ -5,6 +16,7 @@
   --background-content: white;
   --background-input: #eeeeee;
   --background-button: #cecece;
+  --background-code: rgb(245, 245, 245);
   --text-primary: #444;
   --icon-size: 2.2rem;
   --icon-small-size: 24px;
@@ -22,6 +34,7 @@
   --background-input: #222;
   --background-content: #111;
   --background-button: #333;
+  --background-code: #333;
   --text-primary: rgb(222, 222, 222);
   --button-color: rgb(32, 32, 32);
   --button-bg: #e6e6e6;

@@ -1,17 +1,28 @@
+import { DateTime } from "luxon";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 // import { CustomSelect } from "../../components/ReactSelect/CustomSelect";
 import { categoriesApiSlice } from "../categories/categoriesApiSlice";
-import { Post, editorActions } from "./EditorSlice";
+import { editorActions, selectPost } from "./EditorSlice";
 import styles from "./PostDetails.module.css";
 
-type PostDetailsProps = {
-  post: Post;
-};
+// type PostDetailsProps = {
+//   post: Post;
+// };
 
-export const PostDetails = ({ post }: PostDetailsProps) => {
+export const PostDetails = () => {
   const dispatch = useAppDispatch();
 
   const { data: categories } = categoriesApiSlice.useGetCategoriesQuery();
+
+  const post = useAppSelector(selectPost);
+
+  let dateToRender = "";
+  if (post.date) {
+    const iso = DateTime.fromISO(post.date).toISODate();
+    if (iso) {
+      dateToRender = iso;
+    }
+  }
 
   return (
     <div className={styles.postDetails}>
@@ -29,9 +40,15 @@ export const PostDetails = ({ post }: PostDetailsProps) => {
       <div className={styles.detailItem}>
         <input
           type="date"
-          value={post.date}
+          value={dateToRender}
           onChange={(e) => {
-            dispatch(editorActions.editPost({ key: "date", value: e.target.value }));
+            if (!e.target.value) {
+              dispatch(editorActions.editPost({ key: "date", value: "" }));
+            }
+            const convertedToISO = DateTime.fromISO(e.target.value).toISO();
+
+            if (!convertedToISO) return;
+            dispatch(editorActions.editPost({ key: "date", value: convertedToISO }));
           }}
         />
       </div>

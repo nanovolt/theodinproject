@@ -18,6 +18,7 @@ export const Categories = () => {
     isError: isQueryError,
     error: queryError,
     isLoading: isCategoriesLoading,
+    isFetching,
     isSuccess: haveCategories,
   } = categoriesApiSlice.useGetCategoriesQuery();
 
@@ -71,7 +72,7 @@ export const Categories = () => {
           <li key={category._id} className={styles.listItem}>
             <p>{category.title}</p>
             <Button
-              disabled={isDeleting && originalArgs?._id === category._id}
+              disabled={(isDeleting || isFetching) && originalArgs?._id === category._id}
               options={{ isIcon: true }}
               onClick={() => {
                 handleDeleteCategory(category._id);

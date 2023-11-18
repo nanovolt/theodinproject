@@ -48,6 +48,21 @@ export const editorSlice = createSlice({
     togglePreview: (state) => {
       state.isPreview = !state.isPreview;
     },
+    setPreview: (state) => {
+      state.isPreview = true;
+    },
+    unsetPreview: (state) => {
+      state.isPreview = false;
+    },
+    toggleEdit: (state) => {
+      state.isEdit = !state.isEdit;
+    },
+    setEdit: (state) => {
+      state.isEdit = true;
+    },
+    unsetEdit: (state) => {
+      state.isEdit = false;
+    },
   },
 });
 

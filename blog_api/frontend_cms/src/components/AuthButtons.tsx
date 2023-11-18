@@ -24,6 +24,7 @@ export const AuthButtons = () => {
           {/* <FontAwesomeIcon icon={faExit} className={classNames(styles.toggleIcon, "fa-fw")} /> */}
           Logout
           <FontAwesomeIcon
+            style={{ marginLeft: 8 }}
             icon={faRightFromBracket}
             className={classNames(styles.toggleIcon, "fa-fw")}
           />

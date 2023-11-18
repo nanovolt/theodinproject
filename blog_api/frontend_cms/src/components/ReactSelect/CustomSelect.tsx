@@ -92,7 +92,7 @@ export function CustomSelect<
         borderRadius: 0,
         colors: {
           ...theme.colors,
-          primary: "dodgerblue",
+          primary: "#00ff80",
         },
       })}
       classNamePrefix="react-select"

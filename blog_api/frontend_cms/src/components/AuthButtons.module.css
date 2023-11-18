@@ -9,7 +9,7 @@
 
 @media (hover: hover) {
   .link:hover {
-    background-color: dodgerblue;
+    background-color: var(--hover);
   }
 }
 

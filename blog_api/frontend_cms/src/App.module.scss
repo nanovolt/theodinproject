@@ -1,5 +1,4 @@
 .App {
-  // text-align: center;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -7,15 +6,10 @@
 
 main {
   flex: 1;
-  display: flex;
-  flex-direction: column;
   background-color: var(--background-content);
 }
 
 .mainWrapper {
   width: clamp(300px, 100%, 1080px);
   margin: 0 auto;
-  // padding: 8px;
-  display: grid;
-  // justify-items: center;
 }

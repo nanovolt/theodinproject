@@ -8,10 +8,29 @@ import { editorActions, selectPost } from "./EditorSlice";
 import toast from "react-hot-toast";
 import { categoriesApiSlice } from "../categories/categoriesApiSlice";
 import { postsApiSlice } from "./postsApiSlice";
+import { DateTime } from "luxon";
+import { currentUserApiSlice } from "../currentUser/currentUserSlice";
+
+// import { common, createLowlight } from "lowlight";
+import css from "highlight.js/lib/languages/css";
+import js from "highlight.js/lib/languages/javascript";
+import ts from "highlight.js/lib/languages/typescript";
+import html from "highlight.js/lib/languages/xml";
+import { useEffect } from "react";
+import hljs from "highlight.js/lib/core";
+
+// const lowlight = createLowlight(common);
+
+hljs.registerLanguage("html", html);
+hljs.registerLanguage("css", css);
+hljs.registerLanguage("javascript", js);
+hljs.registerLanguage("typescript", ts);
 
 export const Preview = () => {
   const dispatch = useAppDispatch();
   const post = useAppSelector(selectPost);
+
+  const { data: currentUser } = currentUserApiSlice.useMeQuery();
 
   const { data: categories } = categoriesApiSlice.useGetCategoriesQuery();
 
@@ -36,6 +55,10 @@ export const Preview = () => {
     }
   }
 
+  useEffect(() => {
+    hljs.highlightAll();
+  }, []);
+
   return (
     <div className={styles.preview}>
       <div className="controls">
@@ -59,12 +82,18 @@ export const Preview = () => {
         </button>
       </div>
 
-      <article>
-        <h1>{post.title}</h1>
-        <p>{post.date}</p>
-        <p>{chosenCategory ? chosenCategory.title : "No category"}</p>
-        {parse(post.content)}
-      </article>
+      <div className={styles.post}>
+        <h1 className={styles.postTitle}>{post.title}</h1>
+        <p className={styles.postDate}>
+          {DateTime.fromISO(post.date).toLocaleString(DateTime.DATE_MED)}
+        </p>
+        <p className={styles.postAuthor}>by {currentUser!.user.username}</p>
+        <p className={styles.postCategory}>
+          {chosenCategory ? chosenCategory.title : "No category"}
+        </p>
+
+        <article>{parse(post.content)}</article>
+      </div>
     </div>
   );
 };

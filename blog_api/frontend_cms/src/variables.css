@@ -16,26 +16,30 @@
   --background-content: white;
   --background-input: #eeeeee;
   --background-button: #cecece;
-  --background-code: rgb(245, 245, 245);
+  --background-code: #222;
   --text-primary: #444;
   --icon-size: 2.2rem;
   --icon-small-size: 24px;
-  --fs-base: 1.8rem;
-  --fs-input: 2.2rem;
-  --fs-xl: 2.4rem;
+  --fs-sm: clamp(1rem, 1rem + 0.5vw, 1.4rem);
+  --fs-base: clamp(1.4rem, 1.4rem + 0.5vw, 1.8rem);
+  --fs-xl: clamp(2.2rem, 2.2 + 0.6vw, 3.6rem);
+  --fs-input: clamp(1.4rem, 3vw, 2.2rem);
+
   --button-color: rgb(255, 255, 255);
   --button-bg: #333;
-  --hover: dodgerblue;
+  --hover: #00ff80;
+  --category: #5e00aa;
 }
 
 [data-color-scheme="dark"] {
-  --background: #222;
-  --drawer-bg: #222;
-  --background-input: #222;
-  --background-content: #111;
-  --background-button: #333;
-  --background-code: #333;
+  --background: #20132b;
+  --drawer-bg: #20132b;
+  --background-input: #1b4731;
+  --background-content: #160d1d;
+  --background-button: #1b4731;
   --text-primary: rgb(222, 222, 222);
   --button-color: rgb(32, 32, 32);
   --button-bg: #e6e6e6;
+  --hover: #00b85c;
+  --category: #ad48ff;
 }

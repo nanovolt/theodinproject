@@ -7,13 +7,14 @@
 
 article {
   /* max-width: 60ch; */
-  width: clamp(240px, 100%, 60ch);
-  padding: 8px;
+
+  /* padding: 8px; */
   /* background-color: var(--background); */
   /* min-width: 240px; */
   overflow-wrap: anywhere;
+  margin-top: 16px;
   /* hyphens: auto; */
-  align-self: center;
+  /* align-self: center; */
 }
 
 .button {
@@ -25,5 +26,55 @@ article {
   outline: 2px solid var(--text-primary);
 }
 
-.preview p {
+.post {
+  width: clamp(240px, 100%, 60ch);
+  align-self: center;
+}
+
+.postCategory {
+  padding: 8px;
+  background-color: var(--category);
+  width: fit-content;
+  color: var(--button-color);
+}
+
+.post pre {
+  overflow-x: auto;
+}
+
+.post a {
+  font-size: var(--fs-base);
+  padding: 0;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.post a:hover {
+  background-color: #ffffff00;
+  color: var(--category);
+}
+
+.post ul,
+.post ol {
+  margin-left: 24px;
+  /* border-left: 2px solid var(--text-primary); */
+  /* padding-left: 1rem; */
+}
+
+.post ul p,
+.post ol p {
+  margin: 0;
+}
+
+.post ul {
+  list-style-type: disc;
+}
+
+.post ol {
+  list-style-type: decimal;
+}
+
+.post blockquote {
+  border-left: 4px solid var(--text-primary);
+  padding-left: 1rem;
 }

@@ -1,9 +1,10 @@
 .editor {
-  display: flex;
-  flex-direction: column;
+  /* display: flex; */
+  /* flex-direction: column; */
   /* flex-wrap: wrap-reverse; */
-  gap: 8px;
+  /* gap: 8px; */
   border: 2px solid var(--text-primary);
   padding: 8px;
   flex: 4 1 300px;
+  min-width: 0;
 }

@@ -3,27 +3,35 @@ import { TipTapEditor } from "./TipTapEditor";
 import styles from "./Editor.module.css";
 import { Preview } from "./Preview";
 import { PostDetails } from "./PostDetails";
-import { useAppSelector } from "../../app/hooks";
-import { selectIsEdit, selectIsPreview, selectPost } from "./EditorSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { editorActions, selectIsEdit, selectIsPreview } from "./EditorSlice";
+import { useEffect } from "react";
 
 export const Editor = () => {
-  const post = useAppSelector(selectPost);
+  const dispatch = useAppDispatch();
 
   const isPreview = useAppSelector(selectIsPreview);
   const isEdit = useAppSelector(selectIsEdit);
 
   useTitle(`${isEdit ? "Edit" : "Create"} | Blog CMS`);
 
+  useEffect(() => {
+    return () => {
+      dispatch(editorActions.clearPost());
+      dispatch(editorActions.unsetPreview());
+    };
+  }, [dispatch]);
+
   return (
     <div className={styles.editorContainer}>
-      <h1>{isEdit ? "Edit" : "Create"}</h1>
+      <h1 className={styles.pageTitle}>{isEdit ? "Edit" : "Create"}</h1>
 
       {isPreview && <Preview />}
       <div className={styles.wrapper}>
         {!isPreview && (
           <>
-            <TipTapEditor post={post} />
-            <PostDetails post={post} />
+            <TipTapEditor />
+            <PostDetails />
           </>
         )}
       </div>

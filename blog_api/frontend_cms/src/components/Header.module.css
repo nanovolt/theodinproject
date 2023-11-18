@@ -19,7 +19,7 @@ header {
 
 @media (hover: hover) {
   .link:hover {
-    background-color: dodgerblue;
+    background-color: #00ff80;
   }
 }
 

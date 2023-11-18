@@ -1,12 +1,8 @@
 .menuBar {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.mainControls {
-  display: flex;
-  gap: 8px;
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* gap: 8px; */
+  margin-bottom: 8px;
 }
 
 .button {

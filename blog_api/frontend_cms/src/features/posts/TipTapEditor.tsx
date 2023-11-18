@@ -5,20 +5,23 @@ import "./TipTapEditor.css";
 
 import styles from "./TipTapEditor.module.css";
 import { extensions } from "./Extentions";
-import { Post } from "./EditorSlice";
+import { selectPost } from "./EditorSlice";
+import { useAppSelector } from "../../app/hooks";
 
-type TipTapEditorProps = {
-  post: Post;
-};
+// type TipTapEditorProps = {
+//   post: Post;
+// };
 
-export const TipTapEditor = ({ post }: TipTapEditorProps) => {
+export const TipTapEditor = () => {
+  const post = useAppSelector(selectPost);
+
   return (
     <div className={styles.editor}>
       <EditorProvider
         injectCSS={false}
         editorProps={{
           attributes: {
-            spellcheck: "true",
+            spellcheck: "false",
           },
         }}
         extensions={extensions}

@@ -1,7 +1,8 @@
 .formContainer {
   width: clamp(300px, 100%, 360px);
   color: var(--text-primary);
-  justify-self: center;
+  /* justify-self: center; */
+  margin: 0 auto;
   padding: 8px;
 }
 
@@ -47,7 +48,7 @@
 
 @media (hover: hover) {
   .submit:hover {
-    background-color: dodgerblue;
+    background-color: var(--hover);
   }
 }
 
@@ -81,7 +82,7 @@
 }
 
 .formItem input:focus {
-  outline: 2px solid dodgerblue;
+  outline: 2px solid #00ff80;
 }
 
 .valid {

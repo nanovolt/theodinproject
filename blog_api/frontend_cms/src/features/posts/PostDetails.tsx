@@ -1,13 +1,8 @@
 import { DateTime } from "luxon";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-// import { CustomSelect } from "../../components/ReactSelect/CustomSelect";
 import { categoriesApiSlice } from "../categories/categoriesApiSlice";
 import { editorActions, selectPost } from "./EditorSlice";
 import styles from "./PostDetails.module.css";
-
-// type PostDetailsProps = {
-//   post: Post;
-// };
 
 export const PostDetails = () => {
   const dispatch = useAppDispatch();
@@ -42,13 +37,16 @@ export const PostDetails = () => {
           type="date"
           value={dateToRender}
           onChange={(e) => {
+            console.log(e.target.value);
             if (!e.target.value) {
               dispatch(editorActions.editPost({ key: "date", value: "" }));
+              return;
             }
-            const convertedToISO = DateTime.fromISO(e.target.value).toISO();
 
-            if (!convertedToISO) return;
-            dispatch(editorActions.editPost({ key: "date", value: convertedToISO }));
+            const offset = DateTime.fromISO(e.target.value).toISO();
+
+            if (!offset) return;
+            dispatch(editorActions.editPost({ key: "date", value: offset }));
           }}
         />
       </div>

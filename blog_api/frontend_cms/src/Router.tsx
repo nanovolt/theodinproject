@@ -9,13 +9,14 @@ import App from "./App";
 
 import { Home } from "./pages/Home";
 import { ErrorPage } from "./pages/ErrorPage.tsx";
-import { Editor } from "./features/posts/Editor.tsx";
+import { Create } from "./features/posts/Create.tsx";
 import { Login } from "./pages/Login.tsx";
 import { Register } from "./pages/Register.tsx";
 import { ProtectedRoute } from "./pages/ProtectedRoute.tsx";
 import { Logout } from "./pages/Logout.tsx";
 import { Posts } from "./features/posts/Posts.tsx";
 import { Categories } from "./features/categories/Categories.tsx";
+import { Edit } from "./features/posts/Edit.tsx";
 
 export function Router() {
   const router = createBrowserRouter(
@@ -37,7 +38,8 @@ export function Router() {
 
         <Route element={<ProtectedRoute redirectPath="/login" />}>
           <Route path="logout" element={<Logout />} />
-          <Route path="create" element={<Editor />} />
+          <Route path="create" element={<Create />} />
+          <Route path="edit/:id" element={<Edit />} />
           <Route path="posts" element={<Posts />} />
           <Route path="categories" element={<Categories />} />
         </Route>

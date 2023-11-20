@@ -11,12 +11,14 @@ export type Post = {
 type EditorState = {
   isPreview: boolean;
   isEdit: boolean;
+  postId: string;
   post: Post;
 };
 
 const initialState: EditorState = {
   isPreview: false,
   isEdit: false,
+  postId: "",
   post: {
     title: "",
     date: "",
@@ -36,6 +38,9 @@ export const editorSlice = createSlice({
   name: "editor",
   initialState,
   reducers: {
+    setPost: (state, action: PayloadAction<Post>) => {
+      state.post = action.payload;
+    },
     editPost: (state, action: PayloadAction<Payload>) => {
       state.post[action.payload.key] = action.payload.value;
     },
@@ -63,6 +68,12 @@ export const editorSlice = createSlice({
     unsetEdit: (state) => {
       state.isEdit = false;
     },
+    setPostId: (state, action: PayloadAction<string>) => {
+      state.postId = action.payload;
+    },
+    unsetPostId: (state) => {
+      state.postId = "";
+    },
   },
 });
 
@@ -70,5 +81,5 @@ export const { reducer: editorReducer, actions: editorActions } = editorSlice;
 
 export const selectIsPreview = (state: RootState) => state.editor.isPreview;
 export const selectIsEdit = (state: RootState) => state.editor.isEdit;
-
+export const selectPostId = (state: RootState) => state.editor.postId;
 export const selectPost = (state: RootState) => state.editor.post;

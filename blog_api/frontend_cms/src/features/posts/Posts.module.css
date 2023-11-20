@@ -1,3 +1,62 @@
+.postsContainer {
+  padding: 8px;
+}
+
+.pageTitle {
+  margin-bottom: 8px;
+}
+
 .post {
   display: flex;
+  flex-wrap: wrap;
+  /* grid-template-columns: 4fr 1fr; */
+  background-color: var(--background);
+  /* width: fit-content; */
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* .post:hover {
+  background-color: var(--hover);
+} */
+
+.postList {
+  margin: 0 auto;
+  max-width: 70ch;
+}
+
+.post h2 {
+  margin: 0;
+  overflow: hidden;
+  /* overflow-wrap: anywhere; */
+  text-overflow: ellipsis;
+}
+
+.post p {
+  margin: 0;
+}
+
+.post .postLink {
+  padding: 8px;
+  /* text-decoration: underline; */
+}
+
+.left {
+  min-width: 0;
+  flex: 1 1 280px;
+}
+
+.post .categoryLink {
+  padding: 8px;
+  text-decoration: underline;
+  /* min-width: 0; */
+  /* flex: 1 1 280px; */
+}
+
+.post a:hover {
+  background-color: var(--hover);
+}
+
+.postDate {
+  padding: 8px;
 }

@@ -23,7 +23,8 @@
   --fs-sm: clamp(1rem, 1rem + 0.5vw, 1.4rem);
   --fs-base: clamp(1.4rem, 1.4rem + 0.5vw, 1.8rem);
   --fs-xl: clamp(2.2rem, 2.2 + 0.6vw, 3.6rem);
-  --fs-input: clamp(1.4rem, 3vw, 2.2rem);
+  /* --fs-input: clamp(1.4rem, 3vw, 2.2rem); */
+  --fs-input: clamp(1.4rem, 1.4rem + 0.5vw, 1.8rem);
 
   --button-color: rgb(255, 255, 255);
   --button-bg: #333;

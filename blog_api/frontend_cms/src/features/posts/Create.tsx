@@ -4,27 +4,28 @@ import styles from "./Editor.module.css";
 import { Preview } from "./Preview";
 import { PostDetails } from "./PostDetails";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { editorActions, selectIsEdit, selectIsPreview } from "./EditorSlice";
+import { editorActions, selectIsPreview } from "./EditorSlice";
 import { useEffect } from "react";
 
-export const Editor = () => {
+export const Create = () => {
   const dispatch = useAppDispatch();
 
   const isPreview = useAppSelector(selectIsPreview);
-  const isEdit = useAppSelector(selectIsEdit);
 
-  useTitle(`${isEdit ? "Edit" : "Create"} | Blog CMS`);
+  useTitle("Create | Blog CMS");
 
   useEffect(() => {
     return () => {
       dispatch(editorActions.clearPost());
+      dispatch(editorActions.unsetPostId());
+      dispatch(editorActions.unsetEdit());
       dispatch(editorActions.unsetPreview());
     };
   }, [dispatch]);
 
   return (
     <div className={styles.editorContainer}>
-      <h1 className={styles.pageTitle}>{isEdit ? "Edit" : "Create"}</h1>
+      <h1 className={styles.pageTitle}>Create</h1>
 
       {isPreview && <Preview />}
       <div className={styles.wrapper}>

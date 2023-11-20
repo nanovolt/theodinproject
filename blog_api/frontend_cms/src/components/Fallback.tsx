@@ -8,7 +8,8 @@ export function Fallback({
   resetErrorBoundary: () => void;
 }) {
   // Call resetErrorBoundary() to reset the error boundary and retry the render.
-  resetErrorBoundary();
+  // WARNING: calling reset here causes re-render, don't do it
+  // resetErrorBoundary();
   return (
     <div role="alert">
       <p>Something went wrong:</p>

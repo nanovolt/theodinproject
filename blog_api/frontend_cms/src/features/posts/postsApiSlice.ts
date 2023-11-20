@@ -27,6 +27,8 @@ type CreatedPost = {
   isPublished: boolean;
 };
 
+type EditedPost = { id: string; payload: Partial<CreatedPost> };
+
 export const postsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPosts: builder.query<Post[], void>({
@@ -43,6 +45,15 @@ export const postsApiSlice = apiSlice.injectEndpoints({
           : [{ type: "Posts", id: "LIST" }],
     }),
 
+    getPostById: builder.query<Post, { id: string }>({
+      query: (payload) => ({
+        url: `cms/posts/${payload.id}`,
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: (_result, _err, arg) => [{ type: "Posts" as const, id: arg.id }],
+    }),
+
     createPost: builder.mutation<void, CreatedPost>({
       query: (payload) => ({
         url: "cms/posts",
@@ -53,11 +64,21 @@ export const postsApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: [{ type: "Posts", id: "LIST" }],
     }),
 
+    updatePost: builder.mutation<void, EditedPost>({
+      query: (payload) => ({
+        url: `cms/posts/${payload.id}`,
+        method: "PUT",
+        body: payload.payload,
+        credentials: "include",
+      }),
+      invalidatesTags: (_result, _error, arg) => [{ type: "Posts", id: arg.id }],
+    }),
+
     deletePost: builder.mutation<void, { id: string }>({
       query: (payload) => ({
         url: `cms/posts/${payload.id}`,
         method: "DELETE",
-        body: payload,
+        body: payload.id,
         credentials: "include",
       }),
       invalidatesTags: (_result, _error, arg) => [{ type: "Posts", id: arg.id }],

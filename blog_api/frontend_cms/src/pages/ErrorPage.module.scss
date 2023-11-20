@@ -1,8 +1,14 @@
 .errorPage {
   text-align: center;
+  height: 100vh;
   display: grid;
-  gap: 8px;
+  place-items: center;
+  align-content: center;
   a {
     text-decoration: underline;
   }
+}
+
+.errorPage button {
+  text-decoration: underline;
 }

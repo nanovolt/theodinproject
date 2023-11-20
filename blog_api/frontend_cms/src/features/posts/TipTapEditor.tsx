@@ -8,10 +8,6 @@ import { extensions } from "./Extentions";
 import { selectPost } from "./EditorSlice";
 import { useAppSelector } from "../../app/hooks";
 
-// type TipTapEditorProps = {
-//   post: Post;
-// };
-
 export const TipTapEditor = () => {
   const post = useAppSelector(selectPost);
 

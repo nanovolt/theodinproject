@@ -1,7 +1,7 @@
 .ProseMirror {
   /* max-width: 60ch; */
   /* width: clamp(240px, 100%, 60ch); */
-  min-height: 260px;
+  min-height: 250px;
   /* width: 100%; */
   padding: 8px;
   /* background-color: var(--background); */

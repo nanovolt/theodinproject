@@ -1,5 +1,5 @@
 import styles from "./Categories.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
@@ -16,7 +16,6 @@ export const Categories = () => {
   const {
     data: categories,
     isError: isQueryError,
-    error: queryError,
     isLoading: isCategoriesLoading,
     isFetching,
     isSuccess: haveCategories,
@@ -28,35 +27,46 @@ export const Categories = () => {
   const [deleteCategory, { isLoading: isDeleting, originalArgs }] =
     categoriesApiSlice.useDeleteCategoryMutation();
 
+  useEffect(() => {
+    if (isQueryError) {
+      toast.error("Failed to load categories", { id: "categories" });
+    }
+  }, [isQueryError]);
+
   async function handleCreateCategory() {
     if (!input) {
       return;
     }
     setInput("");
     try {
-      toast.loading("Creating category...", { id: "category" });
+      toast.loading("Creating category...", { id: "categories" });
       await createCategory({ title: input }).unwrap();
-      toast.success("Category created", { id: "category" });
+      toast.success("Category created", { id: "categories" });
     } catch (err) {
       reset();
-      toast.error("Failed to create category", { id: "category" });
+      toast.error("Failed to create category", { id: "categories" });
     }
   }
 
   async function handleDeleteCategory(_id: string) {
     try {
-      toast.loading("Deleting category...", { id: "category" });
+      toast.loading("Deleting category...", { id: "categories" });
       await deleteCategory({ _id }).unwrap();
-      toast.success("Category deleted", { id: "category" });
+      toast.success("Category deleted", { id: "categories" });
     } catch (err) {
-      toast.error("Failed to delete category", { id: "category" });
+      toast.error("Failed to delete category", { id: "categories" });
     }
   }
 
   let categoryList = null;
+
+  if (isQueryError) {
+    categoryList = <p className={styles.center}>Failed to load categories</p>;
+  }
+
   if (isCategoriesLoading) {
     categoryList = (
-      <div className={styles.loading}>
+      <div className={styles.center}>
         <span>
           Loading...
           <FontAwesomeIcon icon={faSync} className={classNames("fa-fw", "fa-spin")} />
@@ -84,13 +94,6 @@ export const Categories = () => {
         ))}
       </ul>
     );
-  }
-
-  if (isQueryError) {
-    console.log(queryError);
-    // console.log("reset");
-    toast.error("Failed to load category", { id: "category" });
-    categoryList = <p>Category list is empty</p>;
   }
 
   return (

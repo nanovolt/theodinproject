@@ -37,7 +37,6 @@ export const PostDetails = () => {
           type="date"
           value={dateToRender}
           onChange={(e) => {
-            console.log(e.target.value);
             if (!e.target.value) {
               dispatch(editorActions.editPost({ key: "date", value: "" }));
               return;

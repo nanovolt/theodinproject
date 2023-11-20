@@ -1,39 +1,69 @@
 import { useTitle } from "../../hooks/useTitle";
 import { postsApiSlice } from "./postsApiSlice";
-// import parse from "html-react-parser";
 import styles from "./Posts.module.css";
 import { Button } from "../../components/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
-import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faSync, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import { DateTime } from "luxon";
+import { toast } from "react-hot-toast";
+import { useEffect } from "react";
 
 export const Posts = () => {
   useTitle("Posts | Blog CMS");
 
   const navigate = useNavigate();
 
-  const { data: posts } = postsApiSlice.useGetPostsQuery();
+  const {
+    data: posts,
+    isLoading: isPostsLoading,
+    isError: isQueryError,
+    isFetching,
+  } = postsApiSlice.useGetPostsQuery();
 
-  const [deletePost] = postsApiSlice.useDeletePostMutation();
+  const [deletePost, { isLoading: isDeleting, originalArgs }] =
+    postsApiSlice.useDeletePostMutation();
 
-  if (!posts) {
-    return <p>Error</p>;
+  useEffect(() => {
+    if (isQueryError) {
+      toast.error("Failed to load posts", { id: "posts" });
+    }
+  }, [isQueryError]);
+
+  async function handleDeletePost(_id: string) {
+    try {
+      toast.loading("Deleting post...", { id: "posts" });
+      await deletePost({ id: _id }).unwrap();
+      toast.success("Post deleted", { id: "posts" });
+    } catch (err) {
+      toast.error("Failed to delete post", { id: "posts" });
+    }
   }
 
-  if (posts.length === 0) {
-    return (
-      <div className={styles.postsContainer}>
-        <h1 className={styles.pageTitle}>Posts</h1>
-        <p>Post list is empty</p>
+  let postList = null;
+
+  if (isQueryError) {
+    postList = <p className={styles.center}>Failed to load posts</p>;
+  }
+
+  if (isPostsLoading) {
+    postList = (
+      <div className={styles.center}>
+        <span>
+          Loading...
+          <FontAwesomeIcon icon={faSync} className={classNames("fa-fw", "fa-spin")} />
+        </span>
       </div>
     );
   }
 
-  return (
-    <div className={styles.postsContainer}>
-      <h1 className={styles.pageTitle}>Posts</h1>
+  if (posts && posts.length === 0) {
+    postList = <p>Post list is empty</p>;
+  }
+
+  if (posts && posts.length > 0) {
+    postList = (
       <ul className={styles.postList}>
         {posts.map((post) => (
           <li key={post._id} className={styles.post}>
@@ -58,16 +88,16 @@ export const Posts = () => {
               <Button
                 options={{ isIcon: true }}
                 onClick={() => {
-                  // console.log(`edit post ${post._id}`);
                   navigate(`/edit/${post._id}`);
                 }}
               >
                 <FontAwesomeIcon icon={faPenToSquare} className={classNames("fa-fw")} />
               </Button>
               <Button
+                disabled={(isDeleting || isFetching) && originalArgs?.id === post._id}
                 options={{ isIcon: true }}
-                onClick={async () => {
-                  await deletePost({ id: post._id });
+                onClick={() => {
+                  handleDeletePost(post._id);
                 }}
               >
                 <FontAwesomeIcon icon={faTrashCan} className={classNames("fa-fw")} />
@@ -76,6 +106,13 @@ export const Posts = () => {
           </li>
         ))}
       </ul>
+    );
+  }
+
+  return (
+    <div className={styles.postsContainer}>
+      <h1 className={styles.pageTitle}>Posts</h1>
+      {postList}
     </div>
   );
 };

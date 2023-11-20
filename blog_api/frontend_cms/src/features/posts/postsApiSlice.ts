@@ -1,6 +1,6 @@
 import { apiSlice } from "../api/apiSlice";
 
-type Post = {
+export type FetchPost = {
   _id: string;
   title: string;
   content: string;
@@ -31,7 +31,7 @@ type EditedPost = { id: string; payload: Partial<CreatedPost> };
 
 export const postsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getPosts: builder.query<Post[], void>({
+    getPosts: builder.query<FetchPost[], void>({
       query: () => ({
         url: "cms/posts",
         credentials: "include",
@@ -45,7 +45,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
           : [{ type: "Posts", id: "LIST" }],
     }),
 
-    getPostById: builder.query<Post, { id: string }>({
+    getPostById: builder.query<FetchPost, { id: string }>({
       query: (payload) => ({
         url: `cms/posts/${payload.id}`,
         method: "GET",

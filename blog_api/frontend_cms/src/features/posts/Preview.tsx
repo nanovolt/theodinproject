@@ -19,7 +19,7 @@ import html from "highlight.js/lib/languages/xml";
 import { useEffect } from "react";
 import hljs from "highlight.js/lib/core";
 import { validateEditor } from "./EditorValidator";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCurrentEditor } from "@tiptap/react";
 import { bundlePayload } from "./bundlePayload";
 
@@ -99,7 +99,7 @@ export const Preview = () => {
         return;
       }
 
-      toast.success("Edit had no changes", { id: "editor" });
+      toast.error("Edit had no changes", { id: "editor" });
     } catch (err) {
       reset();
       toast.error("Failed to edit post", { id: "editor" });
@@ -107,8 +107,12 @@ export const Preview = () => {
   }
 
   useEffect(() => {
-    hljs.highlightAll();
-  }, []);
+    const highlightedBlock = document.querySelector("[data-highlighted=yes]");
+    // highlightedBlock?.removeAttribute("data-highlighted");
+    if (!highlightedBlock) {
+      hljs.highlightAll();
+    }
+  }, [post]);
 
   return (
     <div className={styles.preview}>
@@ -143,9 +147,9 @@ export const Preview = () => {
           {DateTime.fromISO(post.date).toLocaleString(DateTime.DATE_MED)}
         </p>
         <p className={styles.postAuthor}>by {currentUser!.user.username}</p>
-        <p className={styles.postCategory}>
+        <Link to={`/categories/${post.categoryId}`} className={styles.postCategory}>
           {chosenCategory ? chosenCategory.title : "No category"}
-        </p>
+        </Link>
         <article>{parse(post.content)}</article>
       </div>
     </div>

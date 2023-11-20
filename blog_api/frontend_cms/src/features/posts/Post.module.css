@@ -1,34 +1,13 @@
-.preview {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 10px;
-}
-
-article {
-  /* max-width: 60ch; */
-
-  /* padding: 8px; */
-  /* background-color: var(--background); */
-  /* min-width: 240px; */
-  overflow-wrap: anywhere;
+.center {
+  text-align: center;
   margin-top: 16px;
-  /* hyphens: auto; */
-  /* align-self: center; */
-}
-
-.button {
-  background-color: var(--button-bg);
-  color: var(--button-color);
-}
-
-.isPreview {
-  outline: 2px solid var(--text-primary);
 }
 
 .post {
   width: clamp(240px, 100%, 60ch);
-  align-self: center;
+  /* align-self: center; */
+  margin: 0 auto;
+  padding: 8px;
 }
 
 .post pre {

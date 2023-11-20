@@ -1,14 +1,14 @@
 import { useCurrentEditor } from "@tiptap/react";
 import styles from "./MainControls.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faNewspaper, faUpload } from "@fortawesome/free-solid-svg-icons";
+import { faNewspaper, faPowerOff, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { editorActions, selectIsEdit, selectPost, selectPostId } from "./EditorSlice";
 import { postsApiSlice } from "./postsApiSlice";
 import toast from "react-hot-toast";
 import { validateEditor } from "./EditorValidator";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { bundlePayload } from "./bundlePayload";
 
 export const MainControls = () => {
@@ -92,7 +92,7 @@ export const MainControls = () => {
         return;
       }
 
-      toast.success("Edit had no changes", { id: "editor" });
+      toast.error("Edit had no changes", { id: "editor" });
     } catch (err) {
       reset();
       toast.error("Failed to edit post", { id: "editor" });
@@ -101,6 +101,14 @@ export const MainControls = () => {
 
   return (
     <div className={styles.mainControls}>
+      {isEdit && (
+        <div className={styles.cancel}>
+          <Link to="/posts" className={styles.button} replace>
+            Cancel
+            <FontAwesomeIcon icon={faPowerOff} style={{ marginLeft: "8px" }} />
+          </Link>
+        </div>
+      )}
       <div>
         <button
           className={styles.button}

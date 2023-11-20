@@ -1,10 +1,4 @@
-import {
-  Link,
-  isRouteErrorResponse,
-  useLocation,
-  useNavigate,
-  useRouteError,
-} from "react-router-dom";
+import { Link, isRouteErrorResponse, useNavigate, useRouteError } from "react-router-dom";
 import styles from "./ErrorPage.module.scss";
 import { useTitle } from "../hooks/useTitle";
 
@@ -12,9 +6,8 @@ export function ErrorPage() {
   useTitle("Error | Blog CMS");
   const error = useRouteError();
 
-  const location = useLocation();
   const navigate = useNavigate();
-  console.log(location);
+
   if (isRouteErrorResponse(error)) {
     if (error.status === 401) {
       return <h1>401 error fffff</h1>;

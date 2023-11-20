@@ -52,7 +52,9 @@
 
 .post .categoryLink {
   padding: 8px;
-  text-decoration: underline;
+  background-color: var(--category);
+  color: white;
+  text-decoration: none;
   /* min-width: 0; */
   /* flex: 1 1 280px; */
 }

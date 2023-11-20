@@ -1,6 +1,10 @@
 .mainControls {
-  display: flex;
-  gap: 8px;
+  /* display: flex; */
+  /* gap: 8px; */
+  margin-bottom: 8px;
+}
+
+.cancel {
   margin-bottom: 8px;
 }
 

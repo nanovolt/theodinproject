@@ -5,7 +5,7 @@ import { Button } from "../../components/Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import { faPenToSquare, faSync, faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { DateTime } from "luxon";
 import { toast } from "react-hot-toast";
 import { useEffect } from "react";
@@ -68,14 +68,14 @@ export const Posts = () => {
         {posts.map((post) => (
           <li key={post._id} className={styles.post}>
             <div className={styles.left}>
-              <a href={`posts/${post._id}`} className={styles.postLink}>
+              <Link to={`/posts/${post._id}`} className={styles.postLink}>
                 <h2>{post.title}</h2>
-              </a>
+              </Link>
               {post.categoryId && (
                 <p>
-                  <a href={`categories/${post.categoryId._id}`} className={styles.categoryLink}>
+                  <Link to={`/categories/${post.categoryId._id}`} className={styles.categoryLink}>
                     {post.categoryId.title}
-                  </a>
+                  </Link>
                 </p>
               )}
               <p>{!post.categoryId && <a href="#">No category</a>}</p>

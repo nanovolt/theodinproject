@@ -7,6 +7,7 @@ import { categoriesApiSlice } from "./categoriesApiSlice";
 import { Button } from "../../components/Button/Button";
 import { useTitle } from "../../hooks/useTitle";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 export const Categories = () => {
   useTitle("Categories | Blog CMS");
@@ -80,7 +81,9 @@ export const Categories = () => {
       <ul className={styles.categoryList}>
         {categories.map((category) => (
           <li key={category._id} className={styles.listItem}>
-            <p>{category.title}</p>
+            <Link to={`/categories/${category._id}`} className={styles.category}>
+              {category.title}
+            </Link>
             <Button
               disabled={(isDeleting || isFetching) && originalArgs?._id === category._id}
               options={{ isIcon: true }}

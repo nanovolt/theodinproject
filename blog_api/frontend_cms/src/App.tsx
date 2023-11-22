@@ -1,4 +1,6 @@
 import styles from "./App.module.scss";
+import "./toaster.css";
+
 import classNames from "classnames";
 
 import { Outlet } from "react-router-dom";
@@ -13,7 +15,11 @@ function App() {
 
   return (
     <div className={appClasses} data-color-scheme={mode} data-testid="app">
-      <Toaster />
+      <Toaster
+        toastOptions={{
+          className: "toaster",
+        }}
+      />
       <Header />
       <main>
         <div className={styles.mainWrapper}>

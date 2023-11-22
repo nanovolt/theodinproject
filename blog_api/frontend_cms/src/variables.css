@@ -30,6 +30,8 @@
   --button-bg: #333;
   --hover: #00ff80;
   --category: #5e00aa;
+  --toaster-bg: #5e00aa;
+  --toaster-color: white;
 }
 
 [data-color-scheme="dark"] {
@@ -42,4 +44,6 @@
   --button-color: rgb(32, 32, 32);
   --button-bg: #e6e6e6;
   --hover: #00b85c;
+  --toaster-bg: white;
+  --toaster-color: #444;
 }

@@ -1,0 +1,5 @@
+.toaster {
+  background-color: var(--toaster-bg);
+  color: var(--toaster-color);
+  border-radius: 0;
+}

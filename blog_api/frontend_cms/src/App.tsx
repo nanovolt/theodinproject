@@ -1,4 +1,4 @@
-import styles from "./App.module.scss";
+import styles from "./App.module.css";
 import "./toaster.css";
 
 import classNames from "classnames";
@@ -18,6 +18,9 @@ function App() {
       <Toaster
         toastOptions={{
           className: "toaster",
+          // style: {
+          //   borderRadius: 0,
+          // },
         }}
       />
       <Header />

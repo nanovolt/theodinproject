@@ -17,4 +17,6 @@ router.get("/posts/:id", postsController.readPost);
 router.put("/posts/:id", validateUpdatePost, postsController.updatePost);
 router.delete("/posts/:id", postsController.deletePost);
 
+router.get("/posts/category/:id", postsController.readPostsByCategory);
+
 export { router as cmsRoute };

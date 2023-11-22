@@ -45,6 +45,20 @@ export const postsApiSlice = apiSlice.injectEndpoints({
           : [{ type: "Posts", id: "LIST" }],
     }),
 
+    getPostsByCategory: builder.query<FetchPost[], { id: string }>({
+      query: (payload) => ({
+        url: `cms/posts/category/${payload.id}`,
+        credentials: "include",
+      }),
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.map(({ _id }) => ({ type: "Posts" as const, id: _id })),
+              { type: "Posts", id: "LIST" },
+            ]
+          : [{ type: "Posts", id: "LIST" }],
+    }),
+
     getPostById: builder.query<FetchPost, { id: string }>({
       query: (payload) => ({
         url: `cms/posts/${payload.id}`,

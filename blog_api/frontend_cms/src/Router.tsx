@@ -18,6 +18,7 @@ import { Posts } from "./features/posts/Posts.tsx";
 import { Categories } from "./features/categories/Categories.tsx";
 import { Edit } from "./features/posts/Edit.tsx";
 import { Post } from "./features/posts/Post.tsx";
+import { Category } from "./features/categories/Category.tsx";
 
 export function Router() {
   const router = createBrowserRouter(
@@ -44,6 +45,7 @@ export function Router() {
           <Route path="posts" element={<Posts />} />
           <Route path="posts/:id" element={<Post />} />
           <Route path="categories" element={<Categories />} />
+          <Route path="categories/:id" element={<Category />} />
         </Route>
       </Route>
     )

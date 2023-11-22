@@ -26,6 +26,20 @@ export const postsController = {
     res.json(posts);
   }),
 
+  readPostsByCategory: asyncHandler(async (req, res, next) => {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return next(createError(404, { error: `post with category id ${id} not found` }));
+    }
+
+    const posts = await PostModel.find({ categoryId: id })
+      .populate("categoryId", "title")
+      .populate("authorId", "username");
+
+    res.json(posts);
+  }),
+
   readPost: asyncHandler(async (req, res, next) => {
     const { id } = req.params;
 

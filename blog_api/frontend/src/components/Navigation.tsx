@@ -12,14 +12,6 @@ export const Navigation = () => {
       <ul className={styles.linkList}>
         <li>
           <NavLink
-            to="/create"
-            className={({ isActive }) => ["someclass", isActive ? `${active}` : `${cn}`].join(" ")}
-          >
-            Create
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
             to="/posts"
             end
             className={({ isActive }) => ["someclass", isActive ? `${active}` : `${cn}`].join(" ")}

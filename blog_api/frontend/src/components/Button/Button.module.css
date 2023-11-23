@@ -1,0 +1,13 @@
+.button {
+}
+
+.button[disabled] {
+  background: repeating-linear-gradient(45deg, #dbdbdb, #dbdbdb 5px, #999999 2px, #999999 10px);
+  color: black;
+  cursor: not-allowed;
+}
+
+.icon {
+  background-color: var(--background-button);
+  /* width: 48px; */
+}

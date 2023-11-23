@@ -1,25 +1,27 @@
-import { useEffect, useState } from "react";
-import "./App.css";
+import styles from "./App.module.css";
+
+import classNames from "classnames";
+
+import { Outlet } from "react-router-dom";
+import { Footer } from "./components/Footer";
+import { useDarkModeContext } from "./context/DarkModeContext";
+import { Header } from "./components/Header";
 
 function App() {
-  const [data, setData] = useState();
-  useEffect(() => {
-    fetch("http://localhost:3000/", {
-      method: "get",
-    })
-      .then((res) => {
-        console.log(res);
-        return res.json();
-      })
-      .then((d) => {
-        console.log(d);
-        setData(d);
-      });
-  }, []);
-  if (data) {
-    return <pre>{JSON.stringify(data, null, "  ")}</pre>;
-  }
-  return <div>Loading...</div>;
+  const mode = useDarkModeContext();
+  const appClasses = classNames(styles.App, {});
+
+  return (
+    <div className={appClasses} data-color-scheme={mode} data-testid="app">
+      <Header />
+      <main>
+        <div className={styles.mainWrapper}>
+          <Outlet />
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
 }
 
 export default App;

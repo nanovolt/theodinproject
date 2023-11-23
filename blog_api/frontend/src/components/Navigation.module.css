@@ -1,0 +1,17 @@
+.active {
+  outline: 2px solid var(--text-primary);
+}
+
+.column {
+  flex-direction: column;
+}
+
+.linkList {
+  flex-direction: row;
+}
+
+@media (max-width: 768px) {
+  .linkList {
+    flex-direction: column;
+  }
+}

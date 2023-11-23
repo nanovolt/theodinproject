@@ -1,0 +1,69 @@
+.categoriesContainer {
+  /* width: clamp(300px, 100%, 960px);   */
+  padding: 8px;
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@media (hover: hover) {
+  .submit:hover {
+    background-color: dodgerblue;
+  }
+}
+
+.submit:active {
+  background-color: lime;
+}
+
+.submit[disabled] {
+  background: repeating-linear-gradient(45deg, #dbdbdb, #dbdbdb 5px, #999999 2px, #999999 10px);
+  /* color: black; */
+  cursor: not-allowed;
+}
+
+.valid {
+  outline: 2px solid rgb(0, 255, 0);
+}
+
+.invalid {
+  outline: 2px solid rgb(255, 0, 0);
+}
+
+.inputAndSubmit {
+  /* max-width: 300px; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.input {
+  width: 0;
+  max-width: 20ch;
+  flex: 1;
+  padding: 8px 16px;
+  font-size: var(--fs-input);
+  outline: 2px solid var(--text-primary);
+  color: var(--text-primary);
+  background-color: var(--background-input);
+}
+
+.categoryList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.listItem {
+  display: flex;
+  background-color: var(--background);
+  /* min-width: 100px; */
+  padding: 8px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.center {
+  text-align: center;
+}

@@ -1,8 +1,6 @@
 # The Odin Project
 
-Main repository for all project assignments
-
-[The Odin Project website](https://www.theodinproject.com)
+Main repository for all project assignments from [TOP](https://www.theodinproject.com)
 
 [Recipes](https://nanovolt.github.io/theodinproject/recipes/)
 
@@ -25,8 +23,6 @@ Main repository for all project assignments
 [Restaurant page](https://nanovolt.github.io/theodinproject/restaurant_page/)
 
 [To-do List App](https://nanovolt.github.io/theodinproject/todo_list/)
-
-[Form validation with Javascript](https://nanovolt.github.io/theodinproject/form_validation_with_javascript/)
 
 [Weather App](https://nanovolt.github.io/theodinproject/weather_app/)
 

@@ -1,9 +1,16 @@
-isPublished casts "1" to true
-date format is iso8601 for api transmission
-backend transforms date iso to simple js date
-update post validation is not completely DRY, added optional() and deleted notEmpty()
-if the project had complex business logic where whould i put it and how to organize?
+Features:
 
-mongodb throws error MongoServerError: E11000 duplicate key error collection if there was a key
-with different name even if it no longer existed, but it saved it in index?
-isNumeric() correctly validates out non numbers, but still implicitly casts strings to numbers
+- Fullstack Blog platform
+- Backend on node.js and express framework
+- 2 Frontens CMS on React and Redux
+- Written fully on typescript
+- CRUD operations with posts and categories
+- Integrated Tip-Tap rich text editor
+- Code highligthing
+- Basic authentication with session cookies
+- Redis as a session storage
+- Client and server side validation and sanitization of html entities
+- RTK Query caching
+- Responsive layout with react only, no css media queries
+- Dark mode
+- Docker containers

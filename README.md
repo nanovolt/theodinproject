@@ -1,8 +1,8 @@
 # The Odin Project
 
-[The Odin Project website](https://www.theodinproject.com)
+Main repository for all project assignments
 
-[https://nanovolt.github.io/theodinproject](https://nanovolt.github.io/theodinproject/)
+[The Odin Project website](https://www.theodinproject.com)
 
 [Recipes](https://nanovolt.github.io/theodinproject/recipes/)
 
@@ -41,3 +41,5 @@
 [Shopping cart](https://nanovolt.github.io/theodinproject/shopping_cart/)
 
 [NodeJS: Basic Informational site](https://basicinformationalsite--nanovolt.repl.co/)
+
+[Blog API](https://nanovolt-blog-cms.fly.dev/)

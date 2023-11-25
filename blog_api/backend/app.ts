@@ -24,7 +24,7 @@ app.set("trust proxy", true);
 
 const corsOptions: cors.CorsOptions = {
   credentials: true,
-  origin: [process.env.CORS_HOST, process.env.CORS_LOCAL_HOST],
+  origin: [process.env.CORS_CMS, process.env.CORS_BLOG],
   exposedHeaders: "Authorization",
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };

@@ -1,7 +1,7 @@
 # Use the official Node.js runtime as the base image
 FROM node:18-alpine3.17 as build
 
-ENV VITE_APP_API_URL=https://blog-api-backend.fly.dev/api/v1
+ENV VITE_APP_API_URL=https://nanovolt-blog-api.fly.dev/api/v1
 
 # Set the working directory in the container
 WORKDIR /app
@@ -31,8 +31,8 @@ COPY --from=build /app/dist /usr/share/nginx/html
 
 # WARNING The app is not listening on the expected address and will not be reachable by fly-proxy.
 # You can fix this by configuring your app to listen on the following addresses:
-#  - 0.0.0.0:3000
-EXPOSE 3000
+#  - 0.0.0.0:80
+EXPOSE 80
 
 # Start Nginx when the container runs
 CMD ["nginx", "-g", "daemon off;"]

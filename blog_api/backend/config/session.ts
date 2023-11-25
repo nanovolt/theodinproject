@@ -24,11 +24,11 @@ const expressSession = session({
     httpOnly: true,
 
     // production
-    // sameSite: "none",
-    // secure: true,
+    sameSite: "none",
+    secure: true,
 
     // development
-    sameSite: "strict",
+    // sameSite: "strict",
   },
   rolling: true,
 });

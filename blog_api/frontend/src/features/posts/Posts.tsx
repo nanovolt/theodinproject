@@ -14,7 +14,6 @@ export const Posts = () => {
     data: posts,
     isLoading: isPostsLoading,
     isError: isQueryError,
-    isFetching,
   } = postsApiSlice.useGetPostsQuery();
 
   let postList = null;

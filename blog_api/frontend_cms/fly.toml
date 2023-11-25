@@ -1,17 +1,22 @@
-# fly.toml app configuration file generated for blog-cms-nanovolt on 2023-11-08T17:10:38+06:00
+# fly.toml app configuration file generated for nanovolt-blog-cms on 2023-11-25T14:48:28+06:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "blog-cms-nanovolt"
-primary_region = "arn"
+app = "nanovolt-blog-cms"
+primary_region = "waw"
 
 [build]
 
 [http_service]
-  internal_port = 3000
+  internal_port = 80
   force_https = true
   auto_stop_machines = true
   auto_start_machines = true
   min_machines_running = 0
   processes = ["app"]
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256

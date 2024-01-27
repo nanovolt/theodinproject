@@ -31,9 +31,11 @@ passport.use("local", localStrategy);
 // adds passport property to req.session
 passport.serializeUser(function (user, cb) {
   log("passport.serializeUser:", user);
+  // pass in id
   cb(null, user.id);
 });
 
+// get id that was passed in serializeUser
 passport.deserializeUser(async (id, cb) => {
   try {
     const user = await UserModel.findById(id);

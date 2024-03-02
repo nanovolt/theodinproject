@@ -9,6 +9,7 @@ const log = debug("config:redis");
 
 const redisClient = createClient({
   url: process.env.REDIS_URL,
+  pingInterval: 100000,
 });
 
 async function startRedis() {

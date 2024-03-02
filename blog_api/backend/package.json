@@ -9,7 +9,7 @@
     "dev": "DEBUG=config:*,blog-api:*,app,controllers:*,routes:* npm run nodemon",
     "prepreview": "npm run build",
     "preview": "NODE_ENV=production node ./dist/bin/www",
-    "tsnode": "ts-node --swc script.ts",
+    "tsnode": "DEBUG=config:*,blog-api:*,app,controllers:*,routes:* ts-node --swc script.ts",
     "build": "rimraf dist && npx tsc"
   },
   "dependencies": {

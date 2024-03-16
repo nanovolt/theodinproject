@@ -9,8 +9,17 @@ const log = debug("config:redis");
 
 const redisClient = createClient({
   url: process.env.REDIS_URL,
-  pingInterval: 60000,
+  // pingInterval: 60000,
 });
+
+const timer = setInterval(async () => {
+  try {
+    await redisClient.ping();
+    console.log("pinged redis");
+  } catch (err) {
+    console.error("Ping Interval Error", err);
+  }
+}, 1000 * 60 * 10);
 
 async function startRedis() {
   try {
@@ -40,6 +49,10 @@ startRedis();
 
 process.on("exit", async () => {
   await redisClient.quit();
+
+  // make sure to `clearInterval` when you close the client
+  clearInterval(timer);
+  redisClient.disconnect();
 });
 
 export { redisClient };
